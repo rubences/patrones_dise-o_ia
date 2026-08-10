@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "5.0.0",
-  "description": "35 patrones de diseño exhaustivos: 8 patrones agénticos + 4 patrones agénticos emergentes + 7 patrones GoF faltantes + 16 patrones estructurales y comportamiento avanzado, todos adaptados para sistemas de IA",
+  "version": "6.0.0",
+  "description": "42 patrones de diseño exhaustivos para sistemas agénticos de IA: GoF completo + patrones agénticos emergentes (RAG, CoT, ToT, MoE, Cascade, Branching, Self-Consistency...) implementados en TypeScript",
   "type": "module",
   "main": "src/common.ts",
   "scripts": {
@@ -39,7 +39,14 @@
     "pattern:32": "node --loader ts-node/esm src/pattern_32_flyweight.ts",
     "pattern:33": "node --loader ts-node/esm src/pattern_33_interpreter.ts",
     "pattern:34": "node --loader ts-node/esm src/pattern_34_iterator.ts",
-    "pattern:35": "node --loader ts-node/esm src/pattern_35_visitor.ts"
+    "pattern:35": "node --loader ts-node/esm src/pattern_35_visitor.ts",
+    "pattern:36": "node --loader ts-node/esm src/pattern_36_tree_of_thought.ts",
+    "pattern:37": "node --loader ts-node/esm src/pattern_37_knowledge_graph.ts",
+    "pattern:38": "node --loader ts-node/esm src/pattern_38_mixture_of_experts.ts",
+    "pattern:39": "node --loader ts-node/esm src/pattern_39_cascade.ts",
+    "pattern:40": "node --loader ts-node/esm src/pattern_40_branching.ts",
+    "pattern:41": "node --loader ts-node/esm src/pattern_41_retrieval_ranking.ts",
+    "pattern:42": "node --loader ts-node/esm src/pattern_42_self_consistency.ts"
   },
   "keywords": [
     "openai",
