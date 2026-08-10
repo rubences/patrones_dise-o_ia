@@ -38,7 +38,7 @@
  *  - Composición en lugar de herencia
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // ── IMPLEMENTOR: Abstracción de LLM ────────────────────────────────

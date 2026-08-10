@@ -39,7 +39,7 @@
  *  cambios de configuración, decisiones médicas, aprobaciones legales.
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export type NivelRiesgo = "bajo" | "medio" | "alto" | "crítico";

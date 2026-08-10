@@ -30,7 +30,7 @@
  */
 
 import { isDirectRun, makeClient, paso } from "./common.js";
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL } from "./common.js";
 
 export interface Checkpoint {

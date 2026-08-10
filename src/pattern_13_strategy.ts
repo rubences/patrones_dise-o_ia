@@ -34,7 +34,7 @@
  *  - Diferentes formatos de output
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // ── Interfaz de estrategia ─────────────────────────────────────

@@ -31,7 +31,7 @@
  *  - Permite contextos más largos que el límite del modelo
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export type MetodoCompresion = "extractive" | "abstractive" | "hybrid";

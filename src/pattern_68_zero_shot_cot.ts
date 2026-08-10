@@ -28,7 +28,7 @@
  *  - Universal para cualquier tarea de razonamiento
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export type SufijoCoT =

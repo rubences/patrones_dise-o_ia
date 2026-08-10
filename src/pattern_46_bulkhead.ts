@@ -71,7 +71,7 @@ export class Bulkhead {
     nombre: string;
     activos: number;
     capacidad: number;
-    estadisticas: typeof this.estadisticas;
+    estadisticas: { aceptadas: number; rechazadas: number; completadas: number };
   } {
     return {
       nombre: this.nombre,

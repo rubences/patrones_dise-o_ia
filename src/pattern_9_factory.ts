@@ -26,7 +26,7 @@
  *  - Facilita testing (mocks de agentes)
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // ── Interfaz común para todos los agentes ──────────────────────

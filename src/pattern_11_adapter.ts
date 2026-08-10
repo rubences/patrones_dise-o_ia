@@ -25,7 +25,7 @@
  *  - Fácil agregar nuevos formatos sin tocar LLM
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // ── Tipos de formatos ──────────────────────────────────────────

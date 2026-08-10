@@ -30,7 +30,7 @@
  *  - Escalable a objetivos complejos
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // ── Estados del agente ─────────────────────────────────────────────

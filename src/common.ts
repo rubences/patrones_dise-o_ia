@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 
 // El SDK lee OPENAI_API_KEY automáticamente de las variables de entorno.
 export const DEFAULT_MODEL = process.env.OPENAI_MODEL ?? "gpt-5.6";

@@ -26,7 +26,7 @@
  *  - Mejora continua de robustez
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export type NivelRiesgo = "critico" | "alto" | "moderado" | "bajo" | "ninguno";
@@ -206,7 +206,7 @@ export async function demostrarRedTeaming(client: OpenAI = makeClient()): Promis
 
   const informe = await redTeam.ejecutar("Agente-Sin-Protecciones", agenteBasico);
 
-  paso("Informe de Red Team");
+  paso("📊", "Informe de Red Team");
   console.log(`\n   🏢 Agente: ${informe.agenteTestado}`);
   console.log(`   🎯 Ataques realizados: ${informe.totalAtaques}`);
   console.log(`   🔴 Vulnerabilidades críticas: ${informe.vulnerabilidadesCriticas}`);

@@ -16,7 +16,7 @@
  *  Ejemplo: responder preguntas técnicas complejas con auto-revisión.
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export interface RespuestaConReflexion {

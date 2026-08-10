@@ -21,7 +21,7 @@
  *  ejecución de scripts, recuperación de datos específicos.
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // Definir las herramientas disponibles para el modelo

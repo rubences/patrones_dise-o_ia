@@ -25,7 +25,7 @@
  *  - Auditoría de seguridad
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export type RiesgoCategoría = "pii" | "contenido_inapropiado" | "topic_prohibido" | "datos_sensibles" | "ninguno";

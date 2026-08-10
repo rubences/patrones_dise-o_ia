@@ -31,7 +31,7 @@
  *  (redactor, diseñador, editor).
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // Definir roles especializados

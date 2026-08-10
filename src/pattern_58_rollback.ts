@@ -24,7 +24,7 @@
  *  - Rollback parcial o total
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export interface Transaccion {

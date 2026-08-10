@@ -24,7 +24,7 @@
  *  - Testeable (cada componente es independiente)
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // ── Tipos para componentes del prompt ──────────────────────────

@@ -26,7 +26,7 @@
  *  - Analítica de consumo por usuario/sesión
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export interface PresupuestoConfig {

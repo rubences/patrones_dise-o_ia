@@ -36,7 +36,7 @@
  *  - Actualización de datos sin reentrenamiento
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // ── Base de datos de documentos (simulada) ──────────────────────

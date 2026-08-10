@@ -28,7 +28,7 @@
  *  - Cero errores de parsing en producción
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { z } from "zod";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 

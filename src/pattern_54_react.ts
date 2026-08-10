@@ -29,7 +29,7 @@
  *  - Base de muchos frameworks agénticos (LangChain, etc.)
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export type TipoAccion = "buscar" | "calcular" | "consultar_bd" | "responder";

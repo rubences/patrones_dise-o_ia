@@ -32,7 +32,7 @@
  *  - Manejo de casos edge
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export type Condicion = (entrada: string) => Promise<boolean>;

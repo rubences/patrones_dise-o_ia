@@ -28,7 +28,7 @@
  *  - Registro de eventos
  */
 
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 // ── SINGLETON: Gestor global de agentes ────────────────────────
