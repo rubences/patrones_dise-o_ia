@@ -1,700 +1,483 @@
-# 🤖 14 Patrones de Diseño para Sistemas Agénticos con IA
+# 🏛️ Patrones de Diseño para Sistemas Agénticos de IA
 
-Una colección profesional y exhaustiva de **patrones de diseño** para construir flujos de trabajo agénticos robustos: 8 patrones específicos para agentic workflows + 6 patrones de diseño clásicos (Gang of Four) **adaptados al contexto de sistemas de IA**.
+Una biblioteca exhaustiva de **24 patrones de diseño** clásicos y agénticos, todos adaptados y demostrados para trabajar con **agentes de IA** y **Large Language Models (LLMs)** usando **TypeScript** y **OpenAI API**.
 
-**Fusión de:**
-- 🎯 **Agentic Workflows** (AIMultiple + Microsoft Azure)
-- 🏛️ **Design Patterns Clásicos** (refactoring.guru - Gang of Four)
-- 💻 **TypeScript + OpenAI SDK v6** (implementación moderna)
+## 📊 Visión General
 
----
+Este repositorio proporciona implementaciones prácticas de patrones de diseño organizados en cuatro categorías:
 
-## 📚 Tabla de Contenidos
-
-1. [¿Por qué estos patrones?](#por-qué-estos-patrones)
-2. [Grupo 1: Patrones Agénticos (1-8)](#grupo-1-patrones-agénticos-1-8)
-3. [Grupo 2: Patrones Clásicos Adaptados (9-14)](#grupo-2-patrones-clásicos-adaptados-9-14)
-4. [Comparativa Completa](#comparativa-completa)
-5. [Instalación](#instalación)
-6. [Uso](#uso)
-7. [Archirectura y Combinaciones](#arquitectura-y-combinaciones)
-8. [Casos de Uso Avanzados](#casos-de-uso-avanzados)
+1. **Patrones Agénticos (1-8)**: Flujos de trabajo especializados para sistemas de IA
+2. **Patrones Estructurales Clásicos (9-14)**: Patrones de creación y estructura adaptados para agentes
+3. **Patrones Estructurales Avanzados (15-19)**: Composición y acceso a objetos complejos
+4. **Patrones de Comportamiento (20-24)**: Comunicación y algoritmos personalizables
 
 ---
 
-## ¿Por qué estos patrones?
-
-### El Problema
-Los sistemas de IA modernos requieren arquitecturas **más flexibles y sofisticadas** que los sistemas tradicionales:
-
-| Problema | Solución |
-|----------|----------|
-| Respuestas no estructuradas del LLM | **Structured Outputs** + **Adapter** |
-| Lógica compleja con múltiples puntos de decisión | **Router** + **Chain of Responsibility** |
-| Tareas complejas que requieren descomposición | **Planning** + **Builder** |
-| Necesidad de diferentes estilos de respuesta | **Strategy** (directa, reflexiva, creativa) |
-| Falta de herramientas reutilizables | **Factory** (crear agentes especializados) |
-| Comportamientos transversales (logging, retry, cache) | **Decorator** |
-| Supervisión humana en decisiones críticas | **Human-in-the-Loop** |
-| Colaboración entre agentes especializados | **Multi-Agent** + **Fan-out/Fan-in** |
-
----
-
-## GRUPO 1: Patrones Agénticos (1-8)
-
-Patrones específicos para construir flujos de trabajo impulsados por IA donde agentes toman decisiones autónomas.
-
-### **Pattern 1: PIPELINE** — Cadena de Montaje Secuencial
-```
-Input → [Paso 1] → [Paso 2] → [Paso 3] → Output
-```
-
-**Uso:** Procesamiento secuencial con transformaciones en cada paso
-- Generación de contenido (tema → esquema → borrador → título)
-- ETL de datos
-- Validación progresiva
-
-**Ejecución:** `npm run pattern:1`
-
----
-
-### **Pattern 2: ROUTER** — Clasificación y Enrutamiento
-```
-Entrada → [Clasificar] → ¿Qué tipo es? → [Especialista 1 / 2 / Humano]
-```
-
-**Uso:** Dirigir solicitudes al manejador apropiado
-- Soporte técnico multicanal
-- Clasificación de tickets
-- Enrutamiento de cargas de trabajo
-
-**Ejecución:** `npm run pattern:2`
-
----
-
-### **Pattern 3: REFLECTION** — Auto-Evaluación e Iteración
-```
-v1 → [Evalúa críticamente] → Encuentra errores → [Mejora] → v2 (mejor)
-```
-
-**Uso:** Mejora iterativa mediante autocrítica
-- Control de calidad de contenido
-- Detección de inconsistencias
-- Refinamiento automático
-
-**Ejecución:** `npm run pattern:3`
-
----
-
-### **Pattern 4: EVALUATOR-OPTIMIZER** — Escritor y Crítico
-```
-Borrador → [Rubric] → Puntuación → [¿Aprobado?] → Sí: Fin | No: Refina
-```
-
-**Uso:** Garantizar calidad final mediante evaluación explícita
-- Documentación de alto valor
-- Copywriting profesional
-- Revisión de código
-
-**Ejecución:** `npm run pattern:4`
-
----
-
-### **Pattern 5: TOOL-USE** — Acceso a Recursos Externos
-```
-Pregunta → [¿Necesito herramientas?] → Sí → [Invoca API/búsqueda/BD] → [Integra] → Respuesta
-```
-
-**Uso:** Enriquecer respuestas con datos externos en tiempo real
-- Consultas con información actual
-- Acceso a APIs y bases de datos
-- Búsqueda en internet
-
-**Ejecución:** `npm run pattern:5`
-
----
-
-### **Pattern 6: PLANNING** — Descomposición de Objetivos
-```
-Objetivo → [Descompone] → Subtareas → [Ordena] → [Evalúa] → [Refina] → Plan ejecutable
-```
-
-**Uso:** Resolver problemas complejos mediante planificación adaptativa
-- Desarrollo de software
-- Investigación
-- Proyectos multifase
-
-**Ejecución:** `npm run pattern:6`
-
----
-
-### **Pattern 7: MULTI-AGENT** — Orquestación de Especialistas
-```
-         ┌─ Agente 1 (Investigador) ─┐
-Tarea ──┤─ Agente 2 (Desarrollador) ─┼─▶ [Orquestador sintetiza] ─▶ Resultado
-         └─ Agente 3 (Revisor) ──────┘
-```
-
-**Uso:** Análisis desde múltiples perspectivas en paralelo
-- Decisiones complejas (técnica, finanzas, legal)
-- Desarrollo en equipo virtual
-- Evaluaciones multidisciplinarias
-
-**Ejecución:** `npm run pattern:7`
-
----
-
-### **Pattern 8: HUMAN-IN-THE-LOOP (HITL)** — Supervisión Humana
-```
-Propuesta IA → [Evalúa riesgo] → ¿Requiere aprobación? → Sí → [Humano decide]
-                                   ↓ No
-                               [Ejecuta automático]
-```
-
-**Uso:** Garantizar precisión y seguridad en decisiones críticas
-- Transacciones financieras
-- Cambios de configuración crítica
-- Decisiones médicas/legales
-- Eliminación de datos
-
-**Ejecución:** `npm run pattern:8`
-
----
-
-## GRUPO 2: Patrones Clásicos Adaptados (9-14)
-
-Patrones de diseño probados del catálogo Gang of Four, **adaptados específicamente para sistemas de IA**.
-
-### **Pattern 9: FACTORY** — Creación Flexible de Agentes ⚙️
-```
-[Fábrica de Agentes]
-    │
-    ├─ crearAgente("experto", "ML") ──▶ AgenteExperto
-    ├─ crearAgente("generalista") ──▶ AgenteGeneralista
-    ├─ crearAgente("supervisor") ──▶ AgenteSupervisor
-    └─ crearEquipo([...]) ──▶ Equipo de agentes
-```
-
-**Referencia:** [Factory Method](https://refactoring.guru/design-patterns/factory-method)
-
-**Problema:** Crear diferentes tipos de agentes (experto, generalista, supervisor) sin acoplamiento
-
-**Solución:** Interfaz común `Agente` + Implementaciones concretas + `FabricaAgentes` centralizada
-
-**Ventajas:**
-- Desacoplamiento entre cliente y tipos de agentes
-- Fácil agregar nuevas especializaciones
-- Lógica de creación centralizada
-- Facilita testing con mocks
-
-**Ejemplo:**
-```typescript
-const fabrica = new FabricaAgentes();
-const experto = fabrica.crearAgente({
-  tipo: "experto",
-  especializacion: "Arquitectura de Sistemas"
-});
-const equipo = fabrica.crearEquipo([
-  { tipo: "experto", especializacion: "DevOps" },
-  { tipo: "supervisor" }
-]);
-```
-
-**Ejecución:** `npm run pattern:9`
-
----
-
-### **Pattern 10: BUILDER** — Construcción de Prompts Fluida 🔨
-```
-new ConstructorPrompt()
-  .conRol("Eres un experto")
-  .conContexto("Trabajas en fintech")
-  .conTarea("Analiza riesgo")
-  .agregarConstraint("Sé conciso")
-  .agregarEjemplo("entrada", "salida")
-  .conFormato("JSON")
-  .construir() ──▶ Prompt completo estructurado
-```
-
-**Referencia:** [Builder](https://refactoring.guru/design-patterns/builder)
-
-**Problema:** Construir prompts complejos con múltiples componentes (rol, contexto, tarea, constraints, ejemplos, formato)
-
-**Solución:** Interfaz fluida que permite composición paso a paso + Templates predefinidos
-
-**Ventajas:**
-- Prompts legibles y componibles
-- Orden flexible
-- Reutilización (templates)
-- Testeable
-
-**Ejemplo:**
-```typescript
-const promptClasificador = new ConstructorPrompt()
-  .conRol("Clasificador de sentimientos")
-  .conContexto("Opiniones de clientes")
-  .conTarea("Clasifica: positivo/negativo/neutro")
-  .agregarEjemplo("¡Excelente!", "positivo")
-  .conFormato("JSON: {sentimiento, confianza}");
-
-// O usar template
-const prompt = TemplatesPrompt.analizador()
-  .conContexto("Reporte financiero")
-  .construir();
-```
-
-**Ejecución:** `npm run pattern:10`
-
----
-
-### **Pattern 11: ADAPTER** — Conversión de Formatos 🔌
-```
-[Respuesta LLM (texto natural)]
-         │
-         ├─ AdapterJSON ──▶ {"respuesta": "..."}
-         ├─ AdapterCSV ──▶ "respuesta_1", "respuesta_2"
-         ├─ AdapterXML ──▶ <respuesta>...</respuesta>
-         ├─ AdapterMarkdown ──▶ # Respuesta\n...
-         └─ AdapterHTML ──▶ <html>...</html>
-```
-
-**Referencia:** [Adapter](https://refactoring.guru/design-patterns/adapter)
-
-**Problema:** El LLM devuelve texto. Los sistemas downstream necesitan JSON, CSV, XML, HTML, etc.
-
-**Solución:** Cadena de adaptadores que transforman la salida del LLM a múltiples formatos
-
-**Ventajas:**
-- LLM desacoplado de sistemas downstream
-- Agregar nuevos formatos sin tocar LLM
-- Conversión automática y consistente
-- Manejo de errores centralizado
-
-**Ejemplo:**
-```typescript
-const respuestaLLM = { contenido: "...", metadata: {} };
-
-const gestor = new GestorAdaptadores();
-gestor.registrarAdaptador("json", new AdapterJSON());
-gestor.registrarAdaptador("xml", new AdapterXML());
-
-const json = gestor.adaptar(respuestaLLM, "json");
-const xml = gestor.adaptar(respuestaLLM, "xml");
-```
-
-**Ejecución:** `npm run pattern:11`
-
----
-
-### **Pattern 12: DECORATOR** — Comportamientos Transversales 🎁
-```
-[Agente Base]
-    ↓
-[Decorator: Validación] ──▶ Verifica entrada/salida
-    ↓
-[Decorator: Caché] ──▶ Evita consultas repetidas
-    ↓
-[Decorator: Retry] ──▶ Reintentos con backoff
-    ↓
-[Decorator: Logging] ──▶ Traza ejecución
-    ↓
-[Agente decorado completo]
-```
-
-**Referencia:** [Decorator](https://refactoring.guru/design-patterns/decorator)
-
-**Problema:** Agregar funcionalidad (logging, retry, caché, validación) sin modificar agentes
-
-**Solución:** Stack de decoradores que envuelven el agente, cada uno agregando un comportamiento
-
-**Ventajas:**
-- Composición flexible (puedo stackear decoradores)
-- Responsabilidad única (cada decorador hace una cosa)
-- Testeable (pruebo cada decorador independientemente)
-- Reutilizable
-
-**Decoradores disponibles:**
-- `DecoradorLogging`: Registra entrada/salida y duración
-- `DecoradorRetry`: Reintentos exponenciales
-- `DecoradorCache`: Cachéing con hash de entrada
-- `DecoradorValidacion`: Valida entrada/salida
-- `DecoradorTimeout`: Límite de tiempo de ejecución
-
-**Ejemplo:**
-```typescript
-let agente = new AgenteSimple("Especialista", client);
-agente = new DecoradorValidacion(agente);    // Valida entrada
-agente = new DecoradorCache(agente);         // Cachea resultado
-agente = new DecoradorRetry(agente, 3);      // 3 reintentos
-agente = new DecoradorLogging(agente);       // Registra todo
-
-// Usa como si fuera el agente original
-await agente.procesar("pregunta");
-```
-
-**Ejecución:** `npm run pattern:12`
-
----
-
-### **Pattern 13: STRATEGY** — Estrategias de Prompting 🎯
-```
-[Generador con Estrategia]
-    │
-    ├─ .setStrategy(StrategyDirecta) ──▶ Rápida, concisa
-    ├─ .setStrategy(StrategyReflexiva) ──▶ Razonada, nuanceada
-    ├─ .setStrategy(StrategyCreativa) ──▶ Innovadora, divergente
-    ├─ .setStrategy(StrategyAnalítica) ──▶ Profunda, estructurada
-    └─ .setStrategy(StrategySocrática) ──▶ Preguntas guía
-
-    Todos con la misma interfaz `.generar(pregunta)`
-```
-
-**Referencia:** [Strategy](https://refactoring.guru/design-patterns/strategy)
-
-**Problema:** Diferentes preguntas requieren diferentes estilos de respuesta (directa, reflexiva, creativa, analítica)
-
-**Solución:** Familia de estrategias intercambiables, seleccionables en runtime
-
-**Ventajas:**
-- Cambiar comportamiento sin modificar cliente
-- A/B testing de estrategias
-- Encapsulación de lógica de prompting
-- Fácil agregar nuevas estrategias
-
-**Estrategias disponibles:**
-1. **Directa:** Respuesta rápida, concisa
-2. **Reflexiva:** Análisis profundo con múltiples perspectivas
-3. **Creativa:** Ideas innovadoras y ángulos inesperados
-4. **Analítica:** Rigor, descomposición, patrones
-5. **Socrática:** Preguntas guía en lugar de respuestas
-
-**Ejemplo:**
-```typescript
-const generador = new GeneradorConEstrategia(
-  new EstrategiaDirecta()
-);
-
-// Cambiar estrategia en runtime
-generador.cambiarEstrategia(new EstrategiaReflexiva());
-const resultado = await generador.generar("Mi pregunta");
-
-// Probar múltiples estrategias
-for (const estrategia of [
-  new EstrategiaDirecta(),
-  new EstrategiaReflexiva(),
-  new EstrategiaCreativa()
-]) {
-  generador.cambiarEstrategia(estrategia);
-  await generador.generar("pregunta");
-}
-```
-
-**Ejecución:** `npm run pattern:13`
-
----
-
-### **Pattern 14: CHAIN OF RESPONSIBILITY** — Enrutamiento Jerárquico ⛓️
-```
-[Solicitud]
-    │
-    ▼
-[Manejador Nivel 1: Soporte Simple]
-    ¿Puedo manejar? ──▶ NO ──▶ siguiente
-    
-[Manejador Técnico]
-    ¿Puedo manejar? ──▶ NO ──▶ siguiente
-    
-[Manejador Facturación]
-    ¿Puedo manejar? ──▶ NO ──▶ siguiente
-    
-[Manejador Legal]
-    ¿Puedo manejar? ──▶ NO ──▶ siguiente
-    
-[Manejador Supervisor]
-    ¿Puedo manejar? ──▶ SÍ (última instancia) ──▶ Resuelve
-```
-
-**Referencia:** [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility)
-
-**Problema:** Una solicitud puede necesitar diferentes tipos de procesamiento. No sabemos de antemano quién puede manejarla.
-
-**Solución:** Cadena de manejadores. Cada uno decide si procesa o pasa al siguiente.
-
-**Ventajas:**
-- Desacoplamiento entre emisor y receptores
-- Orden dinámico de manejadores
-- Fácil agregar/remover manejadores
-- Encadenamiento en runtime
-
-**Manejadores disponibles:**
-1. **Nivel 1:** Problemas simples/FAQ
-2. **Técnico:** Problemas técnicos complejos
-3. **Facturación:** Solicitudes de facturación
-4. **Legal:** Asuntos legales
-5. **Supervisor:** Última instancia
-
-**Ejemplo:**
-```typescript
-const cadena = CadenaSoporteFactory.crearCadenaEstandar(client);
-
-const solicitud = {
-  contenido: "El sistema devuelve error 500",
-  prioridad: "alta",
-  campo: "soporte",
-  intentos: 1
-};
-
-// Procesa automáticamente a través de la cadena
-const respuesta = await cadena.manejar(solicitud);
-// → Detecta que es problema técnico alto
-// → Manejador Técnico lo maneja
-```
-
-**Ejecución:** `npm run pattern:14`
-
----
-
-## Comparativa Completa
-
-### Patrones Agénticos vs Clásicos
-
-| # | Patrón | Categoría | Complejidad | Velocidad | Precisión | Mejor Para |
-|---|--------|-----------|-------------|-----------|-----------|-----------|
-| 1 | Pipeline | Agéntico | ⭐ | ⭐⭐⭐ | ⭐⭐⭐ | Procesamiento secuencial |
-| 2 | Router | Agéntico | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | Clasificación y enrutamiento |
-| 3 | Reflection | Agéntico | ⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | Control de calidad |
-| 4 | Evaluator | Agéntico | ⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ | Contenido de alto valor |
-| 5 | Tool-Use | Agéntico | ⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | Datos en tiempo real |
-| 6 | Planning | Agéntico | ⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐ | Proyectos complejos |
-| 7 | Multi-Agent | Agéntico | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | Análisis multifacético |
-| 8 | HITL | Agéntico | ⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ | Decisiones críticas |
-| 9 | Factory | Creational | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | Crear agentes especializados |
-| 10 | Builder | Creational | ⭐⭐ | ⭐⭐ | ⭐⭐⭐ | Prompts complejos |
-| 11 | Adapter | Structural | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | Conversión de formatos |
-| 12 | Decorator | Structural | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | Funcionalidad transversal |
-| 13 | Strategy | Behavioral | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | Diferentes estilos de respuesta |
-| 14 | Chain | Behavioral | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | Enrutamiento jerárquico |
-
----
-
-## 🚀 Instalación
+## 🚀 Inicio Rápido
 
 ### Requisitos
-- Node.js 18+
-- TypeScript 6+
-- API key de OpenAI
+- **Node.js 18+**
+- **TypeScript 6.0.3**
+- **OpenAI API Key** (variable de entorno `OPENAI_API_KEY`)
 
-### Setup
+### Instalación
 
 ```bash
-# Clonar repositorio
-git clone https://github.com/rubences/patrones_dise-o_ia.git
-cd patrones_dise-o_ia
-
-# Instalar dependencias
 npm install
-
-# Configurar API key
-export OPENAI_API_KEY="sk-..."
 ```
 
----
-
-## 📖 Uso
-
-### Ejecutar un patrón individual
+### Ejecutar un Patrón
 
 ```bash
-npm run pattern:1   # Pipeline
-npm run pattern:9   # Factory
-npm run pattern:14  # Chain of Responsibility
-```
+# Ejecutar patrón 1 (Pipeline)
+npm run pattern:1
 
-### En tu código
+# Ejecutar patrón 12 (Decorator)
+npm run pattern:12
 
-```typescript
-// Importar funciones de los patrones
-import { escribirPost } from "./src/pattern_1_pipeline.js";
-import { FabricaAgentes } from "./src/pattern_9_factory.js";
-import { DecoradorRetry } from "./src/pattern_12_decorator.js";
-
-// Usar patrón 1: Pipeline
-const post = await escribirPost("Topic de IA");
-console.log(`# ${post.titulo}\n\n${post.borrador}`);
-
-// Usar patrón 9: Factory
-const agente = FabricaAgentes.crearAgente({
-  tipo: "experto",
-  especializacion: "Machine Learning"
-});
-
-// Usar patrón 12: Decorator
-let procesador = agente;
-procesador = new DecoradorRetry(procesador, 3);
-procesador = new DecoradorCache(procesador);
-await procesador.procesarTarea(tarea, client);
+# Ejecutar patrón 24 (Template Method)
+npm run pattern:24
 ```
 
 ---
 
-## 📁 Estructura
+## 📚 Catálogo Completo (24 Patrones)
+
+### **Patrones Agénticos (1-8): Flujos de Trabajo Especializados**
+
+Estos patrones definen flujos de trabajo específicos para sistemas de IA y agentes autónomos.
+
+| # | Patrón | Propósito | Referencia |
+|---|--------|----------|-----------|
+| **1** | **Pipeline** | Transformación secuencial de datos a través de múltiples etapas LLM | AIMultiple Agentic Workflows |
+| **2** | **Router** | Enrutamiento inteligente de mensajes a especialistas por tipo o confianza | AIMultiple, Microsoft |
+| **3** | **Reflection** | Autoevaluación iterativa y mejora de respuestas | OpenAI Cookbook |
+| **4** | **Evaluator/Optimizer** | Refinamiento iterativo con rúbricas de evaluación explícitas | Iterative Improvement Loop |
+| **5** | **Tool Use** | Invocación dinámica de APIs y herramientas externas basada en decisiones del modelo | OpenAI Tool Use |
+| **6** | **Planning** | Descomposición de objetivos complejos en planes de subtareas adaptables | Task Decomposition |
+| **7** | **Multi-Agent** | Múltiples agentes especializados trabajando en paralelo con coordinación | Collaborative AI Systems |
+| **8** | **Human-in-Loop** | Flujos con aprobación humana gestionada por niveles de riesgo | HITL Workflows |
+
+---
+
+### **Patrones Creacionales Clásicos (9-14): Creación y Estructura Flexible**
+
+Adaptan los patrones Gang of Four para sistemas agénticos.
+
+| # | Patrón | Propósito | Referencia GoF |
+|---|--------|----------|---|
+| **9** | **Factory** | Creación flexible de agentes especializados (Experto, Generalista, Auditor) | Factory Method |
+| **10** | **Builder** | Construcción fluida de prompts complejos con componentes reutilizables | Builder |
+| **11** | **Adapter** | Conversión de salidas LLM a múltiples formatos (JSON, CSV, XML, HTML, Markdown) | Adapter |
+| **12** | **Decorator** | Apilamiento de capacidades transversales (logging, retry, cache, validación, timeout) | Decorator |
+| **13** | **Strategy** | Estrategias de generación intercambiables (Directa, Reflexiva, Creativa, Analítica) | Strategy |
+| **14** | **Chain of Responsibility** | Enrutamiento jerárquico a través de cadena de manejadores | Chain of Responsibility |
+
+---
+
+### **Patrones Estructurales Avanzados (15-19): Composición y Acceso**
+
+Patrones para estructuras complejas y acceso controlado.
+
+| # | Patrón | Propósito | Referencia GoF | Ventajas |
+|---|--------|----------|---|---|
+| **15** | **Singleton** | Instancias globales únicas para config y pools de conexiones | Singleton | Sincronización centralizada, gestión de recursos |
+| **16** | **Facade** | Interfaz unificada sobre subsistemas agénticos complejos | Facade | Simplifica uso de sistemas complejos, desacoplamiento |
+| **17** | **Composite** | Composición jerárquica de tareas simples y compuestas | Composite | Estructura natural, interfaz uniforme |
+| **18** | **Observer** | Notificación reactiva de cambios de estado a múltiples observadores | Observer | Desacoplamiento, reactividad automática |
+| **19** | **State** | Máquina de estados para ciclo de vida de agentes (Inicializado → Ejecutando → Pausado → Completado) | State | Comportamiento dependiente del estado, transiciones claras |
+
+---
+
+### **Patrones de Comportamiento (20-24): Comunicación y Algoritmos**
+
+Patrones avanzados para lógica de interacción y procesamiento.
+
+| # | Patrón | Propósito | Referencia GoF | Casos de Uso |
+|---|--------|----------|---|---|
+| **20** | **Command** | Encapsulación de operaciones como objetos para encolado, undo/redo, macros | Command | Colas de tareas, auditoría, scripting |
+| **21** | **Proxy** | Control de acceso, rate limiting, lazy loading, caching de agentes | Proxy | Autorización, protección, optimización |
+| **22** | **Memento** | Snapshots del estado para undo/redo e historial de conversaciones | Memento | Historial, rollback, análisis de evolución |
+| **23** | **Mediator** | Hub central que coordina comunicación entre múltiples agentes | Mediator | Orquestación, desacoplamiento, escalabilidad |
+| **24** | **Template Method** | Esqueleto de algoritmo personalizable en pasos específicos | Template Method | Reutilización de estructura con variaciones |
+
+---
+
+## 🏗️ Arquitectura del Proyecto
 
 ```
 src/
-├── common.ts                              # Utilidades compartidas
+├── common.ts                          # Utilidades compartidas
+│   ├── DEFAULT_MODEL (GPT-5.6)
+│   ├── makeClient() - OpenAI instance
+│   ├── paso() - Banner printing
+│   └── isDirectRun() - Script detection
 │
-├── PATRONES AGÉNTICOS (1-8)
-├── pattern_1_pipeline.ts                  # Sequential transformation
-├── pattern_2_router.ts                    # Classification & routing
-├── pattern_3_reflection.ts                # Self-evaluation
-├── pattern_4_evaluator_optimizer.ts       # Quality assurance loop
-├── pattern_5_tool_use.ts                  # External tool invocation
-├── pattern_6_planning.ts                  # Task decomposition
-├── pattern_7_multi_agent.ts               # Specialist collaboration
-├── pattern_8_human_in_loop.ts             # Human approval gating
+├── pattern_1_pipeline.ts              # Transformación secuencial
+├── pattern_2_router.ts                # Enrutamiento inteligente
+├── pattern_3_reflection.ts            # Autoevaluación
+├── pattern_4_evaluator_optimizer.ts   # Refinamiento iterativo
+├── pattern_5_tool_use.ts              # Invocación de herramientas
+├── pattern_6_planning.ts              # Descomposición de tareas
+├── pattern_7_multi_agent.ts           # Agentes paralelos
+├── pattern_8_human_in_loop.ts         # Aprobación humana
 │
-├── PATRONES CLÁSICOS ADAPTADOS (9-14)
-├── pattern_9_factory.ts                   # Flexible agent creation
-├── pattern_10_builder.ts                  # Fluent prompt construction
-├── pattern_11_adapter.ts                  # Format conversion
-├── pattern_12_decorator.ts                # Cross-cutting concerns
-├── pattern_13_strategy.ts                 # Pluggable prompting styles
-└── pattern_14_chain.ts                    # Hierarchical routing
+├── pattern_9_factory.ts               # Creación de agentes
+├── pattern_10_builder.ts              # Construcción de prompts
+├── pattern_11_adapter.ts              # Conversión de formatos
+├── pattern_12_decorator.ts            # Capacidades transversales
+├── pattern_13_strategy.ts             # Estrategias intercambiables
+├── pattern_14_chain.ts                # Cadena de manejadores
+│
+├── pattern_15_singleton.ts            # Instancias globales
+├── pattern_16_facade.ts               # Interfaz unificada
+├── pattern_17_composite.ts            # Composición jerárquica
+├── pattern_18_observer.ts             # Notificación reactiva
+├── pattern_19_state.ts                # Máquina de estados
+│
+├── pattern_20_command.ts              # Encapsulación de operaciones
+├── pattern_21_proxy.ts                # Control de acceso
+├── pattern_22_memento.ts              # Snapshots de estado
+├── pattern_23_mediator.ts             # Coordinación central
+└── pattern_24_template_method.ts      # Personalización de algoritmos
 ```
 
 ---
 
-## Arquitectura y Combinaciones
+## 🔧 Configuración
 
-### Combinación 1: Content Generation Pipeline
-```
-Pattern 1 (Pipeline)
-  └─ Pattern 10 (Builder para cada prompt)
-      └─ Pattern 12 (Decorator: validación + logging)
-```
+### Variables de Entorno
 
-**Resultado:** Generador de contenido robusto con prompts flexibles y logging
+```bash
+# API Key de OpenAI (requerido)
+export OPENAI_API_KEY=sk-...
 
-### Combinación 2: Intelligent Support System
+# Modelo opcional (por defecto: gpt-5.6)
+export OPENAI_MODEL=gpt-4-turbo
 ```
-Pattern 2 (Router)
-  └─ Pattern 14 (Chain of Responsibility)
-      └─ Pattern 9 (Factory para crear agentes especializados)
-          └─ Pattern 12 (Decorator: retry + cache)
-```
-
-**Resultado:** Sistema de soporte multicapa con escalamiento automático
-
-### Combinación 3: Enterprise Decision Making
-```
-Pattern 7 (Multi-Agent)
-  ├─ Pattern 13 (Strategy: cada agente con su estrategia)
-  ├─ Pattern 5 (Tool-Use: acceso a datos externos)
-  ├─ Pattern 3 (Reflection: auto-evaluación)
-  └─ Pattern 8 (HITL: aprobación humana)
-```
-
-**Resultado:** Sistema de decisión empresarial completo y auditado
-
-### Combinación 4: Adaptive Research System
-```
-Pattern 6 (Planning)
-  └─ Pattern 7 (Multi-Agent: investigadores)
-      └─ Pattern 13 (Strategy: reflexiva + analítica)
-          └─ Pattern 11 (Adapter: salida estructurada)
-```
-
-**Resultado:** Sistema de investigación que genera reportes en múltiples formatos
 
 ---
 
-## Casos de Uso Avanzados
+## 📖 Ejemplos de Uso por Categoría
 
-### 1. Sistema de Generación de Contenido Profesional
+### Patrón 1: Pipeline (Transformación Secuencial)
 ```typescript
-// Combina: Factory + Builder + Decorator + Pipeline
-const fabrica = new FabricaAgentes();
-const escritor = fabrica.crearAgente({
-  tipo: "experto",
-  especializacion: "Escritura Profesional"
+// tema → esquema → borrador → título
+const post = await escribirPost("Patrones de IA");
+console.log(post.titulo);
+```
+
+### Patrón 2: Router (Enrutamiento Inteligente)
+```typescript
+// Clasifica y enruta consulta al especialista
+const atencion = await atenderConsulta("¿Cómo funciona el aprendizaje?");
+console.log(atencion.departamento); // "Educación"
+```
+
+### Patrón 3: Reflection (Autoevaluación)
+```typescript
+// Genera → Critica → Mejora
+const respuesta = await responderConReflexion("Pregunta compleja");
+```
+
+### Patrón 5: Tool Use (Herramientas)
+```typescript
+// Modelo decide qué herramienta usar
+const resultado = await responderConHerramientas("¿Qué tiempo hace?");
+// Internamente puede: buscar_web(), acceder_api(), recuperar_bd(), etc.
+```
+
+### Patrón 7: Multi-Agent (Paralelo)
+```typescript
+// Investigador, Desarrollador, Revisor trabajan en paralelo
+const resultados = await procesarMultiAgent("Tarea compleja");
+```
+
+### Patrón 9: Factory (Creación)
+```typescript
+const experto = FabricaAgentes.crearAgente({ 
+  tipo: "experto", 
+  dominio: "fisica" 
 });
-
-let pipeline = new EscrituraDecorada(escritor);
-pipeline = new DecoradorValidacion(pipeline);
-pipeline = new DecoradorCache(pipeline);
-
-const post = await pipeline.generarArticulo("IA y Futuro del Trabajo");
 ```
 
-### 2. Soporte Técnico Inteligente Multicanal
+### Patrón 10: Builder (Construcción de Prompts)
 ```typescript
-// Combina: Router + Chain + Factory + Decorator
-const cadena = CadenaSoporteFactory.crearCadenaEstandar();
-const manejador = new DecoradorRetry(cadena);
-
-const ticket = {
-  contenido: "Error 500 en producción",
-  prioridad: "alta",
-  campo: "soporte"
-};
-
-const resultado = await manejador.manejar(ticket);
-// Automáticamente escalará a experto técnico si es necesario
+const prompt = new ConstructorPrompt()
+  .conRol("Matemático experto")
+  .conContexto("Tutoría de estudiantes")
+  .conTarea("Explicar integrales")
+  .agregarEjemplo("Integral definida")
+  .conFormato("paso a paso")
+  .construir();
 ```
 
-### 3. Análisis de Decisión Ejecutiva
+### Patrón 12: Decorator (Capacidades Transversales)
 ```typescript
-// Combina: Multi-Agent + Strategy + Tool-Use + HITL
-const equipo = FabricaAgentes.crearEquipo([
-  { tipo: "experto", especializacion: "Finanzas" },
-  { tipo: "experto", especializacion: "Legal" },
-  { tipo: "experto", especializacion: "Operaciones" }
-]);
-
-const analisis = await procesarMultiAgent(
-  "¿Invertir en adquisición de startup?"
+// Apila: Logging → Retry → Cache → Validation
+const agente = new DecoradorLogging(
+  new DecoradorRetry(
+    new DecoradorCache(nuevoAgente)
+  )
 );
+```
 
-// Resultado: análisis multidisciplinario
-// Siguiente: HITL para aprobación ejecutiva
-const aprobacion = await procesarConAprobacionHumana(
-  analisis.sintesis
-);
+### Patrón 15: Singleton (Instancia Global)
+```typescript
+const gestor = GestorAgentesGlobal.getInstance();
+```
+
+### Patrón 17: Composite (Jerarquía de Tareas)
+```typescript
+const proyecto = new TareaCompuesta("Proyecto IA");
+proyecto.agregarSubtarea(new TareaSimple("Diseño"));
+proyecto.agregarSubtarea(new TareaSimple("Implementación"));
+await proyecto.ejecutar(client);
+```
+
+### Patrón 20: Command (Cola de Tareas)
+```typescript
+const cola = new ColaComandos();
+cola.encolar(new ComandoGenerarTexto(client, "prompt"));
+cola.encolar(new ComandoClasificar(client, "entrada"));
+await cola.ejecutarTodos();
+```
+
+### Patrón 22: Memento (Historial)
+```typescript
+const memento = agente.crearMemento("Paso 1");
+historial.guardarEstado(memento, "Estado inicial");
+// ... cambios ...
+agente.restaurarDesdeMemento(memento); // Volver atrás
+```
+
+### Patrón 24: Template Method (Personalización)
+```typescript
+const blog = new GeneradorBlog(client);
+const contenido = await blog.generarContenido("tema");
+// Internamente: prepara → genera → personaliza → valida → formatea
 ```
 
 ---
 
-## 🔐 Seguridad y Mejores Prácticas
+## 📊 Tabla Comparativa de Patrones
 
-✅ **Recomendado:**
-- Variables de entorno para API keys
-- Validación con Zod en todos los inputs
-- Timeouts en todas las llamadas
-- Logging y auditoría completa
-- HITL para decisiones críticas
-- Caché para evitar llamadas innecesarias
+| Categoría | Patrón | Complejidad | Interacción LLM | Escalabilidad | Uso Principal |
+|-----------|--------|-------------|-----------------|---------------|---------------|
+| Agéntico | Pipeline | ⭐⭐ | Secuencial | Media | Transformación encadenada |
+| Agéntico | Router | ⭐⭐⭐ | Clasificación | Alta | Enrutamiento inteligente |
+| Agéntico | Reflection | ⭐⭐⭐ | Iterativa | Media | Mejora de calidad |
+| Agéntico | Multi-Agent | ⭐⭐⭐⭐ | Paralela | Alta | Problemas complejos |
+| Creacional | Factory | ⭐ | Ninguna | Alta | Flexibilidad de creación |
+| Creacional | Builder | ⭐⭐ | Ninguna | Alta | Construcción compleja |
+| Estructural | Adapter | ⭐ | Ninguna | Media | Conversión de formatos |
+| Estructural | Decorator | ⭐⭐ | Envolvente | Muy Alta | Capacidades adicionales |
+| Estructural | Facade | ⭐ | Coordinada | Alta | Simplificación de interfaz |
+| Estructural | Composite | ⭐⭐ | Recursiva | Alta | Estructuras jerárquicas |
+| Comportamiento | Command | ⭐⭐ | Ninguna | Alta | Encolado y auditoría |
+| Comportamiento | Proxy | ⭐⭐ | Controlada | Alta | Seguridad y optimización |
+| Comportamiento | Memento | ⭐⭐ | Histórica | Media | Undo/Redo |
+| Comportamiento | Mediator | ⭐⭐⭐ | Coordinada | Alta | Orquestación |
+| Comportamiento | Template Method | ⭐⭐ | Mixta | Media | Algoritmos personalizables |
 
-❌ **Evitar:**
-- API keys en código
-- Confiar en formato de respuesta sin validar
-- Sin límites de iteración (infinitos loops)
-- Sin manejo de errores
-- Decisiones financieras/legales sin humano
+---
+
+## 🎯 Selección de Patrón por Caso de Uso
+
+### ❓ "Necesito transformar datos paso a paso"
+→ **Pattern 1 (Pipeline)** o **Pattern 24 (Template Method)**
+
+### ❓ "Necesito enrutar a especialistas según el tipo de tarea"
+→ **Pattern 2 (Router)** o **Pattern 14 (Chain of Responsibility)**
+
+### ❓ "Necesito mejorar la calidad iterativamente"
+→ **Pattern 3 (Reflection)** o **Pattern 4 (Evaluator)**
+
+### ❓ "Necesito que el modelo use herramientas externas"
+→ **Pattern 5 (Tool Use)**
+
+### ❓ "Necesito múltiples agentes trabajando en paralelo"
+→ **Pattern 7 (Multi-Agent)**
+
+### ❓ "Necesito aprobación humana en ciertos puntos"
+→ **Pattern 8 (Human-in-Loop)**
+
+### ❓ "Necesito crear agentes de diferentes tipos"
+→ **Pattern 9 (Factory)**
+
+### ❓ "Necesito construir prompts complejos"
+→ **Pattern 10 (Builder)**
+
+### ❓ "Necesito múltiples formatos de salida"
+→ **Pattern 11 (Adapter)**
+
+### ❓ "Necesito agregar logging, retry, cache, etc."
+→ **Pattern 12 (Decorator)**
+
+### ❓ "Necesito cambiar estrategias de prompting en tiempo real"
+→ **Pattern 13 (Strategy)**
+
+### ❓ "Necesito control centralizado de instancias"
+→ **Pattern 15 (Singleton)**
+
+### ❓ "Necesito tareas jerárquicas anidadas"
+→ **Pattern 17 (Composite)**
+
+### ❓ "Necesito reaccionar a cambios de estado"
+→ **Pattern 18 (Observer)** o **Pattern 19 (State)**
+
+### ❓ "Necesito encolar operaciones para ejecución posterior"
+→ **Pattern 20 (Command)**
+
+### ❓ "Necesito control de acceso y rate limiting"
+→ **Pattern 21 (Proxy)**
+
+### ❓ "Necesito historial y undo/redo"
+→ **Pattern 22 (Memento)**
+
+### ❓ "Necesito coordinar múltiples agentes comunicándose"
+→ **Pattern 23 (Mediator)**
+
+---
+
+## 🧪 Ejecución de Todos los Patrones
+
+Para verificar que todos funcionan correctamente:
+
+```bash
+for i in {1..24}; do
+  echo "━━━ Patrón $i ━━━"
+  npm run pattern:$i
+  echo ""
+done
+```
+
+---
+
+## 🔍 Estructura de un Patrón
+
+Cada archivo de patrón sigue la siguiente estructura estándar:
+
+```typescript
+// 1. Diagrama ASCII explicativo
+// 2. Importaciones
+// 3. Interfaces/Tipos
+// 4. Implementación de clases
+// 5. Ejemplo demo
+// 6. main() function
+// 7. Export con isDirectRun check
+```
 
 ---
 
 ## 📚 Referencias
 
-- [Refactoring.guru Design Patterns Catalog](https://refactoring.guru/design-patterns/catalog)
-- [OpenAI API Documentation](https://platform.openai.com/docs)
-- [Microsoft Azure AI Agent Patterns](https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns)
-- [AIMultiple Agentic Workflows](https://aimultiple.com/agentic-workflows/)
-- [Gang of Four Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns)
+### Patrones Agénticos
+- [AIMultiple: Agentic Workflows](https://www.aimultiple.com/agentic-workflows/)
+- [Microsoft: Agentic Design Patterns](https://microsoft.com/research/agents)
+- [OpenAI: Cookbook Examples](https://github.com/openai/openai-cookbook)
+
+### Patrones Clásicos
+- [Refactoring Guru: Design Patterns](https://refactoring.guru/design-patterns)
+- [Gang of Four: Design Patterns (1994)](https://en.wikipedia.org/wiki/Design_Patterns)
+
+### Herramientas
+- **OpenAI API**: https://platform.openai.com/docs/
+- **Zod**: Validación de esquemas TypeScript
+- **TypeScript**: Tipado estricto para JavaScript
 
 ---
 
-**Versión:** 3.0.0  
-**Estado:** ✅ 14 patrones listos para producción  
-**Última actualización:** Agosto 2026  
-**Autor:** rubences  
-**Licencia:** MIT
+## 📈 Historial de Versiones
+
+### v4.0.0 (Actual) - 🎉 Lanzamiento Completo
+- ✅ 24 patrones implementados y documentados
+- ✅ Scripts npm para cada patrón
+- ✅ Documentación exhaustiva
+- ✅ Ejemplos de uso completos
+- ✅ Tabla comparativa de patrones
+- ✅ Guía de selección por caso de uso
+
+### v3.0.0
+- 14 patrones (8 agénticos + 6 clásicos)
+
+### v2.0.0
+- 8 patrones agénticos iniciales
+
+### v1.0.0
+- Estructura base
+
+---
+
+## 💡 Consejos de Uso
+
+1. **Comienza con Patrones 1-8** si eres nuevo en sistemas agénticos
+2. **Patrones 9-14** son esenciales para proyectos grandes
+3. **Patrones 15-19** se usan para estructuras complejas
+4. **Patrones 20-24** son herramientas avanzadas de orquestación
+5. Combina patrones: un Router (2) puede usar Tool Use (5) internamente
+6. Usa Decorator (12) para agregar capacidades sin modificar código original
+7. Template Method (24) es perfecto para crear familias de generadores
+
+---
+
+## 🚨 Troubleshooting
+
+### Error: "OPENAI_API_KEY no está definido"
+```bash
+export OPENAI_API_KEY=sk-...
+```
+
+### Error: "ts-node: command not found"
+```bash
+npm install -g ts-node
+```
+
+### Error: "Cannot find module"
+```bash
+npm install
+```
+
+### Timeout en llamadas a API
+Aumenta el timeout en `common.ts` o usa `Pattern 12 (Decorator)` con DecoradorTimeout
+
+---
+
+## 📝 Licencia
+
+MIT License - Libre para uso comercial y personal
+
+---
+
+## 👤 Autor
+
+**rubences** - Desarrollo de patrones de diseño para sistemas agénticos de IA
+
+---
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Por favor:
+1. Fork el repositorio
+2. Crea una rama (`git checkout -b feature/nuevo-patron`)
+3. Commit cambios (`git commit -am 'Agregar nuevo patrón'`)
+4. Push a la rama (`git push origin feature/nuevo-patron`)
+5. Abre un Pull Request
+
+---
+
+## ⭐ Si te es útil, ¡marca con una estrella!
+
+```
+      ⭐
+    ⭐   ⭐
+  ⭐  🏛️   ⭐
+    ⭐   ⭐
+      ⭐
+```
+
+**Patrones de Diseño para IA** - Haciendo sistemas inteligentes y mantenibles
+
+---
+
+Última actualización: 2026 | Versión 4.0.0 | Patrones Implementados: 24/24 ✅

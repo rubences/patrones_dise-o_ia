@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "3.0.0",
-  "description": "14 patrones de diseño: 8 patrones agénticos + 6 patrones de diseño clásicos (Gang of Four) adaptados para sistemas de IA",
+  "version": "4.0.0",
+  "description": "24 patrones de diseño exhaustivos: 8 patrones agénticos + 10 patrones clásicos adicionales + 6 patrones de comportamiento avanzado, todos adaptados para sistemas de IA",
   "type": "module",
   "main": "src/common.ts",
   "scripts": {
@@ -18,7 +18,17 @@
     "pattern:11": "node --loader ts-node/esm src/pattern_11_adapter.ts",
     "pattern:12": "node --loader ts-node/esm src/pattern_12_decorator.ts",
     "pattern:13": "node --loader ts-node/esm src/pattern_13_strategy.ts",
-    "pattern:14": "node --loader ts-node/esm src/pattern_14_chain.ts"
+    "pattern:14": "node --loader ts-node/esm src/pattern_14_chain.ts",
+    "pattern:15": "node --loader ts-node/esm src/pattern_15_singleton.ts",
+    "pattern:16": "node --loader ts-node/esm src/pattern_16_facade.ts",
+    "pattern:17": "node --loader ts-node/esm src/pattern_17_composite.ts",
+    "pattern:18": "node --loader ts-node/esm src/pattern_18_observer.ts",
+    "pattern:19": "node --loader ts-node/esm src/pattern_19_state.ts",
+    "pattern:20": "node --loader ts-node/esm src/pattern_20_command.ts",
+    "pattern:21": "node --loader ts-node/esm src/pattern_21_proxy.ts",
+    "pattern:22": "node --loader ts-node/esm src/pattern_22_memento.ts",
+    "pattern:23": "node --loader ts-node/esm src/pattern_23_mediator.ts",
+    "pattern:24": "node --loader ts-node/esm src/pattern_24_template_method.ts"
   },
   "keywords": [
     "openai",
