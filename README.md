@@ -8,6 +8,43 @@ Una biblioteca de **94 patrones de diseño** implementados en TypeScript: los 23
 
 ---
 
+## 📑 Índice
+
+*(Los enlaces usan anchors HTML explícitos — más fiables que depender del algoritmo de slugs de GitHub con emojis y rayas.)*
+
+- [🚀 Inicio Rápido](#anchor-inicio-rapido)
+- [🗺️ Mapa Completo de 94 Patrones](#anchor-mapa-completo)
+  - [GRUPO 1 — Agénticos Clásicos (1–8)](#anchor-grupo-1)
+  - [GRUPO 2 — Creacionales GoF (9–10, 29–30)](#anchor-grupo-2)
+  - [GRUPO 3 — Estructurales GoF (11–19, 31–32)](#anchor-grupo-3)
+  - [GRUPO 4 — Comportamiento GoF (20–24, 33–35)](#anchor-grupo-4)
+  - [GRUPO 5 — Agénticos Emergentes Core (25–28)](#anchor-grupo-5)
+  - [GRUPO 6 — Razonamiento Avanzado (36, 42, 54, 55, 61, 62, 68)](#anchor-grupo-6)
+  - [GRUPO 7 — Recuperación de Información (37, 41, 66)](#anchor-grupo-7)
+  - [GRUPO 8 — Especialización y Routing (38–40)](#anchor-grupo-8)
+  - [GRUPO 9 — Confiabilidad y Resiliencia (43–47)](#anchor-grupo-9)
+  - [GRUPO 10 — Optimización de Costos (48–49, 67)](#anchor-grupo-10)
+  - [GRUPO 11 — Versatilidad (50)](#anchor-grupo-11)
+  - [GRUPO 12 — Memoria y Contexto (51–52)](#anchor-grupo-12)
+  - [GRUPO 13 — Seguridad y Fiabilidad (53, 58–59)](#anchor-grupo-13)
+  - [GRUPO 14 — Coordinación Multi-Agente Avanzada (56–57, 60, 63, 65)](#anchor-grupo-14)
+  - [GRUPO 15 — Personalización (64)](#anchor-grupo-15)
+  - [GRUPO 16 — Ciberseguridad (69–72)](#anchor-grupo-16)
+  - [GRUPO 17 — QA (73–76)](#anchor-grupo-17)
+  - [GRUPO 18 — Producción Base (77–79)](#anchor-grupo-18)
+  - [GRUPO 19 — Resiliencia e Interoperabilidad (80–84)](#anchor-grupo-19)
+  - [GRUPO 20 — Coordinación Emergente y Privacidad (85–89)](#anchor-grupo-20)
+  - [GRUPO 21 — Operación en Producción (90–94)](#anchor-grupo-21)
+- [🏗️ Estructura del Proyecto](#anchor-estructura)
+- [📈 Progresión por Versiones](#anchor-progresion)
+- [🎯 Guía de Selección Rápida](#anchor-seleccion)
+- [🔧 Configuración](#anchor-configuracion)
+- [📚 Referencias](#anchor-referencias)
+- [📦 Uso como Librería npm](#anchor-libreria-npm)
+
+---
+
+<a id="anchor-inicio-rapido"></a>
 ## 🚀 Inicio Rápido
 
 ```bash
@@ -30,8 +67,10 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 
 ---
 
-## 📊 Mapa Completo de 68 Patrones
+<a id="anchor-mapa-completo"></a>
+## 🗺️ Mapa Completo de 94 Patrones
 
+<a id="anchor-grupo-1"></a>
 ### 🎯 GRUPO 1 — Patrones Agénticos Clásicos (1–8)
 *Flujos de trabajo fundamentales para agentes IA*
 
@@ -46,6 +85,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 7 | **Multi-Agent** | Ejecución paralela de agentes especializados |
 | 8 | **Human-in-Loop** | Aprobación humana por niveles de riesgo |
 
+<a id="anchor-grupo-2"></a>
 ### 🏭 GRUPO 2 — Patrones Creacionales GoF (9–10, 29–30)
 *Creación flexible de agentes y configuraciones*
 
@@ -56,6 +96,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 29 | **Abstract Factory** | Familias coherentes de agentes (LLM vs Rules) |
 | 30 | **Prototype** | Clonación rápida de configuraciones |
 
+<a id="anchor-grupo-3"></a>
 ### 🏗️ GRUPO 3 — Patrones Estructurales GoF (11–19, 31–32)
 *Composición y acceso a sistemas complejos*
 
@@ -73,6 +114,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 31 | **Bridge** | Desacoplar abstracción de implementación LLM |
 | 32 | **Flyweight** | Compartir objetos → **-60% tokens** |
 
+<a id="anchor-grupo-4"></a>
 ### 🎭 GRUPO 4 — Patrones de Comportamiento GoF (20–24, 33–35)
 *Comunicación y algoritmos personalizables*
 
@@ -87,6 +129,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 34 | **Iterator** | Recorrido transparente de colecciones |
 | 35 | **Visitor** | Operaciones sobre árboles de tareas |
 
+<a id="anchor-grupo-5"></a>
 ### ⭐ GRUPO 5 — Patrones Agénticos Emergentes Core (25–28)
 *Base de las aplicaciones IA modernas*
 
@@ -97,6 +140,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 27 | **Agentic Loop** | **Autonomía real** | Plan→Act→Observe→Reflect |
 | 28 | **Function Calling** | **+50% confiabilidad** | Invocación determinística |
 
+<a id="anchor-grupo-6"></a>
 ### 🧠 GRUPO 6 — Razonamiento Avanzado (36, 42, 54, 55, 61, 62, 68)
 *Técnicas de prompting y razonamiento*
 
@@ -110,6 +154,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 62 | **Constitutional AI** | Auto-crítica contra principios éticos |
 | 68 | **Zero-Shot CoT** | "Piensa paso a paso" → razonamiento sin ejemplos |
 
+<a id="anchor-grupo-7"></a>
 ### 🕸️ GRUPO 7 — Recuperación de Información (37, 41, 66)
 *Patrones de retrieval y contexto*
 
@@ -119,6 +164,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 41 | **Retrieval with Ranking** | RAG + re-ranking → +25% precisión |
 | 66 | **Contextual Compression** | Extraer sólo lo relevante → -80% tokens en RAG |
 
+<a id="anchor-grupo-8"></a>
 ### 🧪 GRUPO 8 — Especialización y Routing (38–40)
 *Activación selectiva de expertos*
 
@@ -128,6 +174,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 39 | **Cascade** | Escalar de modelo rápido→potente → **-80% costo** |
 | 40 | **Branching** | Flujos condicionales paralelos/alternativos |
 
+<a id="anchor-grupo-9"></a>
 ### 🛡️ GRUPO 9 — Confiabilidad y Resiliencia (43–47)
 *Producción robusta*
 
@@ -139,6 +186,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 46 | **Bulkhead** | Aislar recursos por componente |
 | 47 | **Retry with Backoff** | Reintentos con espera exponencial + jitter |
 
+<a id="anchor-grupo-10"></a>
 ### ⚡ GRUPO 10 — Optimización de Costos (48–49, 67)
 *Reducción de tokens y latencia*
 
@@ -148,6 +196,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 49 | **Prompt Compression** | **-60–80% tokens** |
 | 67 | **Output Parsers** | Parseo tipado de salidas sin structured outputs |
 
+<a id="anchor-grupo-11"></a>
 ### 🎨 GRUPO 11 — Versatilidad (50)
 *Múltiples modalidades de entrada*
 
@@ -155,6 +204,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 |---|--------|----------|
 | 50 | **Multi-Modal** | Pipeline unificado texto + código + datos + URLs |
 
+<a id="anchor-grupo-12"></a>
 ### 🧠 GRUPO 12 — Memoria y Contexto (51–52)
 *Persistencia y verificación*
 
@@ -163,6 +213,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 51 | **Long-Term Memory** | Memoria persistente entre sesiones |
 | 52 | **Grounding** | Verificar claims LLM → **-60% alucinaciones** |
 
+<a id="anchor-grupo-13"></a>
 ### 🔐 GRUPO 13 — Seguridad y Fiabilidad (53, 58–59)
 *Producción segura y confiable*
 
@@ -172,6 +223,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 58 | **Rollback** | Reversión transaccional multi-paso |
 | 59 | **Structured Output** | Validación Zod con auto-corrección |
 
+<a id="anchor-grupo-14"></a>
 ### 👥 GRUPO 14 — Coordinación Multi-Agente Avanzada (56–57, 60, 63, 65)
 *Patrones de coordinación distribuida*
 
@@ -183,6 +235,7 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 | 63 | **Debate** | Dos agentes debaten → juez veredicta |
 | 65 | **Agent Registry** | Descubrimiento dinámico de agentes |
 
+<a id="anchor-grupo-15"></a>
 ### 🎭 GRUPO 15 — Personalización y Parsing (64, 66)
 *Experiencia de usuario e integración*
 
@@ -190,8 +243,165 @@ Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo C
 |---|--------|----------|
 | 64 | **Persona** | Identidad consistente en toda la conversación |
 
+<a id="anchor-grupo-16"></a>
+### 🔐 GRUPO 16 — Ciberseguridad (69–72)
+
+Proteger sistemas agénticos contra amenazas, ataques y uso indebido.
+
+| # | Patrón | Amenaza | Técnica |
+|---|--------|---------|---------|
+| **69** | **Prompt Injection Defense** | Inyección, jailbreak, prompt leaking | Heurístico multicapa + LLM meta-evaluador |
+| **70** | **Adversarial Robustness** | Entradas perturbadas, evasión | Suite adversarial + score de estabilidad |
+| **71** | **Secret Detection & Masking** | Leaks: API keys, tokens, PII, credenciales | Regex + enmascaramiento automático |
+| **72** | **Access Control for Agents** | Escalada de privilegios, acceso no autorizado | RBAC/ABAC por rol de agente |
+
+#### Stack defensivo recomendado
+
+```
+Input → [P69: Prompt Injection Defense]
+      → [P72: Access Control]
+      → LLM
+      → [P71: Secret Masking]
+      → Output
+
+Auditoría: P70 (Adversarial) + P74 (Red Team) periódicamente
+```
+
+```bash
+npm run pattern:69   # Prompt Injection Defense
+npm run pattern:70   # Adversarial Robustness
+npm run pattern:71   # Secret Detection & Masking
+npm run pattern:72   # Access Control for Agents
+```
+
+<a id="anchor-grupo-17"></a>
+### 🧪 GRUPO 17 — QA (73–76)
+
+Garantizar, medir y mantener calidad de agentes IA en el tiempo.
+
+| # | Patrón | Propósito | Cuándo usarlo |
+|---|--------|----------|---------------|
+| **73** | **LLM-as-Judge** | Evaluar respuestas con rúbricas multi-dimensionales | Monitoreo continuo en producción |
+| **74** | **Red Teaming** | Probar brechas de seguridad sistemáticamente | Antes de cada release |
+| **75** | **A/B Testing for Prompts** | Comparar variantes de prompts con métricas | Al cambiar system prompts |
+| **76** | **Regression Testing** | Detectar degradación de calidad entre versiones | En cada PR / deploy |
+
+#### Pipeline CI/CD de calidad
+
+```
+PR abierto    → P76 Regression Tests (golden tests automáticos)
+Release        → P74 Red Teaming (seguridad) + P73 LLM-Judge (calidad)
+Prod monitor   → P73 LLM-as-Judge continuo
+Cambio prompt  → P75 A/B Testing
+```
+
+```bash
+npm run pattern:73   # LLM-as-Judge
+npm run pattern:74   # Red Teaming
+npm run pattern:75   # A/B Testing for Prompts
+npm run pattern:76   # Regression Testing
+```
+
+<a id="anchor-grupo-18"></a>
+### 🏭 GRUPO 18 — Producción Base (77–79)
+
+Instrumentar y operar agentes IA de forma profesional en entornos reales.
+
+| # | Patrón | Propósito | Beneficio |
+|---|--------|----------|-----------|
+| **77** | **Observability & Tracing** | Trazar cada paso del agente con spans anidados | Visibilidad completa del flujo en producción |
+| **78** | **Token Budget** | Presupuesto de tokens por sesión con degradación elegante | Control de costos en tiempo real |
+| **79** | **Streaming** | Entrega de tokens en tiempo real con pipeline configurable | Latencia percibida ~0ms, interrupción temprana |
+
+```bash
+npm run pattern:77   # Observability & Tracing
+npm run pattern:78   # Token Budget
+npm run pattern:79   # Streaming
+```
+
+#### Stack de producción completo
+
+```typescript
+// Composición de patrones para producción robusta
+import {
+  AgenteInstrumentado,    // P77: Trazar todo
+  AgenteConBudget,        // P78: Controlar costos
+  AgenteConStreaming,     // P79: Respuesta en tiempo real
+  AgenteSeguro,           // P69: Bloquear inyecciones
+  AgenteConCacheSemantica, // P48: Cache semántica (-60% llamadas)
+  CircuitBreaker,         // P45: Evitar fallos en cascada
+  RetryWithBackoff,       // P47: Recuperar fallos transitorios
+} from 'patrones-agentes-ia'
+```
+
+<a id="anchor-grupo-19"></a>
+### 🔀 GRUPO 19 — Resiliencia e Interoperabilidad (80–84)
+
+Sobrevivir a la caída de un proveedor concreto y exponer/descubrir herramientas mediante un protocolo estándar en vez de contratos ad-hoc. Ninguno de estos 5 patrones requiere `OPENAI_API_KEY` para ejecutarse — su lógica central es independiente del LLM.
+
+| # | Patrón | Propósito | Diferencia con patrones existentes |
+|---|--------|----------|--------------------------------------|
+| **80** | **Rate Limiting** | Token bucket real con recarga continua por tiempo transcurrido, aislado por clave (usuario/API key/IP) | El Patrón 21 (Proxy) solo tiene un contador fijo sin recarga temporal real |
+| **81** | **Model Fallback / Multi-Provider Redundancy** | Conmuta a un proveedor alternativo cuando el actual falla o está rate-limited | El Patrón 39 (Cascade) escala por coste/confianza dentro del MISMO proveedor, no por fallo |
+| **82** | **MCP Server Exposure** | Expone herramientas como servidor Model Context Protocol estándar (`@modelcontextprotocol/sdk`) | Ningún patrón previo trata la exposición de tools como un contrato de protocolo versionado |
+| **83** | **Dynamic Tool Discovery** | El agente descubre tools vía `tools/list` en runtime y construye el schema de function-calling dinámicamente | El Patrón 65 (Agent Registry) descubre AGENTES en memoria, no tools de un servidor de protocolo |
+| **84** | **Code Execution Sandboxing** | Aísla código generado por el agente en un contexto `node:vm` con timeout y sin acceso a `require`/`process`/red | Ningún patrón de seguridad (69–72) cubría ejecución aislada de código |
+
+```bash
+npm run pattern:80   # Rate Limiting
+npm run pattern:81   # Model Fallback
+npm run pattern:82   # MCP Server Exposure
+npm run pattern:83   # Dynamic Tool Discovery
+npm run pattern:84   # Code Execution Sandboxing
+```
+
+Los patrones 82 y 83 se componen entre sí: 83 importa `crearServidorPatrones` de 82 y lo consume como cliente, en vez de duplicar la definición de herramientas — así se demuestra un round-trip MCP real (servidor + cliente en memoria, sin subprocess/stdio) en vez de una simulación.
+
+<a id="anchor-grupo-20"></a>
+### 🧩 GRUPO 20 — Coordinación Emergente y Privacidad (85–89)
+
+Evitar efectos duplicados en reintentos, mantener conversaciones largas dentro de la ventana de contexto, coordinar agentes sin un orquestador central, reducir llamadas de red, y proteger datos personales antes de enviarlos a un proveedor externo. Ninguno requiere `OPENAI_API_KEY`.
+
+| # | Patrón | Propósito | Diferencia con patrones existentes |
+|---|--------|----------|--------------------------------------|
+| **85** | **Idempotency Keys** | Garantiza que una acción con efecto secundario ocurre como máximo una vez, incluso si la llamada se reintenta | El Patrón 47 (Retry-Backoff) reintenta la LLAMADA; este patrón evita que el EFECTO se repita |
+| **86** | **Context Compaction** | Resume incrementalmente los turnos antiguos de una conversación larga, conservando los recientes verbatim | El Patrón 51 (Long-Term Memory) persiste entre sesiones; este patrón comprime DENTRO de una sesión larga |
+| **87** | **Blackboard** | Espacio compartido clave-valor con suscripciones — los agentes reaccionan a datos nuevos sin coordinador central | El Patrón 23 (Mediator) centraliza mensajes; el Patrón 60 (Orchestrator) asigna tareas top-down; aquí el orden EMERGE |
+| **88** | **Batching** | Agrupa llamadas independientes y simultáneas en una sola petición, desmultiplexando resultados por llamador | El Patrón 48 (Semantic Cache) evita llamadas REPETIDAS; este patrón agrupa llamadas DISTINTAS simultáneas |
+| **89** | **PII Redaction / Anonymization** | Tokenización reversible y consistente de datos personales (nombre, email, IP, fecha nacimiento) por sesión | El Patrón 71 (Secret Detection) se centra en credenciales y documenta reversibilidad sin implementarla; aquí sí es real |
+
+```bash
+npm run pattern:85   # Idempotency Keys
+npm run pattern:86   # Context Compaction
+npm run pattern:87   # Blackboard
+npm run pattern:88   # Batching
+npm run pattern:89   # PII Redaction
+```
+
+<a id="anchor-grupo-21"></a>
+### 🏭 GRUPO 21 — Operación en Producción (90–94)
+
+Desplegar cambios con seguridad, optimizar prompts automáticamente, saber cuánto cuesta cada cliente, reducir la latencia que percibe el usuario, y detectar problemas antes de que los sufra tráfico real. Ninguno requiere `OPENAI_API_KEY`.
+
+| # | Patrón | Propósito | Diferencia con patrones existentes |
+|---|--------|----------|--------------------------------------|
+| **90** | **Canary Release** | Libera gradualmente a un % creciente de tráfico, con rollback automático ante regresión | El Patrón 75 (A/B Testing) divide tráfico fijo y compara al final; aquí el rollback es automático y en tiempo real |
+| **91** | **Meta-Prompting** | Un LLM reescribe y optimiza un prompt/template a través de generaciones, evaluando cada variante | El Patrón 4 (Evaluator-Optimizer) itera la RESPUESTA a una pregunta; aquí se itera el PROMPT reutilizable en sí |
+| **92** | **Cost Attribution / Chargeback** | Registro agregado de coste por tenant/feature a través de muchas sesiones, para facturación y FinOps | El Patrón 78 (Token Budget) es control en tiempo real DENTRO de una sesión; aquí es reporte agregado ENTRE sesiones |
+| **93** | **Speculative Execution** | Muestra un draft rápido de inmediato mientras verifica en paralelo, corrigiendo solo si hace falta | El Patrón 39 (Cascade) escala niveles de forma SECUENCIAL; aquí ambos caminos corren en PARALELO desde el inicio |
+| **94** | **Health Check / Readiness Probe** | Verificación proactiva y periódica de dependencias, independiente del tráfico real | El Patrón 45 (Circuit Breaker) es REACTIVO a fallos de llamadas reales; aquí se detecta el problema ANTES de esa llamada |
+
+```bash
+npm run pattern:90   # Canary Release
+npm run pattern:91   # Meta-Prompting
+npm run pattern:92   # Cost Attribution
+npm run pattern:93   # Speculative Execution
+npm run pattern:94   # Health Check
+```
+
 ---
 
+<a id="anchor-estructura"></a>
 ## 🏗️ Estructura del Proyecto
 
 ```
@@ -230,14 +440,14 @@ src/
 ├── pattern_58_rollback.ts                # Rollback
 ├── pattern_59_structured_output.ts        # Structured Output
 ├── pattern_60_orchestrator_workers.ts     # Orchestrator-Workers
-├── pattern_61_few_shot.ts                # Few-Shot Prompting ⭐ FASE FINAL
-├── pattern_62_constitutional_ai.ts        # Constitutional AI ⭐ FASE FINAL
-├── pattern_63_debate.ts                  # Debate ⭐ FASE FINAL
-├── pattern_64_persona.ts                 # Persona ⭐ FASE FINAL
-├── pattern_65_agent_registry.ts          # Agent Registry ⭐ FASE FINAL
-├── pattern_66_contextual_compression.ts   # Contextual Compression ⭐ FASE FINAL
-├── pattern_67_output_parsers.ts          # Output Parsers ⭐ FASE FINAL
-├── pattern_68_zero_shot_cot.ts           # Zero-Shot CoT ⭐ FASE FINAL
+├── pattern_61_few_shot.ts                # Few-Shot Prompting
+├── pattern_62_constitutional_ai.ts        # Constitutional AI
+├── pattern_63_debate.ts                  # Debate
+├── pattern_64_persona.ts                 # Persona
+├── pattern_65_agent_registry.ts          # Agent Registry
+├── pattern_66_contextual_compression.ts   # Contextual Compression
+├── pattern_67_output_parsers.ts          # Output Parsers
+├── pattern_68_zero_shot_cot.ts           # Zero-Shot CoT ← GRUPOS 1-15 completos
 ├── pattern_69_prompt_injection_defense.ts # Prompt Injection Defense (ciberseguridad)
 ├── pattern_70_adversarial_robustness.ts   # Adversarial Robustness (ciberseguridad)
 ├── pattern_71_secret_detection.ts         # Secret Detection & Masking (ciberseguridad)
@@ -268,6 +478,7 @@ src/
 
 ---
 
+<a id="anchor-progresion"></a>
 ## 📈 Progresión por Versiones
 
 | Versión | Patrones | Cobertura | Fase |
@@ -291,6 +502,7 @@ src/
 
 ---
 
+<a id="anchor-seleccion"></a>
 ## 🎯 Guía de Selección Rápida
 
 | Necesidad | Patrón |
@@ -323,6 +535,7 @@ src/
 
 ---
 
+<a id="anchor-configuracion"></a>
 ## 🔧 Configuración
 
 ```bash
@@ -341,184 +554,23 @@ export OPENAI_MODEL=gpt-4-turbo  # opcional
 
 ---
 
+<a id="anchor-referencias"></a>
 ## 📚 Referencias
 
 - **Gang of Four**: [refactoring.guru/design-patterns](https://refactoring.guru/design-patterns)
 - **AIMultiple Agentic Workflows**: [aimultiple.com/agentic-workflows](https://aimultiple.com/agentic-workflows)
 - **OpenAI Cookbook**: [github.com/openai/openai-cookbook](https://github.com/openai/openai-cookbook)
-- **Constitutional AI**: Anthropic (2022) — Self-critique alignment
+- **Constitutional AI**: Anthropic (2022) — Self-critique alignment / CAI Framework
 - **ReAct**: Yao et al. (2022) — Synergizing Reasoning and Acting
 - **Tree of Thoughts**: Yao et al. (2023) — Deliberate Problem Solving
 - **Prompt Injection Defense**: OWASP LLM Top 10 (2024) — LLM01
 - **Adversarial Robustness**: Goodfellow et al. — Adversarial Examples
-- **Constitutional AI**: Anthropic (2022) — CAI Framework
 - **Model Context Protocol**: Anthropic (2024) — [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **Token Bucket / Rate Limiting**: RFC-adjacent networking algorithm, aplicado aquí a llamadas LLM
 
 ---
 
-## 🔐 SECCIÓN CIBERSEGURIDAD — Patrones de Seguridad (69–72)
-
-Proteger sistemas agénticos contra amenazas, ataques y uso indebido.
-
-| # | Patrón | Amenaza | Técnica |
-|---|--------|---------|---------|
-| **69** | **Prompt Injection Defense** | Inyección, jailbreak, prompt leaking | Heurístico multicapa + LLM meta-evaluador |
-| **70** | **Adversarial Robustness** | Entradas perturbadas, evasión | Suite adversarial + score de estabilidad |
-| **71** | **Secret Detection & Masking** | Leaks: API keys, tokens, PII, credenciales | Regex + enmascaramiento automático |
-| **72** | **Access Control for Agents** | Escalada de privilegios, acceso no autorizado | RBAC/ABAC por rol de agente |
-
-### Stack defensivo recomendado
-
-```
-Input → [P69: Prompt Injection Defense]
-      → [P72: Access Control]
-      → LLM
-      → [P71: Secret Masking]
-      → Output
-
-Auditoría: P70 (Adversarial) + P74 (Red Team) periódicamente
-```
-
-```bash
-npm run pattern:69   # Prompt Injection Defense
-npm run pattern:70   # Adversarial Robustness
-npm run pattern:71   # Secret Detection & Masking
-npm run pattern:72   # Access Control for Agents
-```
-
----
-
-## 🧪 SECCIÓN QA — Patrones de Calidad (73–76)
-
-Garantizar, medir y mantener calidad de agentes IA en el tiempo.
-
-| # | Patrón | Propósito | Cuándo usarlo |
-|---|--------|----------|---------------|
-| **73** | **LLM-as-Judge** | Evaluar respuestas con rúbricas multi-dimensionales | Monitoreo continuo en producción |
-| **74** | **Red Teaming** | Probar brechas de seguridad sistemáticamente | Antes de cada release |
-| **75** | **A/B Testing for Prompts** | Comparar variantes de prompts con métricas | Al cambiar system prompts |
-| **76** | **Regression Testing** | Detectar degradación de calidad entre versiones | En cada PR / deploy |
-
-### Pipeline CI/CD de calidad
-
-```
-PR abierto    → P76 Regression Tests (golden tests automáticos)
-Release        → P74 Red Teaming (seguridad) + P73 LLM-Judge (calidad)
-Prod monitor   → P73 LLM-as-Judge continuo
-Cambio prompt  → P75 A/B Testing
-```
-
-```bash
-npm run pattern:73   # LLM-as-Judge
-npm run pattern:74   # Red Teaming
-npm run pattern:75   # A/B Testing for Prompts
-npm run pattern:76   # Regression Testing
-```
-
----
-
-## 🏭 SECCIÓN PRODUCCIÓN — Patrones de Infraestructura (77–79)
-
-Instrumentar y operar agentes IA de forma profesional en entornos reales.
-
-| # | Patrón | Propósito | Beneficio |
-|---|--------|----------|-----------|
-| **77** | **Observability & Tracing** | Trazar cada paso del agente con spans anidados | Visibilidad completa del flujo en producción |
-| **78** | **Token Budget** | Presupuesto de tokens por sesión con degradación elegante | Control de costos en tiempo real |
-| **79** | **Streaming** | Entrega de tokens en tiempo real con pipeline configurable | Latencia percibida ~0ms, interrupción temprana |
-
-```bash
-npm run pattern:77   # Observability & Tracing
-npm run pattern:78   # Token Budget
-npm run pattern:79   # Streaming
-```
-
-### Stack de producción completo
-
-```typescript
-// Composición de patrones para producción robusta
-import {
-  AgenteInstrumentado,    // P77: Trazar todo
-  AgenteConBudget,        // P78: Controlar costos
-  AgenteConStreaming,     // P79: Respuesta en tiempo real
-  AgenteSeguro,           // P69: Bloquear inyecciones
-  AgenteConCacheSemantica, // P48: Cache semántica (-60% llamadas)
-  CircuitBreaker,         // P45: Evitar fallos en cascada
-  RetryWithBackoff,       // P47: Recuperar fallos transitorios
-} from 'patrones-agentes-ia'
-```
-
----
-
-## 🔀 SECCIÓN RESILIENCIA E INTEROPERABILIDAD — Patrones 80–84
-
-Sobrevivir a la caída de un proveedor concreto y exponer/descubrir herramientas mediante un protocolo estándar en vez de contratos ad-hoc. Ninguno de estos 5 patrones requiere `OPENAI_API_KEY` para ejecutarse — su lógica central es independiente del LLM.
-
-| # | Patrón | Propósito | Diferencia con patrones existentes |
-|---|--------|----------|--------------------------------------|
-| **80** | **Rate Limiting** | Token bucket real con recarga continua por tiempo transcurrido, aislado por clave (usuario/API key/IP) | El Patrón 21 (Proxy) solo tiene un contador fijo sin recarga temporal real |
-| **81** | **Model Fallback / Multi-Provider Redundancy** | Conmuta a un proveedor alternativo cuando el actual falla o está rate-limited | El Patrón 39 (Cascade) escala por coste/confianza dentro del MISMO proveedor, no por fallo |
-| **82** | **MCP Server Exposure** | Expone herramientas como servidor Model Context Protocol estándar (`@modelcontextprotocol/sdk`) | Ningún patrón previo trata la exposición de tools como un contrato de protocolo versionado |
-| **83** | **Dynamic Tool Discovery** | El agente descubre tools vía `tools/list` en runtime y construye el schema de function-calling dinámicamente | El Patrón 65 (Agent Registry) descubre AGENTES en memoria, no tools de un servidor de protocolo |
-| **84** | **Code Execution Sandboxing** | Aísla código generado por el agente en un contexto `node:vm` con timeout y sin acceso a `require`/`process`/red | Ningún patrón de seguridad (69–72) cubría ejecución aislada de código |
-
-```bash
-npm run pattern:80   # Rate Limiting
-npm run pattern:81   # Model Fallback
-npm run pattern:82   # MCP Server Exposure
-npm run pattern:83   # Dynamic Tool Discovery
-npm run pattern:84   # Code Execution Sandboxing
-```
-
-Los patrones 82 y 83 se componen entre sí: 83 importa `crearServidorPatrones` de 82 y lo consume como cliente, en vez de duplicar la definición de herramientas — así se demuestra un round-trip MCP real (servidor + cliente en memoria, sin subprocess/stdio) en vez de una simulación.
-
----
-
-## 🧩 SECCIÓN COORDINACIÓN EMERGENTE Y PRIVACIDAD — Patrones 85–89
-
-Evitar efectos duplicados en reintentos, mantener conversaciones largas dentro de la ventana de contexto, coordinar agentes sin un orquestador central, reducir llamadas de red, y proteger datos personales antes de enviarlos a un proveedor externo. Ninguno requiere `OPENAI_API_KEY`.
-
-| # | Patrón | Propósito | Diferencia con patrones existentes |
-|---|--------|----------|--------------------------------------|
-| **85** | **Idempotency Keys** | Garantiza que una acción con efecto secundario ocurre como máximo una vez, incluso si la llamada se reintenta | El Patrón 47 (Retry-Backoff) reintenta la LLAMADA; este patrón evita que el EFECTO se repita |
-| **86** | **Context Compaction** | Resume incrementalmente los turnos antiguos de una conversación larga, conservando los recientes verbatim | El Patrón 51 (Long-Term Memory) persiste entre sesiones; este patrón comprime DENTRO de una sesión larga |
-| **87** | **Blackboard** | Espacio compartido clave-valor con suscripciones — los agentes reaccionan a datos nuevos sin coordinador central | El Patrón 23 (Mediator) centraliza mensajes; el Patrón 60 (Orchestrator) asigna tareas top-down; aquí el orden EMERGE |
-| **88** | **Batching** | Agrupa llamadas independientes y simultáneas en una sola petición, desmultiplexando resultados por llamador | El Patrón 48 (Semantic Cache) evita llamadas REPETIDAS; este patrón agrupa llamadas DISTINTAS simultáneas |
-| **89** | **PII Redaction / Anonymization** | Tokenización reversible y consistente de datos personales (nombre, email, IP, fecha nacimiento) por sesión | El Patrón 71 (Secret Detection) se centra en credenciales y documenta reversibilidad sin implementarla; aquí sí es real |
-
-```bash
-npm run pattern:85   # Idempotency Keys
-npm run pattern:86   # Context Compaction
-npm run pattern:87   # Blackboard
-npm run pattern:88   # Batching
-npm run pattern:89   # PII Redaction
-```
-
----
-
-## 🏭 SECCIÓN OPERACIÓN EN PRODUCCIÓN — Patrones 90–94
-
-Desplegar cambios con seguridad, optimizar prompts automáticamente, saber cuánto cuesta cada cliente, reducir la latencia que percibe el usuario, y detectar problemas antes de que los sufra tráfico real. Ninguno requiere `OPENAI_API_KEY`.
-
-| # | Patrón | Propósito | Diferencia con patrones existentes |
-|---|--------|----------|--------------------------------------|
-| **90** | **Canary Release** | Libera gradualmente a un % creciente de tráfico, con rollback automático ante regresión | El Patrón 75 (A/B Testing) divide tráfico fijo y compara al final; aquí el rollback es automático y en tiempo real |
-| **91** | **Meta-Prompting** | Un LLM reescribe y optimiza un prompt/template a través de generaciones, evaluando cada variante | El Patrón 4 (Evaluator-Optimizer) itera la RESPUESTA a una pregunta; aquí se itera el PROMPT reutilizable en sí |
-| **92** | **Cost Attribution / Chargeback** | Registro agregado de coste por tenant/feature a través de muchas sesiones, para facturación y FinOps | El Patrón 78 (Token Budget) es control en tiempo real DENTRO de una sesión; aquí es reporte agregado ENTRE sesiones |
-| **93** | **Speculative Execution** | Muestra un draft rápido de inmediato mientras verifica en paralelo, corrigiendo solo si hace falta | El Patrón 39 (Cascade) escala niveles de forma SECUENCIAL; aquí ambos caminos corren en PARALELO desde el inicio |
-| **94** | **Health Check / Readiness Probe** | Verificación proactiva y periódica de dependencias, independiente del tráfico real | El Patrón 45 (Circuit Breaker) es REACTIVO a fallos de llamadas reales; aquí se detecta el problema ANTES de esa llamada |
-
-```bash
-npm run pattern:90   # Canary Release
-npm run pattern:91   # Meta-Prompting
-npm run pattern:92   # Cost Attribution
-npm run pattern:93   # Speculative Execution
-npm run pattern:94   # Health Check
-```
-
----
-
+<a id="anchor-libreria-npm"></a>
 ## 📦 Uso como Librería npm
 
 ### Importación directa (tree-shakeable)
@@ -532,14 +584,12 @@ import { JuezLLM, RUBRICA_ESTANDAR } from './src/index.js'
 ### Importación por categoría semántica
 
 ```typescript
-// Sólo patrones de seguridad
-import { seguridad } from './src/index.js'
-
-// Sólo QA
-import { qa } from './src/index.js'
-
-// Sólo producción
-import { produccion } from './src/index.js'
+import { seguridad } from './src/index.js'              // Patrones 69-72
+import { qa } from './src/index.js'                      // Patrones 73-76
+import { produccion } from './src/index.js'               // Patrones 77-79
+import { interoperabilidad } from './src/index.js'        // Patrones 80-84
+import { coordinacionYPrivacidad } from './src/index.js'  // Patrones 85-89
+import { operacionProduccion } from './src/index.js'      // Patrones 90-94
 ```
 
 ### Ejemplo de combinación de patrones
@@ -580,4 +630,4 @@ MIT — Libre para uso comercial y personal
 
 ---
 
-*v11.0.0 — 79 Patrones — Observabilidad, Token Budget, Streaming + src/index.ts ✅*
+*v14.0.0 — 94 Patrones — GoF completo + Agénticos + Ciberseguridad + QA + Producción + Resiliencia/Interoperabilidad + Coordinación Emergente + Privacidad + Operación en Producción*
