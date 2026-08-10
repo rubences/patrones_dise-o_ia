@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "12.0.0",
-  "description": "84 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP y Resiliencia multi-proveedor — usable como librería npm",
+  "version": "13.0.0",
+  "description": "89 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP, Resiliencia multi-proveedor, Coordinación emergente y Privacidad — usable como librería npm",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -91,7 +91,12 @@
     "pattern:81": "node --loader ts-node/esm src/pattern_81_model_fallback.ts",
     "pattern:82": "node --loader ts-node/esm src/pattern_82_mcp_server.ts",
     "pattern:83": "node --loader ts-node/esm src/pattern_83_dynamic_tool_discovery.ts",
-    "pattern:84": "node --loader ts-node/esm src/pattern_84_code_sandboxing.ts"
+    "pattern:84": "node --loader ts-node/esm src/pattern_84_code_sandboxing.ts",
+    "pattern:85": "node --loader ts-node/esm src/pattern_85_idempotency_keys.ts",
+    "pattern:86": "node --loader ts-node/esm src/pattern_86_context_compaction.ts",
+    "pattern:87": "node --loader ts-node/esm src/pattern_87_blackboard.ts",
+    "pattern:88": "node --loader ts-node/esm src/pattern_88_batching.ts",
+    "pattern:89": "node --loader ts-node/esm src/pattern_89_pii_redaction.ts"
   },
   "keywords": [
     "openai",
@@ -111,7 +116,12 @@
     "model-context-protocol",
     "rate-limiting",
     "resilience",
-    "sandboxing"
+    "sandboxing",
+    "idempotency",
+    "blackboard",
+    "batching",
+    "pii",
+    "privacy"
   ],
   "author": "rubences",
   "license": "MIT",

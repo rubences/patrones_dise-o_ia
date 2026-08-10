@@ -1,9 +1,9 @@
 # 🏛️ Patrones de Diseño para Sistemas Agénticos de IA — Biblioteca Exhaustiva
 
-Una biblioteca de **84 patrones de diseño** implementados en TypeScript: los 23 patrones Gang of Four completos, más patrones agénticos, de ciberseguridad, QA, producción y resiliencia/interoperabilidad multi-proveedor.
+Una biblioteca de **89 patrones de diseño** implementados en TypeScript: los 23 patrones Gang of Four completos, más patrones agénticos, de ciberseguridad, QA, producción, resiliencia/interoperabilidad multi-proveedor, coordinación emergente y privacidad.
 
 ```
-84 patrones implementados
+89 patrones implementados
 ```
 
 ---
@@ -23,10 +23,10 @@ npm run pattern:54   # ReAct
 npm run pattern:68   # Zero-Shot CoT
 
 # Ejecutar todos
-for i in {1..84}; do npm run pattern:$i; done
+for i in {1..89}; do npm run pattern:$i; done
 ```
 
-Nota: los patrones 80–84 (Rate Limiting, Model Fallback, MCP Server Exposure, Dynamic Tool Discovery, Code Sandboxing) no requieren `OPENAI_API_KEY` — su lógica es independiente del LLM y se ejecutan igual sin la variable configurada.
+Nota: los patrones 80–89 (Rate Limiting, Model Fallback, MCP Server Exposure, Dynamic Tool Discovery, Code Sandboxing, Idempotency Keys, Context Compaction, Blackboard, Batching, PII Redaction) no requieren `OPENAI_API_KEY` — su lógica es independiente del LLM y se ejecutan igual sin la variable configurada.
 
 ---
 
@@ -237,7 +237,28 @@ src/
 ├── pattern_65_agent_registry.ts          # Agent Registry ⭐ FASE FINAL
 ├── pattern_66_contextual_compression.ts   # Contextual Compression ⭐ FASE FINAL
 ├── pattern_67_output_parsers.ts          # Output Parsers ⭐ FASE FINAL
-└── pattern_68_zero_shot_cot.ts           # Zero-Shot CoT ⭐ FASE FINAL
+├── pattern_68_zero_shot_cot.ts           # Zero-Shot CoT ⭐ FASE FINAL
+├── pattern_69_prompt_injection_defense.ts # Prompt Injection Defense (ciberseguridad)
+├── pattern_70_adversarial_robustness.ts   # Adversarial Robustness (ciberseguridad)
+├── pattern_71_secret_detection.ts         # Secret Detection & Masking (ciberseguridad)
+├── pattern_72_access_control.ts           # Access Control for Agents (ciberseguridad)
+├── pattern_73_llm_as_judge.ts             # LLM-as-Judge (QA)
+├── pattern_74_red_teaming.ts              # Red Teaming (QA)
+├── pattern_75_ab_testing.ts               # A/B Testing for Prompts (QA)
+├── pattern_76_regression_testing.ts       # Regression Testing (QA)
+├── pattern_77_observability.ts            # Observability & Tracing (producción)
+├── pattern_78_token_budget.ts             # Token Budget (producción)
+├── pattern_79_streaming.ts                # Streaming (producción)
+├── pattern_80_rate_limiting.ts            # Rate Limiting (resiliencia)
+├── pattern_81_model_fallback.ts           # Model Fallback / Multi-Provider (resiliencia)
+├── pattern_82_mcp_server.ts               # MCP Server Exposure (interoperabilidad)
+├── pattern_83_dynamic_tool_discovery.ts   # Dynamic Tool Discovery (interoperabilidad)
+├── pattern_84_code_sandboxing.ts          # Code Execution Sandboxing (interoperabilidad)
+├── pattern_85_idempotency_keys.ts         # Idempotency Keys (coordinación/fiabilidad)
+├── pattern_86_context_compaction.ts       # Context Compaction (coordinación)
+├── pattern_87_blackboard.ts               # Blackboard (coordinación emergente)
+├── pattern_88_batching.ts                 # Batching (coordinación/costos)
+└── pattern_89_pii_redaction.ts            # PII Redaction / Anonymization (privacidad)
 ```
 
 ---
@@ -257,7 +278,8 @@ src/
 | v9.0.0 | 68 | 95.8% | FASE FINAL |
 | v10.0.0 | 76 | — | +Ciberseguridad (69–72) y QA (73–76) |
 | v11.0.0 | 79 | — | +Producción (77–79) |
-| **v12.0.0** | **84** | **—** | **+Resiliencia e Interoperabilidad (80–84)** |
+| v12.0.0 | 84 | — | +Resiliencia e Interoperabilidad (80–84) |
+| **v13.0.0** | **89** | **—** | **+Coordinación Emergente y Privacidad (85–89)** |
 
 *Desde v10.0.0 el catálogo superó la estimación inicial de "71 patrones conocidos" usada para calcular cobertura — el % se dejó de calcular porque el propio dominio (patrones agénticos de IA) sigue expandiéndose.*
 
@@ -279,6 +301,14 @@ src/
 | **Personalización** | 64 (Persona) + 51 (Long-Term Memory) |
 | **Crear agentes dinámicamente** | 9 (Factory) + 29 (Abstract Factory) + 65 (Registry) |
 | **Añadir capacidades** | 12 (Decorator) + 21 (Proxy) |
+| **Resiliencia multi-proveedor** | 80 (Rate Limiting) + 81 (Model Fallback) + 45 (Circuit Breaker) |
+| **Interoperabilidad de herramientas** | 82 (MCP Server Exposure) + 83 (Dynamic Tool Discovery) |
+| **Ejecutar código no confiable** | 84 (Code Sandboxing) + 71 (Secret Detection) |
+| **Evitar efectos duplicados en reintentos** | 85 (Idempotency Keys) + 47 (Retry-Backoff) |
+| **Conversaciones largas** | 86 (Context Compaction) + 51 (Long-Term Memory) |
+| **Coordinación sin orquestador central** | 87 (Blackboard) vs 23 (Mediator) / 60 (Orchestrator) |
+| **Reducir llamadas de red simultáneas** | 88 (Batching) + 48 (Semantic Cache) |
+| **Proteger datos personales** | 89 (PII Redaction) + 71 (Secret Detection) + 53 (Guardrails) |
 
 ---
 
@@ -290,10 +320,12 @@ export OPENAI_API_KEY=sk-...
 export OPENAI_MODEL=gpt-4-turbo  # opcional
 
 # Stack técnico
-# TypeScript 6.0.3 (strict, ESM)
+# TypeScript 6.0.3 (strict, ESM, NodeNext)
 # OpenAI SDK v6.48.0
 # Zod v4.4.3
-# Node.js 18+ (ESM native)
+# @modelcontextprotocol/sdk v1.30.0 (patrones 82, 83)
+# Node.js 18+ (ESM native; node:vm para el patrón 84)
+# ts-node v10.9.2 (dev, requerido por todos los scripts pattern:N)
 ```
 
 ---
@@ -309,6 +341,8 @@ export OPENAI_MODEL=gpt-4-turbo  # opcional
 - **Prompt Injection Defense**: OWASP LLM Top 10 (2024) — LLM01
 - **Adversarial Robustness**: Goodfellow et al. — Adversarial Examples
 - **Constitutional AI**: Anthropic (2022) — CAI Framework
+- **Model Context Protocol**: Anthropic (2024) — [modelcontextprotocol.io](https://modelcontextprotocol.io)
+- **Token Bucket / Rate Limiting**: RFC-adjacent networking algorithm, aplicado aquí a llamadas LLM
 
 ---
 
@@ -427,6 +461,28 @@ npm run pattern:84   # Code Execution Sandboxing
 ```
 
 Los patrones 82 y 83 se componen entre sí: 83 importa `crearServidorPatrones` de 82 y lo consume como cliente, en vez de duplicar la definición de herramientas — así se demuestra un round-trip MCP real (servidor + cliente en memoria, sin subprocess/stdio) en vez de una simulación.
+
+---
+
+## 🧩 SECCIÓN COORDINACIÓN EMERGENTE Y PRIVACIDAD — Patrones 85–89
+
+Evitar efectos duplicados en reintentos, mantener conversaciones largas dentro de la ventana de contexto, coordinar agentes sin un orquestador central, reducir llamadas de red, y proteger datos personales antes de enviarlos a un proveedor externo. Ninguno requiere `OPENAI_API_KEY`.
+
+| # | Patrón | Propósito | Diferencia con patrones existentes |
+|---|--------|----------|--------------------------------------|
+| **85** | **Idempotency Keys** | Garantiza que una acción con efecto secundario ocurre como máximo una vez, incluso si la llamada se reintenta | El Patrón 47 (Retry-Backoff) reintenta la LLAMADA; este patrón evita que el EFECTO se repita |
+| **86** | **Context Compaction** | Resume incrementalmente los turnos antiguos de una conversación larga, conservando los recientes verbatim | El Patrón 51 (Long-Term Memory) persiste entre sesiones; este patrón comprime DENTRO de una sesión larga |
+| **87** | **Blackboard** | Espacio compartido clave-valor con suscripciones — los agentes reaccionan a datos nuevos sin coordinador central | El Patrón 23 (Mediator) centraliza mensajes; el Patrón 60 (Orchestrator) asigna tareas top-down; aquí el orden EMERGE |
+| **88** | **Batching** | Agrupa llamadas independientes y simultáneas en una sola petición, desmultiplexando resultados por llamador | El Patrón 48 (Semantic Cache) evita llamadas REPETIDAS; este patrón agrupa llamadas DISTINTAS simultáneas |
+| **89** | **PII Redaction / Anonymization** | Tokenización reversible y consistente de datos personales (nombre, email, IP, fecha nacimiento) por sesión | El Patrón 71 (Secret Detection) se centra en credenciales y documenta reversibilidad sin implementarla; aquí sí es real |
+
+```bash
+npm run pattern:85   # Idempotency Keys
+npm run pattern:86   # Context Compaction
+npm run pattern:87   # Blackboard
+npm run pattern:88   # Batching
+npm run pattern:89   # PII Redaction
+```
 
 ---
 

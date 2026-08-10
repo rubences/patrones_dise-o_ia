@@ -138,6 +138,13 @@ export { crearServidorPatrones, CATALOGO_PATRONES } from "./pattern_82_mcp_serve
 export { descubrirHerramientas, aEsquemaFunctionCalling } from "./pattern_83_dynamic_tool_discovery.js";
 export { ejecutarEnSandbox } from "./pattern_84_code_sandboxing.js";
 
+// ── GRUPO 20: Coordinación Emergente y Privacidad (85–89) ────────
+export { RegistroIdempotencia } from "./pattern_85_idempotency_keys.js";
+export { CompactadorContexto } from "./pattern_86_context_compaction.js";
+export { Blackboard } from "./pattern_87_blackboard.js";
+export { BatchProcessor } from "./pattern_88_batching.js";
+export { AnonimizadorPII } from "./pattern_89_pii_redaction.js";
+
 // ── Re-exports agrupados por dominio ─────────────────────────────
 export const seguridad = {
   DefensorPromptInjection: "pattern_69",
@@ -165,4 +172,12 @@ export const interoperabilidad = {
   crearServidorPatrones: "pattern_82",
   descubrirHerramientas: "pattern_83",
   ejecutarEnSandbox: "pattern_84",
+} as const;
+
+export const coordinacionYPrivacidad = {
+  RegistroIdempotencia: "pattern_85",
+  CompactadorContexto: "pattern_86",
+  Blackboard: "pattern_87",
+  BatchProcessor: "pattern_88",
+  AnonimizadorPII: "pattern_89",
 } as const;
