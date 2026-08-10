@@ -1,14 +1,18 @@
 {
   "name": "cinco-patrones-agenticos-openai",
-  "version": "1.0.0",
-  "description": "Cinco patrones de diseño para construir agentes inteligentes con OpenAI",
+  "version": "2.0.0",
+  "description": "Ocho patrones de diseño para construir agentes inteligentes y flujos de trabajo agénticos con OpenAI",
   "type": "module",
   "main": "src/common.ts",
   "scripts": {
     "pattern:1": "node --loader ts-node/esm src/pattern_1_pipeline.ts",
     "pattern:2": "node --loader ts-node/esm src/pattern_2_router.ts",
     "pattern:3": "node --loader ts-node/esm src/pattern_3_reflection.ts",
-    "pattern:4": "node --loader ts-node/esm src/pattern_4_evaluator_optimizer.ts"
+    "pattern:4": "node --loader ts-node/esm src/pattern_4_evaluator_optimizer.ts",
+    "pattern:5": "node --loader ts-node/esm src/pattern_5_tool_use.ts",
+    "pattern:6": "node --loader ts-node/esm src/pattern_6_planning.ts",
+    "pattern:7": "node --loader ts-node/esm src/pattern_7_multi_agent.ts",
+    "pattern:8": "node --loader ts-node/esm src/pattern_8_human_in_loop.ts"
   },
   "keywords": [
     "openai",
@@ -18,7 +22,8 @@
     "typescript",
     "llm",
     "structured-outputs",
-    "prompting"
+    "prompting",
+    "agentic-workflows"
   ],
   "author": "rubences",
   "license": "MIT",
