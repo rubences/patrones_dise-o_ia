@@ -20,8 +20,8 @@ export { makeClient, paso, isDirectRun, DEFAULT_MODEL } from "./common.js";
 export { escribirPost } from "./pattern_1_pipeline.js";
 export { atenderConsulta } from "./pattern_2_router.js";
 export { responderConReflexion } from "./pattern_3_reflection.js";
-export { demostrarEvaluadorOptimizador } from "./pattern_4_evaluator_optimizer.js";
-export { demostrarToolUse } from "./pattern_5_tool_use.js";
+export { mejorarConCritica } from "./pattern_4_evaluator_optimizer.js";
+export { responderConHerramientas } from "./pattern_5_tool_use.js";
 export { planificarTarea } from "./pattern_6_planning.js";
 export { procesarMultiAgent } from "./pattern_7_multi_agent.js";
 export { procesarConAprobacionHumana } from "./pattern_8_human_in_loop.js";
@@ -131,6 +131,13 @@ export { Tracer, AgenteInstrumentado } from "./pattern_77_observability.js";
 export { GestorTokenBudget, AgenteConBudget } from "./pattern_78_token_budget.js";
 export { StreamProcessor, AgenteConStreaming, TRANSFORMADORES } from "./pattern_79_streaming.js";
 
+// ── GRUPO 19: Resiliencia Multi-Proveedor e Interoperabilidad (80–84) ─
+export { RateLimiter } from "./pattern_80_rate_limiting.js";
+export { FallbackMultiProveedor, RateLimitError } from "./pattern_81_model_fallback.js";
+export { crearServidorPatrones, CATALOGO_PATRONES } from "./pattern_82_mcp_server.js";
+export { descubrirHerramientas, aEsquemaFunctionCalling } from "./pattern_83_dynamic_tool_discovery.js";
+export { ejecutarEnSandbox } from "./pattern_84_code_sandboxing.js";
+
 // ── Re-exports agrupados por dominio ─────────────────────────────
 export const seguridad = {
   DefensorPromptInjection: "pattern_69",
@@ -150,4 +157,12 @@ export const produccion = {
   Tracer: "pattern_77",
   GestorTokenBudget: "pattern_78",
   StreamProcessor: "pattern_79",
+} as const;
+
+export const interoperabilidad = {
+  RateLimiter: "pattern_80",
+  FallbackMultiProveedor: "pattern_81",
+  crearServidorPatrones: "pattern_82",
+  descubrirHerramientas: "pattern_83",
+  ejecutarEnSandbox: "pattern_84",
 } as const;

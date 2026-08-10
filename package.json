@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "11.0.0",
-  "description": "79 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget y Streaming — usable como librería npm",
+  "version": "12.0.0",
+  "description": "84 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP y Resiliencia multi-proveedor — usable como librería npm",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -86,7 +86,12 @@
     "pattern:76": "node --loader ts-node/esm src/pattern_76_regression_testing.ts",
     "pattern:77": "node --loader ts-node/esm src/pattern_77_observability.ts",
     "pattern:78": "node --loader ts-node/esm src/pattern_78_token_budget.ts",
-    "pattern:79": "node --loader ts-node/esm src/pattern_79_streaming.ts"
+    "pattern:79": "node --loader ts-node/esm src/pattern_79_streaming.ts",
+    "pattern:80": "node --loader ts-node/esm src/pattern_80_rate_limiting.ts",
+    "pattern:81": "node --loader ts-node/esm src/pattern_81_model_fallback.ts",
+    "pattern:82": "node --loader ts-node/esm src/pattern_82_mcp_server.ts",
+    "pattern:83": "node --loader ts-node/esm src/pattern_83_dynamic_tool_discovery.ts",
+    "pattern:84": "node --loader ts-node/esm src/pattern_84_code_sandboxing.ts"
   },
   "keywords": [
     "openai",
@@ -101,16 +106,23 @@
     "adapter",
     "decorator",
     "strategy",
-    "chain-of-responsibility"
+    "chain-of-responsibility",
+    "mcp",
+    "model-context-protocol",
+    "rate-limiting",
+    "resilience",
+    "sandboxing"
   ],
   "author": "rubences",
   "license": "MIT",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "openai": "^6.48.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
+    "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   }
 }

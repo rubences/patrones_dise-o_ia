@@ -1,9 +1,9 @@
 # 🏛️ Patrones de Diseño para Sistemas Agénticos de IA — Biblioteca Exhaustiva
 
-Una biblioteca de **68 patrones de diseño** implementados en TypeScript, cubriendo el **95.8% del catálogo conocido** de patrones para sistemas de IA. Incluye los 23 patrones Gang of Four completos más 45 patrones agénticos emergentes.
+Una biblioteca de **84 patrones de diseño** implementados en TypeScript: los 23 patrones Gang of Four completos, más patrones agénticos, de ciberseguridad, QA, producción y resiliencia/interoperabilidad multi-proveedor.
 
 ```
-68/71 patrones implementados — 95.8% de cobertura
+84 patrones implementados
 ```
 
 ---
@@ -23,8 +23,10 @@ npm run pattern:54   # ReAct
 npm run pattern:68   # Zero-Shot CoT
 
 # Ejecutar todos
-for i in {1..68}; do npm run pattern:$i; done
+for i in {1..84}; do npm run pattern:$i; done
 ```
+
+Nota: los patrones 80–84 (Rate Limiting, Model Fallback, MCP Server Exposure, Dynamic Tool Discovery, Code Sandboxing) no requieren `OPENAI_API_KEY` — su lógica es independiente del LLM y se ejecutan igual sin la variable configurada.
 
 ---
 
@@ -252,7 +254,12 @@ src/
 | v6.0.0 | 42 | 59.2% | **FASE 2** |
 | v7.0.0 | 50 | 70.4% | **FASE 3** |
 | v8.0.0 | 60 | 84.5% | **FASE 4** |
-| **v9.0.0** | **68** | **95.8%** | **🏆 FASE FINAL** |
+| v9.0.0 | 68 | 95.8% | FASE FINAL |
+| v10.0.0 | 76 | — | +Ciberseguridad (69–72) y QA (73–76) |
+| v11.0.0 | 79 | — | +Producción (77–79) |
+| **v12.0.0** | **84** | **—** | **+Resiliencia e Interoperabilidad (80–84)** |
+
+*Desde v10.0.0 el catálogo superó la estimación inicial de "71 patrones conocidos" usada para calcular cobertura — el % se dejó de calcular porque el propio dominio (patrones agénticos de IA) sigue expandiéndose.*
 
 ---
 
@@ -396,6 +403,30 @@ import {
   RetryWithBackoff,       // P47: Recuperar fallos transitorios
 } from 'patrones-agentes-ia'
 ```
+
+---
+
+## 🔀 SECCIÓN RESILIENCIA E INTEROPERABILIDAD — Patrones 80–84
+
+Sobrevivir a la caída de un proveedor concreto y exponer/descubrir herramientas mediante un protocolo estándar en vez de contratos ad-hoc. Ninguno de estos 5 patrones requiere `OPENAI_API_KEY` para ejecutarse — su lógica central es independiente del LLM.
+
+| # | Patrón | Propósito | Diferencia con patrones existentes |
+|---|--------|----------|--------------------------------------|
+| **80** | **Rate Limiting** | Token bucket real con recarga continua por tiempo transcurrido, aislado por clave (usuario/API key/IP) | El Patrón 21 (Proxy) solo tiene un contador fijo sin recarga temporal real |
+| **81** | **Model Fallback / Multi-Provider Redundancy** | Conmuta a un proveedor alternativo cuando el actual falla o está rate-limited | El Patrón 39 (Cascade) escala por coste/confianza dentro del MISMO proveedor, no por fallo |
+| **82** | **MCP Server Exposure** | Expone herramientas como servidor Model Context Protocol estándar (`@modelcontextprotocol/sdk`) | Ningún patrón previo trata la exposición de tools como un contrato de protocolo versionado |
+| **83** | **Dynamic Tool Discovery** | El agente descubre tools vía `tools/list` en runtime y construye el schema de function-calling dinámicamente | El Patrón 65 (Agent Registry) descubre AGENTES en memoria, no tools de un servidor de protocolo |
+| **84** | **Code Execution Sandboxing** | Aísla código generado por el agente en un contexto `node:vm` con timeout y sin acceso a `require`/`process`/red | Ningún patrón de seguridad (69–72) cubría ejecución aislada de código |
+
+```bash
+npm run pattern:80   # Rate Limiting
+npm run pattern:81   # Model Fallback
+npm run pattern:82   # MCP Server Exposure
+npm run pattern:83   # Dynamic Tool Discovery
+npm run pattern:84   # Code Execution Sandboxing
+```
+
+Los patrones 82 y 83 se componen entre sí: 83 importa `crearServidorPatrones` de 82 y lo consume como cliente, en vez de duplicar la definición de herramientas — así se demuestra un round-trip MCP real (servidor + cliente en memoria, sin subprocess/stdio) en vez de una simulación.
 
 ---
 
