@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "6.0.0",
-  "description": "42 patrones de diseño exhaustivos para sistemas agénticos de IA: GoF completo + patrones agénticos emergentes (RAG, CoT, ToT, MoE, Cascade, Branching, Self-Consistency...) implementados en TypeScript",
+  "version": "7.0.0",
+  "description": "50 patrones de diseño para sistemas agénticos de IA: GoF completo + agénticos emergentes + escalabilidad y confiabilidad (Ensemble, Circuit Breaker, Bulkhead, Retry, Semantic Cache, Prompt Compression, Multi-Modal...)",
   "type": "module",
   "main": "src/common.ts",
   "scripts": {
@@ -46,7 +46,15 @@
     "pattern:39": "node --loader ts-node/esm src/pattern_39_cascade.ts",
     "pattern:40": "node --loader ts-node/esm src/pattern_40_branching.ts",
     "pattern:41": "node --loader ts-node/esm src/pattern_41_retrieval_ranking.ts",
-    "pattern:42": "node --loader ts-node/esm src/pattern_42_self_consistency.ts"
+    "pattern:42": "node --loader ts-node/esm src/pattern_42_self_consistency.ts",
+    "pattern:43": "node --loader ts-node/esm src/pattern_43_ensemble.ts",
+    "pattern:44": "node --loader ts-node/esm src/pattern_44_checkpointing.ts",
+    "pattern:45": "node --loader ts-node/esm src/pattern_45_circuit_breaker.ts",
+    "pattern:46": "node --loader ts-node/esm src/pattern_46_bulkhead.ts",
+    "pattern:47": "node --loader ts-node/esm src/pattern_47_retry_backoff.ts",
+    "pattern:48": "node --loader ts-node/esm src/pattern_48_semantic_cache.ts",
+    "pattern:49": "node --loader ts-node/esm src/pattern_49_prompt_compression.ts",
+    "pattern:50": "node --loader ts-node/esm src/pattern_50_multi_modal.ts"
   },
   "keywords": [
     "openai",
