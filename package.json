@@ -1,9 +1,12 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "10.0.0",
-  "description": "76 patrones para sistemas agénticos de IA: GoF completo + Agénticos + Ciberseguridad (Prompt Injection Defense, Adversarial Robustness, Secret Detection, Access Control) + QA (LLM-as-Judge, Red Teaming, A/B Testing, Regression Testing)",
+  "version": "11.0.0",
+  "description": "79 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget y Streaming — usable como librería npm",
   "type": "module",
-  "main": "src/common.ts",
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "pattern:1": "node --loader ts-node/esm src/pattern_1_pipeline.ts",
     "pattern:2": "node --loader ts-node/esm src/pattern_2_router.ts",
@@ -80,7 +83,10 @@
     "pattern:73": "node --loader ts-node/esm src/pattern_73_llm_as_judge.ts",
     "pattern:74": "node --loader ts-node/esm src/pattern_74_red_teaming.ts",
     "pattern:75": "node --loader ts-node/esm src/pattern_75_ab_testing.ts",
-    "pattern:76": "node --loader ts-node/esm src/pattern_76_regression_testing.ts"
+    "pattern:76": "node --loader ts-node/esm src/pattern_76_regression_testing.ts",
+    "pattern:77": "node --loader ts-node/esm src/pattern_77_observability.ts",
+    "pattern:78": "node --loader ts-node/esm src/pattern_78_token_budget.ts",
+    "pattern:79": "node --loader ts-node/esm src/pattern_79_streaming.ts"
   },
   "keywords": [
     "openai",

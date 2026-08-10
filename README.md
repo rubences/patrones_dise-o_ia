@@ -366,6 +366,90 @@ npm run pattern:76   # Regression Testing
 
 ---
 
+## 🏭 SECCIÓN PRODUCCIÓN — Patrones de Infraestructura (77–79)
+
+Instrumentar y operar agentes IA de forma profesional en entornos reales.
+
+| # | Patrón | Propósito | Beneficio |
+|---|--------|----------|-----------|
+| **77** | **Observability & Tracing** | Trazar cada paso del agente con spans anidados | Visibilidad completa del flujo en producción |
+| **78** | **Token Budget** | Presupuesto de tokens por sesión con degradación elegante | Control de costos en tiempo real |
+| **79** | **Streaming** | Entrega de tokens en tiempo real con pipeline configurable | Latencia percibida ~0ms, interrupción temprana |
+
+```bash
+npm run pattern:77   # Observability & Tracing
+npm run pattern:78   # Token Budget
+npm run pattern:79   # Streaming
+```
+
+### Stack de producción completo
+
+```typescript
+// Composición de patrones para producción robusta
+import {
+  AgenteInstrumentado,    // P77: Trazar todo
+  AgenteConBudget,        // P78: Controlar costos
+  AgenteConStreaming,     // P79: Respuesta en tiempo real
+  AgenteSeguro,           // P69: Bloquear inyecciones
+  AgenteConCacheSemantica, // P48: Cache semántica (-60% llamadas)
+  CircuitBreaker,         // P45: Evitar fallos en cascada
+  RetryWithBackoff,       // P47: Recuperar fallos transitorios
+} from 'patrones-agentes-ia'
+```
+
+---
+
+## 📦 Uso como Librería npm
+
+### Importación directa (tree-shakeable)
+
+```typescript
+import { SistemaRAG } from './src/index.js'
+import { DefensorPromptInjection } from './src/index.js'
+import { JuezLLM, RUBRICA_ESTANDAR } from './src/index.js'
+```
+
+### Importación por categoría semántica
+
+```typescript
+// Sólo patrones de seguridad
+import { seguridad } from './src/index.js'
+
+// Sólo QA
+import { qa } from './src/index.js'
+
+// Sólo producción
+import { produccion } from './src/index.js'
+```
+
+### Ejemplo de combinación de patrones
+
+```typescript
+import { SistemaRAG, JuezLLM, DefensorPromptInjection } from './src/index.js'
+import { makeClient } from './src/index.js'
+
+const client = makeClient()
+const rag    = new SistemaRAG(client)
+const juez   = new JuezLLM(client)
+const defensor = new DefensorPromptInjection(client)
+
+async function procesarSolicitud(consulta: string) {
+  // 1. Verificar seguridad
+  const analisis = await defensor.analizar(consulta)
+  if (analisis.bloqueado) return { error: analisis.razon }
+
+  // 2. RAG para respuesta fundamentada
+  const { respuesta } = await rag.responderConRAG(consulta)
+
+  // 3. Evaluar calidad automáticamente
+  const { scorePonderado, veredicto } = await juez.juzgar(consulta, respuesta)
+
+  return { respuesta, calidad: { score: scorePonderado, veredicto } }
+}
+```
+
+---
+
 ## 📝 Licencia
 
 MIT — Libre para uso comercial y personal
@@ -376,4 +460,4 @@ MIT — Libre para uso comercial y personal
 
 ---
 
-*v10.0.0 — 76 Patrones — Incluye secciones de Ciberseguridad y QA ✅*
+*v11.0.0 — 79 Patrones — Observabilidad, Token Budget, Streaming + src/index.ts ✅*
