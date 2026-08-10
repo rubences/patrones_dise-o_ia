@@ -1,9 +1,9 @@
 # 🏛️ Patrones de Diseño para Sistemas Agénticos de IA — Biblioteca Exhaustiva
 
-Una biblioteca de **89 patrones de diseño** implementados en TypeScript: los 23 patrones Gang of Four completos, más patrones agénticos, de ciberseguridad, QA, producción, resiliencia/interoperabilidad multi-proveedor, coordinación emergente y privacidad.
+Una biblioteca de **94 patrones de diseño** implementados en TypeScript: los 23 patrones Gang of Four completos, más patrones agénticos, de ciberseguridad, QA, producción, resiliencia/interoperabilidad multi-proveedor, coordinación emergente, privacidad y operación en producción.
 
 ```
-89 patrones implementados
+94 patrones implementados
 ```
 
 ---
@@ -23,10 +23,10 @@ npm run pattern:54   # ReAct
 npm run pattern:68   # Zero-Shot CoT
 
 # Ejecutar todos
-for i in {1..89}; do npm run pattern:$i; done
+for i in {1..94}; do npm run pattern:$i; done
 ```
 
-Nota: los patrones 80–89 (Rate Limiting, Model Fallback, MCP Server Exposure, Dynamic Tool Discovery, Code Sandboxing, Idempotency Keys, Context Compaction, Blackboard, Batching, PII Redaction) no requieren `OPENAI_API_KEY` — su lógica es independiente del LLM y se ejecutan igual sin la variable configurada.
+Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo Canary Release, Meta-Prompting, Cost Attribution y Speculative Execution) no requieren `OPENAI_API_KEY` — su lógica es independiente del LLM y se ejecutan igual sin la variable configurada.
 
 ---
 
@@ -258,7 +258,12 @@ src/
 ├── pattern_86_context_compaction.ts       # Context Compaction (coordinación)
 ├── pattern_87_blackboard.ts               # Blackboard (coordinación emergente)
 ├── pattern_88_batching.ts                 # Batching (coordinación/costos)
-└── pattern_89_pii_redaction.ts            # PII Redaction / Anonymization (privacidad)
+├── pattern_89_pii_redaction.ts            # PII Redaction / Anonymization (privacidad)
+├── pattern_90_canary_release.ts           # Canary Release (producción)
+├── pattern_91_meta_prompting.ts           # Meta-Prompting (producción)
+├── pattern_92_cost_attribution.ts         # Cost Attribution / Chargeback (producción)
+├── pattern_93_speculative_execution.ts    # Speculative Execution (producción)
+└── pattern_94_health_check.ts             # Health Check / Readiness Probe (producción)
 ```
 
 ---
@@ -279,7 +284,8 @@ src/
 | v10.0.0 | 76 | — | +Ciberseguridad (69–72) y QA (73–76) |
 | v11.0.0 | 79 | — | +Producción (77–79) |
 | v12.0.0 | 84 | — | +Resiliencia e Interoperabilidad (80–84) |
-| **v13.0.0** | **89** | **—** | **+Coordinación Emergente y Privacidad (85–89)** |
+| v13.0.0 | 89 | — | +Coordinación Emergente y Privacidad (85–89) |
+| **v14.0.0** | **94** | **—** | **+Operación en Producción (90–94)** |
 
 *Desde v10.0.0 el catálogo superó la estimación inicial de "71 patrones conocidos" usada para calcular cobertura — el % se dejó de calcular porque el propio dominio (patrones agénticos de IA) sigue expandiéndose.*
 
@@ -309,6 +315,11 @@ src/
 | **Coordinación sin orquestador central** | 87 (Blackboard) vs 23 (Mediator) / 60 (Orchestrator) |
 | **Reducir llamadas de red simultáneas** | 88 (Batching) + 48 (Semantic Cache) |
 | **Proteger datos personales** | 89 (PII Redaction) + 71 (Secret Detection) + 53 (Guardrails) |
+| **Desplegar sin riesgo** | 90 (Canary Release) + 76 (Regression Testing) |
+| **Optimizar un prompt automáticamente** | 91 (Meta-Prompting) + 73 (LLM-as-Judge) |
+| **Facturación / FinOps multi-tenant** | 92 (Cost Attribution) + 78 (Token Budget) |
+| **Reducir latencia percibida** | 93 (Speculative Execution) + 79 (Streaming) |
+| **Observabilidad de infraestructura** | 94 (Health Check) + 77 (Observability) + 45 (Circuit Breaker) |
 
 ---
 
@@ -482,6 +493,28 @@ npm run pattern:86   # Context Compaction
 npm run pattern:87   # Blackboard
 npm run pattern:88   # Batching
 npm run pattern:89   # PII Redaction
+```
+
+---
+
+## 🏭 SECCIÓN OPERACIÓN EN PRODUCCIÓN — Patrones 90–94
+
+Desplegar cambios con seguridad, optimizar prompts automáticamente, saber cuánto cuesta cada cliente, reducir la latencia que percibe el usuario, y detectar problemas antes de que los sufra tráfico real. Ninguno requiere `OPENAI_API_KEY`.
+
+| # | Patrón | Propósito | Diferencia con patrones existentes |
+|---|--------|----------|--------------------------------------|
+| **90** | **Canary Release** | Libera gradualmente a un % creciente de tráfico, con rollback automático ante regresión | El Patrón 75 (A/B Testing) divide tráfico fijo y compara al final; aquí el rollback es automático y en tiempo real |
+| **91** | **Meta-Prompting** | Un LLM reescribe y optimiza un prompt/template a través de generaciones, evaluando cada variante | El Patrón 4 (Evaluator-Optimizer) itera la RESPUESTA a una pregunta; aquí se itera el PROMPT reutilizable en sí |
+| **92** | **Cost Attribution / Chargeback** | Registro agregado de coste por tenant/feature a través de muchas sesiones, para facturación y FinOps | El Patrón 78 (Token Budget) es control en tiempo real DENTRO de una sesión; aquí es reporte agregado ENTRE sesiones |
+| **93** | **Speculative Execution** | Muestra un draft rápido de inmediato mientras verifica en paralelo, corrigiendo solo si hace falta | El Patrón 39 (Cascade) escala niveles de forma SECUENCIAL; aquí ambos caminos corren en PARALELO desde el inicio |
+| **94** | **Health Check / Readiness Probe** | Verificación proactiva y periódica de dependencias, independiente del tráfico real | El Patrón 45 (Circuit Breaker) es REACTIVO a fallos de llamadas reales; aquí se detecta el problema ANTES de esa llamada |
+
+```bash
+npm run pattern:90   # Canary Release
+npm run pattern:91   # Meta-Prompting
+npm run pattern:92   # Cost Attribution
+npm run pattern:93   # Speculative Execution
+npm run pattern:94   # Health Check
 ```
 
 ---

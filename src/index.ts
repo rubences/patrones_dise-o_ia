@@ -145,6 +145,13 @@ export { Blackboard } from "./pattern_87_blackboard.js";
 export { BatchProcessor } from "./pattern_88_batching.js";
 export { AnonimizadorPII } from "./pattern_89_pii_redaction.js";
 
+// ── GRUPO 21: Operación en Producción (90–94) ────────────────────
+export { CanaryRelease } from "./pattern_90_canary_release.js";
+export { OptimizadorPrompts } from "./pattern_91_meta_prompting.js";
+export { RastreadorCostos } from "./pattern_92_cost_attribution.js";
+export { ejecutarSpeculativo } from "./pattern_93_speculative_execution.js";
+export { MonitorSalud } from "./pattern_94_health_check.js";
+
 // ── Re-exports agrupados por dominio ─────────────────────────────
 export const seguridad = {
   DefensorPromptInjection: "pattern_69",
@@ -180,4 +187,12 @@ export const coordinacionYPrivacidad = {
   Blackboard: "pattern_87",
   BatchProcessor: "pattern_88",
   AnonimizadorPII: "pattern_89",
+} as const;
+
+export const operacionProduccion = {
+  CanaryRelease: "pattern_90",
+  OptimizadorPrompts: "pattern_91",
+  RastreadorCostos: "pattern_92",
+  ejecutarSpeculativo: "pattern_93",
+  MonitorSalud: "pattern_94",
 } as const;

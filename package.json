@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "13.0.0",
-  "description": "89 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP, Resiliencia multi-proveedor, Coordinación emergente y Privacidad — usable como librería npm",
+  "version": "14.0.0",
+  "description": "94 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP, Resiliencia multi-proveedor, Coordinación emergente, Privacidad y Operación en producción — usable como librería npm",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -96,7 +96,12 @@
     "pattern:86": "node --loader ts-node/esm src/pattern_86_context_compaction.ts",
     "pattern:87": "node --loader ts-node/esm src/pattern_87_blackboard.ts",
     "pattern:88": "node --loader ts-node/esm src/pattern_88_batching.ts",
-    "pattern:89": "node --loader ts-node/esm src/pattern_89_pii_redaction.ts"
+    "pattern:89": "node --loader ts-node/esm src/pattern_89_pii_redaction.ts",
+    "pattern:90": "node --loader ts-node/esm src/pattern_90_canary_release.ts",
+    "pattern:91": "node --loader ts-node/esm src/pattern_91_meta_prompting.ts",
+    "pattern:92": "node --loader ts-node/esm src/pattern_92_cost_attribution.ts",
+    "pattern:93": "node --loader ts-node/esm src/pattern_93_speculative_execution.ts",
+    "pattern:94": "node --loader ts-node/esm src/pattern_94_health_check.ts"
   },
   "keywords": [
     "openai",
@@ -121,7 +126,11 @@
     "blackboard",
     "batching",
     "pii",
-    "privacy"
+    "privacy",
+    "canary-release",
+    "cost-attribution",
+    "health-check",
+    "speculative-execution"
   ],
   "author": "rubences",
   "license": "MIT",
