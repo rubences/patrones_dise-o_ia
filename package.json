@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "4.0.0",
-  "description": "24 patrones de diseño exhaustivos: 8 patrones agénticos + 10 patrones clásicos adicionales + 6 patrones de comportamiento avanzado, todos adaptados para sistemas de IA",
+  "version": "5.0.0",
+  "description": "35 patrones de diseño exhaustivos: 8 patrones agénticos + 4 patrones agénticos emergentes + 7 patrones GoF faltantes + 16 patrones estructurales y comportamiento avanzado, todos adaptados para sistemas de IA",
   "type": "module",
   "main": "src/common.ts",
   "scripts": {
@@ -28,7 +28,18 @@
     "pattern:21": "node --loader ts-node/esm src/pattern_21_proxy.ts",
     "pattern:22": "node --loader ts-node/esm src/pattern_22_memento.ts",
     "pattern:23": "node --loader ts-node/esm src/pattern_23_mediator.ts",
-    "pattern:24": "node --loader ts-node/esm src/pattern_24_template_method.ts"
+    "pattern:24": "node --loader ts-node/esm src/pattern_24_template_method.ts",
+    "pattern:25": "node --loader ts-node/esm src/pattern_25_rag.ts",
+    "pattern:26": "node --loader ts-node/esm src/pattern_26_chain_of_thought.ts",
+    "pattern:27": "node --loader ts-node/esm src/pattern_27_agentic_loop.ts",
+    "pattern:28": "node --loader ts-node/esm src/pattern_28_function_calling.ts",
+    "pattern:29": "node --loader ts-node/esm src/pattern_29_abstract_factory.ts",
+    "pattern:30": "node --loader ts-node/esm src/pattern_30_prototype.ts",
+    "pattern:31": "node --loader ts-node/esm src/pattern_31_bridge.ts",
+    "pattern:32": "node --loader ts-node/esm src/pattern_32_flyweight.ts",
+    "pattern:33": "node --loader ts-node/esm src/pattern_33_interpreter.ts",
+    "pattern:34": "node --loader ts-node/esm src/pattern_34_iterator.ts",
+    "pattern:35": "node --loader ts-node/esm src/pattern_35_visitor.ts"
   },
   "keywords": [
     "openai",
