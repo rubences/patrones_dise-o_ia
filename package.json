@@ -1,7 +1,7 @@
 {
-  "name": "cinco-patrones-agenticos-openai",
-  "version": "2.0.0",
-  "description": "Ocho patrones de diseño para construir agentes inteligentes y flujos de trabajo agénticos con OpenAI",
+  "name": "patrones-agentes-ia",
+  "version": "3.0.0",
+  "description": "14 patrones de diseño: 8 patrones agénticos + 6 patrones de diseño clásicos (Gang of Four) adaptados para sistemas de IA",
   "type": "module",
   "main": "src/common.ts",
   "scripts": {
@@ -12,18 +12,28 @@
     "pattern:5": "node --loader ts-node/esm src/pattern_5_tool_use.ts",
     "pattern:6": "node --loader ts-node/esm src/pattern_6_planning.ts",
     "pattern:7": "node --loader ts-node/esm src/pattern_7_multi_agent.ts",
-    "pattern:8": "node --loader ts-node/esm src/pattern_8_human_in_loop.ts"
+    "pattern:8": "node --loader ts-node/esm src/pattern_8_human_in_loop.ts",
+    "pattern:9": "node --loader ts-node/esm src/pattern_9_factory.ts",
+    "pattern:10": "node --loader ts-node/esm src/pattern_10_builder.ts",
+    "pattern:11": "node --loader ts-node/esm src/pattern_11_adapter.ts",
+    "pattern:12": "node --loader ts-node/esm src/pattern_12_decorator.ts",
+    "pattern:13": "node --loader ts-node/esm src/pattern_13_strategy.ts",
+    "pattern:14": "node --loader ts-node/esm src/pattern_14_chain.ts"
   },
   "keywords": [
     "openai",
     "agents",
     "ai",
-    "patterns",
+    "design-patterns",
+    "gang-of-four",
     "typescript",
     "llm",
-    "structured-outputs",
-    "prompting",
-    "agentic-workflows"
+    "agentic-workflows",
+    "factory",
+    "adapter",
+    "decorator",
+    "strategy",
+    "chain-of-responsibility"
   ],
   "author": "rubences",
   "license": "MIT",
