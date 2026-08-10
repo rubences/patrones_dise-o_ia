@@ -1,0 +1,104 @@
+/**
+ * ═══════════════════════════════════════════════════════════════
+ *  PATRÓN 5 — ORCHESTRATOR-WORKERS (jefe y especialistas)
+ * ═══════════════════════════════════════════════════════════════
+ *
+ *                ┌──▶ 📊 analista de mercado ──┐
+ *   idea ──▶ 👔 ─┼──▶ 🔧 experto técnico     ──┼──▶ 👔 síntesis
+ *                └──▶ ⚠️ analista de riesgos ──┘
+ *              (fan-out: en paralelo)      (fan-in: juntar todo)
+ *
+ *  Idea clave: los tres especialistas trabajan A LA VEZ
+ *  (Promise.all), cada uno con su propio prompt. Al final, el
+ *  orquestador junta las tres opiniones en una sola respuesta.
+ *
+ *  Ejemplo: evaluar una idea de negocio con un comité de expertos.
+ */
+
+import OpenAI from "openai";
+import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
+
+// Cada especialista es solo un prompt distinto.
+export const EQUIPO = {
+  mercado:
+    "Eres analista de mercado. Di quién compraría esto, " +
+    "qué competencia existe y cómo destacar. Sé breve.",
+  tecnico:
+    "Eres ingeniero de software senior. Di qué haría falta " +
+    "para construirlo y cuál es la parte más difícil. Sé breve.",
+  riesgos:
+    "Eres analista de riesgos. Di las dos formas más probables " +
+    "en que esta idea podría fracasar. Sé breve.",
+} as const;
+
+export interface ResultadoComite {
+  opiniones: Record<string, string>;
+  veredicto: string;
+}
+
+// ── Un especialista = una llamada con su prompt ────────────────
+async function consultarEspecialista(
+  client: OpenAI,
+  rol: string,
+  instrucciones: string,
+  idea: string,
+): Promise<readonly [string, string]> {
+  const respuesta = await client.responses.create({
+    model: DEFAULT_MODEL,
+    reasoning: { effort: "low" },
+    store: false,
+    instructions: instrucciones,
+    input: `Idea de negocio: ${idea}`,
+  });
+  console.log(`   ✔ ${rol} ha terminado`);
+  return [rol, respuesta.output_text] as const;
+}
+
+// ── El comité completo: fan-out en paralelo + fan-in ───────────
+export async function evaluarIdea(
+  idea: string,
+  client: OpenAI = makeClient(),
+): Promise<ResultadoComite> {
+  paso("🚀", "Fan-out: los 3 especialistas trabajan en paralelo…");
+
+  // Promise.all lanza las tres llamadas A LA VEZ y espera a que
+  // terminen todas. Tarda lo que el especialista más lento, no
+  // la suma de los tres.
+  const pares = await Promise.all(
+    Object.entries(EQUIPO).map(([rol, instrucciones]) =>
+      consultarEspecialista(client, rol, instrucciones, idea),
+    ),
+  );
+  const opiniones = Object.fromEntries(pares);
+
+  paso("👔", "Fan-in: el orquestador junta las tres opiniones…");
+  const sintesis = await client.responses.create({
+    model: DEFAULT_MODEL,
+    reasoning: { effort: "low" },
+    store: false,
+    instructions:
+      "Eres el orquestador del comité. Integra las tres opiniones " +
+      "en un veredicto claro: ¿merece la pena intentarlo y por qué? " +
+      "Menciona los desacuerdos si los hay.",
+    input: Object.entries(opiniones)
+      .map(([rol, texto]) => `[${rol.toUpperCase()}]\n${texto}`)
+      .join("\n\n"),
+  });
+
+  return { opiniones, veredicto: sintesis.output_text };
+}
+
+async function main(): Promise<void> {
+  const resultado = await evaluarIdea(
+    "una app que avisa cuándo regar cada planta de tu casa",
+  );
+  paso("✅", "Veredicto del comité");
+  console.log(resultado.veredicto);
+}
+
+if (isDirectRun(import.meta.url)) {
+  main().catch((error: unknown) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
