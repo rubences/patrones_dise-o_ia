@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "7.0.0",
-  "description": "50 patrones de diseño para sistemas agénticos de IA: GoF completo + agénticos emergentes + escalabilidad y confiabilidad (Ensemble, Circuit Breaker, Bulkhead, Retry, Semantic Cache, Prompt Compression, Multi-Modal...)",
+  "version": "8.0.0",
+  "description": "60 patrones de diseño para sistemas agénticos de IA: GoF completo + agénticos (RAG, CoT, ToT, ReAct, Scratchpad, Swarm, Guardrails, Grounding, LTM, Rollback, Orchestrator...) en TypeScript",
   "type": "module",
   "main": "src/common.ts",
   "scripts": {
@@ -54,7 +54,17 @@
     "pattern:47": "node --loader ts-node/esm src/pattern_47_retry_backoff.ts",
     "pattern:48": "node --loader ts-node/esm src/pattern_48_semantic_cache.ts",
     "pattern:49": "node --loader ts-node/esm src/pattern_49_prompt_compression.ts",
-    "pattern:50": "node --loader ts-node/esm src/pattern_50_multi_modal.ts"
+    "pattern:50": "node --loader ts-node/esm src/pattern_50_multi_modal.ts",
+    "pattern:51": "node --loader ts-node/esm src/pattern_51_long_term_memory.ts",
+    "pattern:52": "node --loader ts-node/esm src/pattern_52_grounding.ts",
+    "pattern:53": "node --loader ts-node/esm src/pattern_53_guardrails.ts",
+    "pattern:54": "node --loader ts-node/esm src/pattern_54_react.ts",
+    "pattern:55": "node --loader ts-node/esm src/pattern_55_scratchpad.ts",
+    "pattern:56": "node --loader ts-node/esm src/pattern_56_agent_swarm.ts",
+    "pattern:57": "node --loader ts-node/esm src/pattern_57_task_delegation.ts",
+    "pattern:58": "node --loader ts-node/esm src/pattern_58_rollback.ts",
+    "pattern:59": "node --loader ts-node/esm src/pattern_59_structured_output.ts",
+    "pattern:60": "node --loader ts-node/esm src/pattern_60_orchestrator_workers.ts"
   },
   "keywords": [
     "openai",
