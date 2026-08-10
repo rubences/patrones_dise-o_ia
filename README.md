@@ -1,9 +1,9 @@
 # 🏛️ Patrones de Diseño para Sistemas Agénticos de IA — Biblioteca Exhaustiva
 
-Una biblioteca de **94 patrones de diseño** implementados en TypeScript: los 23 patrones Gang of Four completos, más patrones agénticos, de ciberseguridad, QA, producción, resiliencia/interoperabilidad multi-proveedor, coordinación emergente, privacidad y operación en producción.
+Una biblioteca de **99 patrones de diseño** implementados en TypeScript: los 23 patrones Gang of Four completos, más patrones agénticos, de ciberseguridad, QA, producción, resiliencia/interoperabilidad multi-proveedor, coordinación emergente, privacidad, operación en producción y experiencia de usuario.
 
 ```
-94 patrones implementados
+99 patrones implementados
 ```
 
 ---
@@ -35,6 +35,7 @@ Una biblioteca de **94 patrones de diseño** implementados en TypeScript: los 23
   - [GRUPO 19 — Resiliencia e Interoperabilidad (80–84)](#anchor-grupo-19)
   - [GRUPO 20 — Coordinación Emergente y Privacidad (85–89)](#anchor-grupo-20)
   - [GRUPO 21 — Operación en Producción (90–94)](#anchor-grupo-21)
+  - [GRUPO 22 — Experiencia de Usuario (95–99)](#anchor-grupo-22)
 - [🏗️ Estructura del Proyecto](#anchor-estructura)
 - [📈 Progresión por Versiones](#anchor-progresion)
 - [🎯 Guía de Selección Rápida](#anchor-seleccion)
@@ -60,7 +61,7 @@ npm run pattern:54   # ReAct
 npm run pattern:68   # Zero-Shot CoT
 
 # Ejecutar todos
-for i in {1..94}; do npm run pattern:$i; done
+for i in {1..99}; do npm run pattern:$i; done
 ```
 
 Nota: los patrones 80–94 (desde Rate Limiting hasta Health Check, incluyendo Canary Release, Meta-Prompting, Cost Attribution y Speculative Execution) no requieren `OPENAI_API_KEY` — su lógica es independiente del LLM y se ejecutan igual sin la variable configurada.
@@ -399,6 +400,27 @@ npm run pattern:93   # Speculative Execution
 npm run pattern:94   # Health Check
 ```
 
+<a id="anchor-grupo-22"></a>
+### 🙋 GRUPO 22 — Experiencia de Usuario (95–99)
+
+Saber cuándo preguntar en vez de adivinar, cuándo transferir a un humano con contexto completo, adaptar el comportamiento a cómo reacciona cada usuario, hacer verificable cada afirmación, y poblar datasets de prueba sin autoría manual caso a caso. Ninguno requiere `OPENAI_API_KEY`.
+
+| # | Patrón | Propósito | Diferencia con patrones existentes |
+|---|--------|----------|--------------------------------------|
+| **95** | **Escalation to Human / Handoff** | Transfiere TODA la conversación a un humano con un resumen accionable cuando el agente reconoce que no puede resolver el caso | El Patrón 8 (Human-in-Loop) aprueba UNA acción de riesgo y el agente sigue operando; aquí el agente deja de intervenir |
+| **96** | **Clarification Loop** | Pregunta en vez de adivinar cuando la entrada admite ≥2 interpretaciones razonables | Distinto del Patrón 8: no es aprobar una acción, es resolver ambigüedad de INTENCIÓN antes de decidir cualquier acción |
+| **97** | **Preference Learning** | Ajusta pesos de rasgos de comportamiento a partir de señales explícitas e implícitas del usuario a lo largo del tiempo | El Patrón 64 (Persona) es una identidad estática predefinida; el Patrón 51 (Long-Term Memory) guarda hechos, no pesos de comportamiento inferidos |
+| **98** | **Citation / Source Attribution** | Formato de cita inline trazable a la fuente exacta, con métrica de cobertura de citas | El Patrón 52 (Grounding) VERIFICA si una afirmación es fiel a la fuente; este patrón da FORMATO y trazabilidad, asumiendo que ya se sabe la fuente |
+| **99** | **Synthetic Data Generation** | Genera casos de prueba/entrenamiento a escala a partir de plantillas parametrizadas y reproducibles por semilla | El Patrón 76 (Regression Testing) y el 74 (Red Teaming) CONSUMEN datasets ya existentes; este patrón los GENERA o amplía |
+
+```bash
+npm run pattern:95   # Escalation to Human
+npm run pattern:96   # Clarification Loop
+npm run pattern:97   # Preference Learning
+npm run pattern:98   # Citation Attribution
+npm run pattern:99   # Synthetic Data Generation
+```
+
 ---
 
 <a id="anchor-estructura"></a>
@@ -473,7 +495,12 @@ src/
 ├── pattern_91_meta_prompting.ts           # Meta-Prompting (producción)
 ├── pattern_92_cost_attribution.ts         # Cost Attribution / Chargeback (producción)
 ├── pattern_93_speculative_execution.ts    # Speculative Execution (producción)
-└── pattern_94_health_check.ts             # Health Check / Readiness Probe (producción)
+├── pattern_94_health_check.ts             # Health Check / Readiness Probe (producción)
+├── pattern_95_human_escalation.ts         # Escalation to Human / Handoff (experiencia de usuario)
+├── pattern_96_clarification_loop.ts       # Clarification Loop (experiencia de usuario)
+├── pattern_97_preference_learning.ts      # Preference Learning (experiencia de usuario)
+├── pattern_98_citation_attribution.ts     # Citation / Source Attribution (experiencia de usuario)
+└── pattern_99_synthetic_data.ts           # Synthetic Data Generation (experiencia de usuario)
 ```
 
 ---
@@ -496,7 +523,8 @@ src/
 | v11.0.0 | 79 | — | +Producción (77–79) |
 | v12.0.0 | 84 | — | +Resiliencia e Interoperabilidad (80–84) |
 | v13.0.0 | 89 | — | +Coordinación Emergente y Privacidad (85–89) |
-| **v14.0.0** | **94** | **—** | **+Operación en Producción (90–94)** |
+| v14.0.0 | 94 | — | +Operación en Producción (90–94) |
+| **v15.0.0** | **99** | **—** | **+Experiencia de Usuario (95–99)** |
 
 *Desde v10.0.0 el catálogo superó la estimación inicial de "71 patrones conocidos" usada para calcular cobertura — el % se dejó de calcular porque el propio dominio (patrones agénticos de IA) sigue expandiéndose.*
 
@@ -504,6 +532,30 @@ src/
 
 <a id="anchor-seleccion"></a>
 ## 🎯 Guía de Selección Rápida
+
+Dos formas de usar esta guía: por **caso de uso** (qué estás construyendo) si ya tienes un producto en mente, o por **necesidad técnica** (qué problema puntual tienes) si buscas un patrón concreto dentro de algo más grande.
+
+### Por caso de uso habitual
+
+| Qué estás construyendo | Patrones recomendados | Por qué esta combinación |
+|---|---|---|
+| **Chatbot de soporte / atención al cliente** | 25 (RAG) + 53 (Guardrails) + 95 (Escalation to Human) + 78 (Token Budget) | RAG responde desde la base de conocimiento, Guardrails filtra entradas/salidas, Escalation transfiere con contexto cuando el agente no puede resolver, Token Budget controla el coste por conversación |
+| **Asistente de código / copiloto interno** | 5 (Tool Use) + 28 (Function Calling) + 84 (Code Sandboxing) + 59 (Structured Output) | El agente decide qué herramienta usar, invoca funciones de forma determinística, y cualquier código que genere se ejecuta aislado antes de confiar en su salida |
+| **Agente de investigación / research assistant** | 27 (Agentic Loop) + 54 (ReAct) + 41 (Retrieval with Ranking) + 55 (Scratchpad) | Plan→Act→Observe→Reflect con razonamiento intercalado, recuperación de alta precisión, y un bloc de notas interno para no perder el hilo en tareas largas |
+| **Base de conocimiento interna con IA (RAG corporativo)** | 25 (RAG) + 66 (Contextual Compression) + 98 (Citation Attribution) + 52 (Grounding) | RAG + compresión para no saturar contexto, cada afirmación citada a su documento fuente, y Grounding verifica que no haya alucinaciones |
+| **Moderación de contenido a escala** | 2 (Router) + 53 (Guardrails) + 48 (Semantic Cache) | Enruta por tipo de contenido, aplica barreras de política, y cachea evaluaciones de contenido semánticamente repetido para no reprocesar |
+| **SaaS multi-tenant con IA (necesitas facturar por cliente)** | 92 (Cost Attribution) + 78 (Token Budget) + 80 (Rate Limiting) + 72 (Access Control) | Coste agregado por tenant para facturar, presupuesto por sesión, rate limiting por API key, y permisos por rol de cliente |
+| **Triage / automatización de tickets de soporte** | 2 (Router) + 9 (Factory) + 57 (Task Delegation) + 99 (Synthetic Data) | Enruta cada ticket al agente especializado adecuado, y genera datasets sintéticos para ampliar cobertura de categorías poco representadas |
+| **Generador de contenido (marketing, blog, copy)** | 91 (Meta-Prompting) + 61 (Few-Shot) + 75 (A/B Testing) + 62 (Constitutional AI) | Optimiza el prompt automáticamente, guía con ejemplos, compara variantes con métricas, y aplica principios editoriales consistentes |
+| **Agente que ejecuta acciones reales (reservas, pagos, cambios de datos)** | 8 (Human-in-Loop) + 85 (Idempotency Keys) + 58 (Rollback) + 72 (Access Control) | Aprobación humana antes de la acción de riesgo, sin duplicar el efecto si se reintenta, con reversión disponible y permisos explícitos |
+| **Chat con respuesta en tiempo real (baja latencia percibida)** | 79 (Streaming) + 93 (Speculative Execution) + 27 (Agentic Loop) | Entrega token a token, muestra un draft rápido mientras se verifica en paralelo, y mantiene el ciclo plan-actúa-observa |
+| **Migrar un prompt/modelo a producción sin downtime** | 90 (Canary Release) + 76 (Regression Testing) + 75 (A/B Testing) | Rollout progresivo con rollback automático, tests de regresión en cada cambio, y comparación de variantes antes de decidir el ganador |
+| **Evitar depender de un único proveedor de LLM** | 81 (Model Fallback) + 45 (Circuit Breaker) + 39 (Cascade) | Conmuta de proveedor ante fallo/rate-limit, protege llamadas con circuit breaker, y escala a un modelo más potente solo cuando hace falta |
+| **Agente conversacional que se adapta al usuario con el tiempo** | 97 (Preference Learning) + 51 (Long-Term Memory) + 86 (Context Compaction) | Ajusta comportamiento por feedback implícito/explícito, recuerda hechos entre sesiones, y compacta conversaciones largas sin perder contexto clave |
+| **Exponer las capacidades del agente a otras herramientas/IDEs** | 82 (MCP Server Exposure) + 83 (Dynamic Tool Discovery) + 72 (Access Control) | Expone tools vía protocolo estándar, permite descubrimiento dinámico en runtime, y controla qué cliente puede invocar qué |
+| **CI/CD de calidad para prompts y agentes** | 73 (LLM-as-Judge) + 76 (Regression Testing) + 74 (Red Teaming) + 99 (Synthetic Data) | Evalúa calidad continuamente, detecta regresiones en cada cambio, prueba brechas de seguridad, y genera casos de prueba a escala |
+
+### Por necesidad técnica puntual
 
 | Necesidad | Patrón |
 |-----------|--------|
@@ -516,7 +568,7 @@ src/
 | **Múltiples agentes** | 7 (Multi-Agent) + 56 (Swarm) + 60 (Orchestrator) + 57 (Delegation) |
 | **Confiabilidad** | 45 (Circuit Breaker) + 46 (Bulkhead) + 47 (Retry) + 44 (Checkpoint) |
 | **Recuperar de fallos** | 44 (Checkpoint) + 58 (Rollback) |
-| **Personalización** | 64 (Persona) + 51 (Long-Term Memory) |
+| **Personalización** | 64 (Persona) + 51 (Long-Term Memory) + 97 (Preference Learning) |
 | **Crear agentes dinámicamente** | 9 (Factory) + 29 (Abstract Factory) + 65 (Registry) |
 | **Añadir capacidades** | 12 (Decorator) + 21 (Proxy) |
 | **Resiliencia multi-proveedor** | 80 (Rate Limiting) + 81 (Model Fallback) + 45 (Circuit Breaker) |
@@ -532,6 +584,10 @@ src/
 | **Facturación / FinOps multi-tenant** | 92 (Cost Attribution) + 78 (Token Budget) |
 | **Reducir latencia percibida** | 93 (Speculative Execution) + 79 (Streaming) |
 | **Observabilidad de infraestructura** | 94 (Health Check) + 77 (Observability) + 45 (Circuit Breaker) |
+| **Preguntar en vez de adivinar** | 96 (Clarification Loop) |
+| **Transferir a un humano con contexto completo** | 95 (Escalation to Human) |
+| **Hacer una respuesta verificable** | 98 (Citation Attribution) + 52 (Grounding) |
+| **Poblar un dataset de prueba sin autoría manual** | 99 (Synthetic Data Generation) |
 
 ---
 
@@ -590,6 +646,7 @@ import { produccion } from './src/index.js'               // Patrones 77-79
 import { interoperabilidad } from './src/index.js'        // Patrones 80-84
 import { coordinacionYPrivacidad } from './src/index.js'  // Patrones 85-89
 import { operacionProduccion } from './src/index.js'      // Patrones 90-94
+import { experienciaUsuario } from './src/index.js'        // Patrones 95-99
 ```
 
 ### Ejemplo de combinación de patrones
@@ -630,4 +687,4 @@ MIT — Libre para uso comercial y personal
 
 ---
 
-*v14.0.0 — 94 Patrones — GoF completo + Agénticos + Ciberseguridad + QA + Producción + Resiliencia/Interoperabilidad + Coordinación Emergente + Privacidad + Operación en Producción*
+*v15.0.0 — 99 Patrones — GoF completo + Agénticos + Ciberseguridad + QA + Producción + Resiliencia/Interoperabilidad + Coordinación Emergente + Privacidad + Operación en Producción + Experiencia de Usuario*

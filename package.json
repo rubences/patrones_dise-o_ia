@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "14.0.0",
-  "description": "94 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP, Resiliencia multi-proveedor, Coordinación emergente, Privacidad y Operación en producción — usable como librería npm",
+  "version": "15.0.0",
+  "description": "99 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP, Resiliencia multi-proveedor, Coordinación emergente, Privacidad, Operación en producción y Experiencia de usuario — usable como librería npm",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -101,7 +101,12 @@
     "pattern:91": "node --loader ts-node/esm src/pattern_91_meta_prompting.ts",
     "pattern:92": "node --loader ts-node/esm src/pattern_92_cost_attribution.ts",
     "pattern:93": "node --loader ts-node/esm src/pattern_93_speculative_execution.ts",
-    "pattern:94": "node --loader ts-node/esm src/pattern_94_health_check.ts"
+    "pattern:94": "node --loader ts-node/esm src/pattern_94_health_check.ts",
+    "pattern:95": "node --loader ts-node/esm src/pattern_95_human_escalation.ts",
+    "pattern:96": "node --loader ts-node/esm src/pattern_96_clarification_loop.ts",
+    "pattern:97": "node --loader ts-node/esm src/pattern_97_preference_learning.ts",
+    "pattern:98": "node --loader ts-node/esm src/pattern_98_citation_attribution.ts",
+    "pattern:99": "node --loader ts-node/esm src/pattern_99_synthetic_data.ts"
   },
   "keywords": [
     "openai",
@@ -130,7 +135,12 @@
     "canary-release",
     "cost-attribution",
     "health-check",
-    "speculative-execution"
+    "speculative-execution",
+    "human-escalation",
+    "clarification",
+    "preference-learning",
+    "citations",
+    "synthetic-data"
   ],
   "author": "rubences",
   "license": "MIT",
