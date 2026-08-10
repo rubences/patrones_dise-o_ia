@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "9.0.0",
-  "description": "68 patrones de diseño para sistemas agénticos de IA: GoF completo, RAG, CoT, ToT, ReAct, Swarm, Constitutional AI, Debate, Few-Shot, Persona, Guardrails, Grounding, LTM y más — 95.8% de cobertura",
+  "version": "10.0.0",
+  "description": "76 patrones para sistemas agénticos de IA: GoF completo + Agénticos + Ciberseguridad (Prompt Injection Defense, Adversarial Robustness, Secret Detection, Access Control) + QA (LLM-as-Judge, Red Teaming, A/B Testing, Regression Testing)",
   "type": "module",
   "main": "src/common.ts",
   "scripts": {
@@ -72,7 +72,15 @@
     "pattern:65": "node --loader ts-node/esm src/pattern_65_agent_registry.ts",
     "pattern:66": "node --loader ts-node/esm src/pattern_66_contextual_compression.ts",
     "pattern:67": "node --loader ts-node/esm src/pattern_67_output_parsers.ts",
-    "pattern:68": "node --loader ts-node/esm src/pattern_68_zero_shot_cot.ts"
+    "pattern:68": "node --loader ts-node/esm src/pattern_68_zero_shot_cot.ts",
+    "pattern:69": "node --loader ts-node/esm src/pattern_69_prompt_injection_defense.ts",
+    "pattern:70": "node --loader ts-node/esm src/pattern_70_adversarial_robustness.ts",
+    "pattern:71": "node --loader ts-node/esm src/pattern_71_secret_detection.ts",
+    "pattern:72": "node --loader ts-node/esm src/pattern_72_access_control.ts",
+    "pattern:73": "node --loader ts-node/esm src/pattern_73_llm_as_judge.ts",
+    "pattern:74": "node --loader ts-node/esm src/pattern_74_red_teaming.ts",
+    "pattern:75": "node --loader ts-node/esm src/pattern_75_ab_testing.ts",
+    "pattern:76": "node --loader ts-node/esm src/pattern_76_regression_testing.ts"
   },
   "keywords": [
     "openai",

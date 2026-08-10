@@ -299,6 +299,70 @@ export OPENAI_MODEL=gpt-4-turbo  # opcional
 - **Constitutional AI**: Anthropic (2022) — Self-critique alignment
 - **ReAct**: Yao et al. (2022) — Synergizing Reasoning and Acting
 - **Tree of Thoughts**: Yao et al. (2023) — Deliberate Problem Solving
+- **Prompt Injection Defense**: OWASP LLM Top 10 (2024) — LLM01
+- **Adversarial Robustness**: Goodfellow et al. — Adversarial Examples
+- **Constitutional AI**: Anthropic (2022) — CAI Framework
+
+---
+
+## 🔐 SECCIÓN CIBERSEGURIDAD — Patrones de Seguridad (69–72)
+
+Proteger sistemas agénticos contra amenazas, ataques y uso indebido.
+
+| # | Patrón | Amenaza | Técnica |
+|---|--------|---------|---------|
+| **69** | **Prompt Injection Defense** | Inyección, jailbreak, prompt leaking | Heurístico multicapa + LLM meta-evaluador |
+| **70** | **Adversarial Robustness** | Entradas perturbadas, evasión | Suite adversarial + score de estabilidad |
+| **71** | **Secret Detection & Masking** | Leaks: API keys, tokens, PII, credenciales | Regex + enmascaramiento automático |
+| **72** | **Access Control for Agents** | Escalada de privilegios, acceso no autorizado | RBAC/ABAC por rol de agente |
+
+### Stack defensivo recomendado
+
+```
+Input → [P69: Prompt Injection Defense]
+      → [P72: Access Control]
+      → LLM
+      → [P71: Secret Masking]
+      → Output
+
+Auditoría: P70 (Adversarial) + P74 (Red Team) periódicamente
+```
+
+```bash
+npm run pattern:69   # Prompt Injection Defense
+npm run pattern:70   # Adversarial Robustness
+npm run pattern:71   # Secret Detection & Masking
+npm run pattern:72   # Access Control for Agents
+```
+
+---
+
+## 🧪 SECCIÓN QA — Patrones de Calidad (73–76)
+
+Garantizar, medir y mantener calidad de agentes IA en el tiempo.
+
+| # | Patrón | Propósito | Cuándo usarlo |
+|---|--------|----------|---------------|
+| **73** | **LLM-as-Judge** | Evaluar respuestas con rúbricas multi-dimensionales | Monitoreo continuo en producción |
+| **74** | **Red Teaming** | Probar brechas de seguridad sistemáticamente | Antes de cada release |
+| **75** | **A/B Testing for Prompts** | Comparar variantes de prompts con métricas | Al cambiar system prompts |
+| **76** | **Regression Testing** | Detectar degradación de calidad entre versiones | En cada PR / deploy |
+
+### Pipeline CI/CD de calidad
+
+```
+PR abierto    → P76 Regression Tests (golden tests automáticos)
+Release        → P74 Red Teaming (seguridad) + P73 LLM-Judge (calidad)
+Prod monitor   → P73 LLM-as-Judge continuo
+Cambio prompt  → P75 A/B Testing
+```
+
+```bash
+npm run pattern:73   # LLM-as-Judge
+npm run pattern:74   # Red Teaming
+npm run pattern:75   # A/B Testing for Prompts
+npm run pattern:76   # Regression Testing
+```
 
 ---
 
@@ -312,4 +376,4 @@ MIT — Libre para uso comercial y personal
 
 ---
 
-*v9.0.0 — 68/71 Patrones — 95.8% Cobertura — FASE FINAL COMPLETADA ✅*
+*v10.0.0 — 76 Patrones — Incluye secciones de Ciberseguridad y QA ✅*
