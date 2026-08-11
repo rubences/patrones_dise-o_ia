@@ -713,4 +713,4 @@ MIT — Libre para uso comercial y personal
 
 ---
 
-*v15.0.0 — 99 Patrones — GoF completo + Agénticos + Ciberseguridad + QA + Producción + Resiliencia/Interoperabilidad + Coordinación Emergente + Privacidad + Operación en Producción + Experiencia de Usuario*
+*v16.0.0 — 102 Patrones — GoF completo + Agénticos + Ciberseguridad + QA + Producción + Resiliencia/Interoperabilidad + Coordinación Emergente + Privacidad + Operación en Producción + Experiencia de Usuario + Seguridad de Agentes Autónomos*
