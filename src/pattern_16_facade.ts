@@ -48,14 +48,14 @@ class ComponenteAnalisis implements ComponenteSubsistema {
 }
 
 class ComponenteValidacion implements ComponenteSubsistema {
-  async procesar(entrada: string): Promise<string> {
+  async procesar(_entrada: string): Promise<string> {
     console.log("  [Validación] Verificando datos...");
     return `✅ Datos validados correctamente`;
   }
 }
 
 class ComponenteAlmacenamiento implements ComponenteSubsistema {
-  async procesar(entrada: string): Promise<string> {
+  async procesar(_entrada: string): Promise<string> {
     console.log("  [Almacenamiento] Guardando en BD...");
     return `Guardado con ID: ${Math.random().toString(36).substring(7)}`;
   }

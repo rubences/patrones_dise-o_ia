@@ -83,7 +83,7 @@ export class TareaCompuesta implements Elemento {
 
 // ── VISITORS concretos ─────────────────────────────────────────────
 export class VisitorContador implements Visitor {
-  visitarTareaSimple(tarea: TareaSimple): number {
+  visitarTareaSimple(): number {
     return 1;
   }
 

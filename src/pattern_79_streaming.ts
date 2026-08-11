@@ -161,16 +161,14 @@ export class AgenteConStreaming {
   }> {
     const marcadoresDetectados: string[] = [];
     let tokensRecibidos = 0;
-    let ultimaLinea = "";
 
     const texto = await this.responderStreaming(prompt, {
-      onToken: (token, acumulado) => {
+      onToken: () => {
         tokensRecibidos++;
         // Mostrar progreso cada 5 tokens
         if (tokensRecibidos % 5 === 0) {
           process.stdout.write(".");
         }
-        ultimaLinea = token;
       },
       onCompletado: (textoFinal) => {
         console.log(`\n   [Stream completado: ${textoFinal.split(" ").length} palabras]`);
@@ -217,7 +215,8 @@ export async function demostrarStreaming(client: OpenAI = makeClient()): Promise
       "Explica el patrón Observer y por qué es importante en sistemas de IA",
     );
 
-  console.log(`\n   Tokens recibidos: ${tokensRecibidos}`);
+  console.log(`\n   Texto recibido: "${texto.trim().slice(0, 100)}..."`);
+  console.log(`   Tokens recibidos: ${tokensRecibidos}`);
   console.log(`   Marcadores detectados: ${marcadoresDetectados.length > 0 ? marcadoresDetectados.join(", ") : "ninguno"}`);
 
   paso("3️⃣", "Streaming con límite de tokens (interrupción temprana)");

@@ -74,7 +74,6 @@ async function reflexionarSobreRespuesta(
 
   // Parsear la respuesta reflexiva (simplificado)
   const texto = reflexion.output_text;
-  const lineas = texto.split("\n");
   return {
     claridad: 7,
     corrección: 8,

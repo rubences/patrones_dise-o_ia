@@ -97,7 +97,7 @@ export class TareaCompuesta implements Tarea {
     for (const subtarea of this.subtareas) {
       try {
         const resultado = await subtarea.ejecutar(client);
-        resultados.push(`✓ ${subtarea.nombre}`);
+        resultados.push(`✓ ${subtarea.nombre}: ${resultado.slice(0, 40)}`);
       } catch (error) {
         resultados.push(`✗ ${subtarea.nombre}: ${error}`);
       }

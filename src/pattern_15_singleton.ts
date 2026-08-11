@@ -219,7 +219,7 @@ export async function demostrarSingleton(): Promise<void> {
 
   const pool1 = PoolConexionesLLM.obtenerInstancia(3);
   const conn1 = pool1.obtenerConexion();
-  console.log(`   Conexión obtenida`);
+  console.log(`   Conexión obtenida: ${conn1 instanceof OpenAI ? "cliente OpenAI válido" : "inválida"}`);
   console.log(`   Estado: ${JSON.stringify(pool1.obtenerEstado())}`);
 
   // Otra "referencia" obtiene la misma instancia

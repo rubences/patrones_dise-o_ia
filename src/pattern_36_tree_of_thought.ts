@@ -117,11 +117,12 @@ export class TreeOfThought {
 
   private async generarPensamiento(problema: string, contexto: string, variante: number): Promise<string> {
     const angulos = ["Desde un enfoque técnico", "Desde un enfoque práctico", "Desde un enfoque innovador"];
+    const contextoPrevio = contexto ? `\n\nRazonamiento del nodo padre: ${contexto}` : "";
     const resp = await this.client.responses.create({
       model: DEFAULT_MODEL,
       reasoning: { effort: "low" },
       store: false,
-      instructions: `${angulos[(variante - 1) % 3]}, proporciona un camino de razonamiento (2-3 oraciones) para: ${problema}`,
+      instructions: `${angulos[(variante - 1) % 3]}, proporciona un camino de razonamiento (2-3 oraciones) para: ${problema}${contextoPrevio}`,
       input: "",
     });
     return resp.output_text;

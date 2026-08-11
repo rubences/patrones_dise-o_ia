@@ -58,7 +58,6 @@ export interface IteracionAgente {
 export class AgenteConLoopIterativo {
   private nombre: string;
   private cliente: OpenAI;
-  private objetivo: string = "";
   private iteraciones: IteracionAgente[] = [];
   private maxIteraciones: number = 5;
 
@@ -72,11 +71,10 @@ export class AgenteConLoopIterativo {
     iteraciones: IteracionAgente[];
     exito: boolean;
   }> {
-    this.objetivo = objetivo;
     this.iteraciones = [];
 
     console.log(`\n   🎯 Objetivo: ${objetivo}`);
-    console.log(`   🔄 Iniciando Agentic Loop (máx ${this.maxIteraciones} iteraciones)\n`);
+    console.log(`   🔄 [${this.nombre}] Iniciando Agentic Loop (máx ${this.maxIteraciones} iteraciones)\n`);
 
     for (
       let i = 1;
@@ -107,7 +105,7 @@ export class AgenteConLoopIterativo {
 
       // Paso 3: Actuar
       iteracion.estado = "actuando";
-      iteracion.accion = await this.actuar(iteracion.plan);
+      iteracion.accion = await this.actuar();
       console.log(`   ⚙️  Acción: ${iteracion.accion.slice(0, 80)}...`);
 
       // Paso 4: Observar
@@ -186,7 +184,7 @@ Proporciona un análisis breve de qué se necesita hacer.`,
     return respuesta.output_text.slice(0, 200);
   }
 
-  private async actuar(plan: string): Promise<string> {
+  private async actuar(): Promise<string> {
     // Simular ejecución de acciones
     const acciones = [
       "✓ Configuración completada",

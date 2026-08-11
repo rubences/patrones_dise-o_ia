@@ -85,10 +85,8 @@ Si puedes contribuir, responde con tu aportación en 1-2 oraciones.`,
 
 export class SwarmCoordinador {
   private agentes: AgenteSwarm[];
-  private client: OpenAI;
 
   constructor(client: OpenAI = makeClient()) {
-    this.client = client;
     this.agentes = [
       new AgenteSwarm("Experto-Arquitectura", "arquitectura de sistemas", client),
       new AgenteSwarm("Experto-Seguridad", "ciberseguridad y privacidad", client),

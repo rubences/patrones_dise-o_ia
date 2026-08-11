@@ -157,10 +157,12 @@ export function demostrarFlyweight(): void {
   const exp1 = pool.crearObtener("experto", configExperto);
   const exp2 = pool.crearObtener("experto", configExperto);
   const exp3 = pool.crearObtener("experto", configExperto);
+  console.log(`   Misma instancia compartida (exp1 === exp2 === exp3): ${exp1 === exp2 && exp2 === exp3}`);
 
   console.log(`\n   Obtener flyweight "Creativo" (2 usuarios):`);
   const cre1 = pool.crearObtener("creativo", configCreativo);
   const cre2 = pool.crearObtener("creativo", configCreativo);
+  console.log(`   Misma instancia compartida (cre1 === cre2): ${cre1 === cre2}`);
 
   paso("2️⃣", "Procesar solicitudes con contexto específico");
 

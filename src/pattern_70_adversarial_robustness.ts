@@ -159,10 +159,8 @@ ESTABLE: [SÍ/NO]`,
 export class TestadorRobustez {
   private generador: GeneradorAdversarial;
   private evaluador: EvaluadorRobustez;
-  private client: OpenAI;
 
   constructor(client: OpenAI = makeClient()) {
-    this.client = client;
     this.generador = new GeneradorAdversarial(client);
     this.evaluador = new EvaluadorRobustez(client);
   }

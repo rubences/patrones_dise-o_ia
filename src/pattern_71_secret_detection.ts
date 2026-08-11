@@ -90,7 +90,7 @@ export class DetectorSecretos {
     // Ordenar por posición y eliminar solapamientos con el patrón genérico
     return secretos
       .sort((a, b) => a.posicion.inicio - b.posicion.inicio)
-      .filter((s, i, arr) => {
+      .filter((s, _i, arr) => {
         if (s.tipo !== "api_key_generica") return true;
         return !arr.some((other) => other !== s && other.posicion.inicio <= s.posicion.inicio && other.posicion.fin >= s.posicion.fin);
       });

@@ -37,11 +37,10 @@ export interface Transaccion {
 
 export class GestorRollback {
   private historial: Transaccion[] = [];
-  private client: OpenAI;
 
-  constructor(client: OpenAI = makeClient()) {
-    this.client = client;
-  }
+  // El cliente se acepta por consistencia con el resto del catálogo
+  // (constructor inyectable), aunque este gestor no lo usa directamente.
+  constructor(_client: OpenAI = makeClient()) {}
 
   async ejecutar(
     descripcion: string,

@@ -114,7 +114,7 @@ export class ComandoAlmacenar implements Comando {
   }
 
   async ejecutar(): Promise<string> {
-    console.log(`   ⚙️  Ejecutando: Almacenar con ID ${this.id}`);
+    console.log(`   ⚙️  Ejecutando: Almacenar "${this.datos.slice(0, 30)}" con ID ${this.id}`);
     return `Almacenado: ${this.id}`;
   }
 

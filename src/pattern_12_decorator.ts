@@ -258,7 +258,7 @@ export async function demostrarDecorator(
   const respuesta2 = await agenteDecorado.procesar(
     "¿Cuál es el futuro de la IA?",
   );
-  console.log(`   ✅ Completado`);
+  console.log(`   ✅ Completado: "${respuesta2.slice(0, 60)}..."`);
 
   paso("3️⃣", "Agente con caché");
 

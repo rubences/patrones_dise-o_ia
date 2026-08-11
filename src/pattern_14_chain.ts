@@ -98,7 +98,7 @@ export class ManejadorSoporteNivel1 extends ManejadorSolicitud {
     );
   }
 
-  protected async procesar(solicitud: Solicitud): Promise<Respuesta> {
+  protected async procesar(): Promise<Respuesta> {
     console.log(`   🆘 ManejadorSoporteNivel1: Procesando solicitud...`);
 
     return {
