@@ -159,6 +159,11 @@ export { AprendizPreferencias } from "./pattern_97_preference_learning.js";
 export { GestorCitas } from "./pattern_98_citation_attribution.js";
 export { GeneradorDatosSinteticos } from "./pattern_99_synthetic_data.js";
 
+// ── GRUPO 23: Seguridad de Agentes Autónomos (100–102) ───────────
+export { SanitizadorSalidaHerramienta } from "./pattern_100_tool_output_sanitization.js";
+export { ValidadorLlamadasHerramienta } from "./pattern_101_tool_call_validation.js";
+export { ArenaAdversarial, AgenteAtacante, AgenteJuez } from "./pattern_102_adversarial_training_loop.js";
+
 // ── Re-exports agrupados por dominio ─────────────────────────────
 export const seguridad = {
   DefensorPromptInjection: "pattern_69",
@@ -210,4 +215,10 @@ export const experienciaUsuario = {
   AprendizPreferencias: "pattern_97",
   GestorCitas: "pattern_98",
   GeneradorDatosSinteticos: "pattern_99",
+} as const;
+
+export const seguridadAgentes = {
+  SanitizadorSalidaHerramienta: "pattern_100",
+  ValidadorLlamadasHerramienta: "pattern_101",
+  ArenaAdversarial: "pattern_102",
 } as const;

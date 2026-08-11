@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "15.0.0",
-  "description": "99 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP, Resiliencia multi-proveedor, Coordinación emergente, Privacidad, Operación en producción y Experiencia de usuario — usable como librería npm",
+  "version": "16.0.0",
+  "description": "102 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP, Resiliencia multi-proveedor, Coordinación emergente, Privacidad, Operación en producción, Experiencia de usuario y Seguridad de Agentes Autónomos — usable como librería npm",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -106,7 +106,10 @@
     "pattern:96": "node --loader ts-node/esm src/pattern_96_clarification_loop.ts",
     "pattern:97": "node --loader ts-node/esm src/pattern_97_preference_learning.ts",
     "pattern:98": "node --loader ts-node/esm src/pattern_98_citation_attribution.ts",
-    "pattern:99": "node --loader ts-node/esm src/pattern_99_synthetic_data.ts"
+    "pattern:99": "node --loader ts-node/esm src/pattern_99_synthetic_data.ts",
+    "pattern:100": "node --loader ts-node/esm src/pattern_100_tool_output_sanitization.ts",
+    "pattern:101": "node --loader ts-node/esm src/pattern_101_tool_call_validation.ts",
+    "pattern:102": "node --loader ts-node/esm src/pattern_102_adversarial_training_loop.ts"
   },
   "keywords": [
     "openai",
@@ -140,7 +143,10 @@
     "clarification",
     "preference-learning",
     "citations",
-    "synthetic-data"
+    "synthetic-data",
+    "tool-output-sanitization",
+    "tool-call-validation",
+    "adversarial-training"
   ],
   "author": "rubences",
   "license": "MIT",
