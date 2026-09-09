@@ -1,137 +1,183 @@
-# Arquitectura editorial: libro + web
+# Arquitectura editorial — Patrones IA
 
 ## Objetivo
 
-Convertir el repositorio en una obra de referencia abierta sobre patrones de diseño para sistemas de IA, con una sola fuente de contenido que alimente:
+Convertir el repositorio de 102 implementaciones TypeScript en una única fuente de conocimiento capaz de alimentar tres productos sincronizados:
 
-- la web navegable;
-- el libro (PDF/EPUB en fases posteriores);
-- la documentación técnica del repositorio;
-- el catálogo y el grafo de relaciones entre patrones.
+1. **Web navegable** — catálogo, búsqueda, filtros, learning paths y relaciones.
+2. **Libro** — narrativa técnica, capítulos, arquitecturas compuestas y referencias.
+3. **Código ejecutable** — implementación TypeScript asociada a cada patrón.
 
-## Principio rector
-
-**Single source of truth.** Cada patrón se documenta una sola vez en `content/patterns/` mediante Markdown con frontmatter validado. La web y los futuros generadores editoriales consumen ese contenido.
-
-## Arquitectura de directorios
+## Fuentes de verdad
 
 ```text
-catalog/
-  taxonomy.json
-  pattern.schema.json
-content/
-  patterns/
-  templates/
-web/
-  src/content.config.ts
-  src/pages/
-  src/layouts/
-  src/styles/
-scripts/
-  validate-editorial.mjs
-src/
-  pattern_*.ts
+catalog/taxonomy.json
+        |
+        +--> macrofamilias y vocabulario editorial
+
+catalog/patterns.json
+        |
+        +--> inventario maestro 102/102: identidad, slug, familia, grupo histórico y sourceFile
+
+content/patterns/*.md
+        |
+        +--> presencia del fichero = ficha editorial publicada
+        +--> metadatos y contenido canónico para web/libro
+
+src/pattern_*.ts
+        |
+        +--> implementación ejecutable
 ```
 
-## Taxonomía canónica
+El **estado de publicación se deriva de la presencia de una ficha canónica en `content/patterns/`**. No se mantiene un segundo flag mutable para evitar divergencias entre inventario y contenido.
 
-La navegación editorial utiliza 10 macrofamilias:
+## Estado de la Fase 1
 
-1. Foundations
-2. Agentic Workflows
-3. Knowledge & Context
-4. Reasoning
-5. Multi-Agent
-6. Safety & Security
-7. Reliability
-8. Production & FinOps
-9. Evaluation & QA
-10. Human Experience
+- Implementaciones TypeScript: **102/102**.
+- Inventario maestro: **102/102**.
+- Fichas canónicas publicadas: **9/102**.
+- Primer bloque editorial cerrado: patrones **1–8**.
+- Ficha de referencia de Knowledge & Context: patrón **25 — RAG**.
 
-Los 23 grupos históricos del README se conservan como `legacyGroup` para mantener trazabilidad con la evolución previa del repositorio.
+### Fichas publicadas
 
-## Contrato editorial por patrón
+1. Pipeline
+2. Router
+3. Reflection
+4. Evaluator-Optimizer
+5. Tool Use
+6. Planning
+7. Multi-Agent
+8. Human-in-the-Loop
+25. Retrieval-Augmented Generation (RAG)
 
-Toda ficha debe cubrir, como mínimo:
+## Taxonomía principal
 
-1. Propósito
-2. Problema
-3. Solución
-4. Intuición visual
-5. Estructura y participantes
-6. Flujo de ejecución
-7. Implementación
-8. Caso de uso
-9. Aplicabilidad
-10. Cuándo no usarlo
-11. Ventajas y trade-offs
-12. Failure modes
-13. Seguridad
-14. Observabilidad
-15. Coste y latencia
-16. Evaluación
-17. Variantes
-18. Patrones relacionados
-19. Combinaciones recomendadas
-20. Referencias
+La navegación pública utiliza diez macrofamilias:
+
+- Foundations
+- Agentic Workflows
+- Knowledge & Context
+- Reasoning
+- Multi-Agent
+- Safety & Security
+- Reliability
+- Production & FinOps
+- Evaluation & QA
+- Human Experience
+
+Los 23 grupos históricos del README se conservan como `legacyGroup` para trazabilidad, pero no constituyen la navegación principal del libro.
+
+## Contrato mínimo de una ficha
+
+Toda ficha canónica debe declarar:
+
+- `patternId`
+- `slug`
+- `title`
+- `summary`
+- `family`
+- `legacyGroup`
+- `level`
+- `difficulty`
+- `maturity`
+- `llmRequired`
+- `stateful`
+- `evidenceStatus`
+- `sourceFile`
+- `tags`
+- `related`
+- `combinesWith`
+- `antiPatterns`
+- `references`
+
+Astro valida este contrato durante el build mediante Content Collections y Zod.
+
+## Estructura recomendada de capítulo
+
+Cada patrón debe cubrir, como mínimo:
+
+1. Propósito.
+2. Problema.
+3. Solución.
+4. Estructura o arquitectura.
+5. Implementación existente en el repositorio.
+6. Aplicabilidad.
+7. Cuándo no utilizarlo.
+8. Failure modes.
+9. Seguridad.
+10. Observabilidad.
+11. Coste y latencia.
+12. Evaluación.
+13. Patrones relacionados y combinaciones.
+14. Estado editorial/evidencia.
+
+Los capítulos más maduros pueden ampliar este núcleo con variantes, pseudocódigo, ejemplos end-to-end, benchmarks y bibliografía comentada.
 
 ## Política de evidencia
 
-Las cifras cuantitativas no deben publicarse como hechos generales sin una referencia verificable o un benchmark reproducible. Cada patrón declara `evidenceStatus`:
+Tres estados controlan qué afirmaciones pueden presentarse como consolidadas:
 
-- `verified`: las afirmaciones principales están respaldadas por referencias o medidas reproducibles;
-- `partially-verified`: parte de la evidencia está verificada y parte permanece cualitativa;
-- `needs-review`: ficha técnicamente válida pero pendiente de revisión bibliográfica/empírica.
+- `verified`: afirmaciones materiales respaldadas por evidencia revisada y trazable.
+- `partially-verified`: núcleo sustentado, pero existen claims, métricas o variantes pendientes de revisión.
+- `needs-review`: ficha técnicamente útil, pero todavía no apta para presentar métricas o afirmaciones empíricas como verificadas.
 
-## Fases
+Una métrica presente en comentarios o documentación histórica del repositorio **no se convierte automáticamente en evidencia editorial**.
 
-### Fase 0 — Normalización
+## Separación patrón / demo
 
-- [x] Taxonomía canónica
-- [x] Esquema de metadatos
-- [x] Plantilla editorial
-- [x] Primera ficha de referencia (RAG)
-- [ ] Auditar 102/102 patrones
-- [ ] Eliminar referencias editoriales obsoletas a 24, 47, 94 o 99 patrones cuando describan el estado actual
-- [ ] Revisar claims cuantitativos
+La edición debe distinguir siempre entre:
 
-### Fase 1 — Web mínima viable
+- la definición conceptual del patrón;
+- las propiedades de la implementación TypeScript concreta;
+- simplificaciones pedagógicas de la demo;
+- requisitos adicionales para producción.
 
-- [x] Astro + Content Collections
-- [x] Home
-- [x] Catálogo
-- [x] Página dinámica por patrón
-- [x] Diseño base responsive
-- [ ] Buscador
-- [ ] Filtros
-- [ ] Grafo de patrones
-- [ ] Learning paths
+Ejemplos detectados en el primer bloque:
 
-### Fase 2 — Conversión completa del catálogo
+- Reflection usa puntuaciones numéricas demostrativas fijas.
+- Planning materializa parte del plan mediante estructuras codificadas.
+- Multi-Agent genera la confianza de la demo con aleatoriedad.
+- Human-in-the-Loop simula la decisión humana y simplifica la clasificación de riesgo.
+- Tool Use simula herramientas y detección textual en vez de despacho estructurado real.
 
-- [ ] Migrar los 101 patrones restantes a fichas canónicas
-- [ ] Generar diagramas propios
-- [ ] Añadir referencias científicas/técnicas
-- [ ] Construir matrices de combinación y anti-patrones
+Estas simplificaciones se documentan de forma explícita en las fichas para evitar convertirlas en propiedades generales del patrón.
 
-### Fase 3 — Libro
+## Definition of Done editorial
 
-- [ ] Índice narrativo por partes
-- [ ] Front matter y prólogo
-- [ ] Generación PDF
-- [ ] Generación EPUB
-- [ ] Bibliografía consolidada
-- [ ] Revisión editorial final
+Una ficha está lista para publicarse cuando:
 
-## Criterio de Definition of Done por patrón
+- existe su implementación TypeScript y el `sourceFile` coincide;
+- ID, slug, familia y grupo histórico son coherentes con el inventario maestro;
+- el build de Astro valida el frontmatter;
+- problema y solución están expresados en términos de fuerzas de diseño, no solo de código;
+- las limitaciones de la demo están separadas del patrón conceptual;
+- se documentan failure modes y seguridad cuando sean relevantes;
+- las relaciones con otros patrones son justificables;
+- las métricas cuantitativas disponen de evidencia o se omiten;
+- el validador editorial finaliza en PASS.
 
-Una ficha se considera publicable cuando:
+## Roadmap editorial inmediato
 
-- pasa el esquema de contenido;
-- enlaza al fichero TypeScript real;
-- describe al menos un caso de uso concreto;
-- incluye riesgos/failure modes;
-- incluye observabilidad y evaluación;
-- declara su estado de evidencia;
-- no contiene métricas no atribuibles presentadas como hechos universales;
-- declara relaciones con otros patrones.
+### Bloque 2 — Foundations / GoF
+
+Normalizar los 23 patrones clásicos reinterpretados para IA: 9–24 y 29–35.
+
+### Bloque 3 — Knowledge & Context
+
+Completar RAG con Knowledge Graph, Retrieval Ranking, Long-Term Memory, Grounding, Contextual Compression y Context Compaction.
+
+### Bloque 4 — Reasoning y Multi-Agent
+
+Migrar Tree of Thought, Self-Consistency, ReAct, Scratchpad, Few-Shot, Zero-Shot CoT y las variantes multiagente avanzadas.
+
+### Bloques posteriores
+
+Safety & Security, Reliability, Production & FinOps, Evaluation & QA y Human Experience.
+
+## Deuda conocida no bloqueante
+
+- El README histórico conserva un heading residual `Mapa Completo de 99 Patrones`.
+- `RESUMEN_EJECUTIVO_PLAN_ACCION.md` describe una fase anterior y debe tratarse como documento histórico.
+- `web/package-lock.json` debe fijarse cuando se cierre la primera estabilización del subproyecto web.
+- El libro PDF/EPUB se añadirá una vez estabilizada la convención de capítulos en varios bloques.
