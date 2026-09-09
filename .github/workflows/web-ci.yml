@@ -1,11 +1,12 @@
-name: Editorial, Hardening and Web CI
+name: Editorial, Hardening, Publication and Web CI
 
 on:
   pull_request:
     paths:
       - 'catalog/**'
       - 'content/**'
-      - 'scripts/validate-editorial.mjs'
+      - 'book/**'
+      - 'scripts/**'
       - 'src/pattern_*.ts'
       - 'tests/**'
       - 'package.json'
@@ -17,7 +18,8 @@ on:
     paths:
       - 'catalog/**'
       - 'content/**'
-      - 'scripts/validate-editorial.mjs'
+      - 'book/**'
+      - 'scripts/**'
       - 'src/pattern_*.ts'
       - 'tests/**'
       - 'package.json'
@@ -39,6 +41,20 @@ jobs:
 
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
+
+      - name: Build reproducible evidence pack
+        run: node scripts/build-evidence-pack.mjs
+
+      - name: Assemble canonical book manuscript
+        run: node scripts/build-book.mjs
+
+      - name: Verify publication artifacts
+        run: |
+          test -s dist/evidence/evidence-pack.json
+          test -s dist/evidence/EVIDENCE_REPORT.md
+          test -s dist/book/patrones-ia-manuscript.md
+          test -s dist/book/manifest.json
+          node -e "const m=require('./dist/book/manifest.json'); if(m.patternCount!==102||m.familyCount!==10) process.exit(1)"
 
       - name: Install root dependencies
         run: npm install

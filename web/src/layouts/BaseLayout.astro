@@ -12,7 +12,6 @@ const {
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
-const catalogHref = `${base}patterns/`;
 ---
 
 <!doctype html>
@@ -31,14 +30,14 @@ const catalogHref = `${base}patterns/`;
         <span>Patrones IA</span>
       </a>
       <nav aria-label="Navegación principal">
-        <a href={catalogHref}>Patrones</a>
+        <a href={`${base}patterns/`}>Patrones</a>
+        <a href={`${base}evidence/`}>Evidencia</a>
+        <a href={`${base}book/`}>Libro</a>
         <a href="https://github.com/rubences/patrones_dise-o_ia">GitHub</a>
       </nav>
     </header>
 
-    <main>
-      <slot />
-    </main>
+    <main><slot /></main>
 
     <footer class="site-footer">
       <p><strong>Patrones IA</strong> · Catálogo abierto y ejecutable de patrones para ingeniería de IA.</p>
