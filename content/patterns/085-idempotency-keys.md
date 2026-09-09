@@ -2,7 +2,7 @@
 patternId: 85
 slug: idempotency-keys
 title: Idempotency Keys
-summary: Asocia una acción con efecto a una clave estable para que reintentos equivalentes recuperen el resultado anterior sin duplicar el efecto externo.
+summary: Vincula reintentos de una misma operación a una clave estable para que llamadas repetidas o concurrentes converjan en un único efecto observable.
 family: reliability
 legacyGroup: 20
 level: component
@@ -12,25 +12,28 @@ llmRequired: false
 stateful: true
 evidenceStatus: partially-verified
 sourceFile: src/pattern_85_idempotency_keys.ts
-tags: [idempotency, side-effects, retry, exactly-once]
-related: [20, 44, 47]
-combinesWith: [58, 77]
+tags: [idempotency, retries, concurrency, side-effects]
+related: [44, 47, 101]
+combinesWith: [77, 92]
 antiPatterns:
-  - Generar una clave nueva para cada retry de la misma acción.
-  - Guardar el resultado después del efecto sin resolver carreras concurrentes.
-  - Prometer exactly-once distribuido usando solo un Map local.
+  - Generar una clave distinta en cada retry.
+  - Considerar un Map local una garantía exactly-once distribuida.
+  - Cachear para siempre resultados de operaciones cuyo dominio exige expiración.
 references: []
 ---
 # Propósito
-Idempotency Keys evita repetir efectos cuando un cliente no sabe si una operación previa terminó y reintenta.
+Idempotency Keys desacopla «repetir una llamada» de «repetir el efecto». La misma operación lógica conserva una clave estable durante retries y carreras concurrentes.
 
 ## Implementación del repositorio
-`src/pattern_85_idempotency_keys.ts` almacena resultados en un `Map` con TTL y demuestra que dos llamadas secuenciales con la misma clave envían un solo email.
+Tras el hardening P1, `src/pattern_85_idempotency_keys.ts` mantiene tanto resultados completados como Promises **en vuelo**. Si llega una segunda llamada con la misma clave mientras la primera ejecuta el side effect, se une a esa Promise y no vuelve a ejecutar la acción. Cuando la operación termina, el resultado entra en el registro con TTL; si falla, la entrada en vuelo se elimina para permitir un retry posterior.
 
-La comprobación y la ejecución no son atómicas. Dos solicitudes concurrentes con la misma clave pueden ver ambas un miss y ejecutar dos veces. El registro tampoco es durable ni distribuido.
+Esto corrige la carrera anterior en la que dos llamadas simultáneas podían observar el Map vacío y ejecutar ambas el efecto.
+
+## Límites
+La garantía actual está acotada a **un único proceso**. Dos réplicas distintas no comparten ni `registro` ni `enCurso`. Para sistemas distribuidos se necesita almacenamiento compartido con operación atómica/unique constraint/lease y una estrategia frente a procesos que mueren después del side effect pero antes de persistir el resultado.
 
 ## Producción
-Usa una reserva atómica de key, estados `in_progress/completed/failed`, persistencia y contrato de replay. La clave debe incluir el ámbito de identidad/tenant y una representación estable de la operación.
+Deriva la clave de la identidad de la operación, persiste estado durable, define TTL por dominio y combina con outbox/inbox o primitivas transaccionales cuando se necesite robustez fuerte. «Exactly-once» extremo a extremo requiere cooperación del sistema que aplica el efecto.
 
 ## Relaciones
-Retry y Checkpointing se vuelven más seguros cuando los efectos externos son idempotentes.
+**Retry with Backoff (47)** repite llamadas; **Tool Call Validation (101)** valida la acción; Idempotency Keys evita duplicar su efecto.

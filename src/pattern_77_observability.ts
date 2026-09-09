@@ -1,36 +1,13 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
- *  PATRÓN 77 — OBSERVABILITY & TRACING (OBSERVABILIDAD Y TRAZADO)
+ *  PATRÓN 77 — OBSERVABILITY & TRACING
  * ═══════════════════════════════════════════════════════════════════
  *
- *  [Agente ejecuta acción]
- *       │
- *       ▼
- *  [Span Tracer]
- *  ├─ span.start("llm-call")
- *  │    ├─ input: {prompt, tokens}
- *  │    ├─ output: {respuesta, tokens}
- *  │    ├─ duration: 1250ms
- *  │    └─ status: ok
- *  └─ span.end()
- *
- *  [Árbol de Trazas]
- *  Request
- *  └─ Router (50ms)
- *     └─ RAG: recover (200ms)
- *        └─ LLM call (1200ms)
- *           └─ Output parser (5ms)
- *
- *  Idea: Instrumentar cada paso del agente con trazas y métricas
- *  para observar el comportamiento real en producción.
- *
- *  Ventajas:
- *  - Visibilidad completa del flujo de ejecución
- *  - Detección de cuellos de botella
- *  - Debugging de comportamientos inesperados
- *  - Base para alertas y dashboards
+ *  Cada request mantiene su span activo en AsyncLocalStorage para que
+ *  ejecuciones concurrentes no mezclen relaciones padre/hijo.
  */
 
+import { AsyncLocalStorage } from "node:async_hooks";
 import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
@@ -49,44 +26,35 @@ export interface Span {
 
 export class Tracer {
   private trazas: Span[] = [];
-  private spanActivo: Span | null = null;
+  private contexto = new AsyncLocalStorage<Span>();
 
   iniciarSpan(nombre: string, atributos: Record<string, unknown> = {}): Span {
+    const padre = this.contexto.getStore();
     const span: Span = {
-      id: `span-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      id: `span-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       nombre,
-      padreId: this.spanActivo?.id,
+      padreId: padre?.id,
       inicio: Date.now(),
       atributos,
       estado: "en-progreso",
       hijos: [],
     };
 
-    if (this.spanActivo) {
-      this.spanActivo.hijos.push(span);
-    } else {
-      this.trazas.push(span);
-    }
-
-    const anterior = this.spanActivo;
-    this.spanActivo = span;
-
-    // Devolver objeto con cierre automático
-    (span as Span & { cerrar: (atributosExtra?: Record<string, unknown>) => void }).cerrar =
-      (atributosExtra?: Record<string, unknown>) => {
-        span.fin = Date.now();
-        span.duracionMs = span.fin - span.inicio;
-        span.estado = "ok";
-        if (atributosExtra) Object.assign(span.atributos, atributosExtra);
-        this.spanActivo = anterior;
-      };
-
+    if (padre) padre.hijos.push(span);
+    else this.trazas.push(span);
     return span;
+  }
+
+  cerrarSpan(span: Span, atributosExtra?: Record<string, unknown>): void {
+    span.fin = Date.now();
+    span.duracionMs = span.fin - span.inicio;
+    span.estado = "ok";
+    if (atributosExtra) Object.assign(span.atributos, atributosExtra);
   }
 
   cerrarSpanConError(span: Span, error: string): void {
     span.fin = Date.now();
-    span.duracionMs = (span.fin || Date.now()) - span.inicio;
+    span.duracionMs = span.fin - span.inicio;
     span.estado = "error";
     span.error = error;
   }
@@ -97,14 +65,17 @@ export class Tracer {
     operacion: (span: Span) => Promise<T>,
   ): Promise<T> {
     const span = this.iniciarSpan(nombre, atributos);
-    try {
-      const resultado = await operacion(span);
-      (span as Span & { cerrar: (a?: Record<string, unknown>) => void }).cerrar?.();
-      return resultado;
-    } catch (error) {
-      this.cerrarSpanConError(span, error instanceof Error ? error.message : String(error));
-      throw error;
-    }
+
+    return this.contexto.run(span, async () => {
+      try {
+        const resultado = await operacion(span);
+        this.cerrarSpan(span);
+        return resultado;
+      } catch (error) {
+        this.cerrarSpanConError(span, error instanceof Error ? error.message : String(error));
+        throw error;
+      }
+    });
   }
 
   obtenerTrazas(): Span[] {
@@ -115,17 +86,10 @@ export class Tracer {
     if (!span) return;
     const indent = "  ".repeat(nivel);
     const estado = span.estado === "ok" ? "✅" : span.estado === "error" ? "❌" : "⏳";
-    const duracion = span.duracionMs ? `${span.duracionMs}ms` : "en curso";
+    const duracion = span.duracionMs !== undefined ? `${span.duracionMs}ms` : "en curso";
     console.log(`   ${indent}${estado} ${span.nombre} (${duracion})`);
-
-    // Mostrar atributos relevantes
-    if (span.atributos.tokensUsados) {
-      console.log(`   ${indent}   tokens: ${span.atributos.tokensUsados}`);
-    }
-    if (span.error) {
-      console.log(`   ${indent}   error: ${span.error}`);
-    }
-
+    if (span.atributos.tokensUsados) console.log(`   ${indent}   tokens: ${span.atributos.tokensUsados}`);
+    if (span.error) console.log(`   ${indent}   error: ${span.error}`);
     span.hijos.forEach((hijo) => this.imprimirArbol(hijo, nivel + 1));
   }
 
@@ -137,14 +101,14 @@ export class Tracer {
   } {
     const todos = this.aplanarSpans(this.trazas);
     const completados = todos.filter((s) => s.duracionMs !== undefined);
-
     const spanMasLento = completados.reduce(
       (a, b) => ((a.duracionMs ?? 0) > (b.duracionMs ?? 0) ? a : b),
-      completados[0] ?? { nombre: "ninguno", duracionMs: 0 },
+      completados[0] ?? { nombre: "ninguno", duracionMs: 0 } as Span,
     );
 
     return {
       totalSpans: todos.length,
+      // Suma de spans: es trabajo instrumentado acumulado, no wall-clock de request.
       duracionTotal: completados.reduce((s, sp) => s + (sp.duracionMs ?? 0), 0),
       errores: todos.filter((s) => s.estado === "error").length,
       spanMasLento: `${spanMasLento.nombre} (${spanMasLento.duracionMs}ms)`,
@@ -167,39 +131,24 @@ export class AgenteInstrumentado {
 
   async procesarConTrazas(consulta: string): Promise<string> {
     return this.tracer.trazar("request.procesar", { consulta: consulta.slice(0, 50) }, async (spanRaiz) => {
-      // Simular RAG
-      const docs = await this.tracer.trazar(
-        "rag.recuperar",
-        { topK: 3 },
-        async () => {
-          await new Promise((r) => setTimeout(r, 80));
-          return ["doc1", "doc2", "doc3"];
-        },
-      );
-
-      // LLM call
-      const respuesta = await this.tracer.trazar(
-        "llm.completar",
-        { modelo: DEFAULT_MODEL },
-        async (span) => {
-          const r = await this.client.responses.create({
-            model: DEFAULT_MODEL,
-            reasoning: { effort: "low" },
-            store: false,
-            instructions: `Responde brevemente: ${consulta}`,
-            input: "",
-          });
-          const tokens = Math.ceil(r.output_text.split(" ").length * 1.3);
-          span.atributos.tokensUsados = tokens;
-          return r.output_text;
-        },
-      );
-
-      // Output parser
-      await this.tracer.trazar("parser.output", {}, async () => {
-        return respuesta.trim();
+      const docs = await this.tracer.trazar("rag.recuperar", { topK: 3 }, async () => {
+        await new Promise((r) => setTimeout(r, 80));
+        return ["doc1", "doc2", "doc3"];
       });
 
+      const respuesta = await this.tracer.trazar("llm.completar", { modelo: DEFAULT_MODEL }, async (span) => {
+        const r = await this.client.responses.create({
+          model: DEFAULT_MODEL,
+          reasoning: { effort: "low" },
+          store: false,
+          instructions: `Responde brevemente: ${consulta}`,
+          input: "",
+        });
+        span.atributos.tokensUsados = Math.ceil(r.output_text.split(" ").length * 1.3);
+        return r.output_text;
+      });
+
+      await this.tracer.trazar("parser.output", {}, async () => respuesta.trim());
       spanRaiz.atributos.docsRecuperados = docs.length;
       return respuesta;
     });
@@ -212,25 +161,13 @@ export class AgenteInstrumentado {
 
 export async function demostrarObservability(client: OpenAI = makeClient()): Promise<void> {
   paso("🔭", "Demostrando Observability & Tracing Pattern");
-
   const agente = new AgenteInstrumentado(client);
-
-  paso("1️⃣", "Ejecutar agente instrumentado");
   const respuesta = await agente.procesarConTrazas("¿Qué es el patrón Observer?");
   console.log(`\n   Respuesta: "${respuesta.slice(0, 100)}..."\n`);
-
-  paso("2️⃣", "Árbol de trazas");
-  const trazer = agente.obtenerTracer();
-  trazer.obtenerTrazas().forEach((t) => trazer.imprimirArbol(t));
-
-  paso("3️⃣", "Métricas agregadas");
-  const metricas = trazer.obtenerMetricas();
-  console.log(`\n   Total spans: ${metricas.totalSpans}`);
-  console.log(`   Duración total: ${metricas.duracionTotal}ms`);
-  console.log(`   Errores: ${metricas.errores}`);
-  console.log(`   Span más lento: ${metricas.spanMasLento}`);
-
-  paso("✅", "Observability proporcionando visibilidad completa del flujo agéntico");
+  const tracer = agente.obtenerTracer();
+  tracer.obtenerTrazas().forEach((t) => tracer.imprimirArbol(t));
+  console.log(`\n   Métricas:`, tracer.obtenerMetricas());
+  paso("✅", "Observability aislando correctamente trazas concurrentes");
 }
 
 async function main(): Promise<void> { await demostrarObservability(); }
