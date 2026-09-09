@@ -2,35 +2,38 @@
 patternId: 44
 slug: checkpointing
 title: Checkpointing
-summary: Persiste puntos de progreso recuperables para reanudar tareas largas después de fallos sin repetir innecesariamente trabajo ya validado.
+summary: Persiste snapshots de progreso para reanudar workflows largos desde un estado conocido sin repetir trabajo completado.
 family: reliability
 legacyGroup: 9
 level: architecture
 difficulty: intermediate
-maturity: established
-llmRequired: true
+maturity: foundational
+llmRequired: false
 stateful: true
 evidenceStatus: partially-verified
 sourceFile: src/pattern_44_checkpointing.ts
-tags: [checkpoint, recovery, state, resilience]
-related: [22, 27, 58]
-combinesWith: [85, 77, 94]
+tags: [checkpoint, recovery, persistence, workflow]
+related: [22, 58, 85]
+combinesWith: [60, 77, 94]
 antiPatterns:
-  - Guardar solo estado local y llamarlo recuperación durable.
-  - Reanudar sin verificar que efectos externos anteriores ya ocurrieron.
-  - Persistir prompts/secretos completos sin política de protección.
+  - Guardar checkpoints solo en memoria cuando el objetivo es sobrevivir reinicios.
+  - Persistir estado parcial con secretos o PII innecesarios.
+  - Reanudar sin versionar workflow, schema o código que produjo el snapshot.
 references: []
 ---
 # Propósito
-Checkpointing captura estado suficiente para continuar una ejecución larga desde un punto consistente.
+Checkpointing conserva suficiente estado para reanudar un workflow después de un fallo sin empezar desde cero.
 
 ## Implementación del repositorio
-`src/pattern_44_checkpointing.ts` usa un `Map` en memoria y realiza una copia JSON del estado. Simula un fallo en el paso 3 y reanuda usando el checkpoint entregado al error.
+Tras el hardening P1, `src/pattern_44_checkpointing.ts` separa `GestorCheckpoints` de `CheckpointStore`. Incluye `MemoryCheckpointStore` para demos y `JsonFileCheckpointStore` para demostrar persistencia real entre instancias/procesos secuenciales.
 
-La demostración no sobrevive al reinicio del proceso y crea un nuevo `tareaId` al reanudar. Por tanto, ilustra el mecanismo conceptual, no persistencia durable ni exactly-once execution.
+El store JSON serializa timestamps, escribe a un fichero temporal y hace rename, evitando dejar un archivo parcialmente escrito en el caso común. El checkpoint incluye `tareaId`, por lo que una reanudación conserva la identidad del workflow original.
+
+## Límites
+El store JSON sigue siendo una implementación local y no resuelve concurrencia multi-proceso, locking distribuido, cifrado, migrations ni HA. Para producción se recomienda una base durable/transaccional o un motor de workflows.
 
 ## Producción
-Persistir checkpoints transaccionalmente, versionar schema, asociarlos a run IDs estables y registrar efectos externos/idempotency keys. Define qué estado es seguro almacenar y cuándo un checkpoint es consistente.
+Versiona schema/workflow, cifra datos sensibles, añade TTL/retención, ownership y fencing tokens cuando puedan existir múltiples workers. Una reanudación debe validar compatibilidad entre el snapshot y la versión actual del código.
 
 ## Relaciones
-**Memento (22)** captura snapshots de objeto; **Rollback (58)** compensa efectos; **Idempotency Keys (85)** evita duplicar operaciones al reanudar.
+**Memento (22)** guarda estado local; **Rollback (58)** compensa cambios; Checkpointing permite recuperación de progreso de larga duración.
