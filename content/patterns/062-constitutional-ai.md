@@ -20,7 +20,7 @@ antiPatterns:
   - Confundir una lista de principios con autorización determinista.
   - Incorporar principios vagos sin tests adversariales ni criterios medibles.
 references:
-  - Bai et al. (2022), Constitutional AI: Harmlessness from AI Feedback.
+  - "Bai et al. (2022), Constitutional AI: Harmlessness from AI Feedback."
 ---
 # Propósito
 Constitutional AI introduce principios explícitos para criticar y revisar comportamiento. Como patrón de arquitectura, ayuda a convertir criterios como privacidad, veracidad o no-daño en una etapa reproducible de evaluación.
