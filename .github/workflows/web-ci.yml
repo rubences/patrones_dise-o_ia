@@ -1,4 +1,4 @@
-name: Editorial and Web CI
+name: Editorial, Hardening and Web CI
 
 on:
   pull_request:
@@ -7,6 +7,9 @@ on:
       - 'content/**'
       - 'scripts/validate-editorial.mjs'
       - 'src/pattern_*.ts'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
       - 'web/**'
       - '.github/workflows/web-ci.yml'
   push:
@@ -16,6 +19,9 @@ on:
       - 'content/**'
       - 'scripts/validate-editorial.mjs'
       - 'src/pattern_*.ts'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
       - 'web/**'
       - '.github/workflows/web-ci.yml'
 
@@ -33,6 +39,12 @@ jobs:
 
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
+
+      - name: Install root dependencies
+        run: npm install
+
+      - name: Run hardening regression tests
+        run: npx --yes tsx@4.20.6 --test tests/hardening/*.test.ts
 
       - name: Install web dependencies
         working-directory: web

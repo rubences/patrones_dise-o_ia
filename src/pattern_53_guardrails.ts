@@ -15,20 +15,16 @@
  *       ▼                    ▼
  *  [LLM]           [Respuesta segura]
  *
- *  Idea: Capas de control de seguridad antes y después del LLM
- *  para garantizar respuestas seguras, éticas y conformes.
- *
- *  Ventajas:
- *  - Cumplimiento de políticas de uso
- *  - Protección de PII
- *  - Filtrado de contenido dañino
- *  - Auditoría de seguridad
+ *  Idea: Capas de control de seguridad antes y después del LLM.
+ *  Los clasificadores generativos son una señal, no una frontera de
+ *  autorización: las acciones sensibles requieren controles deterministas.
  */
 
 import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export type RiesgoCategoría = "pii" | "contenido_inapropiado" | "topic_prohibido" | "datos_sensibles" | "ninguno";
+export type VeredictoSeguridad = "seguro" | "inseguro" | "invalido";
 
 export interface ResultadoGuardrail {
   aprobado: boolean;
@@ -37,30 +33,48 @@ export interface ResultadoGuardrail {
   textoSanitizado?: string;
 }
 
+/**
+ * Interpreta únicamente etiquetas exactas. Nunca usa `includes("SEGURO")`:
+ * `INSEGURO` contiene esa subcadena y produciría un fail-open crítico.
+ */
+export function interpretarVeredictoSeguridad(texto: string): VeredictoSeguridad {
+  const normalizado = texto.trim().toUpperCase().replace(/[.!]+$/g, "").trim();
+  if (normalizado === "SEGURO") return "seguro";
+  if (normalizado === "INSEGURO") return "inseguro";
+  return "invalido";
+}
+
 export class GuardrailInput {
-  // Patrones de PII (simplificados)
+  // Patrones de PII simplificados para la demo. Conservan `g` para redactar
+  // todas las apariciones, pero reseteamos lastIndex antes y después de `.test()`.
   private patronesPII = [
-    /\b\d{3}-\d{2}-\d{4}\b/g,          // SSN
-    /\b4\d{3}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/g, // Visa
-    /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g, // Email
+    /\b\d{3}-\d{2}-\d{4}\b/g,
+    /\b4\d{3}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/g,
+    /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g,
   ];
 
+  // Lista pedagógica. En producción, la policy debe evaluar intención/contexto
+  // y no bloquear investigación defensiva por mera coincidencia léxica.
   private topicsProhibidos = ["hackear", "exploit", "malware", "phishing", "bypass seguridad"];
 
   revisar(texto: string): ResultadoGuardrail {
-    // Detectar PII
     for (const patron of this.patronesPII) {
-      if (patron.test(texto)) {
+      patron.lastIndex = 0;
+      const detectado = patron.test(texto);
+      patron.lastIndex = 0;
+
+      if (detectado) {
+        const textoSanitizado = texto.replace(patron, "[REDACTADO]");
+        patron.lastIndex = 0;
         return {
           aprobado: false,
           categoria: "pii",
           razon: "Datos personales detectados",
-          textoSanitizado: texto.replace(patron, "[REDACTADO]"),
+          textoSanitizado,
         };
       }
     }
 
-    // Detectar topics prohibidos
     const topicDetectado = this.topicsProhibidos.find((t) =>
       texto.toLowerCase().includes(t),
     );
@@ -80,7 +94,6 @@ export class GuardrailOutput {
   private palabrasProhibidas = ["contraseña:", "password:", "api_key:", "secret:"];
 
   async revisar(texto: string, client: OpenAI): Promise<ResultadoGuardrail> {
-    // Verificar datos sensibles
     const sensible = this.palabrasProhibidas.find((p) =>
       texto.toLowerCase().includes(p),
     );
@@ -88,22 +101,32 @@ export class GuardrailOutput {
       return { aprobado: false, categoria: "datos_sensibles", razon: `Posible leak: ${sensible}` };
     }
 
-    // Verificar contenido inapropiado con LLM
     const resp = await client.responses.create({
       model: DEFAULT_MODEL,
       reasoning: { effort: "low" },
       store: false,
-      instructions: `¿Contiene este texto información dañina, ilegal o inapropiada? Responde solo: SEGURO o INSEGURO.
-      
-Texto: "${texto.slice(0, 200)}"`,
+      instructions: `Clasifica el siguiente texto según la policy de seguridad.\n\nTexto: "${texto.slice(0, 200)}"\n\nResponde únicamente con una etiqueta exacta: SEGURO o INSEGURO.`,
       input: "",
     });
 
-    const seguro = resp.output_text.toUpperCase().includes("SEGURO");
+    const veredicto = interpretarVeredictoSeguridad(resp.output_text);
+    if (veredicto === "seguro") {
+      return { aprobado: true, categoria: "ninguno" };
+    }
+    if (veredicto === "inseguro") {
+      return {
+        aprobado: false,
+        categoria: "contenido_inapropiado",
+        razon: "Contenido potencialmente inapropiado",
+      };
+    }
+
+    // Fail closed ante formato inesperado: un fallo del clasificador nunca se
+    // convierte silenciosamente en aprobación.
     return {
-      aprobado: seguro,
-      categoria: seguro ? "ninguno" : "contenido_inapropiado",
-      razon: seguro ? undefined : "Contenido potencialmente inapropiado",
+      aprobado: false,
+      categoria: "contenido_inapropiado",
+      razon: "Veredicto de seguridad inválido",
     };
   }
 }
@@ -168,11 +191,11 @@ export async function demostrarGuardrails(client: OpenAI = makeClient()): Promis
   const r2 = await agente.procesar("Mi email es user@example.com. ¿Qué es RAG?");
   console.log(`   Bloqueado: ${r2.bloqueado} | Respuesta: "${r2.respuesta.slice(0, 100)}..."\n`);
 
-  paso("3️⃣", "Topic prohibido (bloqueado)");
+  paso("3️⃣", "Topic prohibido (bloqueado por la policy pedagógica)");
   const r3 = await agente.procesar("Explícame cómo hackear un sistema");
   console.log(`   Bloqueado: ${r3.bloqueado} | Razón: ${r3.razon}\n`);
 
-  paso("✅", "Guardrails filtrando entradas y salidas para garantizar seguridad");
+  paso("✅", "Guardrails filtrando entradas y salidas con parsing fail-closed");
 }
 
 async function main(): Promise<void> { await demostrarGuardrails(); }
