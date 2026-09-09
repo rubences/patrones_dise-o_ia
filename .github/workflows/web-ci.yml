@@ -1,0 +1,43 @@
+name: Editorial and Web CI
+
+on:
+  pull_request:
+    paths:
+      - 'catalog/**'
+      - 'content/**'
+      - 'scripts/validate-editorial.mjs'
+      - 'src/pattern_*.ts'
+      - 'web/**'
+      - '.github/workflows/web-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'catalog/**'
+      - 'content/**'
+      - 'scripts/validate-editorial.mjs'
+      - 'src/pattern_*.ts'
+      - 'web/**'
+      - '.github/workflows/web-ci.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Validate editorial catalog
+        run: node scripts/validate-editorial.mjs
+
+      - name: Install web dependencies
+        working-directory: web
+        run: npm install
+
+      - name: Build Astro site
+        working-directory: web
+        run: npm run build
