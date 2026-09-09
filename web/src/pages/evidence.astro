@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const patterns = await getCollection('patterns');
+const total = patterns.length;
+const verified = patterns.filter((p) => p.data.evidenceStatus === 'verified').length;
+const partial = patterns.filter((p) => p.data.evidenceStatus === 'partially-verified').length;
+const needsReview = patterns.filter((p) => p.data.evidenceStatus === 'needs-review').length;
+const withReferences = patterns.filter((p) => p.data.references.length > 0).length;
+const referenceCount = patterns.reduce((sum, p) => sum + p.data.references.length, 0);
+
+const familyLabels: Record<string, string> = {
+  foundations: 'Fundamentos',
+  'agentic-workflows': 'Flujos Agénticos',
+  'knowledge-context': 'Conocimiento y Contexto',
+  reasoning: 'Razonamiento',
+  'multi-agent': 'Multiagente',
+  'safety-security': 'Seguridad y Safety',
+  reliability: 'Fiabilidad y Resiliencia',
+  'production-finops': 'Producción y FinOps',
+  'evaluation-qa': 'Evaluación y QA',
+  'human-experience': 'Experiencia Humana',
+};
+
+const families = Object.entries(familyLabels).map(([id, label]) => {
+  const group = patterns.filter((p) => p.data.family === id);
+  return {
+    id,
+    label,
+    total: group.length,
+    verified: group.filter((p) => p.data.evidenceStatus === 'verified').length,
+    partial: group.filter((p) => p.data.evidenceStatus === 'partially-verified').length,
+    needsReview: group.filter((p) => p.data.evidenceStatus === 'needs-review').length,
+    references: group.filter((p) => p.data.references.length > 0).length,
+  };
+});
+---
+
+<BaseLayout title="Evidencia — Patrones IA" description="Cobertura editorial, estado de evidencia y trazabilidad del catálogo Patrones IA.">
+  <section class="catalog-hero">
+    <p class="eyebrow">Evidence Pack</p>
+    <h1>Evidencia visible, no implícita.</h1>
+    <p class="lead">El catálogo distingue implementación, madurez y evidencia. Una ficha sin referencias se muestra como deuda editorial; no se rellena con una cifra o una fuente inventada.</p>
+  </section>
+
+  <section class="section">
+    <div class="stat-grid">
+      <div class="stat"><strong>{total}</strong><span>fichas canónicas</span></div>
+      <div class="stat"><strong>{verified}</strong><span>verified</span></div>
+      <div class="stat"><strong>{partial}</strong><span>partially verified</span></div>
+      <div class="stat"><strong>{needsReview}</strong><span>needs review</span></div>
+      <div class="stat"><strong>{withReferences}</strong><span>fichas con referencias</span></div>
+      <div class="stat"><strong>{referenceCount}</strong><span>referencias declaradas</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">Cobertura</p><h2>Estado por macrofamilia.</h2></div>
+      <p>Estas cifras describen el corpus actual. No convierten una etiqueta editorial en una certificación de seguridad o rendimiento.</p>
+    </div>
+    <div class="evidence-table-wrap">
+      <table class="evidence-table">
+        <thead><tr><th>Familia</th><th>Total</th><th>Verified</th><th>Partial</th><th>Review</th><th>Con refs.</th></tr></thead>
+        <tbody>{families.map((family) => <tr><td>{family.label}</td><td>{family.total}</td><td>{family.verified}</td><td>{family.partial}</td><td>{family.needsReview}</td><td>{family.references}</td></tr>)}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">REPRODUCIBLE</span><h3>Hash del corpus</h3><p>El pipeline CI genera SHA-256 del conjunto de las 102 fichas y del manuscrito ensamblado.</p></article>
+      <article class="pattern-card"><span class="pattern-number">FAIL CLOSED</span><h3>Ausencia ≠ evidencia</h3><p>Los hardenings P0–P2 eliminan defaults favorables cuando falta una medición válida.</p></article>
+      <article class="pattern-card"><span class="pattern-number">TRACEABLE</span><h3>Fuente única</h3><p>Web, Evidence Pack y libro se construyen desde el mismo Markdown canónico.</p></article>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .evidence-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: rgba(18,27,45,.8); }
+  .evidence-table { width: 100%; border-collapse: collapse; min-width: 720px; }
+  .evidence-table th, .evidence-table td { padding: .95rem 1rem; border-bottom: 1px solid var(--line); text-align: left; }
+  .evidence-table th { color: var(--accent-2); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
+  .evidence-table td:not(:first-child) { font-variant-numeric: tabular-nums; }
+</style>

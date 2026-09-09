@@ -11,13 +11,11 @@ const base = import.meta.env.BASE_URL;
     <div>
       <p class="eyebrow">Open catalog · TypeScript · AI engineering</p>
       <h1>Patrones de diseño para sistemas de IA.</h1>
-      <p class="lead">
-        Un catálogo ejecutable y visual para diseñar agentes, RAG, sistemas multiagente y
-        arquitecturas de IA seguras, fiables y operables en producción.
-      </p>
+      <p class="lead">Un catálogo ejecutable y visual para diseñar agentes, RAG, sistemas multiagente y arquitecturas de IA seguras, fiables y operables en producción.</p>
       <div class="actions">
         <a class="button primary" href={`${base}patterns/`}>Explorar 102 patrones</a>
-        <a class="button" href="https://github.com/rubences/patrones_dise-o_ia">Ver código en GitHub</a>
+        <a class="button" href={`${base}book/`}>Ver el libro</a>
+        <a class="button" href={`${base}evidence/`}>Estado de evidencia</a>
       </div>
     </div>
 
@@ -25,34 +23,22 @@ const base = import.meta.env.BASE_URL;
       <div class="stat"><strong>102</strong><span>implementaciones TypeScript</span></div>
       <div class="stat"><strong>10</strong><span>macrofamilias editoriales</span></div>
       <div class="stat"><strong>{patterns.length}</strong><span>fichas canónicas publicadas</span></div>
-      <div class="stat"><strong>MIT</strong><span>biblioteca de código abierta</span></div>
+      <div class="stat"><strong>35</strong><span>tests de hardening</span></div>
     </div>
   </section>
 
   <section class="section">
     <div class="section-heading">
-      <div>
-        <p class="eyebrow">Primera edición</p>
-        <h2>Del patrón al sistema.</h2>
-      </div>
-      <p>
-        Cada ficha conecta intención, arquitectura, implementación, riesgos, observabilidad,
-        evaluación y relaciones con otros patrones. El objetivo no es memorizar recetas:
-        es aprender a componer arquitecturas de IA defendibles.
-      </p>
+      <div><p class="eyebrow">Primera edición</p><h2>Del patrón al sistema.</h2></div>
+      <p>Cada ficha conecta intención, implementación, riesgos, producción y relaciones. El objetivo no es memorizar recetas: es aprender a componer arquitecturas de IA defendibles.</p>
     </div>
-
     <div class="card-grid">
       {patterns.map((pattern) => (
         <a class="pattern-card" href={`${base}patterns/${pattern.data.slug}/`}>
           <span class="pattern-number">PATTERN {String(pattern.data.patternId).padStart(3, '0')}</span>
           <h3>{pattern.data.title}</h3>
           <p>{pattern.data.summary}</p>
-          <div class="tags">
-            <span class="tag">{pattern.data.family}</span>
-            <span class="tag">{pattern.data.difficulty}</span>
-            <span class="tag">{pattern.data.evidenceStatus}</span>
-          </div>
+          <div class="tags"><span class="tag">{pattern.data.family}</span><span class="tag">{pattern.data.difficulty}</span><span class="tag">{pattern.data.evidenceStatus}</span></div>
         </a>
       ))}
     </div>
@@ -60,32 +46,14 @@ const base = import.meta.env.BASE_URL;
 
   <section class="section">
     <div class="section-heading">
-      <div>
-        <p class="eyebrow">Arquitectura editorial</p>
-        <h2>Una fuente. Tres productos.</h2>
-      </div>
-      <p>
-        El Markdown canónico alimentará la web, el libro y el grafo de relaciones. El código
-        TypeScript permanece como referencia ejecutable y verificable de cada patrón.
-      </p>
+      <div><p class="eyebrow">Arquitectura editorial</p><h2>Una fuente. Cuatro productos.</h2></div>
+      <p>El Markdown canónico alimenta web, libro y Evidence Pack. El código TypeScript permanece como referencia ejecutable de cada patrón.</p>
     </div>
-
     <div class="card-grid">
-      <article class="pattern-card">
-        <span class="pattern-number">LEARN</span>
-        <h3>Libro</h3>
-        <p>Narrativa, fundamentos, decisiones, trade-offs y arquitecturas completas.</p>
-      </article>
-      <article class="pattern-card">
-        <span class="pattern-number">EXPLORE</span>
-        <h3>Web</h3>
-        <p>Catálogo, búsqueda, filtros, learning paths y navegación entre patrones.</p>
-      </article>
-      <article class="pattern-card">
-        <span class="pattern-number">BUILD</span>
-        <h3>Código</h3>
-        <p>102 implementaciones TypeScript enlazadas directamente con su ficha editorial.</p>
-      </article>
+      <a class="pattern-card" href={`${base}book/`}><span class="pattern-number">LEARN</span><h3>Libro</h3><p>Manuscrito ensamblado en 10 partes desde las 102 fichas.</p></a>
+      <a class="pattern-card" href={`${base}patterns/`}><span class="pattern-number">EXPLORE</span><h3>Web</h3><p>Catálogo, filtros y navegación entre patrones.</p></a>
+      <a class="pattern-card" href="https://github.com/rubences/patrones_dise-o_ia"><span class="pattern-number">BUILD</span><h3>Código</h3><p>102 implementaciones TypeScript enlazadas con su ficha.</p></a>
+      <a class="pattern-card" href={`${base}evidence/`}><span class="pattern-number">VERIFY</span><h3>Evidencia</h3><p>Cobertura, referencias, estado de evidencia y hashes reproducibles.</p></a>
     </div>
   </section>
 </BaseLayout>
