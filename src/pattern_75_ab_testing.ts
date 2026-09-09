@@ -1,31 +1,8 @@
 /**
- * ═══════════════════════════════════════════════════════════════════
- *  PATRÓN 75 — A/B TESTING FOR PROMPTS (PRUEBAS A/B DE PROMPTS)
- * ═══════════════════════════════════════════════════════════════════
+ * PATRÓN 75 — A/B TESTING FOR PROMPTS
  *
- *  [Usuarios]
- *       │
- *   ┌───┴───┐
- *   50%     50%
- *   ▼       ▼
- *  [Prompt A]  [Prompt B]
- *   │           │
- *   ▼           ▼
- *  Respuesta A  Respuesta B
- *   │           │
- *   └─────┬─────┘
- *         │
- *   [Métricas]
- *   ├─ Calidad (LLM-as-Judge)
- *   ├─ Latencia
- *   ├─ Tokens usados
- *   └─ Score usuario (simulado)
- *
- *  Ventajas:
- *  - Optimización basada en evidencia
- *  - Comparación objetiva de variantes
- *  - Mejora continua de prompts
- *  - Cuantificación del impacto de cambios
+ * Distingue diferencia observada de evidencia estadística. No imputa
+ * quality scores ausentes y no llama "significativo" a un margen bruto.
  */
 
 import { OpenAI } from "openai";
@@ -46,49 +23,171 @@ export interface ResultadoEjecucion {
   tokensEstimados: number;
 }
 
+export interface ResumenMuestra {
+  n: number;
+  media: number | null;
+  desviacionEstandar: number | null;
+  errorEstandar: number | null;
+  ic95Media: [number, number] | null;
+}
+
 export interface MetricasVariante {
   varianteId: string;
   nombre: string;
   totalEjecuciones: number;
-  latenciaPromedioMs: number;
-  tokensPromedio: number;
-  scoreCalidad: number; // 0-100 evaluado por LLM-as-Judge
+  latenciaPromedioMs: number | null;
+  tokensPromedio: number | null;
+  muestrasCalidad: number;
+  scoreCalidad: number | null;
+  desviacionCalidad: number | null;
+  ic95Calidad: [number, number] | null;
+}
+
+export type EstadoComparacion = "insuficiente" | "inconclusa" | "diferencia_detectada";
+
+export interface ComparacionCalidad {
+  estado: EstadoComparacion;
+  diferenciaMedia: number | null;
+  errorEstandarDiferencia: number | null;
+  ic95Diferencia: [number, number] | null;
+  varianteSuperiorId: string | null;
+  nota: string;
 }
 
 export interface ResultadoABTest {
-  ganador: string;
-  margenVictoria: number;
+  ganador: string | null;
+  margenVictoria: number | null;
   metricas: MetricasVariante[];
+  comparacion: ComparacionCalidad;
   recomendacion: string;
 }
 
-export class ABTestingPrompts {
-  private client: OpenAI;
-  private variantes: VariantePrompt[];
-  private resultados: ResultadoEjecucion[] = [];
+export type EvaluadorCalidad = (respuesta: string, pregunta: string) => Promise<number | null>;
 
-  constructor(variantes: VariantePrompt[], client: OpenAI = makeClient()) {
-    this.client = client;
-    this.variantes = variantes;
+function media(valores: number[]): number {
+  return valores.reduce((sum, valor) => sum + valor, 0) / valores.length;
+}
+
+export function resumirMuestra(valores: number[]): ResumenMuestra {
+  if (valores.length === 0) {
+    return { n: 0, media: null, desviacionEstandar: null, errorEstandar: null, ic95Media: null };
+  }
+  const promedio = media(valores);
+  if (valores.length === 1) {
+    return { n: 1, media: promedio, desviacionEstandar: null, errorEstandar: null, ic95Media: null };
+  }
+  const varianza = valores.reduce((sum, valor) => sum + (valor - promedio) ** 2, 0) / (valores.length - 1);
+  const desviacion = Math.sqrt(varianza);
+  const error = desviacion / Math.sqrt(valores.length);
+  const margen = 1.96 * error;
+  return {
+    n: valores.length,
+    media: promedio,
+    desviacionEstandar: desviacion,
+    errorEstandar: error,
+    ic95Media: [promedio - margen, promedio + margen],
+  };
+}
+
+export function compararMuestrasCalidad(
+  varianteAId: string,
+  valoresA: number[],
+  varianteBId: string,
+  valoresB: number[],
+): ComparacionCalidad {
+  if (valoresA.length < 2 || valoresB.length < 2) {
+    return {
+      estado: "insuficiente",
+      diferenciaMedia: null,
+      errorEstandarDiferencia: null,
+      ic95Diferencia: null,
+      varianteSuperiorId: null,
+      nota: "Se requieren al menos 2 observaciones de calidad válidas por variante para estimar incertidumbre.",
+    };
   }
 
-  private seleccionarVariante(): VariantePrompt {
-    // Distribución uniforme entre variantes
+  const a = resumirMuestra(valoresA);
+  const b = resumirMuestra(valoresB);
+  const diferencia = a.media! - b.media!;
+  const varA = a.desviacionEstandar! ** 2;
+  const varB = b.desviacionEstandar! ** 2;
+  const se = Math.sqrt(varA / a.n + varB / b.n);
+  const margen = 1.96 * se;
+  const intervalo: [number, number] = [diferencia - margen, diferencia + margen];
+
+  // Aproximación normal al 95 %. Para muestras pequeñas o decisiones críticas,
+  // usar Welch-t exacto / bootstrap y un diseño experimental pre-registrado.
+  if (intervalo[0] > 0) {
+    return {
+      estado: "diferencia_detectada",
+      diferenciaMedia: diferencia,
+      errorEstandarDiferencia: se,
+      ic95Diferencia: intervalo,
+      varianteSuperiorId: varianteAId,
+      nota: "El IC95 aproximado de A-B está completamente por encima de 0.",
+    };
+  }
+  if (intervalo[1] < 0) {
+    return {
+      estado: "diferencia_detectada",
+      diferenciaMedia: diferencia,
+      errorEstandarDiferencia: se,
+      ic95Diferencia: intervalo,
+      varianteSuperiorId: varianteBId,
+      nota: "El IC95 aproximado de A-B está completamente por debajo de 0.",
+    };
+  }
+  return {
+    estado: "inconclusa",
+    diferenciaMedia: diferencia,
+    errorEstandarDiferencia: se,
+    ic95Diferencia: intervalo,
+    varianteSuperiorId: null,
+    nota: "El IC95 aproximado de A-B incluye 0; no hay evidencia suficiente para declarar una variante superior.",
+  };
+}
+
+function hashUnidad(unidad: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < unidad.length; i++) {
+    hash ^= unidad.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+export class ABTestingPrompts {
+  private resultados: ResultadoEjecucion[] = [];
+
+  constructor(
+    private variantes: VariantePrompt[],
+    private client: OpenAI = makeClient(),
+    private evaluadorCalidad?: EvaluadorCalidad,
+  ) {
+    if (variantes.length !== 2) throw new Error("A/B Testing requiere exactamente dos variantes");
+    if (new Set(variantes.map((v) => v.id)).size !== 2) throw new Error("Los IDs de variantes deben ser únicos");
+  }
+
+  private seleccionarVariante(unidadExperimental?: string): VariantePrompt {
+    if (unidadExperimental) {
+      return this.variantes[hashUnidad(unidadExperimental) % this.variantes.length];
+    }
     return this.variantes[Math.floor(Math.random() * this.variantes.length)];
   }
 
-  async ejecutar(entrada: string, varianteId?: string): Promise<ResultadoEjecucion> {
+  async ejecutar(entrada: string, varianteId?: string, unidadExperimental?: string): Promise<ResultadoEjecucion> {
     const variante = varianteId
-      ? this.variantes.find((v) => v.id === varianteId) ?? this.seleccionarVariante()
-      : this.seleccionarVariante();
+      ? this.variantes.find((v) => v.id === varianteId)
+      : this.seleccionarVariante(unidadExperimental);
+    if (!variante) throw new Error(`Variante desconocida: ${varianteId}`);
 
     const inicio = Date.now();
     const resp = await this.client.responses.create({
       model: DEFAULT_MODEL,
       reasoning: { effort: "low" },
       store: false,
-      instructions: `${variante.sistemaPrompt}\n\n${entrada}`,
-      input: "",
+      instructions: variante.sistemaPrompt,
+      input: entrada,
     });
 
     const resultado: ResultadoEjecucion = {
@@ -96,122 +195,94 @@ export class ABTestingPrompts {
       entrada,
       salida: resp.output_text,
       latenciaMs: Date.now() - inicio,
-      tokensEstimados: Math.ceil((variante.sistemaPrompt + entrada + resp.output_text).split(" ").length * 1.3),
+      tokensEstimados: Math.ceil((variante.sistemaPrompt + entrada + resp.output_text).split(/\s+/).length * 1.3),
     };
-
     this.resultados.push(resultado);
     return resultado;
   }
 
-  private async evaluarCalidad(respuesta: string, pregunta: string): Promise<number> {
+  private async evaluar(respuesta: string, pregunta: string): Promise<number | null> {
+    if (this.evaluadorCalidad) return this.evaluadorCalidad(respuesta, pregunta);
     const resp = await this.client.responses.create({
       model: DEFAULT_MODEL,
       reasoning: { effort: "low" },
       store: false,
-      instructions: `Evalúa la calidad de esta respuesta del 0-100.
-Pregunta: "${pregunta}"
-Respuesta: "${respuesta.slice(0, 200)}"
-Considera: relevancia, claridad, completitud.
-Responde SOLO con el número.`,
-      input: "",
+      instructions: "Evalúa relevancia, claridad y completitud de 0 a 100. Responde exclusivamente con un número.",
+      input: `Pregunta: ${pregunta}\nRespuesta: ${respuesta.slice(0, 1000)}`,
     });
-    return parseInt(resp.output_text.match(/\d+/)?.[0] ?? "70");
+    const match = resp.output_text.trim().match(/^(\d{1,3}(?:\.\d+)?)$/);
+    if (!match) return null;
+    const score = Number(match[1]);
+    return Number.isFinite(score) && score >= 0 && score <= 100 ? score : null;
   }
 
   async analizarResultados(entradasEvaluacion: string[]): Promise<ResultadoABTest> {
-    console.log(`\n   📊 Analizando ${this.resultados.length} ejecuciones...`);
+    const entradas = new Set(entradasEvaluacion);
+    const datos = new Map<string, { latencias: number[]; tokens: number[]; scores: number[] }>();
+    this.variantes.forEach((v) => datos.set(v.id, { latencias: [], tokens: [], scores: [] }));
 
-    const metricasPorVariante = new Map<string, { latencias: number[]; tokens: number[]; scores: number[] }>();
-
-    // Inicializar
-    this.variantes.forEach((v) => metricasPorVariante.set(v.id, { latencias: [], tokens: [], scores: [] }));
-
-    // Agregar métricas
-    for (const r of this.resultados) {
-      const m = metricasPorVariante.get(r.varianteId);
-      if (m) {
-        m.latencias.push(r.latenciaMs);
-        m.tokens.push(r.tokensEstimados);
-        // Evaluar calidad de algunas respuestas
-        if (entradasEvaluacion.includes(r.entrada)) {
-          const score = await this.evaluarCalidad(r.salida, r.entrada);
-          m.scores.push(score);
-        }
+    for (const resultado of this.resultados) {
+      const bucket = datos.get(resultado.varianteId)!;
+      bucket.latencias.push(resultado.latenciaMs);
+      bucket.tokens.push(resultado.tokensEstimados);
+      if (entradas.has(resultado.entrada)) {
+        const score = await this.evaluar(resultado.salida, resultado.entrada);
+        if (score !== null) bucket.scores.push(score);
       }
     }
 
-    const metricas: MetricasVariante[] = this.variantes.map((v) => {
-      const m = metricasPorVariante.get(v.id) ?? { latencias: [0], tokens: [0], scores: [70] };
+    const metricas = this.variantes.map((variante): MetricasVariante => {
+      const bucket = datos.get(variante.id)!;
+      const resumen = resumirMuestra(bucket.scores);
       return {
-        varianteId: v.id,
-        nombre: v.nombre,
-        totalEjecuciones: m.latencias.length,
-        latenciaPromedioMs: Math.round(m.latencias.reduce((s, l) => s + l, 0) / m.latencias.length),
-        tokensPromedio: Math.round(m.tokens.reduce((s, t) => s + t, 0) / m.tokens.length),
-        scoreCalidad: m.scores.length > 0 ? Math.round(m.scores.reduce((s, sc) => s + sc, 0) / m.scores.length) : 70,
+        varianteId: variante.id,
+        nombre: variante.nombre,
+        totalEjecuciones: bucket.latencias.length,
+        latenciaPromedioMs: bucket.latencias.length ? Math.round(media(bucket.latencias)) : null,
+        tokensPromedio: bucket.tokens.length ? Math.round(media(bucket.tokens)) : null,
+        muestrasCalidad: resumen.n,
+        scoreCalidad: resumen.media,
+        desviacionCalidad: resumen.desviacionEstandar,
+        ic95Calidad: resumen.ic95Media,
       };
     });
 
-    const ganadorMetrica = metricas.sort((a, b) => b.scoreCalidad - a.scoreCalidad)[0];
-    const segundoMetrica = metricas[1];
-    const margen = ganadorMetrica.scoreCalidad - (segundoMetrica?.scoreCalidad ?? 0);
+    const [a, b] = this.variantes;
+    const comparacion = compararMuestrasCalidad(a.id, datos.get(a.id)!.scores, b.id, datos.get(b.id)!.scores);
+    const ganadorVariante = comparacion.varianteSuperiorId
+      ? this.variantes.find((v) => v.id === comparacion.varianteSuperiorId) ?? null
+      : null;
 
     return {
-      ganador: ganadorMetrica.nombre,
-      margenVictoria: margen,
+      ganador: ganadorVariante?.nombre ?? null,
+      margenVictoria: comparacion.diferenciaMedia === null ? null : Math.abs(comparacion.diferenciaMedia),
       metricas,
-      recomendacion: margen >= 10
-        ? `Adoptar "${ganadorMetrica.nombre}" en producción (margen significativo: ${margen} puntos)`
-        : `Diferencia no concluyente (${margen} puntos). Recomendado: más muestras.`,
+      comparacion,
+      recomendacion: ganadorVariante
+        ? `La evidencia disponible favorece a "${ganadorVariante.nombre}"; confirma el resultado con el diseño estadístico apropiado antes de un rollout crítico.`
+        : comparacion.estado === "insuficiente"
+          ? "No hay suficientes observaciones válidas por brazo; continúa el experimento sin imputar scores ausentes."
+          : "Resultado inconcluso: el intervalo de la diferencia incluye 0. No declares ganador con estos datos.",
     };
   }
 }
 
 export async function demostrarABTesting(client: OpenAI = makeClient()): Promise<void> {
-  paso("🧪", "Demostrando A/B Testing for Prompts Pattern");
-
+  paso("🧪", "Demostrando A/B Testing con incertidumbre explícita");
   const variantes: VariantePrompt[] = [
-    {
-      id: "A",
-      nombre: "Prompt-Directo",
-      sistemaPrompt: "Responde de forma concisa y directa.",
-      descripcion: "Sistema prompt minimalista",
-    },
-    {
-      id: "B",
-      nombre: "Prompt-Estructurado",
-      sistemaPrompt: "Eres un experto en patrones de diseño. Responde estructuradamente: primero la definición, luego un ejemplo, finalmente cuándo usarlo.",
-      descripcion: "Sistema prompt con estructura explícita",
-    },
+    { id: "A", nombre: "Directo", sistemaPrompt: "Responde de forma concisa.", descripcion: "Prompt breve" },
+    { id: "B", nombre: "Estructurado", sistemaPrompt: "Define, ejemplifica y explica cuándo usarlo.", descripcion: "Prompt estructurado" },
   ];
-
   const ab = new ABTestingPrompts(variantes, client);
-
-  const preguntas = [
-    "¿Qué es el patrón Singleton?",
-    "¿Cuándo usar Factory Method?",
-    "Explica el patrón Observer",
-  ];
-
-  paso("1️⃣", "Ejecutar cada variante con las mismas preguntas");
+  const preguntas = ["¿Qué es RAG?", "¿Qué es Observer?", "¿Qué es Circuit Breaker?"];
   for (const pregunta of preguntas) {
-    for (const variante of variantes) {
-      const r = await ab.ejecutar(pregunta, variante.id);
-      console.log(`   [${variante.nombre}] "${pregunta.slice(0, 35)}" → ${r.latenciaMs}ms | ${r.tokensEstimados} tokens`);
-    }
+    for (const variante of variantes) await ab.ejecutar(pregunta, variante.id);
   }
-
-  paso("2️⃣", "Analizar y comparar resultados");
-  const resultado = await ab.analizarResultados([preguntas[0]]);
-
-  console.log(`\n   📊 Resultados A/B Test:`);
-  resultado.metricas.forEach((m) => {
-    console.log(`   ${m.nombre}: calidad=${m.scoreCalidad}/100 | latencia=${m.latenciaPromedioMs}ms | tokens=${m.tokensPromedio}`);
-  });
-  console.log(`\n   🏆 Ganador: ${resultado.ganador} (margen: +${resultado.margenVictoria} puntos)`);
-  console.log(`   📋 Recomendación: ${resultado.recomendacion}`);
-
-  paso("✅", "A/B Testing comparando variantes de prompts con métricas objetivas");
+  const resultado = await ab.analizarResultados(preguntas);
+  console.log(`   Estado inferencial: ${resultado.comparacion.estado}`);
+  console.log(`   IC95 diferencia A-B: ${JSON.stringify(resultado.comparacion.ic95Diferencia)}`);
+  console.log(`   Recomendación: ${resultado.recomendacion}`);
+  paso("✅", "La diferencia observada ya no se confunde con evidencia estadística");
 }
 
 async function main(): Promise<void> { await demostrarABTesting(); }
