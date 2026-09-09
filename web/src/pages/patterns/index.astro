@@ -13,9 +13,13 @@ const base = import.meta.env.BASE_URL;
 const patterns = masterCatalog.patterns
   .map((record) => {
     const canonical = canonicalById.get(record.id);
+    const editorialStatus = canonical ? 'published' : record.editorialStatus;
+    const evidenceStatus = canonical?.data.evidenceStatus ?? record.evidenceStatus;
     return {
       ...record,
       canonical,
+      editorialStatus,
+      evidenceStatus,
       title: canonical?.data.title ?? record.name,
       summary:
         canonical?.data.summary ??
