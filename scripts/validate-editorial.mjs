@@ -146,13 +146,21 @@ for (const record of masterCatalog.patterns ?? []) {
 }
 
 const readme = readFileSync(join(root, 'README.md'), 'utf8');
-if (/Mapa Completo de 99 Patrones/i.test(readme)) {
-  warnings.push('README still contains the stale heading "Mapa Completo de 99 Patrones"; normalize it to 102 before publication release.');
+if (/Mapa Completo de 99 Patrones/i.test(readme) || /\{1\.\.99\}/.test(readme)) {
+  errors.push('README contains stale 99-pattern publication state; normalize all operational references to 102.');
+}
+if (!/102\/102\s+implementaciones/i.test(readme) || !/102\/102\s+fichas canónicas/i.test(readme)) {
+  errors.push('README must declare the current 102/102 implementation and canonical-sheet publication state.');
 }
 
-const legacyPlan = join(root, 'RESUMEN_EJECUTIVO_PLAN_ACCION.md');
-if (existsSync(legacyPlan)) {
-  warnings.push('RESUMEN_EJECUTIVO_PLAN_ACCION.md describes an earlier catalog stage; treat it as historical material, not current publication state.');
+const executiveSummaryPath = join(root, 'RESUMEN_EJECUTIVO_PLAN_ACCION.md');
+if (!existsSync(executiveSummaryPath)) {
+  errors.push('RESUMEN_EJECUTIVO_PLAN_ACCION.md is required as the current publication/hardening status document.');
+} else {
+  const executiveSummary = readFileSync(executiveSummaryPath, 'utf8');
+  if (!/102\/102/.test(executiveSummary) || !/Hardening P0/i.test(executiveSummary)) {
+    errors.push('RESUMEN_EJECUTIVO_PLAN_ACCION.md must reflect the current 102/102 catalog and Hardening P0 roadmap.');
+  }
 }
 
 console.log(`Source implementations: ${sourceFiles.length}/${expectedCatalogSize}`);
