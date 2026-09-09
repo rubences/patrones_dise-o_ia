@@ -25,14 +25,16 @@ references: []
 Guardrails sitúa controles en puntos definidos del flujo para decidir qué puede entrar, qué puede salir y qué debe transformarse o bloquearse.
 
 ## Implementación del repositorio
-`src/pattern_53_guardrails.ts` combina regex de PII, una lista de topics prohibidos, palabras sensibles en output y un juicio LLM `SEGURO/INSEGURO`.
+`src/pattern_53_guardrails.ts` combina regex de PII, una lista pedagógica de topics prohibidos, palabras sensibles en output y un juicio LLM `SEGURO/INSEGURO`.
 
-Hay un bug importante en el guardrail de salida: el código calcula `seguro = output.toUpperCase().includes("SEGURO")`. La palabra **`INSEGURO` también contiene `SEGURO`**, por lo que una respuesta explícitamente marcada como `INSEGURO` puede clasificarse como segura. En producción debe parsearse un enum exacto o structured output.
+Tras el hardening P0, el veredicto de salida se interpreta mediante **igualdad exacta** y falla cerrado ante cualquier formato ambiguo. Esto corrige el defecto por el que `includes("SEGURO")` aceptaba también `INSEGURO`. La detección PII resetea además el estado de las regex globales antes y después de `.test()`, evitando falsos negativos entre llamadas consecutivas.
 
-La lista `hackear`, `exploit`, `malware`, `phishing` y `bypass seguridad` también puede bloquear consultas legítimas de docencia, defensa o investigación. La policy debería evaluar intención/contexto, no solo presencia léxica.
+La lista `hackear`, `exploit`, `malware`, `phishing` y `bypass seguridad` continúa siendo intencionalmente pedagógica y puede bloquear consultas legítimas de docencia, defensa o investigación. Una policy de producción debe evaluar intención y contexto, no solo presencia léxica.
 
 ## Producción
-Separa guardrails por finalidad, usa decisiones estructuradas y default-deny únicamente donde el riesgo lo justifique. Prueba falsos positivos/negativos, versiona políticas y evita que el mismo LLM que genera contenido sea la única autoridad de seguridad.
+Separa guardrails por finalidad, usa decisiones estructuradas y default-deny donde el riesgo lo justifique. Prueba falsos positivos/negativos, versiona políticas y evita que el mismo LLM que genera contenido sea la única autoridad de seguridad.
+
+El hardening del parser elimina un fail-open concreto; **no convierte el clasificador LLM en una frontera de seguridad**. Autorización, aislamiento y validación de acciones siguen siendo controles independientes.
 
 ## Relaciones
 **PII Redaction (89)** transforma datos personales; **Prompt Injection Defense (69)** trata manipulación de instrucciones; **Access Control (72)** gobierna acciones y recursos.

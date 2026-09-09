@@ -1,49 +1,12 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
- *  PATRÓN 101 — TOOL CALL VALIDATION GATE (VALIDACIÓN DE LLAMADAS A HERRAMIENTAS)
+ *  PATRÓN 101 — TOOL CALL VALIDATION GATE
  * ═══════════════════════════════════════════════════════════════════
  *
- *  [LLM decide invocar: reiniciar_servicio({ confirmar: "sí" })]
- *       │
- *       ▼
- *  [Puerta de Validación]
- *  ├─ ¿Existen todos los parámetros REQUERIDOS por el schema? ────┐
- *  ├─ ¿El tipo de cada parámetro coincide con el schema?          ├─ alucinación de parámetros
- *  └─ ¿Ya se ejecutó el prerrequisito de secuencia?  ─────────────┘  fallo de secuenciación
- *       │
- *       ▼
- *  [Ejecutar contra el backend real] / [Rechazar con motivo explícito]
- *
- *  Idea: un LLM en un bucle ReAct puede inventar un parámetro que no
- *  existe en el schema de la función, omitir uno requerido, o pedir
- *  ejecutar una acción en el orden equivocado (reiniciar un servicio
- *  ANTES de volcar su caché a disco). Ninguno de estos fallos es un
- *  ataque — es alucinación operativa — pero el efecto en producción
- *  es el mismo: una llamada que no debería ejecutarse tal cual llega
- *  al backend real. Esta puerta valida forma (schema) y orden
- *  (secuencia) ANTES de despachar, sin necesidad de que el LLM
- *  "razone mejor" la próxima vez.
- *
- *  Diferencia vs Patrón 83 (Dynamic Tool Discovery): 83 construye el
- *  schema de function-calling en runtime descubriendo qué herramientas
- *  existen. Este patrón usa ese schema (ya construido, por descubrimiento
- *  o declarado a mano) para VALIDAR que una llamada concreta lo cumple
- *  antes de ejecutarla — son etapas distintas: descubrir el contrato,
- *  luego hacerlo cumplir.
- *
- *  Diferencia vs Patrón 72 (Access Control for Agents): 72 decide SI
- *  el rol del agente tiene permiso para invocar esa herramienta o
- *  recurso en absoluto (RBAC/ABAC). Este patrón asume que sí tiene
- *  permiso y valida que LA LLAMADA CONCRETA (sus argumentos y su
- *  posición en la secuencia) está bien formada — ambas puertas se
- *  aplican en cadena, una tras otra, antes de tocar el backend real:
- *  primero autorización de identidad (72), luego validez de la llamada (101).
- *
- *  Ventajas:
- *  - Detecta alucinación de parámetros antes de que rompa el backend
- *  - Previene secuencias peligrosas (reiniciar antes de volcar caché)
- *  - Mensaje de rechazo explícito que el agente puede usar para reintentar bien
- *  - No requiere una segunda llamada al LLM: validación determinista y barata
+ *  Valida de forma determinista una tool call antes de tocar el backend:
+ *  existencia de tool, parámetros requeridos, tipos, argumentos extra y
+ *  precondiciones de secuencia. La autorización de identidad corresponde
+ *  a una puerta separada (Patrón 72).
  */
 
 import { isDirectRun, paso } from "./common.js";
@@ -59,8 +22,6 @@ export interface EsquemaParametro {
 export interface DefinicionHerramienta {
   nombre: string;
   parametros: EsquemaParametro[];
-  // Esta herramienta solo es válida si al menos una de estas ya se ejecutó antes
-  // en la misma sesión (prerrequisito de secuencia).
   debeSeguirA?: string[];
 }
 
@@ -77,7 +38,7 @@ export interface ResultadoValidacion {
 
 function tipoDe(valor: unknown): TipoParametro | "desconocido" {
   if (typeof valor === "string") return "string";
-  if (typeof valor === "number") return "number";
+  if (typeof valor === "number" && Number.isFinite(valor)) return "number";
   if (typeof valor === "boolean") return "boolean";
   return "desconocido";
 }
@@ -98,8 +59,16 @@ export class ValidadorLlamadasHerramienta {
       return { llamada: llamada.nombre, valida: false, errores: ["herramienta no existe en el schema"] };
     }
 
-    // 1. Validación de forma: parámetros requeridos presentes y con el tipo correcto
-    //    (alucinación de parámetros: el LLM inventó un nombre o un tipo que no coincide).
+    const parametrosPermitidos = new Set(herramienta.parametros.map((p) => p.nombre));
+
+    // Fail closed frente a parámetros alucinados o inyectados. Equivale a
+    // `additionalProperties: false` para este schema pedagógico.
+    for (const nombreArgumento of Object.keys(llamada.argumentos)) {
+      if (!parametrosPermitidos.has(nombreArgumento)) {
+        errores.push(`parámetro desconocido "${nombreArgumento}"`);
+      }
+    }
+
     for (const param of herramienta.parametros) {
       const valor = llamada.argumentos[param.nombre];
       if (param.requerido && valor === undefined) {
@@ -111,7 +80,6 @@ export class ValidadorLlamadasHerramienta {
       }
     }
 
-    // 2. Validación de secuencia: el prerrequisito ya se ejecutó en esta sesión.
     if (herramienta.debeSeguirA && herramienta.debeSeguirA.length > 0) {
       const prerequisitoCumplido = herramienta.debeSeguirA.some((req) => this.historialEjecutadas.includes(req));
       if (!prerequisitoCumplido) {
@@ -124,8 +92,11 @@ export class ValidadorLlamadasHerramienta {
     return { llamada: llamada.nombre, valida: errores.length === 0, errores };
   }
 
-  // Se llama solo tras una ejecución REAL contra el backend, no tras la validación.
+  // Solo se registra tras una ejecución REAL confirmada por el backend.
   registrarEjecutada(nombreHerramienta: string): void {
+    if (!this.herramientas.has(nombreHerramienta)) {
+      throw new Error(`No se puede registrar una herramienta desconocida: ${nombreHerramienta}`);
+    }
     this.historialEjecutadas.push(nombreHerramienta);
   }
 }
@@ -151,9 +122,10 @@ export async function demostrarToolCallValidation(): Promise<void> {
   const validador = new ValidadorLlamadasHerramienta(herramientas);
 
   const llamadas: LlamadaHerramienta[] = [
-    { nombre: "volcar_cache", argumentos: { servicio: "telemetria" } }, // válida: forma correcta
-    { nombre: "reiniciar_servicio", argumentos: { servicio: "telemetria" } }, // inválida: falta "confirmar" (alucinación de parámetro)
-    { nombre: "reiniciar_servicio", argumentos: { servicio: "telemetria", confirmar: "sí" } }, // inválida: "confirmar" debe ser boolean, no string
+    { nombre: "volcar_cache", argumentos: { servicio: "telemetria" } },
+    { nombre: "reiniciar_servicio", argumentos: { servicio: "telemetria" } },
+    { nombre: "reiniciar_servicio", argumentos: { servicio: "telemetria", confirmar: "sí" } },
+    { nombre: "volcar_cache", argumentos: { servicio: "telemetria", force: true } },
   ];
 
   console.log("\n   Intento 1: validar SIN haber ejecutado nada aún");
@@ -176,7 +148,7 @@ export async function demostrarToolCallValidation(): Promise<void> {
       `ahora ${resultadoFinal.valida ? "pasa" : "sigue fallando"} (prerrequisito ya cumplido)`,
   );
 
-  paso("✅", "Tool Call Validation Gate deteniendo alucinación de parámetros y secuencias peligrosas antes del backend real");
+  paso("✅", "Tool Call Validation Gate rechazando argumentos desconocidos, tipos inválidos y secuencias peligrosas");
 }
 
 async function main(): Promise<void> {
