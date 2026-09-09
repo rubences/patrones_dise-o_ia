@@ -3,38 +3,25 @@
  *  PATRÓN 44 — CHECKPOINTING (PUNTOS DE GUARDADO)
  * ═══════════════════════════════════════════════════════════════════
  *
- *  [Tarea larga]
- *       │
- *  ╔════╧════╗  ← Checkpoint 1
- *  ║ SAVE ✓  ║
- *  ╚════╤════╝
- *       │
- *  ╔════╧════╗  ← Checkpoint 2
- *  ║ SAVE ✓  ║
- *  ╚════╤════╝
- *       │
- *       ✗ FALLO
- *       │
- *       ▼
- *  [Recuperar desde Checkpoint 2]
- *  └─ Reanudar sin perder progreso
- *
- *  Idea: Guardar el estado del agente en puntos clave para
- *  reanudar desde ahí en caso de fallo, sin empezar de cero.
- *
- *  Ventajas:
- *  - Tolerancia a fallos en tareas largas
- *  - Reanudar progreso sin perder trabajo
- *  - Auditoría de progreso
- *  - Ahorro de tokens en re-ejecuciones
+ *  El gestor separa la lógica de checkpoint de su almacenamiento. La demo
+ *  puede usar memoria; producción puede inyectar un store durable. Se incluye
+ *  un JsonFileCheckpointStore para demostrar recuperación tras reinicio.
  */
 
-import { isDirectRun, makeClient, paso } from "./common.js";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  writeFileSync,
+} from "node:fs";
+import { dirname } from "node:path";
 import { OpenAI } from "openai";
-import { DEFAULT_MODEL } from "./common.js";
+import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
 export interface Checkpoint {
   id: string;
+  tareaId: string;
   paso: number;
   timestamp: Date;
   estadoAgente: Record<string, unknown>;
@@ -42,43 +29,106 @@ export interface Checkpoint {
   completado: boolean;
 }
 
+export interface CheckpointStore {
+  guardar(checkpoint: Checkpoint): void;
+  listar(tareaId: string): Checkpoint[];
+}
+
+export class MemoryCheckpointStore implements CheckpointStore {
+  private checkpoints = new Map<string, Checkpoint>();
+
+  guardar(checkpoint: Checkpoint): void {
+    this.checkpoints.set(checkpoint.id, structuredClone(checkpoint));
+  }
+
+  listar(tareaId: string): Checkpoint[] {
+    return Array.from(this.checkpoints.values())
+      .filter((cp) => cp.tareaId === tareaId)
+      .map((cp) => structuredClone(cp));
+  }
+}
+
+interface CheckpointSerializado extends Omit<Checkpoint, "timestamp"> {
+  timestamp: string;
+}
+
+export class JsonFileCheckpointStore implements CheckpointStore {
+  constructor(private ruta: string) {
+    mkdirSync(dirname(ruta), { recursive: true });
+  }
+
+  private cargarTodos(): CheckpointSerializado[] {
+    if (!existsSync(this.ruta)) return [];
+    const texto = readFileSync(this.ruta, "utf8").trim();
+    if (!texto) return [];
+    const datos = JSON.parse(texto) as CheckpointSerializado[];
+    if (!Array.isArray(datos)) throw new Error("Checkpoint store inválido: se esperaba un array JSON");
+    return datos;
+  }
+
+  guardar(checkpoint: Checkpoint): void {
+    const todos = this.cargarTodos();
+    const serializado: CheckpointSerializado = {
+      ...checkpoint,
+      timestamp: checkpoint.timestamp.toISOString(),
+    };
+    const indice = todos.findIndex((cp) => cp.id === checkpoint.id);
+    if (indice >= 0) todos[indice] = serializado;
+    else todos.push(serializado);
+
+    const temporal = `${this.ruta}.tmp`;
+    writeFileSync(temporal, JSON.stringify(todos, null, 2), "utf8");
+    renameSync(temporal, this.ruta);
+  }
+
+  listar(tareaId: string): Checkpoint[] {
+    return this.cargarTodos()
+      .filter((cp) => cp.tareaId === tareaId)
+      .map((cp) => ({ ...cp, timestamp: new Date(cp.timestamp) }));
+  }
+}
+
 export class GestorCheckpoints {
-  private checkpoints: Map<string, Checkpoint> = new Map();
-  private idActual: string = "";
+  private tareaIdActual = "";
+
+  constructor(private store: CheckpointStore = new MemoryCheckpointStore()) {}
 
   iniciar(tareaId: string): void {
-    this.idActual = tareaId;
+    this.tareaIdActual = tareaId;
     console.log(`   📂 Tarea iniciada: ${tareaId}`);
   }
 
   guardar(paso: number, estado: Record<string, unknown>, resultados: string[]): Checkpoint {
+    if (!this.tareaIdActual) throw new Error("Debe iniciar una tarea antes de guardar checkpoints");
     const cp: Checkpoint = {
-      id: `${this.idActual}-cp${paso}`,
+      id: `${this.tareaIdActual}-cp${paso}`,
+      tareaId: this.tareaIdActual,
       paso,
       timestamp: new Date(),
-      estadoAgente: JSON.parse(JSON.stringify(estado)),
+      estadoAgente: structuredClone(estado),
       resultadosParciales: [...resultados],
       completado: false,
     };
-    this.checkpoints.set(cp.id, cp);
+    this.store.guardar(cp);
     console.log(`   💾 Checkpoint ${paso} guardado (${resultados.length} resultados)`);
     return cp;
   }
 
-  obtenerUltimo(): Checkpoint | null {
-    const todos = Array.from(this.checkpoints.values()).sort(
-      (a, b) => b.paso - a.paso,
-    );
+  obtenerUltimo(tareaId: string = this.tareaIdActual): Checkpoint | null {
+    const todos = this.store.listar(tareaId).sort((a, b) => b.paso - a.paso);
     return todos[0] ?? null;
   }
 
   marcarCompletado(id: string): void {
-    const cp = this.checkpoints.get(id);
-    if (cp) cp.completado = true;
+    const tareaId = id.replace(/-cp\d+$/, "");
+    const cp = this.store.listar(tareaId).find((item) => item.id === id);
+    if (!cp) throw new Error(`Checkpoint no encontrado: ${id}`);
+    cp.completado = true;
+    this.store.guardar(cp);
   }
 
-  listar(): Checkpoint[] {
-    return Array.from(this.checkpoints.values()).sort((a, b) => a.paso - b.paso);
+  listar(tareaId: string = this.tareaIdActual): Checkpoint[] {
+    return this.store.listar(tareaId).sort((a, b) => a.paso - b.paso);
   }
 }
 
@@ -86,9 +136,9 @@ export class AgenteConCheckpointing {
   private gestor: GestorCheckpoints;
   private client: OpenAI;
 
-  constructor(client: OpenAI = makeClient()) {
+  constructor(client: OpenAI = makeClient(), store: CheckpointStore = new MemoryCheckpointStore()) {
     this.client = client;
-    this.gestor = new GestorCheckpoints();
+    this.gestor = new GestorCheckpoints(store);
   }
 
   async ejecutarTareaLarga(
@@ -97,16 +147,15 @@ export class AgenteConCheckpointing {
     reanudarDesde?: Checkpoint,
   ): Promise<string[]> {
     const resultados: string[] = [];
-    let estadoActual: Record<string, unknown> = { tarea, iniciado: new Date() };
+    let estadoActual: Record<string, unknown> = { tarea, iniciado: new Date().toISOString() };
     let pasoInicial = 0;
+    const tareaId = reanudarDesde?.tareaId ?? `tarea-${Date.now()}`;
+    this.gestor.iniciar(tareaId);
 
-    this.gestor.iniciar(`tarea-${Date.now()}`);
-
-    // Reanudar desde checkpoint si se proporciona
     if (reanudarDesde) {
       console.log(`\n   ↩️  Reanudando desde checkpoint ${reanudarDesde.paso}`);
       resultados.push(...reanudarDesde.resultadosParciales);
-      estadoActual = reanudarDesde.estadoAgente;
+      estadoActual = structuredClone(reanudarDesde.estadoAgente);
       pasoInicial = reanudarDesde.paso;
     }
 
@@ -114,7 +163,6 @@ export class AgenteConCheckpointing {
       const descripcionPaso = pasos[i];
       console.log(`\n   ⚙️  Paso ${i + 1}/${pasos.length}: ${descripcionPaso}`);
 
-      // Simular fallo en paso 3 (para demostrar recuperación)
       if (i === 2 && !reanudarDesde) {
         console.log(`   ⚠️  Fallo simulado en paso ${i + 1}`);
         const cp = this.gestor.guardar(i, estadoActual, resultados);
@@ -132,7 +180,6 @@ export class AgenteConCheckpointing {
       resultados.push(`[Paso ${i + 1}] ${resp.output_text.slice(0, 100)}`);
       estadoActual = { ...estadoActual, ultimoPaso: i + 1, pasoDesc: descripcionPaso };
 
-      // Guardar checkpoint cada 2 pasos
       if ((i + 1) % 2 === 0 || i === pasos.length - 1) {
         const cp = this.gestor.guardar(i + 1, estadoActual, resultados);
         if (i === pasos.length - 1) this.gestor.marcarCompletado(cp.id);
@@ -149,9 +196,7 @@ export class AgenteConCheckpointing {
 
 export async function demostrarCheckpointing(client: OpenAI = makeClient()): Promise<void> {
   paso("💾", "Demostrando Checkpointing Pattern");
-
   const agente = new AgenteConCheckpointing(client);
-
   const pasos = [
     "Analizar requisitos del sistema",
     "Diseñar arquitectura inicial",
@@ -160,10 +205,7 @@ export async function demostrarCheckpointing(client: OpenAI = makeClient()): Pro
     "Desplegar en staging",
   ];
 
-  paso("1️⃣", "Ejecutar tarea con fallo simulado");
-
   let checkpointRecuperacion: Checkpoint | undefined;
-
   try {
     await agente.ejecutarTareaLarga("Construir sistema agéntico", pasos);
   } catch (err: unknown) {
@@ -173,32 +215,14 @@ export async function demostrarCheckpointing(client: OpenAI = makeClient()): Pro
     }
   }
 
-  paso("2️⃣", "Reanudar desde último checkpoint");
-
   if (checkpointRecuperacion) {
     const agente2 = new AgenteConCheckpointing(client);
-    const resultados = await agente2.ejecutarTareaLarga(
-      "Construir sistema agéntico",
-      pasos,
-      checkpointRecuperacion,
-    );
+    const resultados = await agente2.ejecutarTareaLarga("Construir sistema agéntico", pasos, checkpointRecuperacion);
     console.log(`\n   ✅ Completado. ${resultados.length} pasos en total`);
-    resultados.forEach((r) => console.log(`   ${r.slice(0, 80)}`));
   }
 
-  paso("3️⃣", "Historial de checkpoints");
-
-  agente.obtenerGestor().listar().forEach((cp) => {
-    console.log(`   Checkpoint ${cp.paso}: ${cp.resultadosParciales.length} resultados | ${cp.completado ? "✅" : "⏸️"}`);
-  });
-
-  paso("✅", "Checkpointing garantizando tolerancia a fallos en tareas largas");
+  paso("✅", "Checkpointing con store inyectable y recuperación durable opcional");
 }
 
-async function main(): Promise<void> {
-  await demostrarCheckpointing();
-}
-
-if (isDirectRun(import.meta.url)) {
-  main().catch((e: unknown) => { console.error(e); process.exitCode = 1; });
-}
+async function main(): Promise<void> { await demostrarCheckpointing(); }
+if (isDirectRun(import.meta.url)) { main().catch((e: unknown) => { console.error(e); process.exitCode = 1; }); }
