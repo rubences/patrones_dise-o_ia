@@ -16,29 +16,26 @@ tags: [orchestration, workers, planning, dag]
 related: [27, 57, 65]
 combinesWith: [44, 77, 85]
 antiPatterns:
-  - Registrar una dependencia pendiente y ejecutar igualmente la subtarea.
   - Parsear planes críticos desde texto libre sin schema ni validación.
-  - Dejar que el planificador asigne un worker inexistente sin política explícita.
+  - Dejar que el planificador asigne un worker inexistente y ocultar el error con un fallback silencioso.
+  - Ejecutar un DAG sin detectar ciclos o dependencias imposibles.
 references: []
 ---
 # Propósito
 Orchestrator-Workers centraliza la descomposición y coordinación mientras workers especializados ejecutan unidades de trabajo con contratos acotados.
 
-## Solución
-El orquestador produce un DAG validado, determina qué nodos están listos, despacha trabajo, recoge resultados y decide si replanificar o sintetizar.
-
 ## Implementación del repositorio
-`src/pattern_60_orchestrator_workers.ts` pide al LLM un plan textual con líneas `TAREA... | WORKER... | DEPS...` y lo parsea manualmente. Las dependencias se reducen de forma heurística al identificador de la tarea anterior.
+Tras el hardening P0, `src/pattern_60_orchestrator_workers.ts` parsea IDs y dependencias explícitas `DEPS`, valida referencias y despacha únicamente subtareas `pendiente` cuyas dependencias están `completada`.
 
-El hallazgo principal es funcional: durante ejecución calcula `depsPendientes` y escribe `esperando` en el log, pero **no bloquea ni omite la subtarea**. A continuación cambia su estado a `ejecutando` y la lanza. Por tanto, la demo no garantiza respeto real del DAG.
+La ejecución se organiza por **olas**: nodos independientes que están listos pueden ejecutarse en paralelo; la siguiente ola no se libera hasta que sus prerequisitos hayan finalizado. Si quedan tareas pendientes y ninguna está lista, el orquestador falla explícitamente indicando un posible ciclo o dependencia bloqueada. Un worker desconocido también produce error en vez de caer silenciosamente al analista.
 
-Además, un worker desconocido cae silenciosamente al worker `analista`, lo que puede ocultar errores de planificación.
+Esto corrige el defecto anterior, donde se calculaban `depsPendientes` y se escribía `esperando` en el log, pero la subtarea se ejecutaba igualmente.
+
+## Límites
+El plan sigue naciendo de texto libre producido por el LLM. El parser es más fiel, pero en producción conviene structured output, validación formal del DAG y persistencia durable de estado.
 
 ## Producción
-Valida el plan con schema, comprueba ciclos, ejecuta solo nodos cuyas dependencias estén `completed`, persiste estado y define retry/compensación. La ausencia de worker debe ser un error de routing o activar una política explícita de fallback.
-
-## Observabilidad
-Registra plan versionado, dependencia que habilitó cada nodo, worker, intento, latencia, coste y artefactos producidos.
+Añade retries/idempotencia por nodo, checkpoint del plan, cancelación, timeouts, límites de concurrencia y una política explícita para fallo parcial. Si el workflow debe sobrevivir reinicios, el scheduler no puede depender solo de memoria local.
 
 ## Relaciones
-**Task Delegation (57)** selecciona ejecutor; **Checkpointing (44)** persiste progreso; **Blackboard (87)** ofrece una alternativa sin planificación central top-down.
+**Task Delegation (57)** selecciona ejecutor; **Checkpointing (44)** persiste progreso; **Blackboard (87)** ofrece una alternativa reactiva sin planificación top-down.

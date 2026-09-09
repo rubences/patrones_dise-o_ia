@@ -2,38 +2,37 @@
 patternId: 93
 slug: speculative-execution
 title: Speculative Execution
-summary: Produce un resultado preliminar rápido mientras una ruta más fiable verifica o mejora el resultado, corrigiendo solo cuando ambas divergen.
+summary: Lanza simultáneamente un camino rápido y otro más fiable para reducir latencia percibida, tratando el primer resultado como provisional hasta que la ruta verificada confirma o corrige.
 family: production-finops
 legacyGroup: 21
 level: architecture
 difficulty: advanced
 maturity: emerging
 llmRequired: false
-stateful: true
-evidenceStatus: needs-review
+stateful: false
+evidenceStatus: partially-verified
 sourceFile: src/pattern_93_speculative_execution.ts
-tags: [speculative, latency, verification, parallel]
+tags: [speculative, latency, parallelism, verification]
 related: [39, 43, 79]
-combinesWith: [73, 77]
+combinesWith: [77, 78, 92]
 antiPatterns:
-  - Mostrar un draft de alto impacto antes de verificarlo.
-  - Llamar ejecución paralela a una verificación que empieza después de esperar al draft.
-  - Corregir silenciosamente contenido que el usuario ya pudo usar.
+  - Llamar ejecución especulativa a una secuencia que empieza la verificación después del draft.
+  - Mostrar un draft de alto impacto como si ya estuviera confirmado.
+  - Duplicar coste sistemáticamente sin medir tasa de corrección y valor de latencia.
 references: []
 ---
 # Propósito
-Speculative Execution busca reducir latencia percibida mostrando una propuesta temprana y reconciliándola después con una ruta más fiable.
+Speculative Execution reduce la latencia percibida iniciando desde el mismo instante un camino rápido y un camino de mayor fidelidad.
 
 ## Implementación del repositorio
-`src/pattern_93_speculative_execution.ts` espera primero `await draftFn()` y **solo después llama `verificarFn(draft)`**. Por tanto, la demo no lanza ambos caminos en paralelo pese a que el comentario dice que sí; la latencia total es aproximadamente draft + verificación.
+Tras el hardening P0, `src/pattern_93_speculative_execution.ts` invoca `draftFn()` y `verificadoFn()` **antes de esperar a cualquiera de los dos**. Cuando llega el draft puede notificarse mediante `onDraft`; después, el resultado verificado confirma o reemplaza la salida provisional.
 
-Este es un hallazgo editorial importante. Para demostrar ejecución especulativa real, debe iniciarse el trabajo que pueda ejecutarse en paralelo antes de esperar resultados, respetando dependencias del verifier.
+Esto corrige la implementación anterior, que hacía `await draftFn()` y solo entonces comenzaba `verificarFn(draft)`, por lo que las latencias se sumaban y no existía paralelismo real.
 
-## Riesgo de UX
-Una corrección posterior no siempre puede ser silenciosa. Para decisiones médicas, financieras o acciones con efectos, no publiques el draft como resultado definitivo.
+El camino verificado ya no depende del draft: ambos calculan una respuesta desde la misma entrada. Esa independencia es precisamente lo que permite la concurrencia real. Si la verificación falla, el error se propaga; el producto debe decidir si un draft puede mantenerse o debe retirarse.
 
 ## Producción
-Define equivalencia semántica, estado provisional visible, política de cancelación y métricas de correction rate/TTFT/coste duplicado.
+Usa este patrón solo cuando una salida provisional sea aceptable y claramente tratada como tal. Mide `time-to-first-useful-output`, latencia final, coste duplicado y tasa/severidad de correcciones. En operaciones irreversibles, nunca ejecutes efectos basándote únicamente en el draft.
 
 ## Relaciones
-**Cascade (39)** es secuencial por diseño; Speculative Execution acepta trabajo duplicado para bajar latencia.
+**Cascade (39)** escala secuencialmente y puede ahorrar coste; **Streaming (79)** entrega incrementalmente una sola ejecución; Speculative Execution compra latencia mediante trabajo paralelo.
