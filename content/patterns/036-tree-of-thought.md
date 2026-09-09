@@ -20,7 +20,7 @@ antiPatterns:
   - Usar la puntuación del mismo modelo como verificador único de verdad.
   - Expandir el árbol sin presupuesto de anchura, profundidad, tokens o tiempo.
 references:
-  - Yao et al. (2023), Tree of Thoughts: Deliberate Problem Solving with Large Language Models.
+  - "Yao et al. (2023), Tree of Thoughts: Deliberate Problem Solving with Large Language Models."
 ---
 # Propósito
 Tree of Thought (ToT) trata una tarea compleja como un problema de búsqueda: genera varias alternativas, evalúa su potencial y continúa por las ramas más prometedoras. Resulta útil cuando una decisión temprana puede llevar a un callejón sin salida y existe valor en comparar hipótesis.
