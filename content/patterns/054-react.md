@@ -20,7 +20,7 @@ antiPatterns:
   - Parsear acciones sensibles desde texto libre mediante regex.
   - Ejecutar tools sin schema, autorización, límites e idempotencia.
 references:
-  - Yao et al. (2022), ReAct: Synergizing Reasoning and Acting in Language Models.
+  - "Yao et al. (2022), ReAct: Synergizing Reasoning and Acting in Language Models."
 ---
 # Propósito
 ReAct combina razonamiento y actuación en un bucle donde las observaciones del entorno modifican la siguiente decisión. Su valor de ingeniería es conectar deliberación con **evidencia externa real** en lugar de exigir al modelo resolver todo desde conocimiento interno.
