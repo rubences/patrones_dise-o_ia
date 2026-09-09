@@ -44,10 +44,7 @@ jobs:
         run: npm install
 
       - name: Run hardening regression tests
-        env:
-          TS_NODE_TRANSPILE_ONLY: 'true'
-          TS_NODE_EXPERIMENTAL_RESOLVER: 'true'
-        run: node --loader ts-node/esm --test tests/hardening/*.test.ts
+        run: npx --yes tsx@4.20.6 --test tests/hardening/*.test.ts
 
       - name: Install web dependencies
         working-directory: web
