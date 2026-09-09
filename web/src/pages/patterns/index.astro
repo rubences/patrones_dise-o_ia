@@ -1,17 +1,46 @@
 ---
 import { getCollection } from 'astro:content';
+import { readFileSync } from 'node:fs';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const patterns = (await getCollection('patterns')).sort((a, b) => a.data.patternId - b.data.patternId);
+const canonicalSheets = await getCollection('patterns');
+const canonicalById = new Map(canonicalSheets.map((pattern) => [pattern.data.patternId, pattern]));
+const masterCatalog = JSON.parse(
+  readFileSync(new URL('../../../../catalog/patterns.json', import.meta.url), 'utf8'),
+);
+
 const base = import.meta.env.BASE_URL;
-const families = [...new Set(patterns.map((p) => p.data.family))].sort();
+const patterns = masterCatalog.patterns
+  .map((record) => {
+    const canonical = canonicalById.get(record.id);
+    return {
+      ...record,
+      canonical,
+      title: canonical?.data.title ?? record.name,
+      summary:
+        canonical?.data.summary ??
+        'Implementación TypeScript disponible. Ficha editorial pendiente de revisión y publicación.',
+      difficulty: canonical?.data.difficulty ?? 'pending',
+      maturity: canonical?.data.maturity ?? 'pending',
+      href: canonical
+        ? `${base}patterns/${canonical.data.slug}/`
+        : `https://github.com/rubences/patrones_dise-o_ia/blob/main/${record.sourceFile}`,
+    };
+  })
+  .sort((a, b) => a.id - b.id);
+
+const families = [...new Set(patterns.map((pattern) => pattern.family))].sort();
+const publishedCount = patterns.filter((pattern) => pattern.editorialStatus === 'published').length;
 ---
 
-<BaseLayout title="Catálogo — Patrones IA" description="Explora el catálogo canónico de patrones de diseño para sistemas de IA.">
+<BaseLayout title="Catálogo — Patrones IA" description="Explora el catálogo maestro de 102 patrones de diseño para sistemas de IA.">
   <section class="catalog-hero">
-    <p class="eyebrow">Pattern catalog</p>
+    <p class="eyebrow">Pattern catalog · 102/102 catalogued</p>
     <h1>Explorar patrones.</h1>
-    <p class="lead">Busca por nombre, etiqueta o familia. El catálogo crecerá hasta cubrir las 102 implementaciones del repositorio.</p>
+    <p class="lead">
+      El inventario completo ya está normalizado. Las fichas publicadas abren su capítulo editorial;
+      las pendientes enlazan directamente con la implementación TypeScript existente.
+    </p>
 
     <div class="catalog-toolbar" aria-label="Filtros del catálogo">
       <input id="pattern-search" type="search" placeholder="Buscar RAG, seguridad, agente..." aria-label="Buscar patrones" />
@@ -19,36 +48,42 @@ const families = [...new Set(patterns.map((p) => p.data.family))].sort();
         <option value="">Todas las familias</option>
         {families.map((family) => <option value={family}>{family}</option>)}
       </select>
-      <select id="difficulty-filter" aria-label="Filtrar por dificultad">
-        <option value="">Todas las dificultades</option>
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
+      <select id="status-filter" aria-label="Filtrar por estado editorial">
+        <option value="">Todos los estados</option>
+        <option value="published">Ficha publicada</option>
+        <option value="catalogued">Catalogado</option>
       </select>
     </div>
 
-    <p id="result-count" class="lead" style="font-size: .95rem;">{patterns.length} patrón(es) visible(s)</p>
+    <p id="result-count" class="lead" style="font-size: .95rem;">
+      {patterns.length} patrones visibles · {publishedCount} ficha(s) publicada(s)
+    </p>
   </section>
 
   <section class="section" style="padding-top: 1rem;">
     <div id="pattern-grid" class="card-grid">
       {patterns.map((pattern) => (
         <a
-          class="pattern-card"
-          href={`${base}patterns/${pattern.data.slug}/`}
+          class:list={['pattern-card', { 'pattern-card--pending': !pattern.canonical }]}
+          href={pattern.href}
+          target={pattern.canonical ? undefined : '_blank'}
+          rel={pattern.canonical ? undefined : 'noreferrer'}
           data-pattern-card
-          data-family={pattern.data.family}
-          data-difficulty={pattern.data.difficulty}
-          data-search={`${pattern.data.title} ${pattern.data.summary} ${pattern.data.tags.join(' ')}`.toLowerCase()}
+          data-family={pattern.family}
+          data-status={pattern.editorialStatus}
+          data-search={`${pattern.title} ${pattern.summary} ${pattern.family} ${pattern.slug}`.toLowerCase()}
         >
-          <span class="pattern-number">PATTERN {String(pattern.data.patternId).padStart(3, '0')}</span>
-          <h3>{pattern.data.title}</h3>
-          <p>{pattern.data.summary}</p>
+          <span class="pattern-number">PATTERN {String(pattern.id).padStart(3, '0')}</span>
+          <h3>{pattern.title}</h3>
+          <p>{pattern.summary}</p>
           <div class="tags">
-            <span class="tag">{pattern.data.family}</span>
-            <span class="tag">{pattern.data.difficulty}</span>
-            <span class="tag">{pattern.data.maturity}</span>
+            <span class="tag">{pattern.family}</span>
+            <span class="tag">{pattern.editorialStatus}</span>
+            <span class="tag">{pattern.evidenceStatus}</span>
           </div>
+          <p class="pattern-card__cta">
+            {pattern.canonical ? 'Leer ficha completa →' : 'Ver implementación TypeScript ↗'}
+          </p>
         </a>
       ))}
     </div>
@@ -57,22 +92,22 @@ const families = [...new Set(patterns.map((p) => p.data.family))].sort();
   <script>
     const search = document.querySelector('#pattern-search');
     const family = document.querySelector('#family-filter');
-    const difficulty = document.querySelector('#difficulty-filter');
+    const status = document.querySelector('#status-filter');
     const count = document.querySelector('#result-count');
     const cards = Array.from(document.querySelectorAll('[data-pattern-card]'));
 
     const applyFilters = () => {
       const query = search instanceof HTMLInputElement ? search.value.trim().toLowerCase() : '';
       const selectedFamily = family instanceof HTMLSelectElement ? family.value : '';
-      const selectedDifficulty = difficulty instanceof HTMLSelectElement ? difficulty.value : '';
+      const selectedStatus = status instanceof HTMLSelectElement ? status.value : '';
       let visible = 0;
 
       for (const card of cards) {
         if (!(card instanceof HTMLElement)) continue;
         const matchesQuery = !query || (card.dataset.search ?? '').includes(query);
         const matchesFamily = !selectedFamily || card.dataset.family === selectedFamily;
-        const matchesDifficulty = !selectedDifficulty || card.dataset.difficulty === selectedDifficulty;
-        const show = matchesQuery && matchesFamily && matchesDifficulty;
+        const matchesStatus = !selectedStatus || card.dataset.status === selectedStatus;
+        const show = matchesQuery && matchesFamily && matchesStatus;
         card.hidden = !show;
         if (show) visible += 1;
       }
@@ -82,6 +117,6 @@ const families = [...new Set(patterns.map((p) => p.data.family))].sort();
 
     search?.addEventListener('input', applyFilters);
     family?.addEventListener('change', applyFilters);
-    difficulty?.addEventListener('change', applyFilters);
+    status?.addEventListener('change', applyFilters);
   </script>
 </BaseLayout>
