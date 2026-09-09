@@ -20,7 +20,7 @@ antiPatterns:
   - Exigir que el modelo revele todo su razonamiento interno al usuario.
   - Usar texto libre acumulado como estado de workflow sin esquema ni límites.
 references:
-  - Nye et al. (2021), Show Your Work: Scratchpads for Intermediate Computation with Language Models.
+  - "Nye et al. (2021), Show Your Work: Scratchpads for Intermediate Computation with Language Models."
 ---
 # Propósito
 Scratchpad separa el trabajo intermedio de la salida final. En ingeniería de agentes puede ser una memoria temporal para cálculos, hechos recuperados, hipótesis o resultados parciales.
