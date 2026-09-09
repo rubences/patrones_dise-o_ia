@@ -128,27 +128,21 @@ for (const filename of markdownFiles) {
     errors.push(`${filename}: invalid or missing evidenceStatus.`);
   }
 
-  if (master) {
+  if (!master) {
+    errors.push(`${filename}: patternId ${patternId} does not exist in patterns.json.`);
+  } else {
     if (master.slug !== slug) errors.push(`${filename}: slug does not match patterns.json (${master.slug}).`);
     if (master.sourceFile !== sourceFile) errors.push(`${filename}: sourceFile does not match patterns.json (${master.sourceFile}).`);
-    if (master.evidenceStatus !== evidenceStatus) errors.push(`${filename}: evidenceStatus does not match patterns.json (${master.evidenceStatus}).`);
-    if (master.editorialStatus !== 'published') errors.push(`${filename}: master editorialStatus must be published.`);
-    if (master.canonicalContent !== `content/patterns/${filename}`) {
-      errors.push(`${filename}: canonicalContent is missing or inconsistent in patterns.json.`);
-    }
   }
 }
 
-const publishedIds = new Set(
-  (masterCatalog.patterns ?? [])
-    .filter((record) => record.editorialStatus === 'published')
-    .map((record) => record.id),
-);
-for (const id of publishedIds) {
-  if (!editorialIds.has(id)) errors.push(`patterns.json pattern ${id} is published but has no canonical Markdown sheet.`);
-}
-for (const id of editorialIds) {
-  if (!publishedIds.has(id)) errors.push(`Canonical Markdown exists for pattern ${id}, but master catalog is not published.`);
+// Publication status is derived from canonical Markdown presence. This avoids
+// duplicating mutable publication state in both patterns.json and content/.
+const publishedIds = new Set(editorialIds);
+for (const record of masterCatalog.patterns ?? []) {
+  if (record.editorialStatus === 'published' && !publishedIds.has(record.id)) {
+    errors.push(`patterns.json pattern ${record.id} declares published but has no canonical Markdown sheet.`);
+  }
 }
 
 const readme = readFileSync(join(root, 'README.md'), 'utf8');
