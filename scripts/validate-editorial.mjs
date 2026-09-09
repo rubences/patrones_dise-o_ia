@@ -6,9 +6,23 @@ const expectedCatalogSize = 102;
 const errors = [];
 const warnings = [];
 
+const taxonomy = JSON.parse(readFileSync(join(root, 'catalog', 'taxonomy.json'), 'utf8'));
+const masterCatalog = JSON.parse(readFileSync(join(root, 'catalog', 'patterns.json'), 'utf8'));
+const familyIds = new Set(taxonomy.families.map((family) => family.id));
+const legacyGroupIds = new Set(taxonomy.legacyGroups.map((group) => group.id));
+
+if (taxonomy.catalogSize !== expectedCatalogSize) {
+  errors.push(`taxonomy.json catalogSize must be ${expectedCatalogSize}.`);
+}
+if (masterCatalog.catalogSize !== expectedCatalogSize) {
+  errors.push(`patterns.json catalogSize must be ${expectedCatalogSize}.`);
+}
+if (!Array.isArray(masterCatalog.patterns) || masterCatalog.patterns.length !== expectedCatalogSize) {
+  errors.push(`patterns.json must contain exactly ${expectedCatalogSize} pattern records.`);
+}
+
 const sourceFiles = readdirSync(join(root, 'src'))
   .filter((name) => /^pattern_\d+_.*\.ts$/.test(name));
-
 const sourceIds = sourceFiles
   .map((name) => Number(name.match(/^pattern_(\d+)_/)?.[1]))
   .sort((a, b) => a - b);
@@ -17,18 +31,68 @@ if (sourceFiles.length !== expectedCatalogSize) {
   errors.push(`Expected ${expectedCatalogSize} pattern source files, found ${sourceFiles.length}.`);
 }
 
-const duplicates = sourceIds.filter((id, index) => sourceIds.indexOf(id) !== index);
-if (duplicates.length) errors.push(`Duplicate source IDs: ${[...new Set(duplicates)].join(', ')}`);
-
+const duplicateSourceIds = sourceIds.filter((id, index) => sourceIds.indexOf(id) !== index);
+if (duplicateSourceIds.length) {
+  errors.push(`Duplicate source IDs: ${[...new Set(duplicateSourceIds)].join(', ')}`);
+}
 for (let id = 1; id <= expectedCatalogSize; id += 1) {
   if (!sourceIds.includes(id)) errors.push(`Missing source pattern ID ${id}.`);
+}
+
+const catalogIds = new Set();
+const catalogSlugs = new Set();
+const catalogById = new Map();
+
+for (const record of masterCatalog.patterns ?? []) {
+  if (!Number.isInteger(record.id) || record.id < 1 || record.id > expectedCatalogSize) {
+    errors.push(`patterns.json: invalid pattern id ${record.id}.`);
+    continue;
+  }
+  if (catalogIds.has(record.id)) errors.push(`patterns.json: duplicate pattern id ${record.id}.`);
+  catalogIds.add(record.id);
+  catalogById.set(record.id, record);
+
+  if (!/^[a-z0-9-]+$/.test(record.slug ?? '')) {
+    errors.push(`patterns.json pattern ${record.id}: invalid slug ${record.slug}.`);
+  } else if (catalogSlugs.has(record.slug)) {
+    errors.push(`patterns.json: duplicate slug ${record.slug}.`);
+  } else {
+    catalogSlugs.add(record.slug);
+  }
+
+  if (!familyIds.has(record.family)) {
+    errors.push(`patterns.json pattern ${record.id}: unknown family ${record.family}.`);
+  }
+  if (!legacyGroupIds.has(record.legacyGroup)) {
+    errors.push(`patterns.json pattern ${record.id}: unknown legacyGroup ${record.legacyGroup}.`);
+  }
+  if (record.implementationStatus !== 'implemented') {
+    errors.push(`patterns.json pattern ${record.id}: implementationStatus must be implemented.`);
+  }
+  if (!['catalogued', 'draft', 'review', 'published'].includes(record.editorialStatus)) {
+    errors.push(`patterns.json pattern ${record.id}: invalid editorialStatus ${record.editorialStatus}.`);
+  }
+  if (!['verified', 'partially-verified', 'needs-review'].includes(record.evidenceStatus)) {
+    errors.push(`patterns.json pattern ${record.id}: invalid evidenceStatus ${record.evidenceStatus}.`);
+  }
+  if (!record.sourceFile || !existsSync(join(root, record.sourceFile))) {
+    errors.push(`patterns.json pattern ${record.id}: sourceFile does not exist (${record.sourceFile ?? 'missing'}).`);
+  } else {
+    const sourceId = Number(record.sourceFile.match(/pattern_(\d+)_/)?.[1]);
+    if (sourceId !== record.id) {
+      errors.push(`patterns.json pattern ${record.id}: sourceFile points to pattern ${sourceId}.`);
+    }
+  }
+}
+
+for (let id = 1; id <= expectedCatalogSize; id += 1) {
+  if (!catalogIds.has(id)) errors.push(`patterns.json: missing catalog pattern ID ${id}.`);
 }
 
 const contentDir = join(root, 'content', 'patterns');
 const markdownFiles = existsSync(contentDir)
   ? readdirSync(contentDir).filter((name) => name.endsWith('.md'))
   : [];
-
 const editorialIds = new Set();
 const editorialSlugs = new Set();
 
@@ -39,6 +103,7 @@ for (const filename of markdownFiles) {
   const slug = text.match(/^slug:\s*([a-z0-9-]+)\s*$/m)?.[1];
   const sourceFile = text.match(/^sourceFile:\s*(.+)\s*$/m)?.[1]?.trim();
   const evidenceStatus = text.match(/^evidenceStatus:\s*(.+)\s*$/m)?.[1]?.trim();
+  const master = catalogById.get(patternId);
 
   if (!Number.isInteger(patternId) || patternId < 1 || patternId > expectedCatalogSize) {
     errors.push(`${filename}: invalid or missing patternId.`);
@@ -59,15 +124,36 @@ for (const filename of markdownFiles) {
   if (!sourceFile || !existsSync(join(root, sourceFile))) {
     errors.push(`${filename}: sourceFile does not resolve to an existing file (${sourceFile ?? 'missing'}).`);
   }
-
   if (!['verified', 'partially-verified', 'needs-review'].includes(evidenceStatus ?? '')) {
     errors.push(`${filename}: invalid or missing evidenceStatus.`);
   }
+
+  if (master) {
+    if (master.slug !== slug) errors.push(`${filename}: slug does not match patterns.json (${master.slug}).`);
+    if (master.sourceFile !== sourceFile) errors.push(`${filename}: sourceFile does not match patterns.json (${master.sourceFile}).`);
+    if (master.evidenceStatus !== evidenceStatus) errors.push(`${filename}: evidenceStatus does not match patterns.json (${master.evidenceStatus}).`);
+    if (master.editorialStatus !== 'published') errors.push(`${filename}: master editorialStatus must be published.`);
+    if (master.canonicalContent !== `content/patterns/${filename}`) {
+      errors.push(`${filename}: canonicalContent is missing or inconsistent in patterns.json.`);
+    }
+  }
+}
+
+const publishedIds = new Set(
+  (masterCatalog.patterns ?? [])
+    .filter((record) => record.editorialStatus === 'published')
+    .map((record) => record.id),
+);
+for (const id of publishedIds) {
+  if (!editorialIds.has(id)) errors.push(`patterns.json pattern ${id} is published but has no canonical Markdown sheet.`);
+}
+for (const id of editorialIds) {
+  if (!publishedIds.has(id)) errors.push(`Canonical Markdown exists for pattern ${id}, but master catalog is not published.`);
 }
 
 const readme = readFileSync(join(root, 'README.md'), 'utf8');
 if (/Mapa Completo de 99 Patrones/i.test(readme)) {
-  warnings.push('README still contains the stale heading "Mapa Completo de 99 Patrones"; update it to 102 during editorial normalization.');
+  warnings.push('README still contains the stale heading "Mapa Completo de 99 Patrones"; normalize it to 102 before publication release.');
 }
 
 const legacyPlan = join(root, 'RESUMEN_EJECUTIVO_PLAN_ACCION.md');
@@ -76,7 +162,9 @@ if (existsSync(legacyPlan)) {
 }
 
 console.log(`Source implementations: ${sourceFiles.length}/${expectedCatalogSize}`);
+console.log(`Master catalog records: ${catalogIds.size}/${expectedCatalogSize}`);
 console.log(`Canonical editorial sheets: ${markdownFiles.length}/${expectedCatalogSize}`);
+console.log(`Published editorial sheets: ${publishedIds.size}`);
 
 for (const warning of warnings) console.warn(`WARN: ${warning}`);
 
