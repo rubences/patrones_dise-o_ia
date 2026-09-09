@@ -2,7 +2,7 @@
 patternId: 77
 slug: observability
 title: Observability
-summary: Instrumenta ejecuciones agénticas con trazas, métricas y eventos para reconstruir qué ocurrió, cuánto costó y dónde falló sin depender del texto generado.
+summary: Instrumenta flujos agénticos con trazas, atributos y métricas correlacionables, manteniendo aislamiento de contexto entre solicitudes concurrentes.
 family: production-finops
 legacyGroup: 18
 level: architecture
@@ -12,26 +12,27 @@ llmRequired: false
 stateful: true
 evidenceStatus: partially-verified
 sourceFile: src/pattern_77_observability.ts
-tags: [observability, tracing, metrics, production]
-related: [18, 44, 92]
-combinesWith: [73, 76, 94]
+tags: [observability, tracing, metrics, concurrency]
+related: [44, 78, 92]
+combinesWith: [45, 53, 94]
 antiPatterns:
-  - Registrar prompts completos con secretos o PII por defecto.
-  - Usar una variable global de span activo en concurrencia real.
-  - Estimar tokens y presentarlos como consumo facturado.
+  - Usar una variable global de span activo en un servidor concurrente.
+  - Registrar prompts, secretos o PII indiscriminadamente para ganar visibilidad.
+  - Interpretar suma de duración de spans anidados como wall-clock del request.
 references: []
 ---
 # Propósito
-Observability crea telemetría estructurada por paso del workflow y permite correlacionar latencia, errores, herramientas, modelos, coste y resultados.
+Observability hace visible qué ocurrió en un flujo, dónde se consumió tiempo/coste y qué componente produjo un error, sin mezclar solicitudes independientes.
 
 ## Implementación del repositorio
-`src/pattern_77_observability.ts` implementa un tracer en memoria con spans padre/hijo y una variable `spanActivo`. En ejecuciones concurrentes esa variable compartida puede asociar hijos al padre incorrecto. Los tokens se estiman como palabras×1,3 y el RAG de la demo está simulado.
+Tras el hardening P1, `src/pattern_77_observability.ts` usa `AsyncLocalStorage` para asociar el span activo al contexto async de cada request. Los spans hijos consultan ese contexto, por lo que dos operaciones simultáneas conservan árboles padre/hijo independientes aunque sus `await` se intercalen.
+
+Esto sustituye el anterior `spanActivo` global, vulnerable a contaminación cruzada entre requests concurrentes.
+
+`duracionTotal` continúa siendo la suma de duración de spans instrumentados; como existen spans anidados, representa trabajo acumulado y **no** tiempo wall-clock del request.
 
 ## Producción
-Usa context propagation asíncrona, IDs de trace estables y estándares como OpenTelemetry. Redacta datos sensibles, separa logs de payloads y obtiene usage real del proveedor cuando exista.
-
-## Señales recomendadas
-TTFT, latencia total, tool latency, error rate, retries, tokens/coste, cache hits, retrieval quality y outcome/eval score.
+Integra OpenTelemetry o un backend equivalente, propaga trace IDs entre procesos, define sampling y redacción de atributos, y separa métricas de negocio, seguridad, calidad, coste y disponibilidad. El contexto de tracing no debe convertirse en un canal para conservar payloads sensibles.
 
 ## Relaciones
-Observability atraviesa casi todos los patrones de producción y es prerequisito para canary, SLOs y FinOps.
+**Cost Attribution (92)** agrega coste; **Health Check (94)** mide disponibilidad proactiva; Observability explica el comportamiento real de requests e incidentes.
