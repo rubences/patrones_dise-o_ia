@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rubences/patrones_dise-o_ia/catalog/pattern.schema.json",
+  "title": "Patrones IA - Pattern Metadata",
+  "type": "object",
+  "required": [
+    "patternId", "slug", "title", "summary", "family", "legacyGroup",
+    "level", "difficulty", "maturity", "llmRequired", "stateful",
+    "evidenceStatus", "sourceFile", "tags", "related"
+  ],
+  "properties": {
+    "patternId": { "type": "integer", "minimum": 1, "maximum": 102 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 2 },
+    "summary": { "type": "string", "minLength": 20, "maxLength": 240 },
+    "family": {
+      "enum": [
+        "foundations", "agentic-workflows", "knowledge-context", "reasoning",
+        "multi-agent", "safety-security", "reliability", "production-finops",
+        "evaluation-qa", "human-experience"
+      ]
+    },
+    "legacyGroup": { "type": "integer", "minimum": 1, "maximum": 23 },
+    "level": { "enum": ["code", "component", "workflow", "architecture", "system"] },
+    "difficulty": { "enum": ["beginner", "intermediate", "advanced"] },
+    "maturity": { "enum": ["foundational", "established", "emerging", "experimental"] },
+    "llmRequired": { "type": "boolean" },
+    "stateful": { "type": "boolean" },
+    "evidenceStatus": { "enum": ["verified", "partially-verified", "needs-review"] },
+    "sourceFile": { "type": "string", "pattern": "^src/pattern_[0-9]+_.*\\.ts$" },
+    "tags": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+    "related": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1, "maximum": 102 } },
+    "combinesWith": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1, "maximum": 102 } },
+    "antiPatterns": { "type": "array", "items": { "type": "string" } },
+    "references": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true
+}

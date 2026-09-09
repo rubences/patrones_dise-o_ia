@@ -1,0 +1,83 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('patterns');
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'patterns'>;
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const allPatterns = await getCollection('patterns');
+const related = allPatterns.filter((candidate) => entry.data.related.includes(candidate.data.patternId));
+const toc = headings.filter((heading) => heading.depth === 2);
+const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${entry.data.sourceFile}`;
+---
+
+<BaseLayout title={`${entry.data.title} — Patrones IA`} description={entry.data.summary}>
+  <div class="pattern-shell">
+    <article>
+      <header class="pattern-header">
+        <p class="eyebrow">Pattern {String(entry.data.patternId).padStart(3, '0')} · {entry.data.family}</p>
+        <h1>{entry.data.title}</h1>
+        <p class="lead">{entry.data.summary}</p>
+
+        <div class="pattern-meta">
+          <div class="meta-item"><span>Nivel</span><strong>{entry.data.level}</strong></div>
+          <div class="meta-item"><span>Dificultad</span><strong>{entry.data.difficulty}</strong></div>
+          <div class="meta-item"><span>Madurez</span><strong>{entry.data.maturity}</strong></div>
+          <div class="meta-item"><span>LLM</span><strong>{entry.data.llmRequired ? 'Requerido' : 'No requerido'}</strong></div>
+          <div class="meta-item"><span>Estado</span><strong>{entry.data.stateful ? 'Stateful' : 'Stateless'}</strong></div>
+          <div class="meta-item"><span>Evidencia</span><strong>{entry.data.evidenceStatus}</strong></div>
+        </div>
+
+        <div class="tags">
+          {entry.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+
+    <aside class="pattern-aside" aria-label="Información del patrón">
+      <div class="aside-box">
+        <h3>En esta ficha</h3>
+        <ul>
+          {toc.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+        </ul>
+      </div>
+
+      <div class="aside-box">
+        <h3>Implementación</h3>
+        <p><a href={sourceHref}>Abrir {entry.data.sourceFile}</a></p>
+      </div>
+
+      {related.length > 0 && (
+        <div class="aside-box">
+          <h3>Relacionados</h3>
+          <ul>
+            {related.map((pattern) => (
+              <li><a href={`${import.meta.env.BASE_URL}patterns/${pattern.data.slug}/`}>{pattern.data.patternId} · {pattern.data.title}</a></li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div class="aside-box">
+        <h3>Estado editorial</h3>
+        <p>{entry.data.evidenceStatus}</p>
+        <p style="color: var(--muted); font-size: .86rem;">Las métricas cuantitativas requieren referencia o benchmark reproducible antes de considerarse verificadas.</p>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
