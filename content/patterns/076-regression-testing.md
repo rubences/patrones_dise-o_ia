@@ -2,7 +2,7 @@
 patternId: 76
 slug: regression-testing
 title: Regression Testing
-summary: Convierte comportamientos esperados y vulnerabilidades corregidas en una suite versionada que detecta degradación al cambiar modelos, prompts, herramientas o datos.
+summary: Convierte comportamientos esperados en una suite versionada con baselines persistibles y estados explícitos para detectar degradación entre versiones.
 family: evaluation-qa
 legacyGroup: 17
 level: workflow
@@ -18,21 +18,21 @@ combinesWith: [90, 77, 102]
 antiPatterns:
   - Guardar el baseline solo en memoria y llamarlo historial de versiones.
   - Diseñar golden tests que penalizan respuestas correctas por coincidencias léxicas arbitrarias.
-  - Hacer CI dependiente únicamente de un juez estocástico sin tolerancias ni repetición.
+  - Imputar un score cuando el juez no devuelve una medición válida.
 references: []
 ---
 # Propósito
-Regression Testing protege comportamientos que ya funcionaban y convierte incidentes o hallazgos de seguridad en pruebas que no deben volver a fallar.
+Regression Testing protege comportamientos que ya funcionaban y convierte incidentes o hallazgos en pruebas que no deben volver a fallar.
 
 ## Implementación del repositorio
-`src/pattern_76_regression_testing.ts` combina keywords obligatorias/prohibidas con un score LLM 0–100. Mantiene el score anterior en un `Map` de la instancia y declara regresión si cae más de 10 puntos.
+`BaselineStore` desacopla la suite del almacenamiento. `MemoryBaselineStore` sigue disponible para demos; `JsonFileRegressionBaselineStore` conserva snapshots versionados entre procesos mediante escritura temporal y `rename`.
 
-Ese historial **no persiste entre procesos ni builds**, por lo que la comparación `v1.0`/`v1.1` de la demo solo funciona dentro de la misma ejecución. Además, algunos golden son frágiles: el test sobre Observer prohíbe literalmente `observer`, aunque la propia pregunta usa el nombre inglés del patrón.
+Cada ejecución puede indicar `compararContra`. Si el baseline solicitado no existe, la suite falla explícitamente. Una transición `pasado → degradado/fallido/invalido` es regresión; también se detecta una caída de score superior a 10 puntos cuando ambas mediciones son válidas.
 
-El juez es estocástico y una segunda ejecución idéntica puede variar sin que el producto haya cambiado.
+El evaluador LLM usa parsing numérico estricto. Un output no parseable produce `estado: "invalido"` y `scoreObtenido: null`; ya no se inventa un 60. Los golden checks léxicos siguen siendo pedagógicos y deben evolucionar hacia assertions semánticas o específicas de dominio.
 
 ## Producción
-Persiste baselines por versión, usa assertions deterministas para invariantes y repeticiones/intervalos para métricas generativas. Separa tests funcionales, seguridad, groundedness, latencia y coste, y define qué fallos bloquean CI.
+Persiste baselines en almacenamiento transaccional o artefactos de CI, conserva modelo/prompt/dataset/configuración y separa invariantes deterministas de métricas estocásticas. Para scores generativos, usa repeticiones e intervalos antes de bloquear releases por cambios pequeños.
 
 ## Relaciones
-**Red Teaming (74)** produce nuevos casos; **LLM-as-Judge (73)** puede aportar scoring; Regression Testing convierte el aprendizaje en una barrera continua.
+**Red Teaming (74)** produce nuevos casos; **LLM-as-Judge (73)** aporta señales probabilísticas; Regression Testing convierte el aprendizaje en una barrera continua.

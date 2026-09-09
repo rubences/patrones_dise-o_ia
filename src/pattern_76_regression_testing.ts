@@ -1,35 +1,12 @@
 /**
- * ═══════════════════════════════════════════════════════════════════
- *  PATRÓN 76 — REGRESSION TESTING FOR LLMs (PRUEBAS DE REGRESIÓN)
- * ═══════════════════════════════════════════════════════════════════
+ * PATRÓN 76 — REGRESSION TESTING FOR LLMs
  *
- *  [Suite de Tests Golden]
- *  ├─ Test 1: {input, expected_output, tolerance}
- *  ├─ Test 2: {input, expected_output, tolerance}
- *  └─ Test N: ...
- *
- *       │
- *       ▼ (ejecutar contra nueva versión del agente)
- *
- *  [Evaluador Semántico]
- *  ├─ Similitud semántica vs expected
- *  ├─ Check de keywords obligatorias
- *  └─ Score de calidad (LLM-as-Judge)
- *
- *       │
- *       ▼
- *  [Reporte de Regresión]
- *  ├─ Tests pasados: 45/50 (90%)
- *  ├─ Regresiones: 3 tests que antes pasaban ahora fallan
- *  └─ Mejoras: 2 tests que antes fallaban ahora pasan
- *
- *  Ventajas:
- *  - Detectar regresiones al cambiar modelos o prompts
- *  - Golden tests que no deben romperse
- *  - CI/CD para sistemas LLM
- *  - Historial de calidad a lo largo del tiempo
+ * Los baselines son artefactos versionados y persistibles. Un fallo de
+ * parsing del evaluador no se convierte en una nota sintética favorable.
  */
 
+import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 import { OpenAI } from "openai";
 import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 
@@ -37,42 +14,104 @@ export interface TestGolden {
   id: string;
   descripcion: string;
   input: string;
-  expectedKeywords: string[];    // Palabras que DEBEN aparecer
-  forbiddenKeywords: string[];   // Palabras que NO deben aparecer
-  scoreMinimo: number;           // Score mínimo aceptable (0-100)
+  expectedKeywords: string[];
+  forbiddenKeywords: string[];
+  scoreMinimo: number;
 }
 
-export type EstadoTest = "pasado" | "fallido" | "degradado";
+export type EstadoTest = "pasado" | "fallido" | "degradado" | "invalido";
 
 export interface ResultadoTest {
   test: TestGolden;
   respuesta: string;
-  scoreObtenido: number;
+  scoreObtenido: number | null;
   keywordsFaltantes: string[];
   keywordsProhibidasEncontradas: string[];
   estado: EstadoTest;
   detalles: string;
 }
 
+export interface BaselineTest {
+  score: number | null;
+  estado: EstadoTest;
+}
+
+export interface SnapshotBaseline {
+  version: string;
+  creadoEn: string;
+  tests: Record<string, BaselineTest>;
+}
+
+export interface BaselineStore {
+  cargar(version: string): SnapshotBaseline | null;
+  guardar(snapshot: SnapshotBaseline): void;
+}
+
+export class MemoryBaselineStore implements BaselineStore {
+  private snapshots = new Map<string, SnapshotBaseline>();
+  cargar(version: string): SnapshotBaseline | null {
+    const snapshot = this.snapshots.get(version);
+    return snapshot ? structuredClone(snapshot) : null;
+  }
+  guardar(snapshot: SnapshotBaseline): void {
+    this.snapshots.set(snapshot.version, structuredClone(snapshot));
+  }
+}
+
+interface ArchivoBaselines { versions: Record<string, SnapshotBaseline>; }
+
+export class JsonFileRegressionBaselineStore implements BaselineStore {
+  constructor(private ruta: string) {}
+
+  private leer(): ArchivoBaselines {
+    try {
+      const parsed = JSON.parse(readFileSync(this.ruta, "utf8")) as ArchivoBaselines;
+      return parsed && typeof parsed === "object" && parsed.versions ? parsed : { versions: {} };
+    } catch (error) {
+      const code = (error as NodeJS.ErrnoException).code;
+      if (code === "ENOENT") return { versions: {} };
+      throw error;
+    }
+  }
+
+  cargar(version: string): SnapshotBaseline | null {
+    return this.leer().versions[version] ?? null;
+  }
+
+  guardar(snapshot: SnapshotBaseline): void {
+    const data = this.leer();
+    data.versions[snapshot.version] = snapshot;
+    mkdirSync(dirname(this.ruta), { recursive: true });
+    const temporal = `${this.ruta}.${process.pid}.${Date.now()}.tmp`;
+    writeFileSync(temporal, JSON.stringify(data, null, 2), "utf8");
+    renameSync(temporal, this.ruta);
+  }
+}
+
 export interface ReporteRegresion {
   version: string;
+  baselineComparado: string | null;
   timestamp: Date;
   totalTests: number;
   pasados: number;
   fallidos: number;
   degradados: number;
+  invalidos: number;
   tasaExito: number;
   resultados: ResultadoTest[];
   regresionesDetectadas: string[];
 }
 
+export type EvaluadorCalidadRegresion = (test: TestGolden, respuesta: string) => Promise<number | null>;
+
 export class SuiteRegresionLLM {
   private tests: TestGolden[];
-  private client: OpenAI;
-  private historial: Map<string, number> = new Map(); // testId → score anterior
 
-  constructor(client: OpenAI = makeClient()) {
-    this.client = client;
+  constructor(
+    private client: OpenAI = makeClient(),
+    private baselineStore: BaselineStore = new MemoryBaselineStore(),
+    private evaluador?: EvaluadorCalidadRegresion,
+  ) {
     this.tests = this.definirTestsGolden();
   }
 
@@ -82,7 +121,7 @@ export class SuiteRegresionLLM {
         id: "T01",
         descripcion: "Definición básica de RAG",
         input: "¿Qué es RAG en inteligencia artificial?",
-        expectedKeywords: ["recuperación", "generación", "documentos", "llm"],
+        expectedKeywords: ["recuperación", "generación"],
         forbiddenKeywords: ["no sé", "desconozco"],
         scoreMinimo: 70,
       },
@@ -90,162 +129,166 @@ export class SuiteRegresionLLM {
         id: "T02",
         descripcion: "Diferencia Factory vs Abstract Factory",
         input: "¿Cuál es la diferencia entre Factory Method y Abstract Factory?",
-        expectedKeywords: ["familia", "interfaz", "creación"],
+        expectedKeywords: ["familia", "creación"],
         forbiddenKeywords: ["son iguales", "no hay diferencia"],
         scoreMinimo: 65,
       },
       {
         id: "T03",
-        descripcion: "Caso de uso del patrón Singleton",
+        descripcion: "Caso de uso de Singleton",
         input: "¿Cuándo usar el patrón Singleton?",
-        expectedKeywords: ["única instancia", "global", "recurso"],
+        expectedKeywords: ["única instancia", "recurso"],
         forbiddenKeywords: [],
         scoreMinimo: 60,
       },
       {
         id: "T04",
-        descripcion: "Respuesta en idioma correcto",
+        descripcion: "Observer en español",
         input: "Explica brevemente el patrón Observer",
-        expectedKeywords: ["observador", "notificar", "cambio", "suscribir"],
-        forbiddenKeywords: ["observer", "notify"], // No debe responder en inglés
+        expectedKeywords: ["observador", "notificar", "cambio"],
+        forbiddenKeywords: [],
         scoreMinimo: 65,
       },
     ];
   }
 
   agregarTest(test: TestGolden): void {
+    if (this.tests.some((existente) => existente.id === test.id)) throw new Error(`Test duplicado: ${test.id}`);
     this.tests.push(test);
   }
 
-  private async evaluarRespuesta(test: TestGolden, respuesta: string): Promise<ResultadoTest> {
-    const respuestaLower = respuesta.toLowerCase();
-
-    // Verificar keywords obligatorias
-    const keywordsFaltantes = test.expectedKeywords.filter(
-      (kw) => !respuestaLower.includes(kw.toLowerCase()),
-    );
-
-    // Verificar keywords prohibidas
-    const keywordsProhibidasEncontradas = test.forbiddenKeywords.filter(
-      (kw) => respuestaLower.includes(kw.toLowerCase()),
-    );
-
-    // Score de calidad via LLM
+  private async scoreCalidad(test: TestGolden, respuesta: string): Promise<number | null> {
+    if (this.evaluador) return this.evaluador(test, respuesta);
     const resp = await this.client.responses.create({
       model: DEFAULT_MODEL,
       reasoning: { effort: "low" },
       store: false,
-      instructions: `Evalúa del 0-100 la calidad de esta respuesta a la pregunta dada.
-Pregunta: "${test.input}"
-Respuesta: "${respuesta.slice(0, 300)}"
-Responde SOLO con el número.`,
-      input: "",
+      instructions: "Evalúa la calidad de 0 a 100. Responde exclusivamente con un número.",
+      input: `Pregunta: ${test.input}\nRespuesta: ${respuesta.slice(0, 1000)}`,
     });
+    const match = resp.output_text.trim().match(/^(\d{1,3}(?:\.\d+)?)$/);
+    if (!match) return null;
+    const score = Number(match[1]);
+    return Number.isFinite(score) && score >= 0 && score <= 100 ? score : null;
+  }
 
-    const scoreObtenido = parseInt(resp.output_text.match(/\d+/)?.[0] ?? "60");
+  private async evaluarRespuesta(test: TestGolden, respuesta: string): Promise<ResultadoTest> {
+    const lower = respuesta.toLowerCase();
+    const keywordsFaltantes = test.expectedKeywords.filter((kw) => !lower.includes(kw.toLowerCase()));
+    const keywordsProhibidasEncontradas = test.forbiddenKeywords.filter((kw) => lower.includes(kw.toLowerCase()));
+    const scoreJuez = await this.scoreCalidad(test, respuesta);
 
-    // Ajuste por keywords
+    if (scoreJuez === null) {
+      return {
+        test,
+        respuesta: respuesta.slice(0, 500),
+        scoreObtenido: null,
+        keywordsFaltantes,
+        keywordsProhibidasEncontradas,
+        estado: "invalido",
+        detalles: "Evaluador inválido o no parseable; no se imputó score.",
+      };
+    }
+
     const penalizacion = keywordsFaltantes.length * 5 + keywordsProhibidasEncontradas.length * 15;
-    const scoreFinal = Math.max(0, scoreObtenido - penalizacion);
-
+    const scoreFinal = Math.max(0, scoreJuez - penalizacion);
     const estado: EstadoTest =
       scoreFinal >= test.scoreMinimo && keywordsProhibidasEncontradas.length === 0
         ? "pasado"
         : scoreFinal >= test.scoreMinimo * 0.8
-        ? "degradado"
-        : "fallido";
+          ? "degradado"
+          : "fallido";
 
     return {
       test,
-      respuesta: respuesta.slice(0, 200),
+      respuesta: respuesta.slice(0, 500),
       scoreObtenido: scoreFinal,
       keywordsFaltantes,
       keywordsProhibidasEncontradas,
       estado,
-      detalles: `Score: ${scoreFinal}/${test.scoreMinimo} | Faltan: [${keywordsFaltantes.join(", ")}]`,
+      detalles: `Score: ${scoreFinal}/${test.scoreMinimo}; faltan=[${keywordsFaltantes.join(", ")}]`,
+    };
+  }
+
+  private snapshot(version: string, resultados: ResultadoTest[]): SnapshotBaseline {
+    return {
+      version,
+      creadoEn: new Date().toISOString(),
+      tests: Object.fromEntries(resultados.map((r) => [r.test.id, { score: r.scoreObtenido, estado: r.estado }])),
     };
   }
 
   async ejecutar(
     handler: (input: string) => Promise<string>,
     version = "v-actual",
+    compararContra?: string,
   ): Promise<ReporteRegresion> {
-    console.log(`\n   🧪 Ejecutando suite de regresión (${this.tests.length} tests)...`);
+    const baseline = compararContra ? this.baselineStore.cargar(compararContra) : null;
+    if (compararContra && !baseline) throw new Error(`Baseline no encontrado: ${compararContra}`);
+
     const resultados: ResultadoTest[] = [];
-
     for (const test of this.tests) {
-      console.log(`   ▶️  [${test.id}] ${test.descripcion}`);
       const respuesta = await handler(test.input);
-      const resultado = await this.evaluarRespuesta(test, respuesta);
-
-      const icono = { pasado: "✅", fallido: "❌", degradado: "⚠️" }[resultado.estado];
-      console.log(`   ${icono} Score: ${resultado.scoreObtenido}/${test.scoreMinimo}`);
-      resultados.push(resultado);
+      resultados.push(await this.evaluarRespuesta(test, respuesta));
     }
 
-    // Detectar regresiones vs historial
-    const regresiones: string[] = [];
-    for (const r of resultados) {
-      const scoreAnterior = this.historial.get(r.test.id);
-      if (scoreAnterior !== undefined && r.scoreObtenido < scoreAnterior - 10) {
-        regresiones.push(`[${r.test.id}] Regresión: ${scoreAnterior} → ${r.scoreObtenido}`);
+    const regresionesDetectadas: string[] = [];
+    if (baseline) {
+      for (const actual of resultados) {
+        const anterior = baseline.tests[actual.test.id];
+        if (!anterior) continue;
+        if (anterior.estado === "pasado" && actual.estado !== "pasado") {
+          regresionesDetectadas.push(`[${actual.test.id}] Estado: pasado → ${actual.estado}`);
+          continue;
+        }
+        if (anterior.score !== null && actual.scoreObtenido !== null && actual.scoreObtenido < anterior.score - 10) {
+          regresionesDetectadas.push(`[${actual.test.id}] Score: ${anterior.score} → ${actual.scoreObtenido}`);
+        }
       }
-      this.historial.set(r.test.id, r.scoreObtenido);
     }
 
+    this.baselineStore.guardar(this.snapshot(version, resultados));
     const pasados = resultados.filter((r) => r.estado === "pasado").length;
     const fallidos = resultados.filter((r) => r.estado === "fallido").length;
     const degradados = resultados.filter((r) => r.estado === "degradado").length;
+    const invalidos = resultados.filter((r) => r.estado === "invalido").length;
 
     return {
       version,
+      baselineComparado: baseline?.version ?? null,
       timestamp: new Date(),
       totalTests: resultados.length,
       pasados,
       fallidos,
       degradados,
-      tasaExito: Math.round((pasados / resultados.length) * 100),
+      invalidos,
+      tasaExito: resultados.length ? Math.round((pasados / resultados.length) * 100) : 0,
       resultados,
-      regresionesDetectadas: regresiones,
+      regresionesDetectadas,
     };
   }
 }
 
 export async function demostrarRegressionTesting(client: OpenAI = makeClient()): Promise<void> {
-  paso("🧪", "Demostrando Regression Testing for LLMs Pattern");
-
-  const suite = new SuiteRegresionLLM(client);
-
+  paso("🧪", "Demostrando Regression Testing con baseline versionado");
+  const store = new MemoryBaselineStore();
+  const suite = new SuiteRegresionLLM(client, store);
   const agente = async (input: string): Promise<string> => {
     const resp = await client.responses.create({
       model: DEFAULT_MODEL,
       reasoning: { effort: "low" },
       store: false,
-      instructions: `Responde en español de forma concisa: ${input}`,
-      input: "",
+      instructions: "Responde en español de forma concisa.",
+      input,
     });
     return resp.output_text;
   };
 
-  paso("1️⃣", "Primera ejecución de la suite");
-  const reporte1 = await suite.ejecutar(agente, "v1.0");
-
-  console.log(`\n   📊 Reporte v1.0:`);
-  console.log(`   Tests: ${reporte1.totalTests} | ✅ ${reporte1.pasados} | ⚠️  ${reporte1.degradados} | ❌ ${reporte1.fallidos}`);
-  console.log(`   Tasa de éxito: ${reporte1.tasaExito}%`);
-
-  paso("2️⃣", "Segunda ejecución (detecta regresiones vs anterior)");
-  const reporte2 = await suite.ejecutar(agente, "v1.1");
-
-  console.log(`\n   📊 Reporte v1.1:`);
-  console.log(`   Tasa de éxito: ${reporte2.tasaExito}%`);
-  if (reporte2.regresionesDetectadas.length > 0) {
-    console.log(`   ⚠️  Regresiones: ${reporte2.regresionesDetectadas.join(", ")}`);
-  } else {
-    console.log(`   ✅ Sin regresiones detectadas`);
-  }
-
-  paso("✅", "Regression Testing garantizando calidad continua del agente");
+  await suite.ejecutar(agente, "v1.0");
+  const reporte = await suite.ejecutar(agente, "v1.1", "v1.0");
+  console.log(`   Baseline comparado: ${reporte.baselineComparado}`);
+  console.log(`   Regresiones: ${reporte.regresionesDetectadas.length}`);
+  paso("✅", "Usa JsonFileRegressionBaselineStore para conservar baselines entre procesos");
 }
 
 async function main(): Promise<void> { await demostrarRegressionTesting(); }

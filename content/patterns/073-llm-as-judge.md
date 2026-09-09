@@ -2,7 +2,7 @@
 patternId: 73
 slug: llm-as-judge
 title: LLM-as-Judge
-summary: Usa un modelo como evaluador escalable bajo una rúbrica explícita, calibrando sus scores contra evidencia humana o métricas deterministas antes de convertirlos en decisiones.
+summary: Usa un modelo como evaluador escalable bajo una rúbrica explícita, manteniendo ausencias y fallos de parsing como evidencia inválida en vez de imputar scores favorables.
 family: evaluation-qa
 legacyGroup: 17
 level: workflow
@@ -25,14 +25,14 @@ references: []
 LLM-as-Judge permite evaluar outputs a escala cuando una rúbrica puede expresarse con claridad y la evaluación humana completa sería demasiado costosa.
 
 ## Implementación del repositorio
-`src/pattern_73_llm_as_judge.ts` define cinco dimensiones ponderadas y pide al LLM líneas `DIMENSION | SCORE | FEEDBACK`. Después calcula un score ponderado.
+La implementación exige una línea válida por cada dimensión de la rúbrica. `parsearSalidaJuez()` rechaza dimensiones ausentes, duplicadas, desconocidas, scores no numéricos o fuera de 0–10 y feedback ausente.
 
-Si una dimensión no se parsea, la implementación inserta **7/10 por defecto** con `No evaluado explícitamente`. Esto sesga el resultado hacia una nota favorable en caso de fallo de formato. Además, la respuesta evaluada se trunca a 500 caracteres, lo que puede omitir errores o evidencia relevante.
-
-El comparador ejecuta el mismo juez sobre todas las respuestas y ordena por score. No controla sesgos de posición, longitud, estilo o auto-preferencia del modelo.
+Un juicio inválido devuelve `estado: "invalido"`, `scorePonderado: null` y errores explícitos. Ya no existe imputación de 7/10, 5/10 u otra nota de conveniencia. La comparación excluye juicios inválidos y evita declarar ganador en empate exacto.
 
 ## Producción
-Usa structured output, marca parsing fallido como `invalid`, calibra contra anotadores humanos y mide acuerdo por dimensión. Para factualidad, prioriza verificadores o fuentes externas; para seguridad, no delegues autorización al juez.
+El parsing estricto evita el fail-open, pero un juez LLM sigue siendo una medición probabilística. Calibra scores contra anotadores humanos, informa acuerdo inter-evaluador y usa verificadores deterministas o fuentes externas para factualidad y autorización.
+
+Para decisiones relevantes, registra versión de modelo, prompt del juez, rúbrica, dataset y semillas/configuración cuando aplique.
 
 ## Relaciones
-**Regression Testing (76)** consume métricas repetibles; **A/B Testing (75)** compara variantes; LLM-as-Judge puede ser una señal dentro de ambos.
+**Regression Testing (76)** consume métricas repetibles; **A/B Testing (75)** compara variantes. Un Judge puede ser una señal dentro de ambos, no su única fuente de verdad.

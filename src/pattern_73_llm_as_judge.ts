@@ -1,34 +1,9 @@
 /**
- * ═══════════════════════════════════════════════════════════════════
- *  PATRÓN 73 — LLM-AS-JUDGE (LLM COMO JUEZ DE CALIDAD)
- * ═══════════════════════════════════════════════════════════════════
+ * PATRÓN 73 — LLM-AS-JUDGE
  *
- *  [Respuesta del Agente]
- *       │
- *       ▼
- *  [Juez LLM]
- *  ├─ ¿Es correcta? (factual accuracy)
- *  ├─ ¿Es relevante? (relevance to question)
- *  ├─ ¿Es segura? (safety)
- *  ├─ ¿Es completa? (completeness)
- *  └─ ¿Es concisa? (conciseness)
- *
- *       │
- *       ▼
- *  [Score por dimensión + Feedback]
- *  {
- *    factual: 8/10,
- *    relevance: 9/10,
- *    safety: 10/10,
- *    overall: 8.5/10,
- *    feedback: "Mejorar X..."
- *  }
- *
- *  Ventajas:
- *  - Evaluación automática sin humanos
- *  - Scoring multi-dimensional
- *  - Feedback accionable
- *  - Escala a millones de respuestas
+ * Un juez LLM es una señal de evaluación, no ground truth. Esta versión
+ * falla de forma explícita cuando la salida no cumple la rúbrica: nunca
+ * imputa una puntuación favorable para una dimensión ausente o inválida.
  */
 
 import { OpenAI } from "openai";
@@ -37,7 +12,7 @@ import { DEFAULT_MODEL, isDirectRun, makeClient, paso } from "./common.js";
 export interface RubricaEvaluacion {
   nombre: string;
   descripcion: string;
-  peso: number; // Peso en la puntuación final (0-1)
+  peso: number;
 }
 
 export const RUBRICA_ESTANDAR: RubricaEvaluacion[] = [
@@ -50,17 +25,157 @@ export const RUBRICA_ESTANDAR: RubricaEvaluacion[] = [
 
 export interface ScoreEvaluacion {
   dimension: string;
-  score: number; // 0-10
-  feedback: string;
+  score: number | null;
+  feedback: string | null;
+  valido: boolean;
+  error?: string;
 }
 
-export interface ResultadoJuicio {
+export type EstadoJuicio = "valido" | "invalido";
+export type VeredictoJuicio = "excelente" | "bueno" | "aceptable" | "mejorable" | "deficiente" | "invalido";
+
+export interface ResultadoParseoJuez {
+  estado: EstadoJuicio;
+  scores: ScoreEvaluacion[];
+  scorePonderado: number | null;
+  veredicto: VeredictoJuicio;
+  recomendaciones: string[];
+  errores: string[];
+}
+
+export interface ResultadoJuicio extends ResultadoParseoJuez {
   pregunta: string;
   respuesta: string;
-  scores: ScoreEvaluacion[];
-  scorePonderado: number;
-  veredicto: "excelente" | "bueno" | "aceptable" | "mejorable" | "deficiente";
-  recomendaciones: string[];
+}
+
+function validarRubrica(rubrica: RubricaEvaluacion[]): void {
+  if (rubrica.length === 0) throw new Error("La rúbrica debe contener al menos una dimensión");
+  const nombres = new Set<string>();
+  let pesoTotal = 0;
+  for (const dimension of rubrica) {
+    if (!dimension.nombre.trim()) throw new Error("Toda dimensión necesita nombre");
+    if (nombres.has(dimension.nombre)) throw new Error(`Dimensión duplicada: ${dimension.nombre}`);
+    if (!Number.isFinite(dimension.peso) || dimension.peso <= 0) {
+      throw new Error(`Peso inválido en ${dimension.nombre}`);
+    }
+    nombres.add(dimension.nombre);
+    pesoTotal += dimension.peso;
+  }
+  if (pesoTotal <= 0) throw new Error("La suma de pesos debe ser positiva");
+}
+
+function veredictoDesdeScore(score: number): Exclude<VeredictoJuicio, "invalido"> {
+  return score >= 9 ? "excelente"
+    : score >= 7 ? "bueno"
+    : score >= 5 ? "aceptable"
+    : score >= 3 ? "mejorable"
+    : "deficiente";
+}
+
+export function parsearSalidaJuez(
+  texto: string,
+  rubrica: RubricaEvaluacion[] = RUBRICA_ESTANDAR,
+): ResultadoParseoJuez {
+  validarRubrica(rubrica);
+  const errores: string[] = [];
+  const porDimension = new Map<string, ScoreEvaluacion>();
+  const nombresEsperados = new Set(rubrica.map((r) => r.nombre));
+
+  for (const lineaCruda of texto.split(/\r?\n/)) {
+    const linea = lineaCruda.trim();
+    if (!/^DIMENSION:/i.test(linea)) continue;
+
+    const match = linea.match(
+      /^DIMENSION:\s*([^|]+?)\s*\|\s*SCORE:\s*([^|]+?)\s*\|\s*FEEDBACK:\s*(.+)$/i,
+    );
+    if (!match) {
+      errores.push(`Línea de dimensión con formato inválido: ${linea.slice(0, 100)}`);
+      continue;
+    }
+
+    const nombre = match[1].trim();
+    const scoreTexto = match[2].trim();
+    const feedback = match[3].trim();
+    if (!nombresEsperados.has(nombre)) {
+      errores.push(`Dimensión desconocida: ${nombre}`);
+      continue;
+    }
+    if (porDimension.has(nombre)) {
+      errores.push(`Dimensión duplicada en la salida: ${nombre}`);
+      continue;
+    }
+
+    const score = Number(scoreTexto);
+    if (!Number.isFinite(score) || score < 0 || score > 10) {
+      porDimension.set(nombre, {
+        dimension: nombre,
+        score: null,
+        feedback: feedback || null,
+        valido: false,
+        error: `Score fuera de rango o no numérico: ${scoreTexto}`,
+      });
+      errores.push(`${nombre}: score inválido (${scoreTexto})`);
+      continue;
+    }
+    if (!feedback) {
+      porDimension.set(nombre, {
+        dimension: nombre,
+        score: null,
+        feedback: null,
+        valido: false,
+        error: "Feedback ausente",
+      });
+      errores.push(`${nombre}: feedback ausente`);
+      continue;
+    }
+
+    porDimension.set(nombre, { dimension: nombre, score, feedback, valido: true });
+  }
+
+  const scores = rubrica.map((dimension): ScoreEvaluacion => {
+    const encontrado = porDimension.get(dimension.nombre);
+    if (encontrado) return encontrado;
+    errores.push(`${dimension.nombre}: dimensión no evaluada`);
+    return {
+      dimension: dimension.nombre,
+      score: null,
+      feedback: null,
+      valido: false,
+      error: "Dimensión no evaluada",
+    };
+  });
+
+  const recomendacionesMatch = texto.match(/^RECOMENDACIONES:\s*(.+)$/im);
+  const recomendaciones = recomendacionesMatch?.[1]
+    ?.split(";")
+    .map((r) => r.trim())
+    .filter(Boolean) ?? [];
+
+  if (scores.some((score) => !score.valido || score.score === null) || errores.length > 0) {
+    return {
+      estado: "invalido",
+      scores,
+      scorePonderado: null,
+      veredicto: "invalido",
+      recomendaciones,
+      errores,
+    };
+  }
+
+  const pesoTotal = rubrica.reduce((sum, dimension) => sum + dimension.peso, 0);
+  const scorePonderado = scores.reduce((total, score) => {
+    const dimension = rubrica.find((r) => r.nombre === score.dimension)!;
+    return total + score.score! * dimension.peso;
+  }, 0) / pesoTotal;
+
+  return {
+    estado: "valido",
+    scores,
+    scorePonderado,
+    veredicto: veredictoDesdeScore(scorePonderado),
+    recomendaciones,
+    errores: [],
+  };
 }
 
 export class JuezLLM {
@@ -68,13 +183,12 @@ export class JuezLLM {
   private rubrica: RubricaEvaluacion[];
 
   constructor(client: OpenAI = makeClient(), rubrica = RUBRICA_ESTANDAR) {
+    validarRubrica(rubrica);
     this.client = client;
     this.rubrica = rubrica;
   }
 
   async juzgar(pregunta: string, respuesta: string): Promise<ResultadoJuicio> {
-    console.log(`\n   ⚖️  Evaluando respuesta...`);
-
     const dimensionesStr = this.rubrica
       .map((r) => `${r.nombre} (peso: ${r.peso}): ${r.descripcion}`)
       .join("\n");
@@ -83,108 +197,50 @@ export class JuezLLM {
       model: DEFAULT_MODEL,
       reasoning: { effort: "medium" },
       store: false,
-      instructions: `Eres un evaluador experto de calidad de respuestas de IA.
-
-PREGUNTA: "${pregunta}"
-RESPUESTA A EVALUAR: "${respuesta.slice(0, 500)}"
-
-Evalúa en estas dimensiones (puntúa de 0-10):
-${dimensionesStr}
-
-Formato de respuesta (una línea por dimensión):
-DIMENSION: [nombre] | SCORE: [0-10] | FEEDBACK: [comentario breve]
-...
-RECOMENDACIONES: [mejoras concretas separadas por ;]`,
+      instructions: `Eres un evaluador experto de calidad de respuestas de IA.\n\nPREGUNTA: "${pregunta}"\nRESPUESTA A EVALUAR: "${respuesta.slice(0, 2000)}"\n\nEvalúa TODAS estas dimensiones con score de 0 a 10:\n${dimensionesStr}\n\nDevuelve exactamente una línea por dimensión:\nDIMENSION: nombre | SCORE: 0-10 | FEEDBACK: comentario breve\nRECOMENDACIONES: mejora 1; mejora 2`,
       input: "",
     });
 
-    // Parsear scores
-    const scores: ScoreEvaluacion[] = [];
-    const lineas = resp.output_text.split("\n");
-
-    for (const dimension of this.rubrica) {
-      const linea = lineas.find((l) => l.includes(`DIMENSION: ${dimension.nombre}`));
-      if (linea) {
-        const scoreMatch = linea.match(/SCORE:\s*(\d+)/);
-        const feedbackMatch = linea.match(/FEEDBACK:\s*(.+)/);
-        scores.push({
-          dimension: dimension.nombre,
-          score: scoreMatch ? parseInt(scoreMatch[1]) : 5,
-          feedback: feedbackMatch?.[1]?.trim() ?? "Sin feedback",
-        });
-      } else {
-        scores.push({ dimension: dimension.nombre, score: 7, feedback: "No evaluado explícitamente" });
-      }
-    }
-
-    // Calcular score ponderado
-    const scorePonderado = scores.reduce((total, s) => {
-      const rubrica = this.rubrica.find((r) => r.nombre === s.dimension);
-      return total + s.score * (rubrica?.peso ?? 0.2);
-    }, 0);
-
-    const veredicto: ResultadoJuicio["veredicto"] =
-      scorePonderado >= 9 ? "excelente"
-      : scorePonderado >= 7 ? "bueno"
-      : scorePonderado >= 5 ? "aceptable"
-      : scorePonderado >= 3 ? "mejorable"
-      : "deficiente";
-
-    // Extraer recomendaciones
-    const recsMatch = resp.output_text.match(/RECOMENDACIONES:\s*(.+)/);
-    const recomendaciones = recsMatch?.[1]?.split(";").map((r) => r.trim()) ?? [];
-
-    return { pregunta, respuesta, scores, scorePonderado, veredicto, recomendaciones };
+    return { pregunta, respuesta, ...parsearSalidaJuez(resp.output_text, this.rubrica) };
   }
 
-  async compararRespuestas(pregunta: string, respuestas: string[]): Promise<{ ranking: number[]; mejorIndice: number }> {
-    console.log(`\n   ⚖️  Comparando ${respuestas.length} respuestas...`);
-    const juicios = await Promise.all(respuestas.map((r) => this.juzgar(pregunta, r)));
-    const scores = juicios.map((j) => j.scorePonderado);
-    const ranking = scores.map((_, i) => i).sort((a, b) => scores[b] - scores[a]);
-    const mejorIndice = ranking[0];
-    return { ranking, mejorIndice };
+  async compararRespuestas(
+    pregunta: string,
+    respuestas: string[],
+  ): Promise<{ ranking: number[]; mejorIndice: number | null; indicesInvalidos: number[] }> {
+    const juicios = await Promise.all(respuestas.map((respuesta) => this.juzgar(pregunta, respuesta)));
+    const validos = juicios
+      .map((juicio, indice) => ({ indice, score: juicio.scorePonderado }))
+      .filter((item): item is { indice: number; score: number } => item.score !== null)
+      .sort((a, b) => b.score - a.score);
+    const indicesInvalidos = juicios
+      .map((juicio, indice) => ({ juicio, indice }))
+      .filter(({ juicio }) => juicio.estado === "invalido")
+      .map(({ indice }) => indice);
+
+    const empate = validos.length > 1 && Math.abs(validos[0].score - validos[1].score) < 1e-9;
+    return {
+      ranking: validos.map((item) => item.indice),
+      mejorIndice: validos.length === 0 || empate ? null : validos[0].indice,
+      indicesInvalidos,
+    };
   }
 }
 
 export async function demostrarLLMAsJudge(client: OpenAI = makeClient()): Promise<void> {
-  paso("⚖️", "Demostrando LLM-as-Judge Pattern");
-
+  paso("⚖️", "Demostrando LLM-as-Judge con parsing fail-closed");
   const juez = new JuezLLM(client);
+  const juicio = await juez.juzgar(
+    "¿Qué es RAG y cuándo usarlo?",
+    "RAG combina recuperación de documentos con generación para responder usando conocimiento externo actualizado.",
+  );
 
-  paso("1️⃣", "Evaluar una respuesta con rúbrica multi-dimensional");
-
-  const pregunta = "¿Qué es el patrón RAG y cuándo usarlo?";
-  const respuestaEjemplo = `RAG (Retrieval-Augmented Generation) es una arquitectura que combina 
-  la recuperación de documentos relevantes con la generación de respuestas por LLMs. 
-  Se usa cuando necesitas respuestas basadas en conocimiento específico del dominio 
-  que el modelo no tiene en sus parámetros, o cuando los datos cambian frecuentemente.`;
-
-  const juicio = await juez.juzgar(pregunta, respuestaEjemplo);
-
-  console.log(`\n   📊 Resultado del juicio:`);
-  juicio.scores.forEach((s) => {
-    const bar = "█".repeat(Math.floor(s.score)) + "░".repeat(10 - Math.floor(s.score));
-    console.log(`   ${s.dimension.padEnd(20)} [${bar}] ${s.score}/10`);
-  });
-  console.log(`\n   Score ponderado: ${juicio.scorePonderado.toFixed(1)}/10 → ${juicio.veredicto.toUpperCase()}`);
-  if (juicio.recomendaciones.length > 0) {
-    console.log(`   Recomendaciones: ${juicio.recomendaciones[0]}`);
+  if (juicio.estado === "invalido") {
+    console.log(`   🚫 Juicio inválido: ${juicio.errores.join("; ")}`);
+    return;
   }
-
-  paso("2️⃣", "Comparar respuestas alternativas");
-
-  const respuestasAlternativas = [
-    "RAG es una técnica de IA que busca documentos.",
-    respuestaEjemplo,
-    "RAG combina búsqueda vectorial con LLMs para respuestas fundamentadas en datos. Ideal para bases de conocimiento propias, documentación actualizada o cuando se necesita citar fuentes. Reduce alucinaciones y permite actualizar el conocimiento sin re-entrenar.",
-  ];
-
-  const { ranking, mejorIndice } = await juez.compararRespuestas(pregunta, respuestasAlternativas);
-  console.log(`\n   Ranking: ${ranking.map((i) => `R${i + 1}`).join(" > ")}`);
-  console.log(`   Mejor respuesta: R${mejorIndice + 1} (índice ${mejorIndice})`);
-
-  paso("✅", "LLM-as-Judge evaluando calidad automáticamente con rúbricas multi-dimensionales");
+  console.log(`   ✅ Score ponderado: ${juicio.scorePonderado!.toFixed(2)}/10 → ${juicio.veredicto}`);
+  paso("✅", "Las dimensiones ausentes ya no reciben scores favorables por defecto");
 }
 
 async function main(): Promise<void> { await demostrarLLMAsJudge(); }

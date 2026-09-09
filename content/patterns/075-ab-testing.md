@@ -2,7 +2,7 @@
 patternId: 75
 slug: ab-testing
 title: A/B Testing
-summary: Compara variantes bajo asignación controlada y métricas predefinidas para estimar impacto real, distinguiendo una diferencia observada de una diferencia estadísticamente sustentada.
+summary: Compara exactamente dos variantes con asignación controlada, observaciones válidas e incertidumbre explícita antes de recomendar un ganador.
 family: evaluation-qa
 legacyGroup: 17
 level: workflow
@@ -16,23 +16,23 @@ tags: [ab-testing, experimentation, prompts, metrics]
 related: [73, 90, 91]
 combinesWith: [77, 92, 76]
 antiPatterns:
-  - Declarar significancia a partir de una diferencia de puntos sin análisis estadístico.
-  - Cambiar asignación de variante para el mismo usuario durante un experimento sin intención explícita.
-  - Optimizar una sola métrica ignorando coste, seguridad o experiencia de usuario.
+  - Declarar significancia a partir de una diferencia de puntos sin análisis de incertidumbre.
+  - Imputar un score medio cuando una evaluación no existe o no se puede parsear.
+  - Cambiar asignación de variante para la misma unidad experimental sin intención explícita.
 references: []
 ---
 # Propósito
-A/B Testing compara variantes en condiciones controladas y permite decidir con evidencia si un cambio mejora una métrica objetivo.
+A/B Testing compara variantes bajo condiciones controladas y separa una diferencia observada de evidencia suficiente para actuar.
 
 ## Implementación del repositorio
-`src/pattern_75_ab_testing.ts` selecciona variantes uniformemente con `Math.random()` cuando no se fuerza un ID. La demo ejecuta cada variante con las mismas preguntas, estima tokens como palabras×1,3 y evalúa calidad con un juez LLM.
+La clase acepta exactamente dos variantes. Puede asignar de forma sticky usando `unidadExperimental`; un ID forzado desconocido falla explícitamente en vez de caer a una variante aleatoria.
 
-En `analizarResultados()` solo se evalúan con calidad las respuestas cuyas entradas estén en `entradasEvaluacion`; la demo pasa únicamente la primera pregunta. Después se llama `margen >= 10` a un **margen significativo**, pero no existe test estadístico, intervalo de confianza ni cálculo de potencia.
+Las evaluaciones de calidad inválidas se excluyen como observaciones ausentes: no se reemplazan por 70. `resumirMuestra()` calcula media, desviación, error estándar e IC95 aproximado. `compararMuestrasCalidad()` estima el IC95 de la diferencia A−B y solo devuelve `diferencia_detectada` cuando ese intervalo no contiene 0 y cada brazo tiene al menos dos observaciones válidas.
+
+El intervalo usa una aproximación normal de 1,96×SE. Es útil pedagógicamente y mucho más honesto que un umbral arbitrario, pero para muestras pequeñas o decisiones críticas debe sustituirse por Welch-t, bootstrap u otro análisis previsto en el diseño experimental.
 
 ## Producción
-Define hipótesis y métrica primaria antes del experimento, usa asignación sticky por unidad experimental, calcula tamaño de muestra y analiza incertidumbre. Controla guardrails de seguridad/coste y evita peeking oportunista.
-
-Para prompts generativos, conserva modelo, temperatura, versión de prompt y cohortes, y diferencia efectos de calidad de cambios en latencia o tokens.
+Prerregistra hipótesis, unidad experimental, métrica primaria, tamaño de muestra, criterio de parada y análisis. Controla múltiples comparaciones, peeking, efectos de cohorte y guardrails de seguridad/coste.
 
 ## Relaciones
-**Canary Release (90)** reduce riesgo de despliegue pero no sustituye un experimento; **Meta-Prompting (91)** genera candidatos; A/B Testing mide impacto en tráfico o dataset.
+**Canary Release (90)** controla riesgo de despliegue; **LLM-as-Judge (73)** puede aportar una métrica de calidad; **Regression Testing (76)** protege el ganador una vez adoptado.
