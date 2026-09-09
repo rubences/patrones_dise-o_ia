@@ -8,15 +8,25 @@ node scripts/build-evidence-pack.mjs
 node scripts/build-book.mjs
 ```
 
-Los artefactos se generan en:
+Los artefactos intermedios se generan en:
 
 - `dist/book/patrones-ia-manuscript.md`
 - `dist/book/manifest.json`
 - `dist/evidence/evidence-pack.json`
 - `dist/evidence/EVIDENCE_REPORT.md`
 
-`dist/` está ignorado por Git. Esto evita que el manuscrito derivado se desincronice del contenido canónico. El `manifest.json` incluye el SHA-256 del manuscrito para poder identificar exactamente qué corpus produjo una edición.
+`dist/` está ignorado por Git. Esto evita que el manuscrito derivado se desincronice del contenido canónico. Los manifests incluyen SHA-256 para identificar exactamente qué corpus produjo una edición.
 
-## Siguiente capa editorial
+## Edición distribuible
 
-El Markdown ensamblado está preparado como fuente intermedia para maquetación PDF/EPUB. La conversión tipográfica se mantendrá separada de la generación de contenido para que un cambio de renderer no altere el corpus editorial.
+`.github/workflows/book-artifacts.yml` instala Quarto mediante la acción oficial `quarto-dev/quarto-actions/setup@v2`, renderiza la fuente canónica y publica como artefacto de GitHub Actions:
+
+- `patrones-ia.html`
+- `patrones-ia.epub`
+- `patrones-ia.pdf`
+- `release-manifest.json`
+- manuscrito y Evidence Pack asociados
+
+`release-manifest.json` valida la firma real de PDF/EPUB/HTML, registra tamaño y SHA-256 de cada archivo y enlaza esos hashes con el corpus y manuscrito que los originaron.
+
+La renderización pesada vive en un workflow separado de la CI web. Se ejecuta cuando cambia contenido editorial, catálogo, libro o pipeline de publicación, y también puede lanzarse manualmente.
