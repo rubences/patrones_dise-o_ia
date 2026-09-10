@@ -12,6 +12,7 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
     <p class="lead">102 patrones para construir agentes, sistemas RAG y arquitecturas de IA seguras, fiables y escalables. El manuscrito se ensambla desde exactamente las mismas fichas que ves en la web.</p>
     <div class="actions">
       <a class="button primary" href={`${import.meta.env.BASE_URL}patterns/`}>Explorar los patrones</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/actions">Ver ediciones generadas</a>
       <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/tree/main/book">Ver pipeline del libro</a>
     </div>
   </section>
@@ -20,20 +21,27 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
     <div class="stat-grid">
       <div class="stat"><strong>{patterns.length}</strong><span>capítulos de patrón</span></div>
       <div class="stat"><strong>{families}</strong><span>partes editoriales</span></div>
-      <div class="stat"><strong>1</strong><span>fuente canónica</span></div>
-      <div class="stat"><strong>SHA-256</strong><span>identidad de cada build</span></div>
+      <div class="stat"><strong>3</strong><span>formatos distribuibles</span></div>
+      <div class="stat"><strong>SHA-256</strong><span>integridad por artefacto</span></div>
     </div>
   </section>
 
   <section class="section">
     <div class="section-heading">
-      <div><p class="eyebrow">Pipeline</p><h2>Contenido primero. Maquetación después.</h2></div>
-      <p>El repositorio genera un manuscrito Markdown completo y un manifest verificable. PDF y EPUB son renderizados posteriores: no se mantienen como otra copia editorial.</p>
+      <div><p class="eyebrow">Pipeline</p><h2>Contenido primero. Distribución reproducible después.</h2></div>
+      <p>El repositorio ensambla un único manuscrito Markdown y lo renderiza en CI a HTML autocontenido, EPUB y PDF/Typst. Ningún binario se mantiene como una segunda fuente editorial.</p>
     </div>
     <div class="card-grid">
       <article class="pattern-card"><span class="pattern-number">01 · SOURCE</span><h3>102 fichas</h3><p>Contenido canónico, frontmatter estructurado y enlaces a implementaciones TypeScript.</p></article>
-      <article class="pattern-card"><span class="pattern-number">02 · ASSEMBLE</span><h3>10 partes</h3><p>El orden y las familias salen de taxonomy.json; el script valida que entren los 102 patrones.</p></article>
-      <article class="pattern-card"><span class="pattern-number">03 · VERIFY</span><h3>Manifest</h3><p>El build registra número de capítulos, macrofamilias y SHA-256 del manuscrito.</p></article>
+      <article class="pattern-card"><span class="pattern-number">02 · RENDER</span><h3>HTML · EPUB · PDF</h3><p>Quarto renderiza los tres formatos desde el mismo manuscrito; el PDF usa Typst sin una instalación LaTeX adicional.</p></article>
+      <article class="pattern-card"><span class="pattern-number">03 · VERIFY</span><h3>Manifest de distribución</h3><p>Cada build registra SHA-256 y tamaño de cada artefacto junto al hash del manuscrito fuente.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">Distribución</p><h2>Ediciones verificables, no copias manuales.</h2></div>
+      <p>GitHub Actions conserva el bundle de publicación como artifact del workflow. El paquete incluye manuscrito, HTML, EPUB, PDF, manifests y Evidence Pack.</p>
     </div>
   </section>
 </BaseLayout>

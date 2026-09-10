@@ -26,6 +26,10 @@ on:
       - 'package-lock.json'
       - 'web/**'
       - '.github/workflows/web-ci.yml'
+  workflow_dispatch:
+
+env:
+  QUARTO_VERSION: '1.10.18'
 
 jobs:
   validate:
@@ -39,6 +43,11 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: ${{ env.QUARTO_VERSION }}
+
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
 
@@ -48,13 +57,24 @@ jobs:
       - name: Assemble canonical book manuscript
         run: node scripts/build-book.mjs
 
+      - name: Render distributable edition
+        run: quarto render dist/book/patrones-ia-manuscript.md
+
+      - name: Build distribution manifest
+        run: node scripts/build-distribution-manifest.mjs
+
       - name: Verify publication artifacts
         run: |
           test -s dist/evidence/evidence-pack.json
           test -s dist/evidence/EVIDENCE_REPORT.md
           test -s dist/book/patrones-ia-manuscript.md
           test -s dist/book/manifest.json
+          test -s dist/book/patrones-ia-manuscript.html
+          test -s dist/book/patrones-ia-manuscript.epub
+          test -s dist/book/patrones-ia-manuscript.pdf
+          test -s dist/book/distribution-manifest.json
           node -e "const m=require('./dist/book/manifest.json'); if(m.patternCount!==102||m.familyCount!==10) process.exit(1)"
+          node -e "const m=require('./dist/book/distribution-manifest.json'); if(m.patternCount!==102||m.familyCount!==10||m.artifacts.length!==3) process.exit(1)"
 
       - name: Install root dependencies
         run: npm install
@@ -69,3 +89,19 @@ jobs:
       - name: Build Astro site
         working-directory: web
         run: npm run build
+
+      - name: Upload publication bundle
+        uses: actions/upload-artifact@v7
+        with:
+          name: patrones-ia-publication-${{ github.sha }}
+          path: |
+            dist/book/patrones-ia-manuscript.md
+            dist/book/patrones-ia-manuscript.html
+            dist/book/patrones-ia-manuscript.epub
+            dist/book/patrones-ia-manuscript.pdf
+            dist/book/manifest.json
+            dist/book/distribution-manifest.json
+            dist/evidence/evidence-pack.json
+            dist/evidence/EVIDENCE_REPORT.md
+          if-no-files-found: error
+          retention-days: 30
