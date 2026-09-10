@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import requirements from '../../../../publications/common/publisher-submission-requirements.json';
+import research from '../../../../publications/research-monograph-en/publication.json';
+import teaching from '../../../../publications/teaching-manual-es/publication.json';
+
+const base = import.meta.env.BASE_URL;
+const publicationTitle = new Map([
+  [research.id, research.title],
+  [teaching.id, teaching.title],
+]);
+---
+
+<BaseLayout title="Preparación editorial — Patrones IA" description="Estado de preparación de las dos publicaciones y rutas editoriales verificadas.">
+  <section class="catalog-hero">
+    <p class="eyebrow">SUBMISSION READINESS · VERIFIED {requirements.verifiedOn}</p>
+    <h1>Propuestas preparadas sin inventar requisitos editoriales.</h1>
+    <p class="lead">Las rutas de envío se versionan igual que el código. Cuando una editorial publica un requisito lo registramos; cuando no lo publica, queda marcado para confirmación con el editor en lugar de convertir una suposición en un hecho.</p>
+    <div class="actions">
+      <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/PUBLISHER_SUBMISSION_MATRIX.md">Matriz completa</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/CONTRACT_RIGHTS_GATE.md">Gate de derechos</a>
+      <a class="button" href={`${base}publications/`}>Volver a publicaciones</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="stat-grid">
+      <div class="stat"><strong>2</strong><span>obras independientes</span></div>
+      <div class="stat"><strong>{requirements.publishers.length}</strong><span>rutas editoriales verificadas</span></div>
+      <div class="stat"><strong>4</strong><span>capítulos muestra preparados</span></div>
+      <div class="stat"><strong>{requirements.reviewAfter}</strong><span>revisión programada</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">PACK STATUS</p><h2>Ambos dossiers están listos para contacto editorial.</h2></div>
+      <p>“Editor-contact-ready” no significa manuscrito terminado: significa que título, pitch, audiencia, índice, dossier y capítulos muestra tienen una base coherente para iniciar el proceso de adquisición.</p>
+    </div>
+    <div class="publication-grid">
+      {[research, teaching].map((publication) => (
+        <article class="publication-card">
+          <span class="pattern-number">{publication.language.toUpperCase()} · {publication.submissionReadiness.stage}</span>
+          <h3>{publication.title}</h3>
+          <p>{publication.submissionReadiness.sampleChapters.length} capítulos muestra · requisitos revisados {publication.submissionReadiness.publisherRequirementsVerifiedOn}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">PUBLISHER ROUTES</p><h2>Qué sabemos públicamente y qué debe confirmarse.</h2></div>
+      <p>El registro se revalida antes de cada envío. La columna de muestra evita especialmente dos errores: imponer un número de capítulos que la editorial no publica o reutilizar instrucciones obsoletas.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Editorial / ruta</th><th>Obra</th><th>Canal</th><th>Capítulos muestra</th></tr></thead>
+        <tbody>
+          {requirements.publishers.map((publisher) => (
+            <tr>
+              <td>{publisher.name}</td>
+              <td>{publicationTitle.get(publisher.targetPublication)}</td>
+              <td>{publisher.route}</td>
+              <td><code>{publisher.sampleChapterRequirement}</code></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">RA-MA</span><h3>Dato público preciso</h3><p>Índice completo, uno o dos capítulos, extensión y plazo; el formulario limita el PDF adjunto a 30 MB.</p></article>
+      <article class="pattern-card"><span class="pattern-number">PARANINFO</span><h3>Confirmación editorial</h3><p>El encaje universitario y de Ciencias de la Computación es público, pero el número exacto de capítulos iniciales no se presupone.</p></article>
+      <article class="pattern-card"><span class="pattern-number">INTERNATIONAL</span><h3>Proposal first</h3><p>Springer Nature, CRC/T&F y Wiley-IEEE Press se tratan como rutas de adquisición diferenciadas, no como etiquetas intercambiables.</p></article>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .publication-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+  .publication-card { padding:1.35rem; border:1px solid var(--line); border-radius:18px; background:rgba(18,27,45,.78); }
+  .publication-card h3 { margin:.55rem 0; }
+  .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:18px; }
+  table { width:100%; border-collapse:collapse; min-width:850px; background:rgba(18,27,45,.72); }
+  th,td { padding:.9rem 1rem; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--accent-2); font-size:.78rem; text-transform:uppercase; letter-spacing:.07em; }
+  @media (max-width:760px){ .publication-grid{grid-template-columns:1fr;} }
+</style>
