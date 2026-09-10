@@ -33,7 +33,7 @@ const parts = taxonomy.families.map((family, familyIndex) => {
   return `# Parte ${familyIndex + 1} — ${family.nameEs}\n\n${family.description}\n\n${chapters}`;
 }).join('\n\n');
 
-const yaml = `---\ntitle: "${config.title}"\nsubtitle: "${config.subtitle}"\nauthor: "${config.author}"\nlang: es\nedition: "${config.edition}"\n---`;
+const yaml = `---\ntitle: "${config.title}"\nsubtitle: "${config.subtitle}"\nauthor: "${config.author}"\nlang: es\nedition: "${config.edition}"\nformat:\n  html:\n    toc: true\n    toc-depth: 2\n    number-sections: true\n    embed-resources: true\n  epub:\n    toc: true\n    toc-depth: 2\n  typst:\n    toc: true\n    section-numbering: "1.1"\n    papersize: a4\n    margin:\n      x: 2.2cm\n      y: 2.2cm\n---`;
 const manuscript = `${yaml}\n\n${frontmatter}\n\n${parts}\n`;
 const patternHeadings = manuscript.match(/^## Patrón \d{3} — /gm) ?? [];
 if (patternHeadings.length !== taxonomy.catalogSize) {
@@ -45,11 +45,12 @@ const outDir = join(projectRoot, 'dist', 'book');
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, config.output), manuscript, 'utf8');
 writeFileSync(join(outDir, 'manifest.json'), JSON.stringify({
-  schemaVersion: 1,
+  schemaVersion: 2,
   output: config.output,
   patternCount: patternHeadings.length,
   familyCount: taxonomy.families.length,
   manuscriptSha256: sha256,
+  formats: ['html', 'epub', 'typst'],
   commitSha: process.env.GITHUB_SHA ?? null,
 }, null, 2) + '\n', 'utf8');
 
