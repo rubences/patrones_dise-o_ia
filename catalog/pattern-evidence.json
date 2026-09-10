@@ -12,9 +12,19 @@
       "scopeNote": "Toolformer aporta evidencia primaria sobre aprendizaje de uso de APIs; el patrón Tool Use del repositorio es más general y no presupone el método de entrenamiento de Toolformer."
     },
     {
+      "patternId": 6,
+      "references": ["wang-2023-plan-and-solve"],
+      "scopeNote": "Plan-and-Solve separa planificación y ejecución de subtareas en prompting de razonamiento; respalda la separación arquitectónica del patrón Planning, no garantiza mejores planes en cualquier dominio, modelo o agente."
+    },
+    {
+      "patternId": 7,
+      "references": ["wu-2024-autogen"],
+      "scopeNote": "AutoGen demuestra una infraestructura para componer múltiples agentes conversables con LLM, humanos y herramientas; respalda topologías multiagente, no establece que varios agentes superen siempre a una solución monolítica."
+    },
+    {
       "patternId": 25,
-      "references": ["lewis-2020-rag"],
-      "scopeNote": "Lewis et al. formalizan RAG combinando memoria paramétrica y no paramétrica; los resultados del artículo pertenecen a sus tareas y configuración y no son una mejora universal para cualquier RAG."
+      "references": ["lewis-2020-rag", "es-2024-ragas"],
+      "scopeNote": "Lewis et al. formalizan RAG y RAGAs separa dimensiones de evaluación de retrieval, fidelidad y generación; ninguna referencia implica una mejora universal para cualquier corpus, retriever, modelo o métrica."
     },
     {
       "patternId": 26,
@@ -27,14 +37,29 @@
       "scopeNote": "Tree of Thoughts se valida en tareas de búsqueda específicas; sus mejoras de benchmark no deben extrapolarse a cualquier dominio, modelo o política de branching."
     },
     {
+      "patternId": 41,
+      "references": ["khattab-2020-colbert"],
+      "scopeNote": "ColBERT aporta evidencia primaria para ranking neuronal mediante late interaction entre query y pasajes; respalda una familia de retrieval/ranking, no prescribe ColBERT como mejor opción para todo RAG ni conserva sus resultados fuera de sus datasets."
+    },
+    {
       "patternId": 42,
       "references": ["wang-2023-self-consistency"],
       "scopeNote": "Self-Consistency marginaliza múltiples rutas de razonamiento y muestra ganancias en benchmarks concretos; coste y beneficio dependen del número de muestras y de la tarea."
     },
     {
+      "patternId": 53,
+      "references": ["nist-ai-600-1"],
+      "scopeNote": "NIST AI 600-1 estructura riesgos y acciones de gestión para IA generativa y justifica controles por capas; no certifica que un guardrail concreto sea suficiente ni convierte una lista de filtros en conformidad automática."
+    },
+    {
       "patternId": 54,
       "references": ["yao-2023-react"],
       "scopeNote": "ReAct estudia la intercalación de razonamiento y acciones sobre entornos concretos; la referencia no convierte acciones del LLM en autorizadas ni seguras por definición."
+    },
+    {
+      "patternId": 60,
+      "references": ["wu-2024-autogen"],
+      "scopeNote": "AutoGen permite definir patrones conversacionales y coordinación entre agentes especializados, aportando un antecedente primario para Orchestrator-Workers; no valida una única topología ni elimina la necesidad de contratos, límites y observabilidad."
     },
     {
       "patternId": 62,
@@ -47,9 +72,29 @@
       "scopeNote": "NIST clasifica direct e indirect prompt injection entre los ataques relevantes para GenAI; la guía respalda el modelo de amenaza, no garantiza que una defensa heurística concreta sea suficiente."
     },
     {
+      "patternId": 73,
+      "references": ["zheng-2023-llm-as-judge"],
+      "scopeNote": "MT-Bench y Chatbot Arena estudian LLM-as-a-Judge y documentan sesgos de posición, verbosidad y auto-favorecimiento; respaldan el patrón como técnica de evaluación escalable, no como sustituto infalible de evaluación humana o métricas externas."
+    },
+    {
+      "patternId": 74,
+      "references": ["perez-2022-red-teaming-lms"],
+      "scopeNote": "Perez et al. muestran generación automatizada de casos adversariales con otro modelo como herramienta de red teaming; el método descubre clases de fallos, pero no demuestra cobertura exhaustiva ni reemplaza análisis humano, threat modeling o pruebas especializadas."
+    },
+    {
+      "patternId": 77,
+      "references": ["opentelemetry-semconv-1-44"],
+      "scopeNote": "OpenTelemetry define convenciones semánticas comunes para trazas, métricas, logs y eventos, proporcionando una base interoperable de observabilidad; las convenciones GenAI específicas continúan evolucionando y deben versionarse, no asumirse estables por extensión."
+    },
+    {
       "patternId": 82,
       "references": ["mcp-2026-07-28"],
       "scopeNote": "La especificación 2026-07-28 es la referencia normativa del protocolo. Las implementaciones deben declarar la revisión soportada: el SDK o una demo anterior no adquieren automáticamente la semántica de esta revisión."
+    },
+    {
+      "patternId": 98,
+      "references": ["gao-2023-alce"],
+      "scopeNote": "ALCE define un benchmark end-to-end y métricas para respuestas con citas y evidencia recuperada; respalda evaluación de atribución y soporte, pero la mera presencia de una cita no prueba por sí sola que una afirmación sea correcta o completa."
     }
   ]
 }
