@@ -6,6 +6,15 @@
   "language": "es",
   "purpose": "university-teaching-manual",
   "status": "proposal-development",
+  "submissionReadiness": {
+    "stage": "editor-contact-ready",
+    "publisherRequirementsVerifiedOn": "2026-09-10",
+    "dossier": "SUBMISSION_DOSSIER.md",
+    "sampleChapters": [
+      "samples/04-tool-use-function-calling.md",
+      "samples/05-rag-extremo-a-extremo.md"
+    ]
+  },
   "audience": ["estudiantes de grado TIC", "estudiantes de máster", "docentes de ingeniería", "profesionales en formación"],
   "derivativePolicy": "independent-editorial-work",
   "notATranslationOf": "research-monograph-en",
