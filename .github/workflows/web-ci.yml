@@ -91,6 +91,23 @@ jobs:
           node -e "const b=require('./dist/book/manifest.json'),e=require('./dist/evidence/evidence-pack.json'); if(b.patternCount!==102||b.familyCount!==10||e.summary.patternsWithPrimaryEvidence<10||b.primaryEvidenceChapters!==e.summary.patternsWithPrimaryEvidence||e.primaryRegistry.referenceCount<10) process.exit(1)"
           node -e "const m=require('./dist/book/distribution-manifest.json'); if(m.patternCount!==102||m.familyCount!==10||m.artifacts.length!==3) process.exit(1)"
 
+      - name: Assemble publisher-specific submission packages
+        run: node scripts/build-submission-packages.mjs
+
+      - name: Render RA-MA evaluation package
+        run: quarto render dist/submissions/ra-ma/ra-ma-evaluation-package.md --to typst
+
+      - name: Verify publisher-specific submission packages
+        run: |
+          test -s dist/submissions/manifest.json
+          test -s dist/submissions/springer-nature/springer-book-idea-master.md
+          test -s dist/submissions/ra-ma/ra-ma-evaluation-package.md
+          test -s dist/submissions/ra-ma/ra-ma-evaluation-package.pdf
+          pdf_bytes=$(stat -c%s dist/submissions/ra-ma/ra-ma-evaluation-package.pdf)
+          test "$pdf_bytes" -lt 31457280
+          node -e "const m=require('./dist/submissions/manifest.json'); const r=m.packages.find(x=>x.publisher==='RA-MA'); const s=m.packages.find(x=>x.publisher==='Springer Nature'); if(!r||!s||r.sampleCount!==2||s.sampleCount!==2||r.maxPdfBytes!==31457280) process.exit(1)"
+          echo "RA-MA PDF bytes: $pdf_bytes / 31457280"
+
       - name: Install root dependencies
         run: npm ci
 
@@ -105,10 +122,10 @@ jobs:
         working-directory: web
         run: npm run build
 
-      - name: Upload reference publication bundle
+      - name: Upload reference and submission publication bundle
         uses: actions/upload-artifact@v7
         with:
-          name: patrones-ia-reference-${{ github.sha }}
+          name: patrones-ia-publication-${{ github.sha }}
           path: |
             dist/book/patrones-ia-manuscript.md
             dist/book/patrones-ia-manuscript.html
@@ -119,5 +136,9 @@ jobs:
             dist/book/RELEASE_NOTES.md
             dist/evidence/evidence-pack.json
             dist/evidence/EVIDENCE_REPORT.md
+            dist/submissions/manifest.json
+            dist/submissions/springer-nature/springer-book-idea-master.md
+            dist/submissions/ra-ma/ra-ma-evaluation-package.md
+            dist/submissions/ra-ma/ra-ma-evaluation-package.pdf
           if-no-files-found: error
           retention-days: 30
