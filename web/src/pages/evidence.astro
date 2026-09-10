@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import evidenceMapData from '../../../catalog/pattern-evidence.json';
 import referenceRegistryData from '../../../catalog/references.json';
+import evidenceBaselineData from '../../../catalog/evidence-baseline.json';
 
 type PrimaryReference = {
   id: string;
@@ -73,9 +74,9 @@ const primaryRows = evidenceEntries.map((entry) => {
 
 <BaseLayout title="Evidencia — Patrones IA" description="Cobertura editorial, estado de evidencia y trazabilidad del catálogo Patrones IA.">
   <section class="catalog-hero">
-    <p class="eyebrow">Evidence Pack</p>
+    <p class="eyebrow">Evidence Pack · {evidenceBaselineData.phase}</p>
     <h1>Evidencia visible, no implícita.</h1>
-    <p class="lead">El catálogo distingue implementación, madurez, referencias editoriales y evidencia primaria verificada. Una ficha sin fuente permanece como deuda: no se rellena con una cifra, un DOI o una atribución inventada.</p>
+    <p class="lead">El catálogo distingue implementación, madurez, referencias editoriales y evidencia primaria verificada. El baseline {evidenceBaselineData.phase} es fail-closed: una reducción accidental de la cobertura primaria bloquea CI y las releases.</p>
   </section>
 
   <section class="section">
@@ -106,8 +107,8 @@ const primaryRows = evidenceEntries.map((entry) => {
 
   <section class="section">
     <div class="section-heading">
-      <div><p class="eyebrow">Primary sources · P6</p><h2>Primer bloque de evidencia verificada.</h2></div>
-      <p>Cada asociación conserva una nota de alcance para evitar extrapolar resultados de benchmark fuera de la tarea, modelo o procedimiento estudiado.</p>
+      <div><p class="eyebrow">Primary sources · {evidenceBaselineData.phase}</p><h2>Cobertura primaria ampliada: {primaryEvidenceCount}/{total} patrones.</h2></div>
+      <p>Cada asociación conserva una nota de alcance para evitar extrapolar resultados de benchmark fuera de la tarea, modelo o procedimiento estudiado. El baseline exige al menos {evidenceBaselineData.minimumPrimaryPatterns} patrones y {evidenceBaselineData.minimumPrimaryReferences} fuentes primarias/oficiales.</p>
     </div>
     <div class="evidence-table-wrap">
       <table class="evidence-table">
@@ -128,7 +129,7 @@ const primaryRows = evidenceEntries.map((entry) => {
   <section class="section">
     <div class="card-grid">
       <article class="pattern-card"><span class="pattern-number">REPRODUCIBLE</span><h3>Hash del corpus</h3><p>El pipeline CI genera SHA-256 del conjunto de las 102 fichas y del manuscrito ensamblado.</p></article>
-      <article class="pattern-card"><span class="pattern-number">FAIL CLOSED</span><h3>Ausencia ≠ evidencia</h3><p>Los hardenings y el registro P6 mantienen explícita la ausencia de medición o fuente primaria.</p></article>
+      <article class="pattern-card"><span class="pattern-number">FAIL CLOSED</span><h3>Ausencia ≠ evidencia</h3><p>El baseline P6.2 y los hardenings mantienen explícita la ausencia de medición o fuente primaria.</p></article>
       <article class="pattern-card"><span class="pattern-number">TRACEABLE</span><h3>Registro central</h3><p>Libro, Evidence Pack y esta página resuelven las fuentes verificadas desde el mismo registro versionado.</p></article>
     </div>
   </section>
