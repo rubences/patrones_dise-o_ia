@@ -5,7 +5,7 @@ import research from '../../../../publications/research-monograph-en/publication
 import teaching from '../../../../publications/teaching-manual-es/publication.json';
 
 const base = import.meta.env.BASE_URL;
-const publicationTitle = new Map([
+const publicationTitle = new Map<string, string>([
   [research.id, research.title],
   [teaching.id, teaching.title],
 ]);
@@ -14,11 +14,12 @@ const publicationTitle = new Map([
 <BaseLayout title="Preparación editorial — Patrones IA" description="Estado de preparación de las dos publicaciones y rutas editoriales verificadas.">
   <section class="catalog-hero">
     <p class="eyebrow">SUBMISSION READINESS · VERIFIED {requirements.verifiedOn}</p>
-    <h1>Propuestas preparadas sin inventar requisitos editoriales.</h1>
-    <p class="lead">Las rutas de envío se versionan igual que el código. Cuando una editorial publica un requisito lo registramos; cuando no lo publica, queda marcado para confirmación con el editor en lugar de convertir una suposición en un hecho.</p>
+    <h1>De la arquitectura editorial al paquete de adquisición.</h1>
+    <p class="lead">Las rutas de envío se versionan igual que el código. La fase actual añade posicionamiento competitivo, un master específico para Springer Nature y un paquete RA-MA que CI ensambla y limita automáticamente a menos de 30 MB.</p>
     <div class="actions">
-      <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/PUBLISHER_SUBMISSION_MATRIX.md">Matriz completa</a>
-      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/CONTRACT_RIGHTS_GATE.md">Gate de derechos</a>
+      <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/submissions/springer-nature/BOOK_IDEA.md">Springer Book Idea</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/submissions/ra-ma/PAQUETE_EVALUACION.md">Paquete RA-MA</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/PUBLISHER_SUBMISSION_MATRIX.md">Matriz editorial</a>
       <a class="button" href={`${base}publications/`}>Volver a publicaciones</a>
     </div>
   </section>
@@ -28,7 +29,38 @@ const publicationTitle = new Map([
       <div class="stat"><strong>2</strong><span>obras independientes</span></div>
       <div class="stat"><strong>{requirements.publishers.length}</strong><span>rutas editoriales verificadas</span></div>
       <div class="stat"><strong>4</strong><span>capítulos muestra preparados</span></div>
-      <div class="stat"><strong>{requirements.reviewAfter}</strong><span>revisión programada</span></div>
+      <div class="stat"><strong>2</strong><span>paquetes publisher-specific</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">MARKET POSITION</p><h2>La diferenciación ya no puede ser “un libro de patrones de agentes”.</h2></div>
+      <p>El análisis 2026 identifica títulos actuales sobre agentic design patterns, LLM agents, reliability y distributed AI. La monografía se posiciona por pattern language, dependability, control determinista, Edge–Mesh–Cloud y validación experimental. El manual español se diferencia de libros centrados en ChatGPT por su estructura curricular, laboratorios, tests, seguridad y resiliencia.</p>
+    </div>
+    <div class="publication-grid">
+      <a class="publication-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/COMPETING_TITLES_2026.md">
+        <span class="pattern-number">RESEARCH · MARKET SCAN</span>
+        <h3>Competidores internacionales</h3>
+        <p>Comparación de títulos Springer/Apress 2025–2027 y reformulación del USP de la monografía.</p>
+      </a>
+      <a class="publication-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/COMPETING_TITLES_2026.md">
+        <span class="pattern-number">TEACHING · MARKET SCAN</span>
+        <h3>Competidores en español</h3>
+        <p>RA-MA y Paraninfo: la propuesta abandona el framing de “curso de ChatGPT” y se centra en ingeniería de sistemas de IA.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">PUBLISHER-SPECIFIC PACKS</p><h2>Dos rutas, dos formatos de adquisición.</h2></div>
+      <p>Springer Nature comienza con una Book Idea y posterior propuesta completa si existe interés. RA-MA publica un paquete inicial concreto; por ello CI ensambla sus dos capítulos muestra con índice, extensión y plazo en un único PDF controlado.</p>
+    </div>
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">SPRINGER NATURE</span><h3>Book Idea master</h3><p>Título, necesidad, público, USP, competencia, índice, muestras, extensión, calendario, companion assets y preguntas al editor.</p></article>
+      <article class="pattern-card"><span class="pattern-number">RA-MA</span><h3>Evaluation package</h3><p>Índice completo, dos capítulos, extensión y plazo, ensamblados automáticamente para generar el PDF de evaluación.</p></article>
+      <article class="pattern-card"><span class="pattern-number">CI GATE</span><h3>30 MB fail-closed</h3><p>El pipeline comprueba que el PDF RA-MA existe y pesa menos de 31.457.280 bytes antes de aceptar el cambio.</p></article>
     </div>
   </section>
 
@@ -74,14 +106,14 @@ const publicationTitle = new Map([
     <div class="card-grid">
       <article class="pattern-card"><span class="pattern-number">RA-MA</span><h3>Dato público preciso</h3><p>Índice completo, uno o dos capítulos, extensión y plazo; el formulario limita el PDF adjunto a 30 MB.</p></article>
       <article class="pattern-card"><span class="pattern-number">PARANINFO</span><h3>Confirmación editorial</h3><p>El encaje universitario y de Ciencias de la Computación es público, pero el número exacto de capítulos iniciales no se presupone.</p></article>
-      <article class="pattern-card"><span class="pattern-number">INTERNATIONAL</span><h3>Proposal first</h3><p>Springer Nature, CRC/T&F y Wiley-IEEE Press se tratan como rutas de adquisición diferenciadas, no como etiquetas intercambiables.</p></article>
+      <article class="pattern-card"><span class="pattern-number">RIGHTS</span><h3>Separación contractual</h3><p>Web, código, figuras, docencia, traducción/adaptación, repositorio y obras derivadas pasan por un gate específico antes de cualquier contrato.</p></article>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .publication-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
-  .publication-card { padding:1.35rem; border:1px solid var(--line); border-radius:18px; background:rgba(18,27,45,.78); }
+  .publication-card { display:block; padding:1.35rem; border:1px solid var(--line); border-radius:18px; background:rgba(18,27,45,.78); color:inherit; text-decoration:none; }
   .publication-card h3 { margin:.55rem 0; }
   .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:18px; }
   table { width:100%; border-collapse:collapse; min-width:850px; background:rgba(18,27,45,.72); }
