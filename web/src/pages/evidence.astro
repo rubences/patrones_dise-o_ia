@@ -1,4 +1,5 @@
 ---
+import { readFileSync } from 'node:fs';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -9,6 +10,13 @@ const partial = patterns.filter((p) => p.data.evidenceStatus === 'partially-veri
 const needsReview = patterns.filter((p) => p.data.evidenceStatus === 'needs-review').length;
 const withReferences = patterns.filter((p) => p.data.references.length > 0).length;
 const referenceCount = patterns.reduce((sum, p) => sum + p.data.references.length, 0);
+
+const evidenceMap = JSON.parse(readFileSync(new URL('../../../catalog/pattern-evidence.json', import.meta.url), 'utf8'));
+const referenceRegistry = JSON.parse(readFileSync(new URL('../../../catalog/references.json', import.meta.url), 'utf8'));
+const primaryIds = new Set<number>(evidenceMap.patterns.map((entry: { patternId: number }) => entry.patternId));
+const referenceById = new Map(referenceRegistry.references.map((reference: { id: string }) => [reference.id, reference]));
+const primaryEvidenceCount = primaryIds.size;
+const primaryReferences = referenceRegistry.references.length;
 
 const familyLabels: Record<string, string> = {
   foundations: 'Fundamentos',
@@ -33,7 +41,14 @@ const families = Object.entries(familyLabels).map(([id, label]) => {
     partial: group.filter((p) => p.data.evidenceStatus === 'partially-verified').length,
     needsReview: group.filter((p) => p.data.evidenceStatus === 'needs-review').length,
     references: group.filter((p) => p.data.references.length > 0).length,
+    primary: group.filter((p) => primaryIds.has(p.data.patternId)).length,
   };
+});
+
+const primaryRows = evidenceMap.patterns.map((entry: { patternId: number; references: string[]; scopeNote: string }) => {
+  const pattern = patterns.find((candidate) => candidate.data.patternId === entry.patternId);
+  const refs = entry.references.map((id) => referenceById.get(id)).filter(Boolean) as Array<{ id: string; title: string; authors: string; year: number; venue: string; url: string }>;
+  return { entry, pattern, refs };
 });
 ---
 
@@ -41,7 +56,7 @@ const families = Object.entries(familyLabels).map(([id, label]) => {
   <section class="catalog-hero">
     <p class="eyebrow">Evidence Pack</p>
     <h1>Evidencia visible, no implícita.</h1>
-    <p class="lead">El catálogo distingue implementación, madurez y evidencia. Una ficha sin referencias se muestra como deuda editorial; no se rellena con una cifra o una fuente inventada.</p>
+    <p class="lead">El catálogo distingue implementación, madurez, referencias editoriales y evidencia primaria verificada. Una ficha sin fuente permanece como deuda: no se rellena con una cifra, un DOI o una atribución inventada.</p>
   </section>
 
   <section class="section">
@@ -50,20 +65,43 @@ const families = Object.entries(familyLabels).map(([id, label]) => {
       <div class="stat"><strong>{verified}</strong><span>verified</span></div>
       <div class="stat"><strong>{partial}</strong><span>partially verified</span></div>
       <div class="stat"><strong>{needsReview}</strong><span>needs review</span></div>
-      <div class="stat"><strong>{withReferences}</strong><span>fichas con referencias</span></div>
-      <div class="stat"><strong>{referenceCount}</strong><span>referencias declaradas</span></div>
+      <div class="stat"><strong>{withReferences}</strong><span>fichas con refs. editoriales</span></div>
+      <div class="stat"><strong>{referenceCount}</strong><span>refs. de frontmatter</span></div>
+      <div class="stat"><strong>{primaryEvidenceCount}</strong><span>patrones con fuente primaria verificada</span></div>
+      <div class="stat"><strong>{primaryReferences}</strong><span>fuentes del registro primario</span></div>
     </div>
   </section>
 
   <section class="section">
     <div class="section-heading">
       <div><p class="eyebrow">Cobertura</p><h2>Estado por macrofamilia.</h2></div>
-      <p>Estas cifras describen el corpus actual. No convierten una etiqueta editorial en una certificación de seguridad o rendimiento.</p>
+      <p>Las etiquetas editoriales y la evidencia primaria se muestran por separado. Un paper relacionado no certifica seguridad, rendimiento ni equivalencia exacta de una implementación.</p>
     </div>
     <div class="evidence-table-wrap">
       <table class="evidence-table">
-        <thead><tr><th>Familia</th><th>Total</th><th>Verified</th><th>Partial</th><th>Review</th><th>Con refs.</th></tr></thead>
-        <tbody>{families.map((family) => <tr><td>{family.label}</td><td>{family.total}</td><td>{family.verified}</td><td>{family.partial}</td><td>{family.needsReview}</td><td>{family.references}</td></tr>)}</tbody>
+        <thead><tr><th>Familia</th><th>Total</th><th>Verified</th><th>Partial</th><th>Review</th><th>Con refs.</th><th>Primaria</th></tr></thead>
+        <tbody>{families.map((family) => <tr><td>{family.label}</td><td>{family.total}</td><td>{family.verified}</td><td>{family.partial}</td><td>{family.needsReview}</td><td>{family.references}</td><td>{family.primary}</td></tr>)}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">Primary sources · P6</p><h2>Primer bloque de evidencia verificada.</h2></div>
+      <p>Cada asociación conserva una nota de alcance para evitar extrapolar resultados de benchmark fuera de la tarea, modelo o procedimiento estudiado.</p>
+    </div>
+    <div class="evidence-table-wrap">
+      <table class="evidence-table">
+        <thead><tr><th>Patrón</th><th>Fuente primaria / estándar</th><th>Alcance</th></tr></thead>
+        <tbody>
+          {primaryRows.map(({ entry, pattern, refs }) => (
+            <tr>
+              <td>{pattern ? <a href={`${import.meta.env.BASE_URL}patterns/${pattern.data.slug}/`}>{String(entry.patternId).padStart(3, '0')} · {pattern.data.title}</a> : entry.patternId}</td>
+              <td>{refs.map((reference) => <div><a href={reference.url}>{reference.authors} ({reference.year}) · {reference.title}</a><br /><small>{reference.venue}</small></div>)}</td>
+              <td>{entry.scopeNote}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   </section>
@@ -71,16 +109,17 @@ const families = Object.entries(familyLabels).map(([id, label]) => {
   <section class="section">
     <div class="card-grid">
       <article class="pattern-card"><span class="pattern-number">REPRODUCIBLE</span><h3>Hash del corpus</h3><p>El pipeline CI genera SHA-256 del conjunto de las 102 fichas y del manuscrito ensamblado.</p></article>
-      <article class="pattern-card"><span class="pattern-number">FAIL CLOSED</span><h3>Ausencia ≠ evidencia</h3><p>Los hardenings P0–P2 eliminan defaults favorables cuando falta una medición válida.</p></article>
-      <article class="pattern-card"><span class="pattern-number">TRACEABLE</span><h3>Fuente única</h3><p>Web, Evidence Pack y libro se construyen desde el mismo Markdown canónico.</p></article>
+      <article class="pattern-card"><span class="pattern-number">FAIL CLOSED</span><h3>Ausencia ≠ evidencia</h3><p>Los hardenings y el registro P6 mantienen explícita la ausencia de medición o fuente primaria.</p></article>
+      <article class="pattern-card"><span class="pattern-number">TRACEABLE</span><h3>Registro central</h3><p>Libro, Evidence Pack y esta página resuelven las fuentes verificadas desde el mismo registro versionado.</p></article>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .evidence-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: rgba(18,27,45,.8); }
-  .evidence-table { width: 100%; border-collapse: collapse; min-width: 720px; }
-  .evidence-table th, .evidence-table td { padding: .95rem 1rem; border-bottom: 1px solid var(--line); text-align: left; }
+  .evidence-table { width: 100%; border-collapse: collapse; min-width: 820px; }
+  .evidence-table th, .evidence-table td { padding: .95rem 1rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
   .evidence-table th { color: var(--accent-2); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
   .evidence-table td:not(:first-child) { font-variant-numeric: tabular-nums; }
+  .evidence-table small { color: var(--muted); }
 </style>
