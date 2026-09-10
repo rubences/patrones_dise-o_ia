@@ -1,7 +1,23 @@
 ---
-import { readFileSync } from 'node:fs';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import evidenceMapData from '../../../catalog/pattern-evidence.json';
+import referenceRegistryData from '../../../catalog/references.json';
+
+type PrimaryReference = {
+  id: string;
+  title: string;
+  authors: string;
+  year: number;
+  venue: string;
+  url: string;
+};
+
+type EvidenceEntry = {
+  patternId: number;
+  references: string[];
+  scopeNote: string;
+};
 
 const patterns = await getCollection('patterns');
 const total = patterns.length;
@@ -11,12 +27,12 @@ const needsReview = patterns.filter((p) => p.data.evidenceStatus === 'needs-revi
 const withReferences = patterns.filter((p) => p.data.references.length > 0).length;
 const referenceCount = patterns.reduce((sum, p) => sum + p.data.references.length, 0);
 
-const evidenceMap = JSON.parse(readFileSync(new URL('../../../catalog/pattern-evidence.json', import.meta.url), 'utf8'));
-const referenceRegistry = JSON.parse(readFileSync(new URL('../../../catalog/references.json', import.meta.url), 'utf8'));
-const primaryIds = new Set<number>(evidenceMap.patterns.map((entry: { patternId: number }) => entry.patternId));
-const referenceById = new Map(referenceRegistry.references.map((reference: { id: string }) => [reference.id, reference]));
+const evidenceEntries = evidenceMapData.patterns as EvidenceEntry[];
+const primaryReferenceRegistry = referenceRegistryData.references as PrimaryReference[];
+const primaryIds = new Set<number>(evidenceEntries.map((entry) => entry.patternId));
+const referenceById = new Map<string, PrimaryReference>(primaryReferenceRegistry.map((reference) => [reference.id, reference]));
 const primaryEvidenceCount = primaryIds.size;
-const primaryReferences = referenceRegistry.references.length;
+const primaryReferences = primaryReferenceRegistry.length;
 
 const familyLabels: Record<string, string> = {
   foundations: 'Fundamentos',
@@ -45,9 +61,12 @@ const families = Object.entries(familyLabels).map(([id, label]) => {
   };
 });
 
-const primaryRows = evidenceMap.patterns.map((entry: { patternId: number; references: string[]; scopeNote: string }) => {
+const primaryRows = evidenceEntries.map((entry) => {
   const pattern = patterns.find((candidate) => candidate.data.patternId === entry.patternId);
-  const refs = entry.references.map((id) => referenceById.get(id)).filter(Boolean) as Array<{ id: string; title: string; authors: string; year: number; venue: string; url: string }>;
+  const refs = entry.references.flatMap((id) => {
+    const reference = referenceById.get(id);
+    return reference ? [reference] : [];
+  });
   return { entry, pattern, refs };
 });
 ---
