@@ -1,0 +1,96 @@
+name: Publish versioned book release
+
+on:
+  push:
+    tags:
+      - 'book-v*'
+
+permissions:
+  contents: write
+
+env:
+  QUARTO_VERSION: '1.10.18'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: ${{ env.QUARTO_VERSION }}
+
+      - name: Pin reproducibility epoch to tagged commit
+        run: echo "SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)" >> "$GITHUB_ENV"
+
+      - name: Validate editorial catalog
+        run: node scripts/validate-editorial.mjs
+
+      - name: Build reproducible evidence pack
+        run: node scripts/build-evidence-pack.mjs
+
+      - name: Assemble canonical book manuscript
+        run: node scripts/build-book.mjs
+
+      - name: Render HTML EPUB and PDF
+        run: quarto render dist/book/patrones-ia-manuscript.md
+
+      - name: Build distribution manifest and release notes
+        run: |
+          node scripts/build-distribution-manifest.mjs
+          node scripts/build-release-notes.mjs
+
+      - name: Verify release bundle
+        run: |
+          test -s dist/book/patrones-ia-manuscript.md
+          test -s dist/book/patrones-ia-manuscript.html
+          test -s dist/book/patrones-ia-manuscript.epub
+          test -s dist/book/patrones-ia-manuscript.pdf
+          test -s dist/book/manifest.json
+          test -s dist/book/distribution-manifest.json
+          test -s dist/book/RELEASE_NOTES.md
+          test -s dist/evidence/evidence-pack.json
+          test -s dist/evidence/EVIDENCE_REPORT.md
+          node -e "const m=require('./dist/book/distribution-manifest.json'); if(m.patternCount!==102||m.familyCount!==10||m.artifacts.length!==3) process.exit(1)"
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Run hardening regression tests
+        run: npx --yes tsx@4.20.6 --test tests/hardening/*.test.ts
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="$GITHUB_REF_NAME"
+          title="Patrones IA ${tag}"
+          files=(
+            dist/book/patrones-ia-manuscript.md
+            dist/book/patrones-ia-manuscript.html
+            dist/book/patrones-ia-manuscript.epub
+            dist/book/patrones-ia-manuscript.pdf
+            dist/book/manifest.json
+            dist/book/distribution-manifest.json
+            dist/book/RELEASE_NOTES.md
+            dist/evidence/evidence-pack.json
+            dist/evidence/EVIDENCE_REPORT.md
+          )
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "${files[@]}" --clobber
+            gh release edit "$tag" --title "$title" --notes-file dist/book/RELEASE_NOTES.md
+          else
+            gh release create "$tag" "${files[@]}" --title "$title" --notes-file dist/book/RELEASE_NOTES.md --verify-tag
+          fi
