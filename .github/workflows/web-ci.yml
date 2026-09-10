@@ -13,6 +13,7 @@ on:
       - 'package-lock.json'
       - 'web/**'
       - '.github/workflows/web-ci.yml'
+      - '.github/workflows/release-book.yml'
   push:
     branches: [main]
     paths:
@@ -26,6 +27,7 @@ on:
       - 'package-lock.json'
       - 'web/**'
       - '.github/workflows/web-ci.yml'
+      - '.github/workflows/release-book.yml'
   workflow_dispatch:
 
 env:
@@ -60,8 +62,10 @@ jobs:
       - name: Render distributable edition
         run: quarto render dist/book/patrones-ia-manuscript.md
 
-      - name: Build distribution manifest
-        run: node scripts/build-distribution-manifest.mjs
+      - name: Build distribution manifest and release notes
+        run: |
+          node scripts/build-distribution-manifest.mjs
+          node scripts/build-release-notes.mjs ci-${{ github.sha }}
 
       - name: Verify publication artifacts
         run: |
@@ -73,11 +77,14 @@ jobs:
           test -s dist/book/patrones-ia-manuscript.epub
           test -s dist/book/patrones-ia-manuscript.pdf
           test -s dist/book/distribution-manifest.json
+          test -s dist/book/RELEASE_NOTES.md
+          grep -q 'Corpus SHA-256' dist/book/RELEASE_NOTES.md
+          grep -q 'Manuscrito SHA-256' dist/book/RELEASE_NOTES.md
           node -e "const m=require('./dist/book/manifest.json'); if(m.patternCount!==102||m.familyCount!==10) process.exit(1)"
           node -e "const m=require('./dist/book/distribution-manifest.json'); if(m.patternCount!==102||m.familyCount!==10||m.artifacts.length!==3) process.exit(1)"
 
       - name: Install root dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run hardening regression tests
         run: npx --yes tsx@4.20.6 --test tests/hardening/*.test.ts
@@ -101,6 +108,7 @@ jobs:
             dist/book/patrones-ia-manuscript.pdf
             dist/book/manifest.json
             dist/book/distribution-manifest.json
+            dist/book/RELEASE_NOTES.md
             dist/evidence/evidence-pack.json
             dist/evidence/EVIDENCE_REPORT.md
           if-no-files-found: error
