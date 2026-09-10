@@ -11,6 +11,11 @@ const base = import.meta.env.BASE_URL;
     <p class="eyebrow">PUBLISH · TWO DISTINCT WORKS</p>
     <h1>Un corpus técnico. Dos obras editoriales.</h1>
     <p class="lead">La web y el repositorio mantienen la referencia canónica de 102 patrones. Sobre esa base se desarrollan una monografía internacional de investigación en inglés y un manual universitario práctico en español. No son traducciones: comparten sustrato técnico, no manuscrito narrativo.</p>
+    <div class="actions">
+      <a class="button primary" href={`${base}publications/readiness/`}>Preparación editorial</a>
+      <a class="button" href={`${base}book/`}>Edición de referencia</a>
+      <a class="button" href={`${base}evidence/`}>Evidence Pack</a>
+    </div>
   </section>
 
   <section class="section publication-grid">
@@ -19,7 +24,7 @@ const base = import.meta.env.BASE_URL;
       <h2>{research.title}</h2>
       <p class="subtitle">{research.subtitle}</p>
       <p>{research.distinctiveContribution}</p>
-      <div class="meta-row"><span>{research.chapters.length} capítulos</span><span>{research.status}</span></div>
+      <div class="meta-row"><span>{research.chapters.length} capítulos</span><span>{research.submissionReadiness.stage}</span></div>
     </a>
 
     <a class="publication-card" href={`${base}publications/teaching-manual/`}>
@@ -27,7 +32,7 @@ const base = import.meta.env.BASE_URL;
       <h2>{teaching.title}</h2>
       <p class="subtitle">{teaching.subtitle}</p>
       <p>{teaching.distinctiveContribution}</p>
-      <div class="meta-row"><span>{teaching.chapters.length} módulos</span><span>{teaching.status}</span></div>
+      <div class="meta-row"><span>{teaching.chapters.length} módulos</span><span>{teaching.submissionReadiness.stage}</span></div>
     </a>
   </section>
 
@@ -49,6 +54,7 @@ const base = import.meta.env.BASE_URL;
       <p>Cada contrato debe revisar expresamente traducción/adaptación, companion web, código, figuras, docencia, repositorio, embargo y obras derivadas. El proyecto no presupone una cesión estándar ni una puntuación automática en evaluación académica.</p>
     </div>
     <div class="actions">
+      <a class="button" href={`${base}publications/readiness/`}>Rutas editoriales verificadas</a>
       <a class="button" href={`${base}book/`}>Edición de referencia reproducible</a>
       <a class="button" href={`${base}evidence/`}>Evidence Pack</a>
       <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/tree/main/publications">Arquitectura editorial</a>
