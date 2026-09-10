@@ -210,6 +210,116 @@
       "url": "https://aclanthology.org/2024.eacl-demo.16/",
       "identifier": "DOI:10.18653/v1/2024.eacl-demo.16",
       "primary": true
+    },
+    {
+      "id": "madaan-2023-self-refine",
+      "type": "paper",
+      "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "authors": "Aman Madaan et al.",
+      "year": 2023,
+      "venue": "NeurIPS 2023",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/91edff07232fb1b55a505a9e9f6c0ff3-Abstract-Conference.html",
+      "identifier": "DOI:10.52202/075280-2019",
+      "primary": true
+    },
+    {
+      "id": "shazeer-2017-moe",
+      "type": "paper",
+      "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "authors": "Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc Le, Geoffrey Hinton, Jeff Dean",
+      "year": 2017,
+      "venue": "ICLR 2017",
+      "url": "https://research.google/pubs/outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer/",
+      "identifier": "arXiv:1701.06538",
+      "primary": true
+    },
+    {
+      "id": "chen-2023-frugalgpt",
+      "type": "paper",
+      "title": "FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance",
+      "authors": "Lingjiao Chen, Matei Zaharia, James Zou",
+      "year": 2023,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2305.05176",
+      "identifier": "arXiv:2305.05176",
+      "primary": true
+    },
+    {
+      "id": "jiang-2023-llmlingua",
+      "type": "paper",
+      "title": "LLMLingua: Compressing Prompts for Accelerated Inference of Large Language Models",
+      "authors": "Huiqiang Jiang, Qianhui Wu, Chin-Yew Lin, Yuqing Yang, Lili Qiu",
+      "year": 2023,
+      "venue": "EMNLP 2023",
+      "url": "https://aclanthology.org/2023.emnlp-main.825/",
+      "identifier": "DOI:10.18653/v1/2023.emnlp-main.825",
+      "primary": true
+    },
+    {
+      "id": "packer-2023-memgpt",
+      "type": "paper",
+      "title": "MemGPT: Towards LLMs as Operating Systems",
+      "authors": "Charles Packer, Sarah Wooders, Kevin Lin, Vivian Fang, Shishir G. Patil, Ion Stoica, Joseph E. Gonzalez",
+      "year": 2023,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2310.08560",
+      "identifier": "arXiv:2310.08560",
+      "primary": true
+    },
+    {
+      "id": "nist-sp-800-162-abac",
+      "type": "government-guidance",
+      "title": "Guide to Attribute Based Access Control (ABAC) Definition and Considerations",
+      "authors": "Vincent Hu, David Ferraiolo, Richard Kuhn, Adam Schnitzer, Kenneth Sandlin, Robert Miller, Karen Scarfone",
+      "year": 2014,
+      "venue": "NIST Special Publication 800-162, updated 2019",
+      "url": "https://csrc.nist.gov/pubs/sp/800/162/upd2/final",
+      "identifier": "DOI:10.6028/NIST.SP.800-162",
+      "primary": true
+    },
+    {
+      "id": "leviathan-2023-speculative-decoding",
+      "type": "paper",
+      "title": "Fast Inference from Transformers via Speculative Decoding",
+      "authors": "Yaniv Leviathan, Matan Kalman, Yossi Matias",
+      "year": 2023,
+      "venue": "ICML 2023",
+      "url": "https://proceedings.mlr.press/v202/leviathan23a.html",
+      "identifier": "PMLR:v202:leviathan23a",
+      "primary": true
+    },
+    {
+      "id": "ouyang-2022-instructgpt",
+      "type": "paper",
+      "title": "Training Language Models to Follow Instructions with Human Feedback",
+      "authors": "Long Ouyang et al.",
+      "year": 2022,
+      "venue": "NeurIPS 2022",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/b1efde53be364a73914f58805a001731-Abstract.html",
+      "identifier": "arXiv:2203.02155",
+      "primary": true
+    },
+    {
+      "id": "wang-2023-self-instruct",
+      "type": "paper",
+      "title": "Self-Instruct: Aligning Language Models with Self-Generated Instructions",
+      "authors": "Yizhong Wang, Yeganeh Kordi, Swaroop Mishra, Alisa Liu, Noah A. Smith, Daniel Khashabi, Hannaneh Hajishirzi",
+      "year": 2023,
+      "venue": "ACL 2023",
+      "url": "https://aclanthology.org/2023.acl-long.754/",
+      "identifier": "DOI:10.18653/v1/2023.acl-long.754",
+      "primary": true
+    },
+    {
+      "id": "madry-2018-adversarial-training",
+      "type": "paper",
+      "title": "Towards Deep Learning Models Resistant to Adversarial Attacks",
+      "authors": "Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, Adrian Vladu",
+      "year": 2018,
+      "venue": "ICLR 2018",
+      "url": "https://openreview.net/forum?id=rJzIBfZAb",
+      "identifier": "arXiv:1706.06083",
+      "primary": true
     }
   ]
 }
