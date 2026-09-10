@@ -53,6 +53,9 @@ jobs:
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
 
+      - name: Validate primary evidence registry
+        run: node scripts/validate-evidence-registry.mjs
+
       - name: Build reproducible evidence pack
         run: node scripts/build-evidence-pack.mjs
 
@@ -80,7 +83,8 @@ jobs:
           test -s dist/book/RELEASE_NOTES.md
           grep -q 'Corpus SHA-256' dist/book/RELEASE_NOTES.md
           grep -q 'Manuscrito SHA-256' dist/book/RELEASE_NOTES.md
-          node -e "const m=require('./dist/book/manifest.json'); if(m.patternCount!==102||m.familyCount!==10) process.exit(1)"
+          node -e "const m=require('./dist/book/manifest.json'); if(m.patternCount!==102||m.familyCount!==10||m.primaryEvidenceChapters!==10) process.exit(1)"
+          node -e "const e=require('./dist/evidence/evidence-pack.json'); if(e.summary.patternsWithPrimaryEvidence!==10||e.primaryRegistry.referenceCount!==10) process.exit(1)"
           node -e "const m=require('./dist/book/distribution-manifest.json'); if(m.patternCount!==102||m.familyCount!==10||m.artifacts.length!==3) process.exit(1)"
 
       - name: Install root dependencies
