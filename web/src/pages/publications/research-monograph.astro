@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import publication from '../../../../publications/research-monograph-en/publication.json';
+
+const uniquePatterns = new Set(publication.chapters.flatMap((chapter) => chapter.patternIds)).size;
+---
+
+<BaseLayout title={`${publication.title} — Patrones IA`} description={publication.subtitle}>
+  <section class="catalog-hero">
+    <p class="eyebrow">RESEARCH MONOGRAPH · EN · {publication.status}</p>
+    <h1>{publication.title}</h1>
+    <p class="lead">{publication.subtitle}</p>
+    <p>{publication.distinctiveContribution}</p>
+    <div class="actions">
+      <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/BOOK_PROPOSAL.md">Book Proposal</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/OUTLINE.md">Detailed outline</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="stat-grid">
+      <div class="stat"><strong>{publication.chapters.length}</strong><span>research chapters</span></div>
+      <div class="stat"><strong>{uniquePatterns}</strong><span>selected pattern IDs</span></div>
+      <div class="stat"><strong>EN</strong><span>manuscript language</span></div>
+      <div class="stat"><strong>Independent</strong><span>not a translation</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">THESIS</p><h2>From model behaviour to system architecture.</h2></div>
+      <p>The monograph argues that AI-intensive systems need composable architectural patterns connecting probabilistic behaviour to deterministic controls, distributed execution, evidence, security and resilience.</p>
+    </div>
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">AGENTIC</span><h3>Control and MCP</h3><p>Orchestration, tools, protocol boundaries, validation, capability discovery and sandboxing.</p></article>
+      <article class="pattern-card"><span class="pattern-number">DEPENDABILITY</span><h3>Reliable and secure AI</h3><p>Failure containment, recovery, authorization, adversarial testing, observability and semantic failure.</p></article>
+      <article class="pattern-card"><span class="pattern-number">DISTRIBUTED</span><h3>Edge–Mesh–Cloud</h3><p>Original case studies for distributed placement, coordination, graceful degradation and high-dependability environments.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">PROPOSED CONTENTS</p><h2>12 chapters organized by research questions.</h2></div>
+      <p>The 102-pattern website remains the encyclopedic reference. The monograph selects and composes patterns to support a research argument.</p>
+    </div>
+    <div class="chapter-list">
+      {publication.chapters.map((chapter) => (
+        <article class="chapter-row">
+          <span>{String(chapter.number).padStart(2, '0')}</span>
+          <div><h3>{chapter.title}</h3><p>{chapter.originalContribution}</p><small>Pattern IDs: {chapter.patternIds.join(', ')}</small></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">EDITORIAL ROUTES</p><h2>Candidates, not promises.</h2></div>
+      <p>Series and imprint will be selected by editorial fit, peer-review process, rights, audience and distribution. No historical publisher ranking is treated as a guarantee.</p>
+    </div>
+    <div class="tags">{publication.publisherCandidates.map((publisher) => <span class="tag">{publisher}</span>)}</div>
+  </section>
+</BaseLayout>
+
+<style>
+  .chapter-list { display: grid; gap: .8rem; }
+  .chapter-row { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: 16px; background: rgba(18,27,45,.7); }
+  .chapter-row > span { color: var(--accent-2); font-weight: 700; }
+  .chapter-row h3 { margin: 0 0 .35rem; }
+  .chapter-row p { margin: 0 0 .4rem; }
+  .chapter-row small { color: var(--muted); }
+</style>

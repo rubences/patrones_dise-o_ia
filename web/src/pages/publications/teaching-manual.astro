@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import publication from '../../../../publications/teaching-manual-es/publication.json';
+
+const uniquePatterns = new Set(publication.chapters.flatMap((chapter) => chapter.patternIds)).size;
+---
+
+<BaseLayout title={`${publication.title} — Patrones IA`} description={publication.subtitle}>
+  <section class="catalog-hero">
+    <p class="eyebrow">MANUAL UNIVERSITARIO · ES · {publication.status}</p>
+    <h1>{publication.title}</h1>
+    <p class="lead">{publication.subtitle}</p>
+    <p>{publication.distinctiveContribution}</p>
+    <div class="actions">
+      <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/PROPUESTA_EDITORIAL.md">Propuesta editorial</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/INDICE_Y_LABORATORIOS.md">Índice y laboratorios</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="stat-grid">
+      <div class="stat"><strong>{publication.chapters.length}</strong><span>módulos progresivos</span></div>
+      <div class="stat"><strong>{uniquePatterns}</strong><span>patrones seleccionados</span></div>
+      <div class="stat"><strong>ES</strong><span>idioma del manuscrito</span></div>
+      <div class="stat"><strong>Capstone</strong><span>proyecto integrador</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">METODOLOGÍA</p><h2>Aprender diseñando, rompiendo y evaluando sistemas.</h2></div>
+      <p>Cada módulo sigue una secuencia concepto → diseño → implementación → fallo → evaluación → reflexión. El catálogo web aporta la referencia completa; el manual aporta la ingeniería didáctica.</p>
+    </div>
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">BUILD</span><h3>Python + Docker</h3><p>Laboratorios reproducibles con APIs desacopladas del proveedor y servicios aislados.</p></article>
+      <article class="pattern-card"><span class="pattern-number">VISUALIZE</span><h3>n8n cuando aporta valor</h3><p>Workflows visuales para estudiar routing, herramientas, RAG y automatización sin sustituir la comprensión del código.</p></article>
+      <article class="pattern-card"><span class="pattern-number">ASSESS</span><h3>Rúbricas y evidencia</h3><p>Casos negativos, métricas, ADR, ejercicios, defensa y proyecto final en lugar de evaluar únicamente una demo positiva.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">PROGRAMA</p><h2>12 módulos orientados a competencias.</h2></div>
+      <p>El orden reduce la dependencia de herramientas concretas y lleva al alumnado desde contratos básicos hasta seguridad, observabilidad y producción.</p>
+    </div>
+    <div class="chapter-list">
+      {publication.chapters.map((chapter) => (
+        <article class="chapter-row">
+          <span>{String(chapter.number).padStart(2, '0')}</span>
+          <div><h3>{chapter.title}</h3><p>{chapter.originalContribution}</p><small>Patrones: {chapter.patternIds.join(', ')}</small></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">STACK</p><h2>Herramientas para aprender, no para encerrar el libro.</h2></div>
+      <p>Versiones de SDK, modelos, endpoints, imágenes y workflows se mantendrán en el companion site para que el texto impreso preserve vigencia.</p>
+    </div>
+    <div class="tags">{publication.technicalStack.map((item) => <span class="tag">{item}</span>)}</div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">RUTAS EDITORIALES</p><h2>Candidatos sujetos a encaje.</h2></div>
+      <p>La propuesta se adaptará a los requisitos vigentes de cada editorial y no se presentará como una traducción o réplica de la monografía inglesa.</p>
+    </div>
+    <div class="tags">{publication.publisherCandidates.map((publisher) => <span class="tag">{publisher}</span>)}</div>
+  </section>
+</BaseLayout>
+
+<style>
+  .chapter-list { display: grid; gap: .8rem; }
+  .chapter-row { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: 16px; background: rgba(18,27,45,.7); }
+  .chapter-row > span { color: var(--accent-2); font-weight: 700; }
+  .chapter-row h3 { margin: 0 0 .35rem; }
+  .chapter-row p { margin: 0 0 .4rem; }
+  .chapter-row small { color: var(--muted); }
+</style>

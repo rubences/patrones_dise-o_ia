@@ -1,4 +1,4 @@
-name: Publish versioned book release
+name: Publish versioned reference book release
 
 on:
   push:
@@ -35,13 +35,16 @@ jobs:
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
 
+      - name: Validate dual publication architecture
+        run: node scripts/validate-publications.mjs
+
       - name: Validate primary evidence registry
         run: node scripts/validate-evidence-registry.mjs
 
       - name: Build reproducible evidence pack
         run: node scripts/build-evidence-pack.mjs
 
-      - name: Assemble canonical book manuscript
+      - name: Assemble canonical reference manuscript
         run: node scripts/build-book.mjs
 
       - name: Render HTML EPUB and PDF
@@ -79,7 +82,7 @@ jobs:
         run: |
           set -euo pipefail
           tag="$GITHUB_REF_NAME"
-          title="Patrones IA ${tag}"
+          title="Patrones IA Reference ${tag}"
           files=(
             dist/book/patrones-ia-manuscript.md
             dist/book/patrones-ia-manuscript.html

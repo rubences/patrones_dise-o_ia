@@ -6,6 +6,7 @@ on:
       - 'catalog/**'
       - 'content/**'
       - 'book/**'
+      - 'publications/**'
       - 'scripts/**'
       - 'src/pattern_*.ts'
       - 'tests/**'
@@ -20,6 +21,7 @@ on:
       - 'catalog/**'
       - 'content/**'
       - 'book/**'
+      - 'publications/**'
       - 'scripts/**'
       - 'src/pattern_*.ts'
       - 'tests/**'
@@ -53,16 +55,19 @@ jobs:
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
 
+      - name: Validate dual publication architecture
+        run: node scripts/validate-publications.mjs
+
       - name: Validate primary evidence registry
         run: node scripts/validate-evidence-registry.mjs
 
       - name: Build reproducible evidence pack
         run: node scripts/build-evidence-pack.mjs
 
-      - name: Assemble canonical book manuscript
+      - name: Assemble canonical reference manuscript
         run: node scripts/build-book.mjs
 
-      - name: Render distributable edition
+      - name: Render distributable reference edition
         run: quarto render dist/book/patrones-ia-manuscript.md
 
       - name: Build distribution manifest and release notes
@@ -70,7 +75,7 @@ jobs:
           node scripts/build-distribution-manifest.mjs
           node scripts/build-release-notes.mjs ci-${{ github.sha }}
 
-      - name: Verify publication artifacts
+      - name: Verify reference publication artifacts
         run: |
           test -s dist/evidence/evidence-pack.json
           test -s dist/evidence/EVIDENCE_REPORT.md
@@ -100,10 +105,10 @@ jobs:
         working-directory: web
         run: npm run build
 
-      - name: Upload publication bundle
+      - name: Upload reference publication bundle
         uses: actions/upload-artifact@v7
         with:
-          name: patrones-ia-publication-${{ github.sha }}
+          name: patrones-ia-reference-${{ github.sha }}
           path: |
             dist/book/patrones-ia-manuscript.md
             dist/book/patrones-ia-manuscript.html

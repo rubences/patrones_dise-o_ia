@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "research-monograph-en",
+  "title": "Architectural Design Patterns for Edge and Generative AI",
+  "subtitle": "A Pattern Language for Agentic, Distributed, Reliable and Secure AI Systems",
+  "language": "en",
+  "purpose": "research-monograph",
+  "status": "proposal-development",
+  "audience": ["AI researchers", "software architects", "distributed-systems engineers", "doctoral and postgraduate readers"],
+  "derivativePolicy": "independent-editorial-work",
+  "notATranslationOf": "teaching-manual-es",
+  "sharedSubstrate": ["catalog", "source-code", "evidence-registry", "taxonomy"],
+  "rightsReview": "contract-review-required",
+  "publisherCandidates": [
+    "Springer Nature Computer Science book program",
+    "CRC Press / Routledge",
+    "Wiley / IEEE Press route subject to editor fit"
+  ],
+  "distinctiveContribution": "A research-oriented pattern language that connects generative AI, agentic control, distributed execution, evidence, security, resilience and Edge-Mesh-Cloud deployment through composable architectural patterns and explicit validation boundaries.",
+  "chapters": [
+    {"number": 1, "title": "Pattern Languages for AI-Intensive Systems", "patternIds": [1,2,9,10,11,13,16], "originalContribution": "Defines an AI-specific architectural pattern language, quality attributes, composition rules and research questions beyond the implementation catalog."},
+    {"number": 2, "title": "Agentic Control and Orchestration", "patternIds": [1,2,3,4,5,6,27,28,54,60], "originalContribution": "Builds a control-plane model for agentic workflows and compares orchestration structures using explicit termination, evaluation and authority boundaries."},
+    {"number": 3, "title": "Tool Ecosystems and Model Context Protocol", "patternIds": [5,28,65,82,83,84,100,101], "originalContribution": "Studies tool ecosystems as capability boundaries and relates MCP discovery, validation, sandboxing and sanitization to secure agent architecture."},
+    {"number": 4, "title": "Knowledge and Context Architectures", "patternIds": [25,37,41,48,49,51,52,66,86,98], "originalContribution": "Introduces a compositional model for retrieval, grounding, compression, memory and attribution with measurable evidence and context-integrity properties."},
+    {"number": 5, "title": "Reasoning and Evaluator Architectures", "patternIds": [3,4,26,36,42,54,55,68,73], "originalContribution": "Separates internal reasoning techniques from externally verifiable evaluator loops and proposes validation boundaries for claims of improved reasoning."},
+    {"number": 6, "title": "Multi-Agent Coordination", "patternIds": [7,23,56,57,60,63,65,87], "originalContribution": "Develops coordination topologies, delegation contracts and shared-state models for multi-agent systems, including failure propagation and conflict handling."},
+    {"number": 7, "title": "Reliability and Resilience", "patternIds": [44,45,46,47,58,81,85,90,93,94], "originalContribution": "Adapts distributed-systems resilience patterns to probabilistic AI components and defines failure containment, replay, rollback and recovery semantics."},
+    {"number": 8, "title": "Security and Safety by Architecture", "patternIds": [53,62,69,70,71,72,74,84,89,100,101,102], "originalContribution": "Treats model output and tool use as untrusted inputs, composing preventive, detective and recovery controls into a defense-in-depth architecture."},
+    {"number": 9, "title": "Observability, Evaluation and FinOps", "patternIds": [73,75,76,77,78,80,88,92], "originalContribution": "Defines cross-layer measurements for quality, latency, tokens, cost, regressions and experiment integrity so architectural choices can be falsified and compared."},
+    {"number": 10, "title": "Edge-Mesh-Cloud AI Architectures", "patternIds": [2,7,38,39,45,46,56,65,77,81,88,93,94], "originalContribution": "Presents an original Edge-Mesh-Cloud composition model for placement, coordination, observability and graceful degradation under latency and resource constraints."},
+    {"number": 11, "title": "High-Dependability Vehicular and C-V2X Systems", "patternIds": [7,45,46,47,57,65,72,77,85,90,94], "originalContribution": "Uses vehicular and C-V2X scenarios as a planned original research exemplar for latency, trust, delegation, recovery and distributed decision making."},
+    {"number": 12, "title": "Empirical Validation and Research Agenda", "patternIds": [42,43,73,74,75,76,77,99,102], "originalContribution": "Defines benchmark design, ablations, adversarial evaluation, threats to validity and a reproducible research agenda for pattern-level and composition-level evidence."}
+  ]
+}
