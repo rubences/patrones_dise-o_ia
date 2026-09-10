@@ -3,17 +3,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import publication from '../../../../publications/teaching-manual-es/publication.json';
 
 const uniquePatterns = new Set(publication.chapters.flatMap((chapter) => chapter.patternIds)).size;
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={`${publication.title} — Patrones IA`} description={publication.subtitle}>
   <section class="catalog-hero">
-    <p class="eyebrow">MANUAL UNIVERSITARIO · ES · {publication.status}</p>
+    <p class="eyebrow">MANUAL UNIVERSITARIO · ES · {publication.submissionReadiness.stage}</p>
     <h1>{publication.title}</h1>
     <p class="lead">{publication.subtitle}</p>
     <p>{publication.distinctiveContribution}</p>
     <div class="actions">
       <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/PROPUESTA_EDITORIAL.md">Propuesta editorial</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/SUBMISSION_DOSSIER.md">Dossier de envío</a>
       <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/INDICE_Y_LABORATORIOS.md">Índice y laboratorios</a>
+      <a class="button" href={`${base}publications/readiness/`}>Preparación editorial</a>
     </div>
   </section>
 
@@ -21,7 +24,7 @@ const uniquePatterns = new Set(publication.chapters.flatMap((chapter) => chapter
     <div class="stat-grid">
       <div class="stat"><strong>{publication.chapters.length}</strong><span>módulos progresivos</span></div>
       <div class="stat"><strong>{uniquePatterns}</strong><span>patrones seleccionados</span></div>
-      <div class="stat"><strong>ES</strong><span>idioma del manuscrito</span></div>
+      <div class="stat"><strong>{publication.submissionReadiness.sampleChapters.length}</strong><span>capítulos muestra preparados</span></div>
       <div class="stat"><strong>Capstone</strong><span>proyecto integrador</span></div>
     </div>
   </section>
@@ -35,6 +38,17 @@ const uniquePatterns = new Set(publication.chapters.flatMap((chapter) => chapter
       <article class="pattern-card"><span class="pattern-number">BUILD</span><h3>Python + Docker</h3><p>Laboratorios reproducibles con APIs desacopladas del proveedor y servicios aislados.</p></article>
       <article class="pattern-card"><span class="pattern-number">VISUALIZE</span><h3>n8n cuando aporta valor</h3><p>Workflows visuales para estudiar routing, herramientas, RAG y automatización sin sustituir la comprensión del código.</p></article>
       <article class="pattern-card"><span class="pattern-number">ASSESS</span><h3>Rúbricas y evidencia</h3><p>Casos negativos, métricas, ADR, ejercicios, defensa y proyecto final en lugar de evaluar únicamente una demo positiva.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">CAPÍTULOS MUESTRA</p><h2>Dos módulos completos para evaluación editorial.</h2></div>
+      <p>RA-MA pide públicamente uno o dos capítulos. Preparamos dos para poder seleccionar el paquete final; Paraninfo se contactará sin inventar un número de muestras no publicado.</p>
+    </div>
+    <div class="card-grid">
+      <a class="pattern-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/samples/04-tool-use-function-calling.md"><span class="pattern-number">MUESTRA 04</span><h3>Tool Use y Function Calling</h3><p>Contratos, allowlists, validación, efectos laterales, saneamiento, auditoría, casos adversariales y rúbrica.</p></a>
+      <a class="pattern-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/samples/05-rag-extremo-a-extremo.md"><span class="pattern-number">MUESTRA 05</span><h3>RAG de extremo a extremo</h3><p>Corpus, recuperación, ranking, grounding, citas, métricas, fallos provocados, evaluación y rúbrica.</p></a>
     </div>
   </section>
 
