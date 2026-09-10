@@ -58,6 +58,9 @@ jobs:
       - name: Validate dual publication architecture
         run: node scripts/validate-publications.mjs
 
+      - name: Validate submission readiness gates
+        run: node scripts/validate-submission-readiness.mjs
+
       - name: Validate primary evidence registry
         run: node scripts/validate-evidence-registry.mjs
 
@@ -97,15 +100,18 @@ jobs:
       - name: Render RA-MA evaluation package
         run: quarto render dist/submissions/ra-ma/ra-ma-evaluation-package.md --to typst
 
-      - name: Verify publisher-specific submission packages
+      - name: Verify publisher-specific submission packages and readiness report
         run: |
           test -s dist/submissions/manifest.json
+          test -s dist/submissions/submission-readiness-report.json
+          test -s dist/submissions/SUBMISSION_READINESS_REPORT.md
           test -s dist/submissions/springer-nature/springer-book-idea-master.md
           test -s dist/submissions/ra-ma/ra-ma-evaluation-package.md
           test -s dist/submissions/ra-ma/ra-ma-evaluation-package.pdf
           pdf_bytes=$(stat -c%s dist/submissions/ra-ma/ra-ma-evaluation-package.pdf)
           test "$pdf_bytes" -lt 31457280
-          node -e "const m=require('./dist/submissions/manifest.json'); const r=m.packages.find(x=>x.publisher==='RA-MA'); const s=m.packages.find(x=>x.publisher==='Springer Nature'); if(!r||!s||r.sampleCount!==2||s.sampleCount!==2||r.maxPdfBytes!==31457280) process.exit(1)"
+          node -e "const m=require('./dist/submissions/manifest.json'); const r=m.packages.find(x=>x.publisher==='RA-MA'); const s=m.packages.find(x=>x.publisher==='Springer Nature'); if(m.schemaVersion!==2||!r||!s||r.sampleCount!==2||s.sampleCount!==2||r.maxPdfBytes!==31457280) process.exit(1)"
+          node -e "const r=require('./dist/submissions/submission-readiness-report.json'); if(r.schemaVersion!==1||r.publicSafe!==true||r.policy!=='fail-closed'||r.publications.length!==2) process.exit(1)"
           echo "RA-MA PDF bytes: $pdf_bytes / 31457280"
 
       - name: Install root dependencies
@@ -137,6 +143,8 @@ jobs:
             dist/evidence/evidence-pack.json
             dist/evidence/EVIDENCE_REPORT.md
             dist/submissions/manifest.json
+            dist/submissions/submission-readiness-report.json
+            dist/submissions/SUBMISSION_READINESS_REPORT.md
             dist/submissions/springer-nature/springer-book-idea-master.md
             dist/submissions/ra-ma/ra-ma-evaluation-package.md
             dist/submissions/ra-ma/ra-ma-evaluation-package.pdf

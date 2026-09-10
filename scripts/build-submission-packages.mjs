@@ -11,11 +11,16 @@ mkdirSync(raMaOut, { recursive: true });
 mkdirSync(springerOut, { recursive: true });
 
 const read = (...parts) => readFileSync(join(publicationsRoot, ...parts), 'utf8').trim();
+const readJson = (...parts) => JSON.parse(read(...parts));
 const sha256 = (text) => createHash('sha256').update(text).digest('hex');
 
-const teachingManifest = JSON.parse(read('teaching-manual-es', 'publication.json'));
-const researchManifest = JSON.parse(read('research-monograph-en', 'publication.json'));
-const publisherRegistry = JSON.parse(read('common', 'publisher-submission-requirements.json'));
+const teachingManifest = readJson('teaching-manual-es', 'publication.json');
+const researchManifest = readJson('research-monograph-en', 'publication.json');
+const publisherRegistry = readJson('common', 'publisher-submission-requirements.json');
+const blockerRegistry = readJson('common', 'submission-blockers.json');
+const figureLedger = readJson('common', 'FIGURE_RIGHTS_LEDGER.json');
+const springerFields = readJson('research-monograph-en', 'submissions', 'springer-nature', 'form-fields.json');
+const raMaFields = readJson('teaching-manual-es', 'submissions', 'ra-ma', 'form-fields.json');
 
 const raMaRequirements = publisherRegistry.publishers.find((publisher) => publisher.id === 'ra-ma');
 if (!raMaRequirements || raMaRequirements.sampleChapterRequirement !== '1-or-2-chapters') {
@@ -47,11 +52,79 @@ const springerMaster = `# Springer Nature — Book Idea submission master\n\n` +
 const springerMd = join(springerOut, 'springer-book-idea-master.md');
 writeFileSync(springerMd, springerMaster, 'utf8');
 
-const manifest = {
+const summarizeFields = (form) => ({
+  total: form.fields.length,
+  ready: form.fields.filter((field) => field.status === 'ready').length,
+  open: form.fields.filter((field) => field.status === 'open').length,
+  manualEntry: form.fields.filter((field) => field.status === 'manual-entry').length,
+});
+
+const buildReadiness = (publication, form) => {
+  const blockers = blockerRegistry.blockers.filter((blocker) => blocker.publicationId === publication.id && blocker.status === 'open');
+  const figures = figureLedger.figures.filter((figure) => figure.publicationIds.includes(publication.id));
+  return {
+    publicationId: publication.id,
+    stage: publication.submissionReadiness.stage,
+    blockers: {
+      totalOpen: blockers.length,
+      critical: blockers.filter((blocker) => blocker.severity === 'critical').length,
+      major: blockers.filter((blocker) => blocker.severity === 'major').length,
+      minor: blockers.filter((blocker) => blocker.severity === 'minor').length,
+      items: blockers.map(({ id, field, severity, resolutionCondition }) => ({ id, field, severity, resolutionCondition })),
+    },
+    formFields: summarizeFields(form),
+    figures: {
+      total: figures.length,
+      cleared: figures.filter((figure) => figure.status === 'cleared').length,
+      planned: figures.filter((figure) => figure.status === 'planned').length,
+      permissionRequired: figures.filter((figure) => figure.status === 'permission-required').length,
+    },
+    submissionReady: publication.submissionReadiness.stage === 'submission-ready' &&
+      blockers.every((blocker) => blocker.severity !== 'critical') &&
+      form.fields.every((field) => field.status !== 'open') &&
+      figures.every((figure) => figure.status === 'cleared'),
+  };
+};
+
+const readinessReport = {
   schemaVersion: 1,
   generatedAt: process.env.SOURCE_DATE_EPOCH ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString() : null,
   commitSha: process.env.GITHUB_SHA ?? null,
+  policy: 'fail-closed',
+  publicSafe: true,
+  publications: [
+    buildReadiness(researchManifest, springerFields),
+    buildReadiness(teachingManifest, raMaFields),
+  ],
+};
+writeFileSync(join(outRoot, 'submission-readiness-report.json'), JSON.stringify(readinessReport, null, 2) + '\n', 'utf8');
+
+const readinessMd = [
+  '# Submission Readiness Report',
+  '',
+  '> Generated from public-safe metadata. No private contact data is stored in this report.',
+  '',
+  ...readinessReport.publications.flatMap((entry) => [
+    `## ${entry.publicationId}`,
+    '',
+    `- Stage: **${entry.stage}**`,
+    `- Open blockers: ${entry.blockers.totalOpen} (critical ${entry.blockers.critical}, major ${entry.blockers.major}, minor ${entry.blockers.minor})`,
+    `- Form fields: ${entry.formFields.ready} ready · ${entry.formFields.open} open · ${entry.formFields.manualEntry} manual-private`,
+    `- Figures: ${entry.figures.cleared}/${entry.figures.total} cleared`,
+    `- Submission-ready gate: **${entry.submissionReady ? 'PASS' : 'BLOCKED'}**`,
+    '',
+    ...entry.blockers.items.map((blocker) => `- [${blocker.severity.toUpperCase()}] ${blocker.id} · ${blocker.field}: ${blocker.resolutionCondition}`),
+    '',
+  ]),
+].join('\n');
+writeFileSync(join(outRoot, 'SUBMISSION_READINESS_REPORT.md'), readinessMd + '\n', 'utf8');
+
+const manifest = {
+  schemaVersion: 2,
+  generatedAt: readinessReport.generatedAt,
+  commitSha: process.env.GITHUB_SHA ?? null,
   publisherRequirementsVerifiedOn: publisherRegistry.verifiedOn,
+  readinessReport: 'dist/submissions/submission-readiness-report.json',
   packages: [
     {
       publisher: 'RA-MA',
@@ -76,5 +149,8 @@ const manifest = {
 
 writeFileSync(join(outRoot, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', 'utf8');
 console.log(`Submission packages: ${manifest.packages.length}`);
+for (const entry of readinessReport.publications) {
+  console.log(`${entry.publicationId}: ${entry.stage} · critical blockers=${entry.blockers.critical} · fields ready/open/manual=${entry.formFields.ready}/${entry.formFields.open}/${entry.formFields.manualEntry}`);
+}
 console.log(`RA-MA: ${teachingSamples.length} samples · source ${manifest.packages[0].sourceSha256}`);
 console.log(`Springer Nature: book idea master · source ${manifest.packages[1].sourceSha256}`);

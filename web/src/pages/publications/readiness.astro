@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import requirements from '../../../../publications/common/publisher-submission-requirements.json';
+import blockers from '../../../../publications/common/submission-blockers.json';
+import figures from '../../../../publications/common/FIGURE_RIGHTS_LEDGER.json';
+import springerForm from '../../../../publications/research-monograph-en/submissions/springer-nature/form-fields.json';
+import raMaForm from '../../../../publications/teaching-manual-es/submissions/ra-ma/form-fields.json';
 import research from '../../../../publications/research-monograph-en/publication.json';
 import teaching from '../../../../publications/teaching-manual-es/publication.json';
 
@@ -9,17 +13,29 @@ const publicationTitle = new Map<string, string>([
   [research.id, research.title],
   [teaching.id, teaching.title],
 ]);
+const researchOpen = blockers.blockers.filter((item) => item.publicationId === research.id && item.status === 'open');
+const teachingOpen = blockers.blockers.filter((item) => item.publicationId === teaching.id && item.status === 'open');
+const researchCritical = researchOpen.filter((item) => item.severity === 'critical').length;
+const teachingCritical = teachingOpen.filter((item) => item.severity === 'critical').length;
+const researchReadyFields = springerForm.fields.filter((field) => field.status === 'ready').length;
+const researchOpenFields = springerForm.fields.filter((field) => field.status === 'open').length;
+const researchManualFields = springerForm.fields.filter((field) => field.status === 'manual-entry').length;
+const teachingReadyFields = raMaForm.fields.filter((field) => field.status === 'ready').length;
+const teachingOpenFields = raMaForm.fields.filter((field) => field.status === 'open').length;
+const teachingManualFields = raMaForm.fields.filter((field) => field.status === 'manual-entry').length;
+const researchFigures = figures.figures.filter((figure) => figure.publicationIds.includes(research.id));
+const teachingFigures = figures.figures.filter((figure) => figure.publicationIds.includes(teaching.id));
 ---
 
-<BaseLayout title="Preparación editorial — Patrones IA" description="Estado de preparación de las dos publicaciones y rutas editoriales verificadas.">
+<BaseLayout title="Preparación editorial — Patrones IA" description="Estado verificable de preparación de las dos publicaciones y rutas editoriales.">
   <section class="catalog-hero">
-    <p class="eyebrow">SUBMISSION READINESS · VERIFIED {requirements.verifiedOn}</p>
-    <h1>De la arquitectura editorial al paquete de adquisición.</h1>
-    <p class="lead">Las rutas de envío se versionan igual que el código. La fase actual añade posicionamiento competitivo, un master específico para Springer Nature y un paquete RA-MA que CI ensambla y limita automáticamente a menos de 30 MB.</p>
+    <p class="eyebrow">SUBMISSION READINESS · FAIL-CLOSED</p>
+    <h1>Preparados para hablar con editores. Todavía no declarados listos para enviar.</h1>
+    <p class="lead">La preparación editorial se trata ahora como un estado verificable. Los paquetes Springer y RA-MA existen, pero `submission-ready` permanece bloqueado hasta resolver hechos, derechos y compromisos que no deben inferirse ni publicarse automáticamente.</p>
     <div class="actions">
-      <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/submissions/springer-nature/BOOK_IDEA.md">Springer Book Idea</a>
-      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/submissions/ra-ma/PAQUETE_EVALUACION.md">Paquete RA-MA</a>
-      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/PUBLISHER_SUBMISSION_MATRIX.md">Matriz editorial</a>
+      <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/SUBMISSION_READINESS_POLICY.md">Política de readiness</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/SUBMISSION_DATA_POLICY.md">Política de datos</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/common/submission-blockers.json">Blockers</a>
       <a class="button" href={`${base}publications/`}>Volver a publicaciones</a>
     </div>
   </section>
@@ -29,7 +45,42 @@ const publicationTitle = new Map<string, string>([
       <div class="stat"><strong>2</strong><span>obras independientes</span></div>
       <div class="stat"><strong>{requirements.publishers.length}</strong><span>rutas editoriales verificadas</span></div>
       <div class="stat"><strong>4</strong><span>capítulos muestra preparados</span></div>
-      <div class="stat"><strong>2</strong><span>paquetes publisher-specific</span></div>
+      <div class="stat"><strong>{researchCritical + teachingCritical}</strong><span>blockers críticos abiertos</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">FAIL-CLOSED GATE</p><h2>“Submission-ready” exige evidencia, no una etiqueta.</h2></div>
+      <p>CI rechazará cualquier intento de marcar una obra como `submission-ready` si conserva blockers críticos, campos públicos abiertos o figuras del paquete sin derechos resueltos.</p>
+    </div>
+    <div class="publication-grid">
+      <article class="publication-card">
+        <span class="pattern-number">RESEARCH · EN · {research.submissionReadiness.stage}</span>
+        <h3>{research.title}</h3>
+        <p><strong>{researchCritical}</strong> blockers críticos · {researchOpen.length} blockers abiertos totales.</p>
+        <p>Formulario Springer: {researchReadyFields} ready · {researchOpenFields} open · {researchManualFields} manual-private.</p>
+        <p>Figuras: {researchFigures.filter((figure) => figure.status === 'cleared').length}/{researchFigures.length} cleared.</p>
+      </article>
+      <article class="publication-card">
+        <span class="pattern-number">TEACHING · ES · {teaching.submissionReadiness.stage}</span>
+        <h3>{teaching.title}</h3>
+        <p><strong>{teachingCritical}</strong> blockers críticos · {teachingOpen.length} blockers abiertos totales.</p>
+        <p>Formulario RA-MA: {teachingReadyFields} ready · {teachingOpenFields} open · {teachingManualFields} manual-private.</p>
+        <p>Figuras: {teachingFigures.filter((figure) => figure.status === 'cleared').length}/{teachingFigures.length} cleared.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">PRIVACY BY DESIGN</p><h2>Los datos privados no pertenecen al repositorio.</h2></div>
+      <p>Teléfono, dirección, firmas, documentación de identidad, datos fiscales/bancarios y contactos privados se representan únicamente como `manual-private`. Se introducirán en el formulario externo solo durante un envío expresamente autorizado.</p>
+    </div>
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">PUBLIC</span><h3>Versionable</h3><p>Título, sinopsis, índice, muestras, estado de derechos, requisitos editoriales y blockers descritos sin información sensible.</p></article>
+      <article class="pattern-card"><span class="pattern-number">MANUAL-PRIVATE</span><h3>Fuera de Git</h3><p>Datos personales requeridos por la editorial se completan manualmente en su plataforma; CI nunca los exige como contenido público.</p></article>
+      <article class="pattern-card"><span class="pattern-number">NO AUTO-SUBMIT</span><h3>Autorización explícita</h3><p>El pipeline puede construir y validar paquetes, pero nunca enviarlos, aceptar condiciones o cambiar a `submitted` por sí solo.</p></article>
     </div>
   </section>
 
@@ -39,74 +90,30 @@ const publicationTitle = new Map<string, string>([
       <p>El análisis 2026 identifica títulos actuales sobre agentic design patterns, LLM agents, reliability y distributed AI. La monografía se posiciona por pattern language, dependability, control determinista, Edge–Mesh–Cloud y validación experimental. El manual español se diferencia de libros centrados en ChatGPT por su estructura curricular, laboratorios, tests, seguridad y resiliencia.</p>
     </div>
     <div class="publication-grid">
-      <a class="publication-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/COMPETING_TITLES_2026.md">
-        <span class="pattern-number">RESEARCH · MARKET SCAN</span>
-        <h3>Competidores internacionales</h3>
-        <p>Comparación de títulos Springer/Apress 2025–2027 y reformulación del USP de la monografía.</p>
-      </a>
-      <a class="publication-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/COMPETING_TITLES_2026.md">
-        <span class="pattern-number">TEACHING · MARKET SCAN</span>
-        <h3>Competidores en español</h3>
-        <p>RA-MA y Paraninfo: la propuesta abandona el framing de “curso de ChatGPT” y se centra en ingeniería de sistemas de IA.</p>
-      </a>
+      <a class="publication-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/COMPETING_TITLES_2026.md"><span class="pattern-number">RESEARCH · MARKET SCAN</span><h3>Competidores internacionales</h3><p>Comparación de títulos Springer/Apress 2025–2027 y reformulación del USP de la monografía.</p></a>
+      <a class="publication-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/teaching-manual-es/COMPETING_TITLES_2026.md"><span class="pattern-number">TEACHING · MARKET SCAN</span><h3>Competidores en español</h3><p>RA-MA y Paraninfo: la propuesta se centra en ingeniería de sistemas de IA, no en un curso de uso de ChatGPT.</p></a>
     </div>
   </section>
 
   <section class="section">
     <div class="section-heading">
       <div><p class="eyebrow">PUBLISHER-SPECIFIC PACKS</p><h2>Dos rutas, dos formatos de adquisición.</h2></div>
-      <p>Springer Nature comienza con una Book Idea y posterior propuesta completa si existe interés. RA-MA publica un paquete inicial concreto; por ello CI ensambla sus dos capítulos muestra con índice, extensión y plazo en un único PDF controlado.</p>
+      <p>Springer Nature utiliza un Book Idea master; RA-MA dispone de un paquete de evaluación que CI ensambla y renderiza a PDF, comprobando automáticamente el límite de 30 MB.</p>
     </div>
     <div class="card-grid">
-      <article class="pattern-card"><span class="pattern-number">SPRINGER NATURE</span><h3>Book Idea master</h3><p>Título, necesidad, público, USP, competencia, índice, muestras, extensión, calendario, companion assets y preguntas al editor.</p></article>
-      <article class="pattern-card"><span class="pattern-number">RA-MA</span><h3>Evaluation package</h3><p>Índice completo, dos capítulos, extensión y plazo, ensamblados automáticamente para generar el PDF de evaluación.</p></article>
-      <article class="pattern-card"><span class="pattern-number">CI GATE</span><h3>30 MB fail-closed</h3><p>El pipeline comprueba que el PDF RA-MA existe y pesa menos de 31.457.280 bytes antes de aceptar el cambio.</p></article>
+      <article class="pattern-card"><span class="pattern-number">SPRINGER NATURE</span><h3>Book Idea master</h3><p>Título, necesidad, público, USP, competencia, índice, muestras, extensión, calendario y companion assets.</p></article>
+      <article class="pattern-card"><span class="pattern-number">RA-MA</span><h3>Evaluation package</h3><p>Índice completo, dos capítulos, extensión y plazo de planificación, ensamblados en un PDF de evaluación.</p></article>
+      <article class="pattern-card"><span class="pattern-number">RIGHTS LEDGER</span><h3>Figuras controladas</h3><p>Cada figura planificada declara origen, ownership, licencia/estado y si puede compartirse entre obras.</p></article>
     </div>
   </section>
 
   <section class="section">
-    <div class="section-heading">
-      <div><p class="eyebrow">PACK STATUS</p><h2>Ambos dossiers están listos para contacto editorial.</h2></div>
-      <p>“Editor-contact-ready” no significa manuscrito terminado: significa que título, pitch, audiencia, índice, dossier y capítulos muestra tienen una base coherente para iniciar el proceso de adquisición.</p>
-    </div>
-    <div class="publication-grid">
-      {[research, teaching].map((publication) => (
-        <article class="publication-card">
-          <span class="pattern-number">{publication.language.toUpperCase()} · {publication.submissionReadiness.stage}</span>
-          <h3>{publication.title}</h3>
-          <p>{publication.submissionReadiness.sampleChapters.length} capítulos muestra · requisitos revisados {publication.submissionReadiness.publisherRequirementsVerifiedOn}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-heading">
-      <div><p class="eyebrow">PUBLISHER ROUTES</p><h2>Qué sabemos públicamente y qué debe confirmarse.</h2></div>
-      <p>El registro se revalida antes de cada envío. La columna de muestra evita especialmente dos errores: imponer un número de capítulos que la editorial no publica o reutilizar instrucciones obsoletas.</p>
-    </div>
+    <div class="section-heading"><div><p class="eyebrow">PUBLISHER ROUTES</p><h2>Qué sabemos públicamente y qué debe confirmarse.</h2></div><p>Los requisitos se revalidan antes de cada envío. Lo que una editorial no publica se mantiene como confirmación pendiente.</p></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Editorial / ruta</th><th>Obra</th><th>Canal</th><th>Capítulos muestra</th></tr></thead>
-        <tbody>
-          {requirements.publishers.map((publisher) => (
-            <tr>
-              <td>{publisher.name}</td>
-              <td>{publicationTitle.get(publisher.targetPublication)}</td>
-              <td>{publisher.route}</td>
-              <td><code>{publisher.sampleChapterRequirement}</code></td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{requirements.publishers.map((publisher) => (<tr><td>{publisher.name}</td><td>{publicationTitle.get(publisher.targetPublication)}</td><td>{publisher.route}</td><td><code>{publisher.sampleChapterRequirement}</code></td></tr>))}</tbody>
       </table>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="card-grid">
-      <article class="pattern-card"><span class="pattern-number">RA-MA</span><h3>Dato público preciso</h3><p>Índice completo, uno o dos capítulos, extensión y plazo; el formulario limita el PDF adjunto a 30 MB.</p></article>
-      <article class="pattern-card"><span class="pattern-number">PARANINFO</span><h3>Confirmación editorial</h3><p>El encaje universitario y de Ciencias de la Computación es público, pero el número exacto de capítulos iniciales no se presupone.</p></article>
-      <article class="pattern-card"><span class="pattern-number">RIGHTS</span><h3>Separación contractual</h3><p>Web, código, figuras, docencia, traducción/adaptación, repositorio y obras derivadas pasan por un gate específico antes de cualquier contrato.</p></article>
     </div>
   </section>
 </BaseLayout>
