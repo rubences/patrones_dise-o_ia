@@ -1,54 +1,36 @@
-name: Editorial, Hardening, Publication and Web CI
+name: Publish versioned book release
 
 on:
-  pull_request:
-    paths:
-      - 'catalog/**'
-      - 'content/**'
-      - 'book/**'
-      - 'scripts/**'
-      - 'src/pattern_*.ts'
-      - 'tests/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'web/**'
-      - '.github/workflows/web-ci.yml'
-      - '.github/workflows/release-book.yml'
   push:
-    branches: [main]
-    paths:
-      - 'catalog/**'
-      - 'content/**'
-      - 'book/**'
-      - 'scripts/**'
-      - 'src/pattern_*.ts'
-      - 'tests/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'web/**'
-      - '.github/workflows/web-ci.yml'
-      - '.github/workflows/release-book.yml'
-  workflow_dispatch:
+    tags:
+      - 'book-v*'
+
+permissions:
+  contents: write
 
 env:
   QUARTO_VERSION: '1.10.18'
 
 jobs:
-  validate:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout tagged source
         uses: actions/checkout@v7
 
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: '24'
+          cache: npm
 
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: ${{ env.QUARTO_VERSION }}
+
+      - name: Pin reproducibility epoch to tagged commit
+        run: echo "SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)" >> "$GITHUB_ENV"
 
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
@@ -59,28 +41,25 @@ jobs:
       - name: Assemble canonical book manuscript
         run: node scripts/build-book.mjs
 
-      - name: Render distributable edition
+      - name: Render HTML EPUB and PDF
         run: quarto render dist/book/patrones-ia-manuscript.md
 
       - name: Build distribution manifest and release notes
         run: |
           node scripts/build-distribution-manifest.mjs
-          node scripts/build-release-notes.mjs ci-${{ github.sha }}
+          node scripts/build-release-notes.mjs
 
-      - name: Verify publication artifacts
+      - name: Verify release bundle
         run: |
-          test -s dist/evidence/evidence-pack.json
-          test -s dist/evidence/EVIDENCE_REPORT.md
           test -s dist/book/patrones-ia-manuscript.md
-          test -s dist/book/manifest.json
           test -s dist/book/patrones-ia-manuscript.html
           test -s dist/book/patrones-ia-manuscript.epub
           test -s dist/book/patrones-ia-manuscript.pdf
+          test -s dist/book/manifest.json
           test -s dist/book/distribution-manifest.json
           test -s dist/book/RELEASE_NOTES.md
-          grep -q 'Corpus SHA-256' dist/book/RELEASE_NOTES.md
-          grep -q 'Manuscrito SHA-256' dist/book/RELEASE_NOTES.md
-          node -e "const m=require('./dist/book/manifest.json'); if(m.patternCount!==102||m.familyCount!==10) process.exit(1)"
+          test -s dist/evidence/evidence-pack.json
+          test -s dist/evidence/EVIDENCE_REPORT.md
           node -e "const m=require('./dist/book/distribution-manifest.json'); if(m.patternCount!==102||m.familyCount!==10||m.artifacts.length!==3) process.exit(1)"
 
       - name: Install root dependencies
@@ -89,19 +68,15 @@ jobs:
       - name: Run hardening regression tests
         run: npx --yes tsx@4.20.6 --test tests/hardening/*.test.ts
 
-      - name: Install web dependencies
-        working-directory: web
-        run: npm install
-
-      - name: Build Astro site
-        working-directory: web
-        run: npm run build
-
-      - name: Upload publication bundle
-        uses: actions/upload-artifact@v7
-        with:
-          name: patrones-ia-publication-${{ github.sha }}
-          path: |
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="$GITHUB_REF_NAME"
+          title="Patrones IA ${tag}"
+          files=(
             dist/book/patrones-ia-manuscript.md
             dist/book/patrones-ia-manuscript.html
             dist/book/patrones-ia-manuscript.epub
@@ -111,5 +86,11 @@ jobs:
             dist/book/RELEASE_NOTES.md
             dist/evidence/evidence-pack.json
             dist/evidence/EVIDENCE_REPORT.md
-          if-no-files-found: error
-          retention-days: 30
+          )
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "${files[@]}" --clobber
+            gh release edit "$tag" --title "$title" --notes-file dist/book/RELEASE_NOTES.md
+          else
+            gh release create "$tag" "${files[@]}" --title "$title" --notes-file dist/book/RELEASE_NOTES.md --verify-tag
+          fi

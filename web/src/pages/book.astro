@@ -12,8 +12,9 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
     <p class="lead">102 patrones para construir agentes, sistemas RAG y arquitecturas de IA seguras, fiables y escalables. El manuscrito se ensambla desde exactamente las mismas fichas que ves en la web.</p>
     <div class="actions">
       <a class="button primary" href={`${import.meta.env.BASE_URL}patterns/`}>Explorar los patrones</a>
-      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/actions">Ver ediciones generadas</a>
-      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/tree/main/book">Ver pipeline del libro</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/releases">Ediciones estables</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/actions">Builds de CI</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/tree/main/book">Pipeline del libro</a>
     </div>
   </section>
 
@@ -40,8 +41,13 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
 
   <section class="section">
     <div class="section-heading">
-      <div><p class="eyebrow">Distribución</p><h2>Ediciones verificables, no copias manuales.</h2></div>
-      <p>GitHub Actions conserva el bundle de publicación como artifact del workflow. El paquete incluye manuscrito, HTML, EPUB, PDF, manifests y Evidence Pack.</p>
+      <div><p class="eyebrow">Distribución</p><h2>Build temporal o edición estable.</h2></div>
+      <p>GitHub Actions conserva bundles temporales para validar cada cambio. Una edición estable solo aparece en GitHub Releases cuando existe un tag inmutable <code>book-v*</code>; esa release adjunta manuscrito, HTML, EPUB, PDF, manifests, notas y Evidence Pack.</p>
+    </div>
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">CI BUILD</span><h3>Validación continua</h3><p>Se regenera en cada cambio relevante y sirve para inspeccionar la salida antes de versionarla.</p></article>
+      <article class="pattern-card"><span class="pattern-number">BOOK-V*</span><h3>Release versionada</h3><p>El tag identifica una edición permanente; nunca se reutiliza para contenido diferente.</p></article>
+      <article class="pattern-card"><span class="pattern-number">EVIDENCE</span><h3>Notas derivadas</h3><p>Hashes, cobertura y estado de evidencia se extraen de los manifests del propio build, no de cifras copiadas a mano.</p></article>
     </div>
   </section>
 </BaseLayout>
