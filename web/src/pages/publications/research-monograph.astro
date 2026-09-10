@@ -3,17 +3,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import publication from '../../../../publications/research-monograph-en/publication.json';
 
 const uniquePatterns = new Set(publication.chapters.flatMap((chapter) => chapter.patternIds)).size;
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={`${publication.title} — Patrones IA`} description={publication.subtitle}>
   <section class="catalog-hero">
-    <p class="eyebrow">RESEARCH MONOGRAPH · EN · {publication.status}</p>
+    <p class="eyebrow">RESEARCH MONOGRAPH · EN · {publication.submissionReadiness.stage}</p>
     <h1>{publication.title}</h1>
     <p class="lead">{publication.subtitle}</p>
     <p>{publication.distinctiveContribution}</p>
     <div class="actions">
       <a class="button primary" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/BOOK_PROPOSAL.md">Book Proposal</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/SUBMISSION_DOSSIER.md">Submission dossier</a>
       <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/OUTLINE.md">Detailed outline</a>
+      <a class="button" href={`${base}publications/readiness/`}>Publisher readiness</a>
     </div>
   </section>
 
@@ -21,7 +24,7 @@ const uniquePatterns = new Set(publication.chapters.flatMap((chapter) => chapter
     <div class="stat-grid">
       <div class="stat"><strong>{publication.chapters.length}</strong><span>research chapters</span></div>
       <div class="stat"><strong>{uniquePatterns}</strong><span>selected pattern IDs</span></div>
-      <div class="stat"><strong>EN</strong><span>manuscript language</span></div>
+      <div class="stat"><strong>{publication.submissionReadiness.sampleChapters.length}</strong><span>sample chapters drafted</span></div>
       <div class="stat"><strong>Independent</strong><span>not a translation</span></div>
     </div>
   </section>
@@ -35,6 +38,17 @@ const uniquePatterns = new Set(publication.chapters.flatMap((chapter) => chapter
       <article class="pattern-card"><span class="pattern-number">AGENTIC</span><h3>Control and MCP</h3><p>Orchestration, tools, protocol boundaries, validation, capability discovery and sandboxing.</p></article>
       <article class="pattern-card"><span class="pattern-number">DEPENDABILITY</span><h3>Reliable and secure AI</h3><p>Failure containment, recovery, authorization, adversarial testing, observability and semantic failure.</p></article>
       <article class="pattern-card"><span class="pattern-number">DISTRIBUTED</span><h3>Edge–Mesh–Cloud</h3><p>Original case studies for distributed placement, coordination, graceful degradation and high-dependability environments.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">ACQUISITIONS SAMPLES</p><h2>Two chapters show the book's two strongest differentiators.</h2></div>
+      <p>One sample demonstrates the capability-boundary thesis around tools and MCP; the other demonstrates original Edge–Mesh–Cloud system architecture. Quantitative results remain explicitly pending until experiments are executed.</p>
+    </div>
+    <div class="card-grid">
+      <a class="pattern-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/samples/03-tool-ecosystems-and-mcp.md"><span class="pattern-number">SAMPLE 03</span><h3>Tool Ecosystems and MCP</h3><p>Discovery, authorization, validation, sandboxing, sanitization and provenance as a capability architecture.</p></a>
+      <a class="pattern-card" href="https://github.com/rubences/patrones_dise-o_ia/blob/main/publications/research-monograph-en/samples/10-edge-mesh-cloud-ai-architectures.md"><span class="pattern-number">SAMPLE 10</span><h3>Edge–Mesh–Cloud AI Architectures</h3><p>Placement, semantic health, resilience, fast/deliberative paths and a reproducible validation plan.</p></a>
     </div>
   </section>
 
