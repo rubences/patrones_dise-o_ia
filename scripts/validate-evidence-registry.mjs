@@ -5,6 +5,7 @@ import { projectRoot, readTaxonomy } from './lib/editorial.mjs';
 const taxonomy = readTaxonomy();
 const registry = JSON.parse(readFileSync(join(projectRoot, 'catalog', 'references.json'), 'utf8'));
 const mapping = JSON.parse(readFileSync(join(projectRoot, 'catalog', 'pattern-evidence.json'), 'utf8'));
+const baseline = JSON.parse(readFileSync(join(projectRoot, 'catalog', 'evidence-baseline.json'), 'utf8'));
 
 const errors = [];
 const allowedTypes = new Set(['paper', 'standard', 'government-guidance', 'official-documentation']);
@@ -42,12 +43,40 @@ for (const entry of mapping.patterns ?? []) {
   if (typeof entry.scopeNote !== 'string' || entry.scopeNote.length < 60) errors.push(`Pattern ${entry.patternId}: scopeNote insuficiente`);
 }
 
+if (baseline.schemaVersion !== 1) errors.push('evidence-baseline.json: schemaVersion debe ser 1');
+if (typeof baseline.phase !== 'string' || !/^P\d+(?:\.\d+)?$/.test(baseline.phase)) errors.push('evidence-baseline.json: phase inválida');
+if (!/^\d{4}-\d{2}-\d{2}$/.test(baseline.verifiedOn ?? '')) errors.push('evidence-baseline.json: verifiedOn inválido');
+if (baseline.policy !== 'fail-closed') errors.push('evidence-baseline.json: policy debe ser fail-closed');
+if (!Number.isInteger(baseline.minimumPrimaryPatterns) || baseline.minimumPrimaryPatterns < 1 || baseline.minimumPrimaryPatterns > taxonomy.catalogSize) {
+  errors.push('evidence-baseline.json: minimumPrimaryPatterns inválido');
+}
+if (!Number.isInteger(baseline.minimumPrimaryReferences) || baseline.minimumPrimaryReferences < 1) {
+  errors.push('evidence-baseline.json: minimumPrimaryReferences inválido');
+}
+if (!Array.isArray(baseline.requiredPatternIds) || baseline.requiredPatternIds.length === 0) {
+  errors.push('evidence-baseline.json: requiredPatternIds debe ser un array no vacío');
+} else {
+  if (new Set(baseline.requiredPatternIds).size !== baseline.requiredPatternIds.length) errors.push('evidence-baseline.json: requiredPatternIds contiene duplicados');
+  for (const id of baseline.requiredPatternIds) {
+    if (!Number.isInteger(id) || id < 1 || id > taxonomy.catalogSize) errors.push(`evidence-baseline.json: patternId fuera de catálogo (${id})`);
+    if (!patternIds.has(id)) errors.push(`Evidence baseline ${baseline.phase}: falta el patternId obligatorio ${id}`);
+  }
+}
+
+if (patternIds.size < (baseline.minimumPrimaryPatterns ?? Number.POSITIVE_INFINITY)) {
+  errors.push(`Evidence baseline ${baseline.phase}: cobertura ${patternIds.size} < ${baseline.minimumPrimaryPatterns}`);
+}
+if (referenceIds.size < (baseline.minimumPrimaryReferences ?? Number.POSITIVE_INFINITY)) {
+  errors.push(`Evidence baseline ${baseline.phase}: referencias ${referenceIds.size} < ${baseline.minimumPrimaryReferences}`);
+}
+
 if (errors.length > 0) {
   console.error('Evidence registry: FAIL');
   for (const error of errors) console.error(`- ${error}`);
   process.exit(1);
 }
 
-console.log(`Primary references: ${referenceIds.size}`);
-console.log(`Patterns with verified primary evidence: ${patternIds.size}/${taxonomy.catalogSize}`);
+console.log(`Evidence baseline: ${baseline.phase} · fail-closed`);
+console.log(`Primary references: ${referenceIds.size} (minimum ${baseline.minimumPrimaryReferences})`);
+console.log(`Patterns with verified primary evidence: ${patternIds.size}/${taxonomy.catalogSize} (minimum ${baseline.minimumPrimaryPatterns})`);
 console.log('Evidence registry: PASS');

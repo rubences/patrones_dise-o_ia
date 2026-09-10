@@ -111,6 +111,105 @@
       "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
       "identifier": "DOI:10.6028/NIST.AI.100-2e2025",
       "primary": true
+    },
+    {
+      "id": "wang-2023-plan-and-solve",
+      "type": "paper",
+      "title": "Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models",
+      "authors": "Lei Wang, Wanyu Xu, Yihuai Lan, Zhiqiang Hu, Yunshi Lan, Roy Ka-Wei Lee, Ee-Peng Lim",
+      "year": 2023,
+      "venue": "ACL 2023",
+      "url": "https://aclanthology.org/2023.acl-long.147/",
+      "identifier": "DOI:10.18653/v1/2023.acl-long.147",
+      "primary": true
+    },
+    {
+      "id": "wu-2024-autogen",
+      "type": "paper",
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversations",
+      "authors": "Qingyun Wu et al.",
+      "year": 2024,
+      "venue": "COLM 2024",
+      "url": "https://openreview.net/forum?id=BAakY1hNKS",
+      "identifier": "OpenReview:BAakY1hNKS",
+      "primary": true
+    },
+    {
+      "id": "khattab-2020-colbert",
+      "type": "paper",
+      "title": "ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT",
+      "authors": "Omar Khattab, Matei Zaharia",
+      "year": 2020,
+      "venue": "SIGIR 2020",
+      "url": "https://arxiv.org/abs/2004.12832",
+      "identifier": "arXiv:2004.12832",
+      "primary": true
+    },
+    {
+      "id": "nist-ai-600-1",
+      "type": "government-guidance",
+      "title": "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile",
+      "authors": "Chloe Autio, Reva Schwartz, Jesse Dunietz, Shomik Jain, Martin Stanley, Elham Tabassi, Patrick Hall, Kamie Roberts",
+      "year": 2024,
+      "venue": "NIST Trustworthy and Responsible AI",
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+      "identifier": "DOI:10.6028/NIST.AI.600-1",
+      "primary": true
+    },
+    {
+      "id": "zheng-2023-llm-as-judge",
+      "type": "paper",
+      "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+      "authors": "Lianmin Zheng et al.",
+      "year": 2023,
+      "venue": "NeurIPS 2023 Datasets and Benchmarks",
+      "url": "https://papers.neurips.cc/paper_files/paper/2023/hash/91f18a1287b398d378ef22505bf41832-Abstract-Datasets_and_Benchmarks.html",
+      "identifier": "DOI:10.52202/075280-2020",
+      "primary": true
+    },
+    {
+      "id": "perez-2022-red-teaming-lms",
+      "type": "paper",
+      "title": "Red Teaming Language Models with Language Models",
+      "authors": "Ethan Perez et al.",
+      "year": 2022,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2202.03286",
+      "identifier": "arXiv:2202.03286",
+      "primary": true
+    },
+    {
+      "id": "opentelemetry-semconv-1-44",
+      "type": "official-documentation",
+      "title": "OpenTelemetry Semantic Conventions 1.44.0",
+      "authors": "OpenTelemetry Authors and Contributors",
+      "year": 2026,
+      "venue": "OpenTelemetry",
+      "url": "https://opentelemetry.io/docs/specs/semconv/",
+      "identifier": "OpenTelemetry-SemConv:1.44.0",
+      "primary": true
+    },
+    {
+      "id": "gao-2023-alce",
+      "type": "paper",
+      "title": "Enabling Large Language Models to Generate Text with Citations",
+      "authors": "Tianyu Gao, Howard Yen, Jiatong Yu, Danqi Chen",
+      "year": 2023,
+      "venue": "EMNLP 2023",
+      "url": "https://aclanthology.org/2023.emnlp-main.398/",
+      "identifier": "DOI:10.18653/v1/2023.emnlp-main.398",
+      "primary": true
+    },
+    {
+      "id": "es-2024-ragas",
+      "type": "paper",
+      "title": "RAGAs: Automated Evaluation of Retrieval Augmented Generation",
+      "authors": "Shahul Es, Jithin James, Luis Espinosa Anke, Steven Schockaert",
+      "year": 2024,
+      "venue": "EACL 2024 System Demonstrations",
+      "url": "https://aclanthology.org/2024.eacl-demo.16/",
+      "identifier": "DOI:10.18653/v1/2024.eacl-demo.16",
+      "primary": true
     }
   ]
 }
