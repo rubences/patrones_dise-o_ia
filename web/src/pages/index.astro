@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import research from '../../../publications/research-monograph-en/publication.json';
+import teaching from '../../../publications/teaching-manual-es/publication.json';
 
 const patterns = (await getCollection('patterns')).sort((a, b) => a.data.patternId - b.data.patternId);
 const base = import.meta.env.BASE_URL;
@@ -14,7 +16,7 @@ const base = import.meta.env.BASE_URL;
       <p class="lead">Un catálogo ejecutable y visual para diseñar agentes, RAG, sistemas multiagente y arquitecturas de IA seguras, fiables y operables en producción.</p>
       <div class="actions">
         <a class="button primary" href={`${base}patterns/`}>Explorar 102 patrones</a>
-        <a class="button" href={`${base}book/`}>Ver el libro</a>
+        <a class="button" href={`${base}publications/`}>Dos publicaciones</a>
         <a class="button" href={`${base}evidence/`}>Estado de evidencia</a>
       </div>
     </div>
@@ -23,7 +25,7 @@ const base = import.meta.env.BASE_URL;
       <div class="stat"><strong>102</strong><span>implementaciones TypeScript</span></div>
       <div class="stat"><strong>10</strong><span>macrofamilias editoriales</span></div>
       <div class="stat"><strong>{patterns.length}</strong><span>fichas canónicas publicadas</span></div>
-      <div class="stat"><strong>35</strong><span>tests de hardening</span></div>
+      <div class="stat"><strong>2</strong><span>obras editoriales independientes</span></div>
     </div>
   </section>
 
@@ -46,14 +48,16 @@ const base = import.meta.env.BASE_URL;
 
   <section class="section">
     <div class="section-heading">
-      <div><p class="eyebrow">Arquitectura editorial</p><h2>Una fuente. Cuatro productos.</h2></div>
-      <p>El Markdown canónico alimenta web, libro y Evidence Pack. El código TypeScript permanece como referencia ejecutable de cada patrón.</p>
+      <div><p class="eyebrow">Arquitectura editorial</p><h2>Una base técnica. Dos libros. Una web.</h2></div>
+      <p>El catálogo, el código, la taxonomía y el Evidence Pack son el sustrato compartido. Cada publicación construye una obra nueva para una audiencia y una finalidad diferentes.</p>
     </div>
     <div class="card-grid">
-      <a class="pattern-card" href={`${base}book/`}><span class="pattern-number">LEARN</span><h3>Libro</h3><p>Manuscrito ensamblado en 10 partes desde las 102 fichas.</p></a>
-      <a class="pattern-card" href={`${base}patterns/`}><span class="pattern-number">EXPLORE</span><h3>Web</h3><p>Catálogo, filtros y navegación entre patrones.</p></a>
+      <a class="pattern-card" href={`${base}publications/research-monograph/`}><span class="pattern-number">RESEARCH · EN</span><h3>{research.title}</h3><p>Monografía de investigación sobre sistemas agénticos, MCP, seguridad, resiliencia y Edge–Mesh–Cloud.</p></a>
+      <a class="pattern-card" href={`${base}publications/teaching-manual/`}><span class="pattern-number">TEACH · ES</span><h3>{teaching.title}</h3><p>Manual universitario con Python, Docker, n8n, laboratorios, ejercicios, rúbricas y capstone.</p></a>
+      <a class="pattern-card" href={`${base}patterns/`}><span class="pattern-number">EXPLORE</span><h3>Web</h3><p>Referencia navegable de las 102 fichas, filtros y relaciones.</p></a>
       <a class="pattern-card" href="https://github.com/rubences/patrones_dise-o_ia"><span class="pattern-number">BUILD</span><h3>Código</h3><p>102 implementaciones TypeScript enlazadas con su ficha.</p></a>
-      <a class="pattern-card" href={`${base}evidence/`}><span class="pattern-number">VERIFY</span><h3>Evidencia</h3><p>Cobertura, referencias, estado de evidencia y hashes reproducibles.</p></a>
+      <a class="pattern-card" href={`${base}evidence/`}><span class="pattern-number">VERIFY</span><h3>Evidencia</h3><p>Cobertura, fuentes primarias, estado de evidencia y hashes reproducibles.</p></a>
+      <a class="pattern-card" href={`${base}book/`}><span class="pattern-number">REFERENCE</span><h3>Edición reproducible</h3><p>Build técnico del catálogo completo en Markdown, HTML, EPUB y PDF; no es el manuscrito comercial de ninguna de las dos obras.</p></a>
     </div>
   </section>
 </BaseLayout>

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "verifiedOn": "2026-09-10",
+  "references": [
+    {
+      "id": "lewis-2020-rag",
+      "type": "paper",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": "Patrick Lewis et al.",
+      "year": 2020,
+      "venue": "NeurIPS 2020",
+      "url": "https://papers.nips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html",
+      "identifier": "arXiv:2005.11401",
+      "primary": true
+    },
+    {
+      "id": "wei-2022-cot",
+      "type": "paper",
+      "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "authors": "Jason Wei et al.",
+      "year": 2022,
+      "venue": "NeurIPS 2022",
+      "url": "https://papers.nips.cc/paper/2022/hash/9d5609613524ecf4f15af0f7b31abca4-Abstract-Conference.html",
+      "identifier": "DOI:10.52202/068431-1800",
+      "primary": true
+    },
+    {
+      "id": "yao-2023-tot",
+      "type": "paper",
+      "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "authors": "Shunyu Yao et al.",
+      "year": 2023,
+      "venue": "NeurIPS 2023",
+      "url": "https://papers.nips.cc/paper/2023/hash/271db9922b8d1f4dd7aaef84ed5ac703-Abstract-Conference.html",
+      "identifier": "DOI:10.52202/075280-0517",
+      "primary": true
+    },
+    {
+      "id": "wang-2023-self-consistency",
+      "type": "paper",
+      "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "authors": "Xuezhi Wang et al.",
+      "year": 2023,
+      "venue": "ICLR 2023",
+      "url": "https://openreview.net/forum?id=1PL1NIMMrw",
+      "identifier": "arXiv:2203.11171",
+      "primary": true
+    },
+    {
+      "id": "yao-2023-react",
+      "type": "paper",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": "Shunyu Yao et al.",
+      "year": 2023,
+      "venue": "ICLR 2023",
+      "url": "https://openreview.net/forum?id=WE_vluYUL-X",
+      "identifier": "arXiv:2210.03629",
+      "primary": true
+    },
+    {
+      "id": "bai-2022-constitutional-ai",
+      "type": "paper",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Yuntao Bai et al.",
+      "year": 2022,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2212.08073",
+      "identifier": "arXiv:2212.08073",
+      "primary": true
+    },
+    {
+      "id": "schick-2023-toolformer",
+      "type": "paper",
+      "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "authors": "Timo Schick et al.",
+      "year": 2023,
+      "venue": "NeurIPS 2023",
+      "url": "https://papers.nips.cc/paper/2023/hash/d842425e4bf79ba039352da0f658a906-Abstract-Conference.html",
+      "identifier": "DOI:10.52202/075280-2997",
+      "primary": true
+    },
+    {
+      "id": "shinn-2023-reflexion",
+      "type": "paper",
+      "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "authors": "Noah Shinn et al.",
+      "year": 2023,
+      "venue": "NeurIPS 2023",
+      "url": "https://papers.nips.cc/paper_files/paper/2023/hash/1b44b878bb782e6954cd888628510e90-Abstract-Conference.html",
+      "identifier": "DOI:10.52202/075280-0377",
+      "primary": true
+    },
+    {
+      "id": "mcp-2026-07-28",
+      "type": "standard",
+      "title": "Model Context Protocol Specification 2026-07-28",
+      "authors": "Model Context Protocol Core Maintainers",
+      "year": 2026,
+      "venue": "Model Context Protocol",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28",
+      "identifier": "MCP:2026-07-28",
+      "primary": true
+    },
+    {
+      "id": "nist-ai-100-2e2025",
+      "type": "government-guidance",
+      "title": "Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations",
+      "authors": "Apostol Vassilev, Alina Oprea, Alie Fordyce, Hyrum Anderson, Xander Davies, Maia Hamin",
+      "year": 2025,
+      "venue": "NIST Trustworthy and Responsible AI",
+      "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+      "identifier": "DOI:10.6028/NIST.AI.100-2e2025",
+      "primary": true
+    }
+  ]
+}

@@ -5,23 +5,23 @@ const patterns = await getCollection('patterns');
 const families = new Set(patterns.map((p) => p.data.family)).size;
 ---
 
-<BaseLayout title="Libro — Patrones IA" description="Libro generado desde el catálogo canónico de 102 patrones de diseño para sistemas de IA.">
+<BaseLayout title="Edición de referencia — Patrones IA" description="Edición técnica reproducible generada desde el catálogo canónico de 102 patrones de diseño para sistemas de IA.">
   <section class="catalog-hero">
-    <p class="eyebrow">LEARN · Primera edición abierta</p>
-    <h1>Un libro generado desde el catálogo vivo.</h1>
-    <p class="lead">102 patrones para construir agentes, sistemas RAG y arquitecturas de IA seguras, fiables y escalables. El manuscrito se ensambla desde exactamente las mismas fichas que ves en la web.</p>
+    <p class="eyebrow">REFERENCE BUILD · OPEN TECHNICAL BASELINE</p>
+    <h1>La edición de referencia reproducible.</h1>
+    <p class="lead">Este artefacto ensambla las 102 fichas canónicas en una edición técnica versionada. Sirve como baseline abierta, trazable y verificable; <strong>no es el manuscrito comercial</strong> de la monografía internacional ni del manual universitario.</p>
     <div class="actions">
-      <a class="button primary" href={`${import.meta.env.BASE_URL}patterns/`}>Explorar los patrones</a>
+      <a class="button primary" href={`${import.meta.env.BASE_URL}publications/`}>Ver las dos publicaciones</a>
+      <a class="button" href={`${import.meta.env.BASE_URL}patterns/`}>Explorar los patrones</a>
       <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/releases">Ediciones estables</a>
-      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/actions">Builds de CI</a>
-      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/tree/main/book">Pipeline del libro</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/tree/main/book">Pipeline de referencia</a>
     </div>
   </section>
 
   <section class="section">
     <div class="stat-grid">
-      <div class="stat"><strong>{patterns.length}</strong><span>capítulos de patrón</span></div>
-      <div class="stat"><strong>{families}</strong><span>partes editoriales</span></div>
+      <div class="stat"><strong>{patterns.length}</strong><span>fichas de patrón</span></div>
+      <div class="stat"><strong>{families}</strong><span>macrofamilias</span></div>
       <div class="stat"><strong>3</strong><span>formatos distribuibles</span></div>
       <div class="stat"><strong>SHA-256</strong><span>integridad por artefacto</span></div>
     </div>
@@ -29,25 +29,31 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
 
   <section class="section">
     <div class="section-heading">
-      <div><p class="eyebrow">Pipeline</p><h2>Contenido primero. Distribución reproducible después.</h2></div>
-      <p>El repositorio ensambla un único manuscrito Markdown y lo renderiza en CI a HTML autocontenido, EPUB y PDF/Typst. Ningún binario se mantiene como una segunda fuente editorial.</p>
+      <div><p class="eyebrow">PIPELINE</p><h2>Referencia canónica, no tercera vía editorial.</h2></div>
+      <p>El repositorio ensambla un manuscrito Markdown técnico y lo renderiza en CI a HTML, EPUB y PDF. Las dos publicaciones usan este corpus como sustrato factual y ejecutable, pero escriben narrativa, casos, figuras y contribuciones propias.</p>
     </div>
     <div class="card-grid">
-      <article class="pattern-card"><span class="pattern-number">01 · SOURCE</span><h3>102 fichas</h3><p>Contenido canónico, frontmatter estructurado y enlaces a implementaciones TypeScript.</p></article>
-      <article class="pattern-card"><span class="pattern-number">02 · RENDER</span><h3>HTML · EPUB · PDF</h3><p>Quarto renderiza los tres formatos desde el mismo manuscrito; el PDF usa Typst sin una instalación LaTeX adicional.</p></article>
-      <article class="pattern-card"><span class="pattern-number">03 · VERIFY</span><h3>Manifest de distribución</h3><p>Cada build registra SHA-256 y tamaño de cada artefacto junto al hash del manuscrito fuente.</p></article>
+      <article class="pattern-card"><span class="pattern-number">01 · SOURCE</span><h3>102 fichas</h3><p>Frontmatter estructurado, contenido técnico y enlaces a implementaciones TypeScript.</p></article>
+      <article class="pattern-card"><span class="pattern-number">02 · RENDER</span><h3>HTML · EPUB · PDF</h3><p>Quarto genera salidas reproducibles desde el mismo baseline técnico.</p></article>
+      <article class="pattern-card"><span class="pattern-number">03 · VERIFY</span><h3>Evidence + manifest</h3><p>Hashes, cobertura y estado de evidencia acompañan cada build para reconstruir exactamente la edición.</p></article>
     </div>
   </section>
 
   <section class="section">
     <div class="section-heading">
-      <div><p class="eyebrow">Distribución</p><h2>Build temporal o edición estable.</h2></div>
-      <p>GitHub Actions conserva bundles temporales para validar cada cambio. Una edición estable solo aparece en GitHub Releases cuando existe un tag inmutable <code>book-v*</code>; esa release adjunta manuscrito, HTML, EPUB, PDF, manifests, notas y Evidence Pack.</p>
+      <div><p class="eyebrow">TWO PUBLICATIONS</p><h2>Dos transformaciones editoriales deliberadamente distintas.</h2></div>
+      <p>La monografía EN organiza el corpus por preguntas de investigación y validación arquitectónica. El manual ES lo transforma en resultados de aprendizaje, prácticas, rúbricas y proyecto integrador.</p>
     </div>
     <div class="card-grid">
-      <article class="pattern-card"><span class="pattern-number">CI BUILD</span><h3>Validación continua</h3><p>Se regenera en cada cambio relevante y sirve para inspeccionar la salida antes de versionarla.</p></article>
-      <article class="pattern-card"><span class="pattern-number">BOOK-V*</span><h3>Release versionada</h3><p>El tag identifica una edición permanente; nunca se reutiliza para contenido diferente.</p></article>
-      <article class="pattern-card"><span class="pattern-number">EVIDENCE</span><h3>Notas derivadas</h3><p>Hashes, cobertura y estado de evidencia se extraen de los manifests del propio build, no de cifras copiadas a mano.</p></article>
+      <a class="pattern-card" href={`${import.meta.env.BASE_URL}publications/research-monograph/`}><span class="pattern-number">EN · RESEARCH</span><h3>Monografía internacional</h3><p>Agentic AI, MCP, Edge–Mesh–Cloud, alta exigencia, seguridad, resiliencia y validación empírica.</p></a>
+      <a class="pattern-card" href={`${import.meta.env.BASE_URL}publications/teaching-manual/`}><span class="pattern-number">ES · TEACH</span><h3>Manual universitario</h3><p>Python, Docker, n8n, laboratorios, evaluación formativa y capstone.</p></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">DISTRIBUCIÓN</p><h2>Build temporal o edición estable.</h2></div>
+      <p>GitHub Actions conserva bundles temporales para validar cada cambio. Una edición técnica estable aparece en GitHub Releases con un tag inmutable <code>book-v*</code>. Esos tags identifican el baseline técnico, no una edición contractual de las futuras editoriales.</p>
     </div>
   </section>
 </BaseLayout>

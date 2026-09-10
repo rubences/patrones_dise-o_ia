@@ -79,6 +79,25 @@ export function readTaxonomy(root = projectRoot) {
   return JSON.parse(readFileSync(join(root, 'catalog', 'taxonomy.json'), 'utf8'));
 }
 
+export function readReferenceRegistry(root = projectRoot) {
+  return JSON.parse(readFileSync(join(root, 'catalog', 'references.json'), 'utf8'));
+}
+
+export function readPatternEvidence(root = projectRoot) {
+  return JSON.parse(readFileSync(join(root, 'catalog', 'pattern-evidence.json'), 'utf8'));
+}
+
+export function buildEvidenceIndex(root = projectRoot) {
+  const registry = readReferenceRegistry(root);
+  const mapping = readPatternEvidence(root);
+  const referencesById = new Map(registry.references.map((reference) => [reference.id, reference]));
+  const evidenceByPatternId = new Map(mapping.patterns.map((entry) => [Number(entry.patternId), {
+    ...entry,
+    resolvedReferences: entry.references.map((id) => referencesById.get(id)).filter(Boolean),
+  }]));
+  return { registry, mapping, referencesById, evidenceByPatternId };
+}
+
 export function countRequiredSections(body) {
   const sections = {
     purpose: /^#\s+Propósito\s*$/im.test(body),

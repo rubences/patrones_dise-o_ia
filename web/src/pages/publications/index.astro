@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import research from '../../../../publications/research-monograph-en/publication.json';
+import teaching from '../../../../publications/teaching-manual-es/publication.json';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Publicaciones — Patrones IA" description="Dos obras editoriales independientes derivadas del corpus técnico Patrones IA.">
+  <section class="catalog-hero">
+    <p class="eyebrow">PUBLISH · TWO DISTINCT WORKS</p>
+    <h1>Un corpus técnico. Dos obras editoriales.</h1>
+    <p class="lead">La web y el repositorio mantienen la referencia canónica de 102 patrones. Sobre esa base se desarrollan una monografía internacional de investigación en inglés y un manual universitario práctico en español. No son traducciones: comparten sustrato técnico, no manuscrito narrativo.</p>
+  </section>
+
+  <section class="section publication-grid">
+    <a class="publication-card" href={`${base}publications/research-monograph/`}>
+      <span class="pattern-number">RESEARCH · EN</span>
+      <h2>{research.title}</h2>
+      <p class="subtitle">{research.subtitle}</p>
+      <p>{research.distinctiveContribution}</p>
+      <div class="meta-row"><span>{research.chapters.length} capítulos</span><span>{research.status}</span></div>
+    </a>
+
+    <a class="publication-card" href={`${base}publications/teaching-manual/`}>
+      <span class="pattern-number">TEACH · ES</span>
+      <h2>{teaching.title}</h2>
+      <p class="subtitle">{teaching.subtitle}</p>
+      <p>{teaching.distinctiveContribution}</p>
+      <div class="meta-row"><span>{teaching.chapters.length} módulos</span><span>{teaching.status}</span></div>
+    </a>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">SEPARATION OF CONCERNS</p><h2>Lo común se versiona; la contribución se diferencia.</h2></div>
+      <p>IDs, código, taxonomía y Evidence Pack son compartidos. Tesis, prosa, estructura, casos, figuras, ejercicios y validación pertenecen a cada obra.</p>
+    </div>
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">SHARED</span><h3>Referencia técnica</h3><p>102 patrones, implementaciones, taxonomía, relaciones y evidencia primaria.</p></article>
+      <article class="pattern-card"><span class="pattern-number">EN · ORIGINAL</span><h3>Investigación</h3><p>MCP, sistemas agénticos, seguridad, resiliencia, Edge–Mesh–Cloud y casos de alta exigencia con validación científica.</p></article>
+      <article class="pattern-card"><span class="pattern-number">ES · ORIGINAL</span><h3>Docencia</h3><p>Python, Docker, n8n, laboratorios, ejercicios, rúbricas, evaluación formativa y capstone.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">RIGHTS & EVIDENCE</p><h2>Diseñado para poder negociar sin bloquear el ecosistema.</h2></div>
+      <p>Cada contrato debe revisar expresamente traducción/adaptación, companion web, código, figuras, docencia, repositorio, embargo y obras derivadas. El proyecto no presupone una cesión estándar ni una puntuación automática en evaluación académica.</p>
+    </div>
+    <div class="actions">
+      <a class="button" href={`${base}book/`}>Edición de referencia reproducible</a>
+      <a class="button" href={`${base}evidence/`}>Evidence Pack</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/tree/main/publications">Arquitectura editorial</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .publication-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+  .publication-card { display: block; padding: 1.6rem; border: 1px solid var(--line); border-radius: 22px; background: rgba(18,27,45,.82); color: inherit; text-decoration: none; }
+  .publication-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .publication-card h2 { margin: .6rem 0; font-size: clamp(1.45rem, 3vw, 2.1rem); }
+  .subtitle { color: var(--accent-2); }
+  .meta-row { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; color: var(--muted); font-size: .9rem; }
+  @media (max-width: 760px) { .publication-grid { grid-template-columns: 1fr; } }
+</style>
