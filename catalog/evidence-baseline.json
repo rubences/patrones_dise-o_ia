@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "phase": "P6.2",
+  "verifiedOn": "2026-09-10",
+  "minimumPrimaryPatterns": 19,
+  "minimumPrimaryReferences": 19,
+  "requiredPatternIds": [3, 5, 6, 7, 25, 26, 36, 41, 42, 53, 54, 60, 62, 69, 73, 74, 77, 82, 98],
+  "policy": "fail-closed",
+  "note": "The baseline prevents accidental regression of verified primary-evidence coverage. A mapped source supports only the scope declared in pattern-evidence.json and must not be interpreted as universal validation of the repository implementation."
+}
