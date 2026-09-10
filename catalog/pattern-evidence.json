@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "patterns": [
+    {
+      "patternId": 3,
+      "references": ["shinn-2023-reflexion"],
+      "scopeNote": "Reflexion es una instancia investigada de reflexión verbal con memoria episódica; respalda esta familia de diseño, no implica que toda implementación del patrón 3 reproduzca sus resultados."
+    },
+    {
+      "patternId": 5,
+      "references": ["schick-2023-toolformer"],
+      "scopeNote": "Toolformer aporta evidencia primaria sobre aprendizaje de uso de APIs; el patrón Tool Use del repositorio es más general y no presupone el método de entrenamiento de Toolformer."
+    },
+    {
+      "patternId": 25,
+      "references": ["lewis-2020-rag"],
+      "scopeNote": "Lewis et al. formalizan RAG combinando memoria paramétrica y no paramétrica; los resultados del artículo pertenecen a sus tareas y configuración y no son una mejora universal para cualquier RAG."
+    },
+    {
+      "patternId": 26,
+      "references": ["wei-2022-cot"],
+      "scopeNote": "La referencia fundacional evalúa Chain-of-Thought prompting en modelos y benchmarks concretos; la ficha separa ese resultado empírico del uso general de descomposición en workflows."
+    },
+    {
+      "patternId": 36,
+      "references": ["yao-2023-tot"],
+      "scopeNote": "Tree of Thoughts se valida en tareas de búsqueda específicas; sus mejoras de benchmark no deben extrapolarse a cualquier dominio, modelo o política de branching."
+    },
+    {
+      "patternId": 42,
+      "references": ["wang-2023-self-consistency"],
+      "scopeNote": "Self-Consistency marginaliza múltiples rutas de razonamiento y muestra ganancias en benchmarks concretos; coste y beneficio dependen del número de muestras y de la tarea."
+    },
+    {
+      "patternId": 54,
+      "references": ["yao-2023-react"],
+      "scopeNote": "ReAct estudia la intercalación de razonamiento y acciones sobre entornos concretos; la referencia no convierte acciones del LLM en autorizadas ni seguras por definición."
+    },
+    {
+      "patternId": 62,
+      "references": ["bai-2022-constitutional-ai"],
+      "scopeNote": "Constitutional AI describe un proceso de entrenamiento con crítica/revisión y RLAIF; una lista de reglas insertada solo en prompt no equivale al procedimiento completo del trabajo original."
+    },
+    {
+      "patternId": 69,
+      "references": ["nist-ai-100-2e2025"],
+      "scopeNote": "NIST clasifica direct e indirect prompt injection entre los ataques relevantes para GenAI; la guía respalda el modelo de amenaza, no garantiza que una defensa heurística concreta sea suficiente."
+    },
+    {
+      "patternId": 82,
+      "references": ["mcp-2026-07-28"],
+      "scopeNote": "La especificación 2026-07-28 es la referencia normativa del protocolo. Las implementaciones deben declarar la revisión soportada: el SDK o una demo anterior no adquieren automáticamente la semántica de esta revisión."
+    }
+  ]
+}
