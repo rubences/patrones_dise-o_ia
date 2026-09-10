@@ -6,6 +6,15 @@
   "language": "en",
   "purpose": "research-monograph",
   "status": "proposal-development",
+  "submissionReadiness": {
+    "stage": "editor-contact-ready",
+    "publisherRequirementsVerifiedOn": "2026-09-10",
+    "dossier": "SUBMISSION_DOSSIER.md",
+    "sampleChapters": [
+      "samples/03-tool-ecosystems-and-mcp.md",
+      "samples/10-edge-mesh-cloud-ai-architectures.md"
+    ]
+  },
   "audience": ["AI researchers", "software architects", "distributed-systems engineers", "doctoral and postgraduate readers"],
   "derivativePolicy": "independent-editorial-work",
   "notATranslationOf": "teaching-manual-es",
@@ -13,8 +22,8 @@
   "rightsReview": "contract-review-required",
   "publisherCandidates": [
     "Springer Nature Computer Science book program",
-    "CRC Press / Routledge",
-    "Wiley / IEEE Press route subject to editor fit"
+    "CRC Press / Taylor & Francis",
+    "Wiley-IEEE Press"
   ],
   "distinctiveContribution": "A research-oriented pattern language that connects generative AI, agentic control, distributed execution, evidence, security, resilience and Edge-Mesh-Cloud deployment through composable architectural patterns and explicit validation boundaries.",
   "chapters": [
