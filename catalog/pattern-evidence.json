@@ -7,6 +7,11 @@
       "scopeNote": "Reflexion es una instancia investigada de reflexión verbal con memoria episódica; respalda esta familia de diseño, no implica que toda implementación del patrón 3 reproduzca sus resultados."
     },
     {
+      "patternId": 4,
+      "references": ["madaan-2023-self-refine"],
+      "scopeNote": "Self-Refine aporta evidencia primaria para ciclos iterativos de generación, feedback y refinamiento sobre tareas concretas; respalda Evaluator Optimizer como familia de control, pero no garantiza mejora monotónica ni elimina sesgos cuando generador y evaluador comparten modelo."
+    },
+    {
       "patternId": 5,
       "references": ["schick-2023-toolformer"],
       "scopeNote": "Toolformer aporta evidencia primaria sobre aprendizaje de uso de APIs; el patrón Tool Use del repositorio es más general y no presupone el método de entrenamiento de Toolformer."
@@ -32,9 +37,29 @@
       "scopeNote": "La referencia fundacional evalúa Chain-of-Thought prompting en modelos y benchmarks concretos; la ficha separa ese resultado empírico del uso general de descomposición en workflows."
     },
     {
+      "patternId": 27,
+      "references": ["yao-2023-react"],
+      "scopeNote": "ReAct ofrece una instancia primaria de bucle donde el modelo alterna razonamiento, acción y nueva observación; respalda la estructura de Agentic Loop, pero no demuestra que toda iteración sea útil ni que el agente deba controlar herramientas sin límites externos."
+    },
+    {
+      "patternId": 28,
+      "references": ["schick-2023-toolformer"],
+      "scopeNote": "Toolformer estudia la inserción y selección de llamadas a APIs dentro de la generación, aportando un antecedente directo para Function Calling; no equivale a los contratos JSON, esquemas ni semántica de autorización de las APIs comerciales modernas."
+    },
+    {
       "patternId": 36,
       "references": ["yao-2023-tot"],
       "scopeNote": "Tree of Thoughts se valida en tareas de búsqueda específicas; sus mejoras de benchmark no deben extrapolarse a cualquier dominio, modelo o política de branching."
+    },
+    {
+      "patternId": 38,
+      "references": ["shazeer-2017-moe"],
+      "scopeNote": "Shazeer et al. introducen una capa Mixture-of-Experts con gating entrenable y activación dispersa de expertos; respalda el principio de especialización y selección condicional, pero sus resultados de capacidad y coste pertenecen a la arquitectura y benchmarks estudiados."
+    },
+    {
+      "patternId": 39,
+      "references": ["chen-2023-frugalgpt"],
+      "scopeNote": "FrugalGPT formula cascadas de modelos con selección secuencial y umbrales orientados a coste y calidad; respalda el patrón Cascade, pero sus ahorros y mejoras publicados dependen de precios, modelos, funciones de scoring, datasets y presupuesto concretos."
     },
     {
       "patternId": 41,
@@ -45,6 +70,21 @@
       "patternId": 42,
       "references": ["wang-2023-self-consistency"],
       "scopeNote": "Self-Consistency marginaliza múltiples rutas de razonamiento y muestra ganancias en benchmarks concretos; coste y beneficio dependen del número de muestras y de la tarea."
+    },
+    {
+      "patternId": 49,
+      "references": ["jiang-2023-llmlingua"],
+      "scopeNote": "LLMLingua aporta evidencia primaria para compresión de prompts con presupuesto de tokens y evaluación empírica de pérdida de rendimiento; respalda Prompt Compression, pero una tasa de compresión concreta no debe extrapolarse a otros modelos, dominios o requisitos de fidelidad."
+    },
+    {
+      "patternId": 51,
+      "references": ["packer-2023-memgpt"],
+      "scopeNote": "MemGPT estudia gestión jerárquica de memoria y movimiento de información entre contexto activo y almacenamiento externo para interacciones prolongadas; respalda Long-Term Memory como arquitectura, no demuestra memoria ilimitada ni ausencia de errores de recuperación."
+    },
+    {
+      "patternId": 52,
+      "references": ["lewis-2020-rag", "gao-2023-alce"],
+      "scopeNote": "RAG fundamenta generación condicionada por evidencia recuperada y ALCE evalúa soporte de afirmaciones mediante citas; juntas respaldan Grounding como vínculo explícito con fuentes, sin garantizar veracidad si la evidencia recuperada es errónea, incompleta o mal atribuida."
     },
     {
       "patternId": 53,
@@ -72,6 +112,16 @@
       "scopeNote": "NIST clasifica direct e indirect prompt injection entre los ataques relevantes para GenAI; la guía respalda el modelo de amenaza, no garantiza que una defensa heurística concreta sea suficiente."
     },
     {
+      "patternId": 70,
+      "references": ["nist-ai-100-2e2025", "madry-2018-adversarial-training"],
+      "scopeNote": "NIST AI 100-2e2025 formaliza taxonomías de ataques y mitigaciones, mientras Madry et al. estudian robust optimization frente a una clase definida de adversarios; respaldan Adversarial Robustness, no una resistencia universal frente a ataques desconocidos o fuera del threat model."
+    },
+    {
+      "patternId": 72,
+      "references": ["nist-sp-800-162-abac"],
+      "scopeNote": "NIST SP 800-162 define ABAC mediante atributos de sujeto, objeto, operación y entorno evaluados contra políticas; respalda separar autorización de generación del modelo, pero no convierte una decisión probabilística del LLM en un control de acceso fiable."
+    },
+    {
       "patternId": 73,
       "references": ["zheng-2023-llm-as-judge"],
       "scopeNote": "MT-Bench y Chatbot Arena estudian LLM-as-a-Judge y documentan sesgos de posición, verbosidad y auto-favorecimiento; respaldan el patrón como técnica de evaluación escalable, no como sustituto infalible de evaluación humana o métricas externas."
@@ -87,14 +137,44 @@
       "scopeNote": "OpenTelemetry define convenciones semánticas comunes para trazas, métricas, logs y eventos, proporcionando una base interoperable de observabilidad; las convenciones GenAI específicas continúan evolucionando y deben versionarse, no asumirse estables por extensión."
     },
     {
+      "patternId": 81,
+      "references": ["chen-2023-frugalgpt"],
+      "scopeNote": "FrugalGPT demuestra que una política puede enrutar entre modelos de distinto coste y capacidad según scoring y presupuesto; respalda Model Fallback como composición escalonada, pero fallback operativo también exige reglas de compatibilidad, seguridad y degradación no cubiertas por el paper."
+    },
+    {
       "patternId": 82,
       "references": ["mcp-2026-07-28"],
       "scopeNote": "La especificación 2026-07-28 es la referencia normativa del protocolo. Las implementaciones deben declarar la revisión soportada: el SDK o una demo anterior no adquieren automáticamente la semántica de esta revisión."
     },
     {
+      "patternId": 86,
+      "references": ["jiang-2023-llmlingua", "packer-2023-memgpt"],
+      "scopeNote": "LLMLingua estudia reducción selectiva del contenido y MemGPT gestión explícita de contexto limitado mediante memoria jerárquica; respaldan Context Compaction como estrategia, pero compactar implica riesgo de pérdida semántica y requiere evaluación específica de la tarea."
+    },
+    {
+      "patternId": 93,
+      "references": ["leviathan-2023-speculative-decoding"],
+      "scopeNote": "Speculative Decoding ejecuta propuestas de un modelo aproximador y las verifica con el modelo objetivo preservando la distribución del algoritmo descrito; respalda Speculative Execution, pero esa propiedad no se transfiere automáticamente a workflows agénticos especulativos arbitrarios."
+    },
+    {
+      "patternId": 97,
+      "references": ["ouyang-2022-instructgpt"],
+      "scopeNote": "InstructGPT entrena un reward model a partir de rankings humanos y optimiza el modelo con feedback humano; respalda Preference Learning, pero las preferencias reflejan la población y protocolo de etiquetado y no equivalen a valores universales ni preferencias permanentes del usuario."
+    },
+    {
       "patternId": 98,
       "references": ["gao-2023-alce"],
       "scopeNote": "ALCE define un benchmark end-to-end y métricas para respuestas con citas y evidencia recuperada; respalda evaluación de atribución y soporte, pero la mera presencia de una cita no prueba por sí sola que una afirmación sea correcta o completa."
+    },
+    {
+      "patternId": 99,
+      "references": ["wang-2023-self-instruct"],
+      "scopeNote": "Self-Instruct genera, filtra y reutiliza instrucciones, entradas y salidas sintéticas para instruction tuning; respalda Synthetic Data como pipeline de bootstrapping, pero los datos generados siguen requiriendo controles de calidad, diversidad, contaminación y sesgo."
+    },
+    {
+      "patternId": 102,
+      "references": ["madry-2018-adversarial-training"],
+      "scopeNote": "Madry et al. formulan entrenamiento adversarial como robust optimization frente a una clase de adversarios de primer orden; respalda el principio de Adversarial Training Loop, pero sus garantías y resultados no se extrapolan a LLMs, agentes o amenazas no modeladas."
     }
   ]
 }
