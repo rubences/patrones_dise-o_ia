@@ -35,11 +35,14 @@ const notes = `# Patrones IA — ${tag}\n\n` +
   `## Artefactos\n\n` +
   `| Formato | Archivo | Bytes | SHA-256 |\n|---|---|---:|---|\n${formatRows}\n\n` +
   `## Estado de evidencia\n\n${evidenceRows}\n\n` +
-  `- **Fichas con referencias:** ${evidence.summary.patternsWithReferences}/${evidence.catalogSize}\n` +
-  `- **Referencias declaradas:** ${evidence.summary.totalReferences}\n` +
+  `- **Fichas con referencias de frontmatter:** ${evidence.summary.patternsWithReferences}/${evidence.catalogSize}\n` +
+  `- **Referencias declaradas en frontmatter:** ${evidence.summary.totalReferences}\n` +
+  `- **Patrones con evidencia primaria verificada:** ${evidence.summary.patternsWithPrimaryEvidence}/${evidence.catalogSize}\n` +
+  `- **Fuentes del registro primario:** ${evidence.primaryRegistry.referenceCount}\n` +
+  `- **Registro primario revisado:** ${evidence.primaryRegistry.verifiedOn}\n` +
   `- **Relaciones editoriales:** ${evidence.summary.relationEdges}\n\n` +
   `## Nota de interpretación\n\n` +
-  `Los hashes identifican exactamente los artefactos de esta edición. El estado de evidencia describe la trazabilidad declarada en el corpus y no constituye una garantía universal sobre cada patrón.\n`;
+  `Los hashes identifican exactamente los artefactos de esta edición. Las referencias libres y la evidencia primaria se contabilizan por separado. Una fuente primaria documenta origen, estándar o evidencia pertinente, pero sus resultados no se extrapolan fuera de su alcance sin validación adicional.\n`;
 
 writeFileSync(join(bookDir, 'RELEASE_NOTES.md'), notes, 'utf8');
-console.log(`Release notes: ${tag} · ${distribution.patternCount} patrones · ${distribution.artifacts.length} formatos`);
+console.log(`Release notes: ${tag} · ${distribution.patternCount} patrones · ${distribution.artifacts.length} formatos · ${evidence.summary.patternsWithPrimaryEvidence} con evidencia primaria`);
