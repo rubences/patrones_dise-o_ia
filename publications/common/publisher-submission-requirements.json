@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "verifiedOn": "2026-09-10",
+  "reviewAfter": "2026-12-10",
+  "policy": "Only publicly verified submission requirements are encoded as facts. Missing public requirements must be confirmed with the commissioning editor before submission.",
+  "publishers": [
+    {
+      "id": "springer-nature-cs",
+      "name": "Springer Nature — Computer Science",
+      "targetPublication": "research-monograph-en",
+      "route": "Submit Book Idea / publishing editor matching",
+      "publiclyVerifiedRequirements": [
+        "Submit the book idea through Springer Nature's book-idea route.",
+        "Explain target audience and need for the book.",
+        "Position the project against competing or related books without claiming there is no competition.",
+        "Demonstrate fit with the publisher's computer-science programme."
+      ],
+      "sampleChapterRequirement": "not-publicly-specified-at-initial-book-idea-stage",
+      "peerReview": "editorial-process-dependent",
+      "sources": [
+        "https://support.springernature.com/en/support/solutions/articles/6000083155-publishing-a-book-with-springer",
+        "https://www.springernature.com/gp/researchers/campaigns/books/computer-science",
+        "https://www-cm10rc.springernature.com/gp/researchers/the-researchers-source/publish-with-impact-blogpost/prepare-and-submit-your-book-proposal/27655466"
+      ]
+    },
+    {
+      "id": "crc-taylor-francis",
+      "name": "CRC Press / Taylor & Francis",
+      "targetPublication": "research-monograph-en",
+      "route": "Contact the appropriate subject Commissioning Editor",
+      "publiclyVerifiedRequirements": [
+        "Submit to one Taylor & Francis editor at a time; editors can redirect internally.",
+        "Articulate a clear unique selling point, demand and author expertise.",
+        "A subject-specific proposal form may be supplied by the editor.",
+        "Proposals that progress undergo external peer review before final approval."
+      ],
+      "sampleChapterRequirement": "subject-form-or-editor-dependent",
+      "peerReview": "external-peer-review; public FAQ advises allowing at least four weeks",
+      "sources": [
+        "https://authorservices.taylorandfrancis.com/publish-your-book/submit-your-book-proposal/",
+        "https://www.routledge.com/faqs/author-faqs/proposals"
+      ]
+    },
+    {
+      "id": "wiley-ieee-press",
+      "name": "Wiley-IEEE Press",
+      "targetPublication": "research-monograph-en",
+      "route": "IEEE Press Professional Book Proposal Form",
+      "publiclyVerifiedRequirements": [
+        "Use the IEEE Press Professional Book Proposal Form for a professional/research-oriented book.",
+        "The proposal must explain the type of book, why it is being written and how it will be structured.",
+        "Completed proposal forms are sent to IEEE Press acquisitions staff at the address published by IEEE Author Center.",
+        "Acceptance considers need, market research and cost analysis, with expert consultation."
+      ],
+      "sampleChapterRequirement": "follow-current-proposal-form",
+      "peerReview": "expert-consultation-described-by-ieee",
+      "sources": [
+        "https://books.ieeeauthorcenter.ieee.org/create-your-book-proposal/",
+        "https://books.ieeeauthorcenter.ieee.org/submit-your-book-proposal/proposal-acceptance-criteria/"
+      ]
+    },
+    {
+      "id": "ra-ma",
+      "name": "RA-MA Editorial",
+      "targetPublication": "teaching-manual-es",
+      "route": "Formulario público 'Manuscrito'",
+      "publiclyVerifiedRequirements": [
+        "Índice completo de contenidos.",
+        "Uno o dos capítulos.",
+        "Información sobre la extensión prevista.",
+        "Plazo de finalización del proyecto.",
+        "El archivo adjunto del formulario debe ser PDF y no superar 30 MB."
+      ],
+      "sampleChapterRequirement": "1-or-2-chapters",
+      "peerReview": "evaluacion-editorial; detalle publico no especificado",
+      "sources": [
+        "https://www.ra-ma.es/manuscrito/"
+      ]
+    },
+    {
+      "id": "paraninfo",
+      "name": "Ediciones Paraninfo",
+      "targetPublication": "teaching-manual-es",
+      "route": "Canal de autores / contacto editorial",
+      "publiclyVerifiedRequirements": [
+        "La línea Universidad publica libros de texto, guías profesionales y monografías.",
+        "Ciencias de la Computación figura entre sus materias editoriales.",
+        "Existe un canal específico para autores y un contacto editorial público."
+      ],
+      "sampleChapterRequirement": "confirm-with-editor-before-submission",
+      "peerReview": "confirm-with-editor-before-submission",
+      "sources": [
+        "https://www.paraninfo.es/universidad",
+        "https://autores.paraninfo.es/",
+        "https://recursos.paraninfo.es/descargas/TRIPTICO_QUIERES_SER_AUTOR.pdf"
+      ]
+    }
+  ]
+}
