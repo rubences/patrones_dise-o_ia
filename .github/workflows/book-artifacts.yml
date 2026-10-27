@@ -1,0 +1,88 @@
+name: Build Distributable Book Artifacts
+
+on:
+  pull_request:
+    paths:
+      - 'content/**'
+      - 'catalog/**'
+      - 'book/**'
+      - 'scripts/build-book.mjs'
+      - 'scripts/build-evidence-pack.mjs'
+      - 'scripts/verify-book-release.mjs'
+      - 'scripts/lib/**'
+      - '.github/workflows/book-artifacts.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'catalog/**'
+      - 'book/**'
+      - 'scripts/build-book.mjs'
+      - 'scripts/build-evidence-pack.mjs'
+      - 'scripts/verify-book-release.mjs'
+      - 'scripts/lib/**'
+      - '.github/workflows/book-artifacts.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-book:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Build canonical evidence and manuscript
+        run: |
+          node scripts/validate-editorial.mjs
+          node scripts/build-evidence-pack.mjs
+          node scripts/build-book.mjs
+
+      - name: Setup Quarto and TinyTeX
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+
+      - name: Render HTML, EPUB and PDF
+        run: |
+          # Quarto resolves output paths relative to the input document directory.
+          # Render beside the generated manuscript first, then stage explicitly in
+          # repo-root dist/release so verification/upload paths are deterministic.
+          quarto render dist/book/patrones-ia-manuscript.md --to html --output patrones-ia.html --toc --number-sections
+          quarto render dist/book/patrones-ia-manuscript.md --to epub --output patrones-ia.epub --toc --number-sections
+          quarto render dist/book/patrones-ia-manuscript.md --to pdf --output patrones-ia.pdf --toc --number-sections --pdf-engine=xelatex
+
+          mkdir -p dist/release
+          mv dist/book/patrones-ia.html dist/release/patrones-ia.html
+          mv dist/book/patrones-ia.epub dist/release/patrones-ia.epub
+          mv dist/book/patrones-ia.pdf dist/release/patrones-ia.pdf
+
+          test -s dist/release/patrones-ia.html
+          test -s dist/release/patrones-ia.epub
+          test -s dist/release/patrones-ia.pdf
+
+      - name: Verify binary release artifacts
+        run: node scripts/verify-book-release.mjs
+
+      - name: Upload distributable edition
+        uses: actions/upload-artifact@v4
+        with:
+          name: patrones-ia-book-${{ github.sha }}
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            dist/release/patrones-ia.html
+            dist/release/patrones-ia.epub
+            dist/release/patrones-ia.pdf
+            dist/release/release-manifest.json
+            dist/book/patrones-ia-manuscript.md
+            dist/book/manifest.json
+            dist/evidence/evidence-pack.json
+            dist/evidence/EVIDENCE_REPORT.md

@@ -11,6 +11,8 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
     <h1>La edición de referencia reproducible.</h1>
     <p class="lead">Este artefacto ensambla las 102 fichas canónicas en una edición técnica versionada. Sirve como baseline abierta, trazable y verificable; <strong>no es el manuscrito comercial</strong> de la monografía internacional ni del manual universitario.</p>
     <div class="actions">
+      <a class="button primary" href={`${import.meta.env.BASE_URL}patterns/`}>Explorar los patrones</a>
+      <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/actions/workflows/book-artifacts.yml">Builds HTML · EPUB · PDF</a>
       <a class="button primary" href={`${import.meta.env.BASE_URL}publications/`}>Ver las dos publicaciones</a>
       <a class="button" href={`${import.meta.env.BASE_URL}patterns/`}>Explorar los patrones</a>
       <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/releases">Ediciones estables</a>
@@ -20,6 +22,10 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
 
   <section class="section">
     <div class="stat-grid">
+      <div class="stat"><strong>{patterns.length}</strong><span>capítulos de patrón</span></div>
+      <div class="stat"><strong>{families}</strong><span>partes editoriales</span></div>
+      <div class="stat"><strong>3</strong><span>formatos distribuibles</span></div>
+      <div class="stat"><strong>SHA-256</strong><span>trazabilidad por build</span></div>
       <div class="stat"><strong>{patterns.length}</strong><span>fichas de patrón</span></div>
       <div class="stat"><strong>{families}</strong><span>macrofamilias</span></div>
       <div class="stat"><strong>3</strong><span>formatos distribuibles</span></div>
@@ -29,6 +35,14 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
 
   <section class="section">
     <div class="section-heading">
+      <div><p class="eyebrow">Pipeline</p><h2>Fuente → manuscrito → edición.</h2></div>
+      <p>Los binarios no se commitean. GitHub Actions genera HTML, EPUB y PDF, verifica sus firmas y publica un bundle temporal con manifests criptográficos.</p>
+    </div>
+    <div class="card-grid">
+      <article class="pattern-card"><span class="pattern-number">01 · SOURCE</span><h3>102 fichas</h3><p>Contenido canónico y enlaces a implementaciones TypeScript.</p></article>
+      <article class="pattern-card"><span class="pattern-number">02 · ASSEMBLE</span><h3>10 partes</h3><p>El orden sale de taxonomy.json y el build exige 102 capítulos.</p></article>
+      <article class="pattern-card"><span class="pattern-number">03 · RENDER</span><h3>HTML · EPUB · PDF</h3><p>Quarto transforma el manuscrito derivado sin alterar la fuente editorial.</p></article>
+      <article class="pattern-card"><span class="pattern-number">04 · VERIFY</span><h3>Release manifest</h3><p>Firmas de formato, tamaño y SHA-256 enlazados con corpus y manuscrito.</p></article>
       <div><p class="eyebrow">PIPELINE</p><h2>Referencia canónica, no tercera vía editorial.</h2></div>
       <p>El repositorio ensambla un manuscrito Markdown técnico y lo renderiza en CI a HTML, EPUB y PDF. Las dos publicaciones usan este corpus como sustrato factual y ejecutable, pero escriben narrativa, casos, figuras y contribuciones propias.</p>
     </div>
