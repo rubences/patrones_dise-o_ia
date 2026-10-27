@@ -1,11 +1,12 @@
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { demoteHeadings, projectRoot, readCanonicalPatterns, readTaxonomy } from './lib/editorial.mjs';
+import { buildEvidenceIndex, demoteHeadings, projectRoot, readCanonicalPatterns, readTaxonomy } from './lib/editorial.mjs';
 
 const config = JSON.parse(readFileSync(join(projectRoot, 'book', 'book.config.json'), 'utf8'));
 const taxonomy = readTaxonomy();
 const patterns = readCanonicalPatterns();
+const { evidenceByPatternId } = buildEvidenceIndex();
 if (patterns.length !== taxonomy.catalogSize) {
   throw new Error(`El manuscrito exige ${taxonomy.catalogSize} patrones; encontrados ${patterns.length}`);
 }
@@ -24,16 +25,29 @@ for (const pattern of patterns) {
   bucket.push(pattern);
 }
 
+function primaryEvidenceBlock(patternId) {
+  const entry = evidenceByPatternId.get(Number(patternId));
+  if (!entry || entry.resolvedReferences.length === 0) return '';
+  const rows = entry.resolvedReferences.map((reference) => {
+    const identifier = reference.identifier ? ` · ${reference.identifier}` : '';
+    return `- ${reference.authors} (${reference.year}). [*${reference.title}*](${reference.url}). ${reference.venue}${identifier}.`;
+  }).join('\n');
+  return `\n\n### Evidencia primaria registrada\n\n${rows}\n\n> **Alcance de la evidencia:** ${entry.scopeNote}`;
+}
+
+let primaryEvidenceChapters = 0;
 const parts = taxonomy.families.map((family, familyIndex) => {
   const chapters = byFamily.get(family.id).map((pattern) => {
     const id = String(pattern.data.patternId).padStart(3, '0');
     const metadata = `> **Familia:** ${family.nameEs} · **Nivel:** ${pattern.data.level} · **Dificultad:** ${pattern.data.difficulty} · **Evidencia:** ${pattern.data.evidenceStatus}`;
-    return `## Patrón ${id} — ${pattern.data.title}\n\n${pattern.data.summary}\n\n${metadata}\n\n${demoteHeadings(pattern.body, 2)}\n\n---`;
+    const primaryEvidence = primaryEvidenceBlock(pattern.data.patternId);
+    if (primaryEvidence) primaryEvidenceChapters += 1;
+    return `## Patrón ${id} — ${pattern.data.title}\n\n${pattern.data.summary}\n\n${metadata}\n\n${demoteHeadings(pattern.body, 2)}${primaryEvidence}\n\n---`;
   }).join('\n\n');
   return `# Parte ${familyIndex + 1} — ${family.nameEs}\n\n${family.description}\n\n${chapters}`;
 }).join('\n\n');
 
-const yaml = `---\ntitle: "${config.title}"\nsubtitle: "${config.subtitle}"\nauthor: "${config.author}"\nlang: es\nedition: "${config.edition}"\n---`;
+const yaml = `---\ntitle: "${config.title}"\nsubtitle: "${config.subtitle}"\nauthor: "${config.author}"\nlang: es\nedition: "${config.edition}"\nformat:\n  html:\n    toc: true\n    toc-depth: 2\n    number-sections: true\n    embed-resources: true\n  epub:\n    toc: true\n    toc-depth: 2\n  typst:\n    toc: true\n    section-numbering: "1.1"\n    papersize: a4\n    margin:\n      x: 2.2cm\n      y: 2.2cm\n---`;
 const manuscript = `${yaml}\n\n${frontmatter}\n\n${parts}\n`;
 const patternHeadings = manuscript.match(/^## Patrón \d{3} — /gm) ?? [];
 if (patternHeadings.length !== taxonomy.catalogSize) {
@@ -45,13 +59,16 @@ const outDir = join(projectRoot, 'dist', 'book');
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, config.output), manuscript, 'utf8');
 writeFileSync(join(outDir, 'manifest.json'), JSON.stringify({
-  schemaVersion: 1,
+  schemaVersion: 3,
   output: config.output,
   patternCount: patternHeadings.length,
   familyCount: taxonomy.families.length,
+  primaryEvidenceChapters,
   manuscriptSha256: sha256,
+  formats: ['html', 'epub', 'typst'],
   commitSha: process.env.GITHUB_SHA ?? null,
 }, null, 2) + '\n', 'utf8');
 
 console.log(`Book manuscript: ${patternHeadings.length} patrones / ${taxonomy.families.length} partes`);
+console.log(`Primary evidence chapters: ${primaryEvidenceChapters}/${patternHeadings.length}`);
 console.log(`Manuscript SHA-256: ${sha256}`);

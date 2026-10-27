@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-09-10",
+  "figures": [
+    {
+      "figureId": "FIG-RM-MCP-TRUST-BOUNDARY",
+      "publicationIds": ["research-monograph-en"],
+      "description": "Original trust-boundary diagram for model, MCP client/server, tools, policy enforcement and external systems.",
+      "sourceType": "original",
+      "owner": "author",
+      "license": "publisher-license-to-be-negotiated",
+      "status": "planned",
+      "sharedAcrossWorks": false,
+      "notes": "Create from first-party vector primitives; do not reproduce third-party MCP diagrams."
+    },
+    {
+      "figureId": "FIG-RM-EDGE-MESH-CLOUD",
+      "publicationIds": ["research-monograph-en"],
+      "description": "Original Edge-Mesh-Cloud placement and resilience architecture used by the research monograph.",
+      "sourceType": "original",
+      "owner": "author",
+      "license": "publisher-license-to-be-negotiated",
+      "status": "planned",
+      "sharedAcrossWorks": false,
+      "notes": "Must be redrawn specifically for the monograph and not copied from prior publications without rights review."
+    },
+    {
+      "figureId": "FIG-TM-TOOL-CALL-LAB",
+      "publicationIds": ["teaching-manual-es"],
+      "description": "Original didactic flow for allowlist, argument validation, execution and output sanitization.",
+      "sourceType": "repo-derived",
+      "owner": "author",
+      "license": "derived-from-MIT-repository-content",
+      "status": "planned",
+      "sharedAcrossWorks": false,
+      "notes": "Generate as a teaching-specific diagram using repository concepts, not third-party figures."
+    },
+    {
+      "figureId": "FIG-TM-RAG-LAB-PIPELINE",
+      "publicationIds": ["teaching-manual-es"],
+      "description": "Original RAG laboratory pipeline showing retrieval, ranking, context construction, generation and attribution.",
+      "sourceType": "repo-derived",
+      "owner": "author",
+      "license": "derived-from-MIT-repository-content",
+      "status": "planned",
+      "sharedAcrossWorks": false,
+      "notes": "Use an original teaching layout and cite academic sources separately from the artwork."
+    }
+  ]
+}

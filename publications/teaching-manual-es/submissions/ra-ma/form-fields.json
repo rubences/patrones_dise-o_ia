@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "publisher": "RA-MA",
+  "publicationId": "teaching-manual-es",
+  "reviewedOn": "2026-09-10",
+  "fields": [
+    {"key":"title","label":"Título","sourcePath":"publications/teaching-manual-es/publication.json","status":"ready","sensitivity":"public"},
+    {"key":"synopsis","label":"Presentación / sinopsis","sourcePath":"publications/teaching-manual-es/submissions/ra-ma/PAQUETE_EVALUACION.md","status":"ready","sensitivity":"public"},
+    {"key":"full-index","label":"Índice completo","sourcePath":"publications/teaching-manual-es/INDICE_Y_LABORATORIOS.md","status":"ready","sensitivity":"public"},
+    {"key":"sample-chapters","label":"Uno o dos capítulos muestra","sourcePath":"publications/teaching-manual-es/samples/04-tool-use-function-calling.md","status":"ready","sensitivity":"public"},
+    {"key":"planned-extent","label":"Extensión prevista","sourcePath":"publications/teaching-manual-es/submissions/ra-ma/PAQUETE_EVALUACION.md","status":"ready","sensitivity":"public"},
+    {"key":"evaluation-pdf","label":"PDF de evaluación generado por CI","sourcePath":"scripts/build-submission-packages.mjs","status":"ready","sensitivity":"public"},
+    {"key":"author-profile","label":"Perfil definitivo del autor","sourcePath":"publications/common/AUTHOR_PROFILE.md","status":"open","sensitivity":"public"},
+    {"key":"affiliations","label":"Afiliaciones vigentes","sourcePath":"publications/common/AUTHOR_PROFILE.md","status":"open","sensitivity":"public"},
+    {"key":"selected-evidence","label":"Selección de evidencias docentes/académicas","sourcePath":"publications/common/AUTHOR_PROFILE.md","status":"open","sensitivity":"public"},
+    {"key":"final-extent","label":"Extensión final comprometida","sourcePath":"publications/teaching-manual-es/submissions/ra-ma/PAQUETE_EVALUACION.md","status":"open","sensitivity":"public"},
+    {"key":"delivery-date","label":"Fecha final de entrega","sourcePath":"publications/teaching-manual-es/submissions/ra-ma/PAQUETE_EVALUACION.md","status":"open","sensitivity":"public"},
+    {"key":"contact-details","label":"Correo/teléfono/datos privados solicitados por el formulario","sourcePath":null,"status":"manual-entry","sensitivity":"manual-private"}
+  ]
+}

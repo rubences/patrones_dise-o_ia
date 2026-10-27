@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "publisher": "Springer Nature",
+  "publicationId": "research-monograph-en",
+  "reviewedOn": "2026-09-10",
+  "fields": [
+    {"key":"title","label":"Proposed title","sourcePath":"publications/research-monograph-en/publication.json","status":"ready","sensitivity":"public"},
+    {"key":"subtitle","label":"Proposed subtitle","sourcePath":"publications/research-monograph-en/publication.json","status":"ready","sensitivity":"public"},
+    {"key":"overview","label":"Book idea / overview","sourcePath":"publications/research-monograph-en/submissions/springer-nature/BOOK_IDEA.md","status":"ready","sensitivity":"public"},
+    {"key":"audience","label":"Target audience","sourcePath":"publications/research-monograph-en/BOOK_PROPOSAL.md","status":"ready","sensitivity":"public"},
+    {"key":"unique-contribution","label":"Unique contribution and market need","sourcePath":"publications/research-monograph-en/COMPETING_TITLES_2026.md","status":"ready","sensitivity":"public"},
+    {"key":"contents","label":"Detailed contents","sourcePath":"publications/research-monograph-en/OUTLINE.md","status":"ready","sensitivity":"public"},
+    {"key":"sample-chapters","label":"Prepared sample chapters","sourcePath":"publications/research-monograph-en/samples/03-tool-ecosystems-and-mcp.md","status":"ready","sensitivity":"public"},
+    {"key":"author-profile","label":"Publisher-specific author biography","sourcePath":"publications/common/AUTHOR_PROFILE.md","status":"open","sensitivity":"public"},
+    {"key":"orcid","label":"ORCID","sourcePath":"publications/common/AUTHOR_PROFILE.md","status":"open","sensitivity":"public"},
+    {"key":"affiliations","label":"Current affiliations and ordering","sourcePath":"publications/common/AUTHOR_PROFILE.md","status":"open","sensitivity":"public"},
+    {"key":"selected-publications","label":"Selected relevant publications","sourcePath":"publications/common/AUTHOR_PROFILE.md","status":"open","sensitivity":"public"},
+    {"key":"final-extent","label":"Final word/page extent","sourcePath":"publications/research-monograph-en/submissions/springer-nature/BOOK_IDEA.md","status":"open","sensitivity":"public"},
+    {"key":"delivery-date","label":"Final manuscript delivery commitment","sourcePath":"publications/research-monograph-en/submissions/springer-nature/BOOK_IDEA.md","status":"open","sensitivity":"public"},
+    {"key":"contact-details","label":"Private contact details","sourcePath":null,"status":"manual-entry","sensitivity":"manual-private"}
+  ]
+}

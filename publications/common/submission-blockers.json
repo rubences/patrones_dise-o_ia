@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-09-10",
+  "blockers": [
+    {
+      "id": "RM-001",
+      "publicationId": "research-monograph-en",
+      "field": "author-orcid",
+      "reason": "The definitive public ORCID value has not been explicitly approved for inclusion in the publisher-facing package.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "Author explicitly approves the ORCID value to be used in the public submission package.",
+      "publicSafe": true
+    },
+    {
+      "id": "RM-002",
+      "publicationId": "research-monograph-en",
+      "field": "author-affiliations",
+      "reason": "Publisher-facing affiliation wording and ordering must be confirmed for the submission date.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "Author approves exact affiliation names and order for the proposal.",
+      "publicSafe": true
+    },
+    {
+      "id": "RM-003",
+      "publicationId": "research-monograph-en",
+      "field": "selected-publications",
+      "reason": "The proposal needs a curated, publisher-specific selection of relevant publications rather than an inferred bibliography.",
+      "severity": "major",
+      "status": "open",
+      "resolutionCondition": "A short list of relevant publications is selected and verified against authoritative records.",
+      "publicSafe": true
+    },
+    {
+      "id": "RM-004",
+      "publicationId": "research-monograph-en",
+      "field": "final-extent",
+      "reason": "Current length is a planning estimate and has not been accepted as a final contractual commitment.",
+      "severity": "major",
+      "status": "open",
+      "resolutionCondition": "Final target word/page extent is approved for the selected publisher route.",
+      "publicSafe": true
+    },
+    {
+      "id": "RM-005",
+      "publicationId": "research-monograph-en",
+      "field": "delivery-date",
+      "reason": "The development schedule is an estimate; a definitive delivery commitment has not been approved.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "Author approves a publisher-facing manuscript delivery date.",
+      "publicSafe": true
+    },
+    {
+      "id": "RM-006",
+      "publicationId": "research-monograph-en",
+      "field": "figure-rights",
+      "reason": "Planned figures are registered but not all have reached a cleared rights state.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "Every figure intended for the proposal/sample chapters is original or has documented permission/license clearance.",
+      "publicSafe": true
+    },
+    {
+      "id": "RM-007",
+      "publicationId": "research-monograph-en",
+      "field": "live-publisher-form",
+      "reason": "Springer Nature form fields must be rechecked immediately before external submission because acquisition forms can change.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "Live submission route and required fields are reverified on the day the proposal is prepared for submission.",
+      "publicSafe": true
+    },
+    {
+      "id": "TM-001",
+      "publicationId": "teaching-manual-es",
+      "field": "author-profile",
+      "reason": "La versión definitiva y aprobada del perfil de autor para la propuesta editorial está pendiente.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "El autor aprueba el perfil público y las afiliaciones exactas que acompañarán el envío.",
+      "publicSafe": true
+    },
+    {
+      "id": "TM-002",
+      "publicationId": "teaching-manual-es",
+      "field": "selected-publications-or-teaching-evidence",
+      "reason": "Debe seleccionarse qué evidencias académicas/docentes son pertinentes para esta propuesta concreta.",
+      "severity": "major",
+      "status": "open",
+      "resolutionCondition": "Se valida una selección breve de evidencias relevantes para el público universitario de la obra.",
+      "publicSafe": true
+    },
+    {
+      "id": "TM-003",
+      "publicationId": "teaching-manual-es",
+      "field": "final-extent",
+      "reason": "La extensión existente es una estimación de planificación y no un compromiso editorial definitivo.",
+      "severity": "major",
+      "status": "open",
+      "resolutionCondition": "Se aprueba la extensión final prevista para el formulario de la editorial seleccionada.",
+      "publicSafe": true
+    },
+    {
+      "id": "TM-004",
+      "publicationId": "teaching-manual-es",
+      "field": "delivery-date",
+      "reason": "El calendario de 8–10 meses aún no se ha convertido en una fecha final de entrega comprometida.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "El autor aprueba una fecha concreta de finalización para el formulario editorial.",
+      "publicSafe": true
+    },
+    {
+      "id": "TM-005",
+      "publicationId": "teaching-manual-es",
+      "field": "figure-rights",
+      "reason": "Las figuras didácticas planificadas todavía no están todas marcadas como cleared.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "Todas las figuras incluidas en el paquete de evaluación quedan documentadas como originales o con permiso/licencia suficiente.",
+      "publicSafe": true
+    },
+    {
+      "id": "TM-006",
+      "publicationId": "teaching-manual-es",
+      "field": "live-ra-ma-form",
+      "reason": "Los campos y límites del formulario RA-MA deben reverificarse inmediatamente antes del envío externo.",
+      "severity": "critical",
+      "status": "open",
+      "resolutionCondition": "Se comprueba el formulario RA-MA vigente el día del envío y se confirma que el paquete generado sigue cumpliendo sus requisitos.",
+      "publicSafe": true
+    }
+  ]
+}
