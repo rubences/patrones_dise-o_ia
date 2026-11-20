@@ -1,0 +1,3 @@
+/** P12 332: educational semantic data contract; not production interoperability certification. */
+export class Pattern332Contract{compare(training:{name:string;type:string}[],serving:{name:string;type:string}[]){if([...training,...serving].some(x=>!x.name.trim()||!x.type.trim())||new Set(training.map(x=>x.name)).size!==training.length||new Set(serving.map(x=>x.name)).size!==serving.length)throw Error("invalid schema");const deployed=new Map(serving.map(x=>[x.name,x.type]));const mismatches=training.filter(x=>deployed.get(x.name)!==x.type).map(x=>x.name);return {parity:mismatches.length===0,mismatches};}}
+export const PATTERN_332_META={id:332,family:"ai-data-contracts",maturity:"experimental"} as const;
