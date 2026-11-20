@@ -4,7 +4,7 @@ slug: symbolic-proof-trace
 title: "Symbolic Proof Trace"
 summary: "Contrato experimental para symbolic proof trace con restricciones explícitas y evaluación reproducible."
 family: causal-neurosymbolic-ai
-legacyGroup: 36
+legacyGroup: 34
 level: architecture
 difficulty: advanced
 maturity: experimental
