@@ -34,7 +34,8 @@ Explicitar precondiciones, propietario y estado; medir degradación y capacidad 
 
 ## Implementación del repositorio
 
-`src/pattern_170_energy_aware_model_router.ts` es un contrato educativo, no ejecuta inferencia edge ni protocolos distribuidos.
+Elige un modelo que cumpla umbral de calidad y presupuesto energético. Contrato TypeScript determinista: `src/pattern_170_energy_aware_model_router.ts`; pruebas de regresión: `tests/p9_edge_patterns.test.ts`. No se ha medido rendimiento real en hardware edge ni se implementan servicios distribuidos completos.
+
 
 ## Producción
 
