@@ -132,6 +132,9 @@ jobs:
       - name: Verify P8 interoperability contracts
         run: npx --yes tsx@4.20.6 tests/p8_interoperability_contracts.ts
 
+      - name: Verify P9 experimental catalog and contract tests
+        run: npx --yes tsx@4.20.6 tests/p9_catalog_contracts.ts
+
       - name: Install web dependencies
         working-directory: web
         run: npm install
