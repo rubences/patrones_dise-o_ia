@@ -4,7 +4,7 @@ slug: dataset-lineage-graph
 title: "Dataset Lineage Graph"
 summary: "Contrato de referencia experimental para dataset lineage graph con validación y procedencia explícitas."
 family: data-centric-ai
-legacyGroup: 34
+legacyGroup: 32
 level: architecture
 difficulty: advanced
 maturity: experimental
