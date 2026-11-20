@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 320,
+  "catalogSize": 330,
   "families": [
     {
       "id": "foundations",
@@ -224,6 +224,12 @@
       "name": "Sustainable & Carbon-Aware AI Operations",
       "nameEs": "Operación Sostenible de IA y Consciente del Carbono",
       "description": "Planificación de inferencia, consumo energético, intensidad de carbono y efecto rebote."
+    },
+    {
+      "id": "ai-incident-forensics",
+      "name": "AI Incident Response, Forensics & Recovery",
+      "nameEs": "Respuesta a Incidentes, Forense y Recuperación de IA",
+      "description": "Preservación de evidencias, contención, reconstrucción, recuperación y aprendizaje de incidentes."
     }
   ],
   "levels": [
@@ -449,6 +455,10 @@
     {
       "id": 50,
       "name": "Sostenibilidad y Eficiencia Energética"
+    },
+    {
+      "id": 51,
+      "name": "Respuesta a Incidentes y Forense"
     }
   ]
 }
