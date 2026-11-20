@@ -4,7 +4,7 @@ Fecha: 2026-11-20. **Estado: 95 contratos experimentales implementados en invest
 
 ## Objetivo cuantificado
 
-Catálogo actual: **280 patrones, 33 macrofamilias**. Objetivo: **365 patrones**, exactamente **95 candidatos nuevos (271–365)** en **10 macrofamilias propuestas**. Estado objetivo condicional: **42 macrofamilias y 55 grupos de trazabilidad**, sujeto a evaluación de solapamientos y CI.
+Catálogo actual: **290 patrones, 34 macrofamilias**. Objetivo: **365 patrones**, exactamente **95 candidatos nuevos (271–365)** en **10 macrofamilias propuestas**. Estado objetivo condicional: **42 macrofamilias y 55 grupos de trazabilidad**, sujeto a evaluación de solapamientos y CI.
 
 ## Principios de calidad
 
@@ -202,4 +202,4 @@ Catálogo actual: **280 patrones, 33 macrofamilias**. Objetivo: **365 patrones**
 
 ## Hito de implementación (20-11-2026)
 
-Los diez grupos P12 (271–365) disponen de fuentes TypeScript, fichas de investigación, pruebas y proyectos de typecheck aislados. Los IDs 271–280 ya se han integrado en catálogo, taxonomía, exportaciones y fichas canónicas. Los otros 85 candidatos P12 siguen en investigación; el catálogo canónico está en 280. No se ha verificado CI verde. El siguiente hito consiste en auditoría de duplicidades, migración canónica, actualización de scripts y versión, validación editorial y comprobación de la web.
+Los diez grupos P12 (271–365) disponen de fuentes TypeScript, fichas de investigación, pruebas y proyectos de typecheck aislados. Los IDs 271–290 ya se han integrado en catálogo, taxonomía, exportaciones y fichas canónicas. Los otros 75 candidatos P12 siguen en investigación; el catálogo canónico está en 290. No se ha verificado CI verde. El siguiente hito consiste en auditoría de duplicidades, migración canónica, actualización de scripts y versión, validación editorial y comprobación de la web.
