@@ -56,6 +56,8 @@ jobs:
         run: node scripts/validate-catalog-integrity.mjs
       - name: Typecheck all pattern modules
         run: npx tsc --noEmit --project tsconfig.json
+      - name: Existing hardening regression suite
+        run: npx --yes tsx@4.20.6 --test tests/hardening/*.test.ts
       - name: P8 interoperability contracts
         run: npx --yes tsx@4.20.6 tests/p8_interoperability_contracts.ts
       - name: P9 catalog contracts
