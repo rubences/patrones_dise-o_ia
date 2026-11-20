@@ -1,0 +1,3 @@
+/** P10 221: educational economic mechanism; not strategyproofness, fairness or market compliance proof. */
+export class ValueOfInformationRouter{choose(options:{id:string;expectedBenefit:number;queryCost:number}[]){if(!options.length||new Set(options.map(o=>o.id)).size!==options.length||options.some(o=>!o.id.trim()||![o.expectedBenefit,o.queryCost].every(Number.isFinite)||o.queryCost<0))throw Error("invalid options");const ranked=[...options].sort((a,b)=>(b.expectedBenefit-b.queryCost)-(a.expectedBenefit-a.queryCost)||a.id.localeCompare(b.id));return ranked[0].expectedBenefit-ranked[0].queryCost>0?ranked[0].id:null;}}
+export const PATTERN_221_META={id:221,family:"ai-economics-mechanisms",maturity:"experimental"} as const;
