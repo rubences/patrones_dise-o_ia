@@ -37,12 +37,12 @@ const families = [...new Set(patterns.map((pattern) => pattern.family))].sort();
 const publishedCount = patterns.filter((pattern) => pattern.editorialStatus === 'published').length;
 ---
 
-<BaseLayout title="Catálogo — Patrones IA" description="Explora el catálogo maestro de 122 patrones de diseño para sistemas de IA.">
+<BaseLayout title="Catálogo — Patrones IA" description="Explora el catálogo maestro actualizado de patrones de diseño para sistemas de IA.">
   <section class="catalog-hero">
-    <p class="eyebrow">Pattern catalog · 122/122 catalogued</p>
+    <p class="eyebrow">Pattern catalog · {patterns.length} patrones · {families.length} macrofamilias</p>
     <h1>Explorar patrones.</h1>
     <p class="lead">
-      El inventario completo ya está normalizado. Las fichas publicadas abren su capítulo editorial;
+      El inventario maestro y sus fichas se generan desde la fuente canónica. Los contratos experimentales se identifican como tales;
       las pendientes enlazan directamente con la implementación TypeScript existente.
     </p>
 
