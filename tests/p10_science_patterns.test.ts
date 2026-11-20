@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {HypothesisRegistry} from "../research/p10/science/src/pattern_207_hypothesis_registry.js";
+import {ExperimentDesignAgent} from "../research/p10/science/src/pattern_208_experiment_design_agent.js";
+import {ReproducibleRunManifest} from "../research/p10/science/src/pattern_209_reproducible_run_manifest.js";
+import {StatisticalValidityGate} from "../research/p10/science/src/pattern_210_statistical_validity_gate.js";
+import {AutomatedReplicationWorkflow} from "../research/p10/science/src/pattern_211_automated_replication_workflow.js";
+import {ScientificProvenanceGraph} from "../research/p10/science/src/pattern_212_scientific_provenance_graph.js";
+import {ActiveLearningExperimentSelector} from "../research/p10/science/src/pattern_213_active_learning_experiment_selector.js";
+import {EvidenceToClaimCalibration} from "../research/p10/science/src/pattern_214_evidence_to_claim_calibration.js";
+test("207 rejects duplicate hypotheses and tracks testing",()=>{const x=new HypothesisRegistry();x.register("h","effect exists","no difference");assert.throws(()=>x.register("h","other","other"));x.markTested("h");assert.equal(x.get("h").status,"tested");});
+test("208 reproducible balanced allocation with fixed seed",()=>{const x=new ExperimentDesignAgent();const ids=["a","b","c","d"];const a=x.allocate(ids,["control","treatment"],42);assert.deepEqual(a,x.allocate(ids,["control","treatment"],42));assert.equal(a.filter(v=>v.arm==="control").length,2);});
+test("209 stable digest for canonical parameters",()=>{const x=new ReproducibleRunManifest();const a=x.build({codeRevision:"abc",datasetDigest:"a".repeat(64),seed:1,parameters:{z:1,a:true}});const b=x.build({codeRevision:"abc",datasetDigest:"a".repeat(64),seed:1,parameters:{a:true,z:1}});assert.equal(a.manifestHash,b.manifestHash);});
+test("210 Holm correction preserves original order",()=>{const x=new StatisticalValidityGate();assert.deepEqual(x.assess([.04,.001,.2],.05).rejected,[false,true,false]);assert.throws(()=>x.assess([1.2],.05));});
+test("211 reports replication mismatch",()=>{const x=new AutomatedReplicationWorkflow();assert.equal(x.compare({metric:1,seed:1,digest:"a"},{metric:2,seed:2,digest:"b"},.1).sameDataset,false);});
+test("212 detects provenance cycles",()=>{const x=new ScientificProvenanceGraph();x.link("data","model");x.link("model","claim");assert.throws(()=>x.link("claim","data"));});
+test("213 selects highest uncertainty per unit cost",()=>{const x=new ActiveLearningExperimentSelector();assert.equal(x.select([{id:"a",uncertainty:2,cost:2},{id:"b",uncertainty:3,cost:1}],2),"b");});
+test("214 rejects unsupported causal claims",()=>{const x=new EvidenceToClaimCalibration();assert.equal(x.assess({id:"c",strength:"causal"},{replications:1,randomized:false,identified:true}).supported,false);});
