@@ -1,0 +1,3 @@
+/** P12 281: educational identity-policy contract, not real credential issuance or cryptographic authentication. */
+export class Pattern281Contract{authorize(workload:{id:string;tenant:string;identity:string},binding:{workloadId:string;tenant:string;identity:string}){if(!workload.id.trim()||!workload.tenant.trim()||!workload.identity.trim()||workload.id!==binding.workloadId||workload.tenant!==binding.tenant||workload.identity!==binding.identity)throw Error("identity binding denied");return true;}}
+export const PATTERN_281_META={id:281,family:"agent-identity-trust",maturity:"experimental"} as const;
