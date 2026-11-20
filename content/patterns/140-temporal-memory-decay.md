@@ -4,7 +4,7 @@ slug: temporal-memory-decay
 title: "Temporal Memory Decay"
 summary: "Contrato arquitectónico experimental para temporal memory decay con trazabilidad, autorización y pruebas negativas."
 family: continual-learning-memory
-legacyGroup: 31
+legacyGroup: 29
 level: architecture
 difficulty: advanced
 maturity: experimental
