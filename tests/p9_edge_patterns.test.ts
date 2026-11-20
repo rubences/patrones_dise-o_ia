@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern167Contract} from "../src/pattern_167_adaptive_edge_inference.js";
+import {Pattern168Contract} from "../src/pattern_168_model_partitioning.js";
+import {Pattern169Contract} from "../src/pattern_169_offline_first_agent.js";
+import {Pattern170Contract} from "../src/pattern_170_energy_aware_model_router.js";
+import {Pattern171Contract} from "../src/pattern_171_federated_update_gate.js";
+import {Pattern172Contract} from "../src/pattern_172_edge_cache_consistency.js";
+import {Pattern173Contract} from "../src/pattern_173_bandwidth_aware_context.js";
+import {Pattern174Contract} from "../src/pattern_174_edge_to_cloud_failover.js";
+test("167 edge selects eligible low latency candidate",()=>{const x=new Pattern167Contract();assert.equal(x.select([{id:"a",latencyMs:10,memoryMb:50,available:true},{id:"b",latencyMs:5,memoryMb:100,available:true}],{maxLatencyMs:20,maxMemoryMb:60}).id,"a");assert.throws(()=>x.select([],{maxLatencyMs:20,maxMemoryMb:60}));});
+test("168 partition respects edge memory",()=>{const x=new Pattern168Contract();assert.deepEqual(x.partition([{name:"l1",memoryMb:2,computeMs:1},{name:"l2",memoryMb:3,computeMs:2}],2).cloudLayers,["l2"]);});
+test("169 offline queue respects owner and connectivity",()=>{const x=new Pattern169Contract();x.enqueue("1","alice","payload");assert.equal(x.flush("alice",false).length,0);assert.equal(x.flush("bob",true).length,0);assert.equal(x.flush("alice",true).length,1);assert.throws(()=>x.enqueue("","alice","payload"));});
+test("170 energy routing enforces quality and budget",()=>{const x=new Pattern170Contract();assert.equal(x.route([{id:"cheap",energyJ:1,quality:.7},{id:"good",energyJ:2,quality:.9}],3,.8).id,"good");assert.throws(()=>x.route([],1,.8));});
+test("171 federated gate rejects unknown client and high norm",()=>{const x=new Pattern171Contract();const limits={maxNorm:2,minSamples:10};assert.equal(x.validate({client:"a",sampleCount:10,norm:1},limits,new Set(["a"])).accepted,true);assert.throws(()=>x.validate({client:"b",sampleCount:10,norm:1},limits,new Set(["a"])));});
+test("172 edge cache rejects stale writes and reads",()=>{const x=new Pattern172Contract();x.write("k",2,"v");assert.equal(x.read("k",2).value,"v");assert.throws(()=>x.write("k",1,"old"));assert.throws(()=>x.read("k",3));});
+test("173 bandwidth selection stays within bytes",()=>{const x=new Pattern173Contract();assert.deepEqual(x.select([{id:"a",bytes:4,priority:2},{id:"b",bytes:3,priority:1}],5),{selected:["a"],usedBytes:4});assert.throws(()=>x.select([], -1));});
+test("174 failover rejects unavailable targets",()=>{const x=new Pattern174Contract();assert.equal(x.choose({healthy:false,latencyMs:1},{healthy:true,latencyMs:2},10),"cloud");assert.throws(()=>x.choose({healthy:false,latencyMs:1},{healthy:false,latencyMs:1},10));});
