@@ -34,7 +34,8 @@ Separar supuestos, datos, modelo, decisión y evidencia con trazabilidad.
 
 ## Implementación del repositorio
 
-`src/pattern_182_uncertainty_aware_planning.ts` es un contrato educativo, no estima modelos causales ni ejecuta simulación del mundo.
+Ordena acciones por recompensa esperada menos penalización de incertidumbre; no estima incertidumbre ni garantiza optimalidad. Referencia determinista: `src/pattern_182_uncertainty_aware_planning.ts`. Pruebas positivas y negativas: `tests/p9_causal_patterns.test.ts`. **No se afirma identificación causal, corrección formal ni rendimiento en benchmarks.**
+
 
 ## Producción
 
