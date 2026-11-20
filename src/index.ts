@@ -10,7 +10,7 @@
  *  Importación por categoría:
  *  import { agenticos, seguridad, qa } from 'patrones-agentes-ia'
  *
- *  134 patrones exportados en 15 macrofamilias.
+ *  190 patrones exportados en 22 macrofamilias.
  */
 
 // ── Utilidades comunes ────────────────────────────────────────────
@@ -261,3 +261,61 @@ export { MCPA2ABridge } from "./pattern_131_mcp_a2a_bridge.js";
 export { ToolPoisoningDefense } from "./pattern_132_tool_poisoning_defense.js";
 export { ArgumentAwareLeastPrivilege } from "./pattern_133_argument_aware_least_privilege.js";
 export { CrossProtocolTraceContext } from "./pattern_134_cross_protocol_trace_context.js";
+
+// P9 experimental architectural contracts (not production-grade integrations)
+export { Pattern135Contract } from "./pattern_135_episodic_memory_consolidation.js";
+export { Pattern136Contract } from "./pattern_136_semantic_memory_distillation.js";
+export { Pattern137Contract } from "./pattern_137_experience_replay.js";
+export { Pattern138Contract } from "./pattern_138_selective_forgetting.js";
+export { Pattern139Contract } from "./pattern_139_memory_provenance.js";
+export { Pattern140Contract } from "./pattern_140_temporal_memory_decay.js";
+export { Pattern141Contract } from "./pattern_141_continual_learning_gate.js";
+export { Pattern142Contract } from "./pattern_142_cross_trajectory_abstraction.js";
+export { Pattern143Contract } from "./pattern_143_ai_risk_register.js";
+export { Pattern144Contract } from "./pattern_144_evidence_backed_assurance_case.js";
+export { Pattern145Contract } from "./pattern_145_policy_to_control_traceability.js";
+export { Pattern146Contract } from "./pattern_146_human_accountability_gate.js";
+export { Pattern147Contract } from "./pattern_147_model_and_data_card_registry.js";
+export { Pattern148Contract } from "./pattern_148_regulatory_change_impact.js";
+export { Pattern149Contract } from "./pattern_149_conformity_evidence_ledger.js";
+export { Pattern150Contract } from "./pattern_150_independent_safety_review.js";
+export { IssueToPatchWorkflow } from "./pattern_151_issue_to_patch_workflow.js";
+export { RepositoryContextMapper } from "./pattern_152_repository_context_mapper.js";
+export { TestFirstRepairAgent } from "./pattern_153_test_first_repair_agent.js";
+export { IndependentCodeVerifier } from "./pattern_154_independent_code_verifier.js";
+export { AgenticPRReviewGate } from "./pattern_155_agentic_pr_review_gate.js";
+export { CIFailureTriage } from "./pattern_156_ci_failure_triage.js";
+export { SandboxedCodeExecution } from "./pattern_157_sandboxed_code_execution.js";
+export { ControlledDeploymentPromotion } from "./pattern_158_controlled_deployment_promotion.js";
+export { Pattern159Contract } from "./pattern_159_data_contract_gate.js";
+export { Pattern160Contract } from "./pattern_160_dataset_lineage_graph.js";
+export { Pattern161Contract } from "./pattern_161_schema_drift_sentinel.js";
+export { Pattern162Contract } from "./pattern_162_label_quality_audit.js";
+export { Pattern163Contract } from "./pattern_163_data_contamination_firewall.js";
+export { Pattern164Contract } from "./pattern_164_synthetic_data_quality_gate.js";
+export { Pattern165Contract } from "./pattern_165_dataset_version_pinning.js";
+export { Pattern166Contract } from "./pattern_166_distribution_shift_monitor.js";
+export { Pattern167Contract } from "./pattern_167_adaptive_edge_inference.js";
+export { Pattern168Contract } from "./pattern_168_model_partitioning.js";
+export { Pattern169Contract } from "./pattern_169_offline_first_agent.js";
+export { Pattern170Contract } from "./pattern_170_energy_aware_model_router.js";
+export { Pattern171Contract } from "./pattern_171_federated_update_gate.js";
+export { Pattern172Contract } from "./pattern_172_edge_cache_consistency.js";
+export { Pattern173Contract } from "./pattern_173_bandwidth_aware_context.js";
+export { Pattern174Contract } from "./pattern_174_edge_to_cloud_failover.js";
+export { Pattern175Contract } from "./pattern_175_causal_intervention_planner.js";
+export { Pattern176Contract } from "./pattern_176_structural_causal_model_adapter.js";
+export { Pattern177Contract } from "./pattern_177_neural_symbolic_constraint_gate.js";
+export { Pattern178Contract } from "./pattern_178_counterfactual_evaluation.js";
+export { Pattern179Contract } from "./pattern_179_symbolic_proof_trace.js";
+export { Pattern180Contract } from "./pattern_180_world_model_rollout.js";
+export { Pattern181Contract } from "./pattern_181_causal_confounder_check.js";
+export { Pattern182Contract } from "./pattern_182_uncertainty_aware_planning.js";
+export { BoundedAgentIteration } from "./pattern_183_bounded_agent_iteration.js";
+export { ReadOnlyParallelFanout } from "./pattern_184_read_only_parallel_fanout.js";
+export { ControlledWriteBarrier } from "./pattern_185_controlled_write_barrier.js";
+export { ResumableAgentSession } from "./pattern_186_resumable_agent_session.js";
+export { TwoStageContextCompaction } from "./pattern_187_two_stage_context_compaction.js";
+export { ToolOutputArtifactStore } from "./pattern_188_tool_output_artifact_store.js";
+export { TrajectoryRetentionPolicy } from "./pattern_189_trajectory_retention_policy.js";
+export { RuntimeCapabilityLease } from "./pattern_190_runtime_capability_lease.js";
