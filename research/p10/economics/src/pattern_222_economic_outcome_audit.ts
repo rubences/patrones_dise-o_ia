@@ -1,0 +1,3 @@
+/** P10 222: educational economic mechanism; not strategyproofness, fairness or market compliance proof. */
+export class EconomicOutcomeAudit{audit(transactions:{agent:string;debit:number;credit:number}[],tolerance=1e-8){if(!Number.isFinite(tolerance)||tolerance<0||transactions.some(t=>!t.agent.trim()||![t.debit,t.credit].every(Number.isFinite)||t.debit<0||t.credit<0))throw Error("invalid ledger");const debit=transactions.reduce((s,t)=>s+t.debit,0),credit=transactions.reduce((s,t)=>s+t.credit,0);if(![debit,credit].every(Number.isFinite))throw Error("overflow");return {balanced:Math.abs(debit-credit)<=tolerance,debit,credit};}}
+export const PATTERN_222_META={id:222,family:"ai-economics-mechanisms",maturity:"experimental"} as const;
