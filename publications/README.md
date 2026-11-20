@@ -6,7 +6,7 @@ Este directorio organiza las **dos obras editoriales independientes** derivadas 
 
 El repositorio mantiene tres capas deliberadamente separadas:
 
-1. **Referencia abierta y ejecutable**: `content/patterns/`, `catalog/`, `src/`, web y Evidence Pack. Es la fuente técnica trazable de los 122 patrones.
+1. **Referencia abierta y ejecutable**: `content/patterns/`, `catalog/`, `src/`, web y Evidence Pack. Es la fuente técnica trazable de los 365 patrones.
 2. **Monografía internacional de investigación (EN)**: una obra de síntesis y contribución arquitectónica para investigadores, arquitectos de software y especialistas en sistemas de IA.
 3. **Manual universitario (ES)**: una obra didáctica basada en resultados de aprendizaje, laboratorios, ejercicios, rúbricas y un proyecto integrador.
 
@@ -24,6 +24,10 @@ Las publicaciones 2 y 3 **no son traducciones entre sí**. Comparten IDs de patr
 Se puede reutilizar de forma trazable el **sustrato factual y técnico**: identificadores, interfaces, código, terminología, referencias, resultados reproducibles y clasificación. No se debe asumir reutilización automática del texto narrativo entre manuscritos.
 
 Antes de entregar a una editorial, revisar `common/EDITORIAL_REUSE_AND_RIGHTS.md` y el contrato propuesto. Las condiciones sobre traducción, adaptación, territorio, figuras, material suplementario, web complementaria, repositorios, acceso abierto y versiones aceptadas dependen del contrato concreto.
+
+## Ampliación del corpus 341–365
+
+La monografía de investigación incorpora decisiones agénticas (341–350), integridad de evaluación (351–360) y autonomía acotada (361–365) como contratos y líneas de investigación, sin alegar resultados empíricos inexistentes. El manual español los integra como prácticas de autorización, auditoría, reproducibilidad y supervisión humana. Las dos obras conservan narrativas, casos y objetivos distintos.
 
 ## Validación
 
