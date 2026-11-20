@@ -7,6 +7,7 @@ import teaching from '../../../publications/teaching-manual-es/publication.json'
 
 const patterns = (await getCollection('patterns')).sort((a, b) => a.data.patternId - b.data.patternId);
 const base = import.meta.env.BASE_URL;
+const familyCards = taxonomy.families.map((family) => ({...family,count:patterns.filter((pattern)=>pattern.data.family===family.id).length})).filter((family)=>family.count>0);
 ---
 
 <BaseLayout title="Patrones IA — Patrones de diseño para sistemas inteligentes">
@@ -30,21 +31,22 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="macrofamilias">
     <div class="section-heading">
-      <div><p class="eyebrow">Catálogo canónico actualizado</p><h2>Del patrón al sistema.</h2></div>
-      <p>Cada ficha conecta intención, implementación, riesgos, producción y relaciones. El objetivo no es memorizar recetas: es aprender a componer arquitecturas de IA defendibles.</p>
+      <div><p class="eyebrow">Exploración por dominio</p><h2>Elige una macrofamilia.</h2></div>
+      <p>Los {patterns.length} patrones se organizan en {familyCards.length} macrofamilias. Accede directamente a cada área, con sus patrones, fichas y diagramas interactivos.</p>
     </div>
-    <div class="card-grid">
-      {patterns.map((pattern) => (
-        <a class="pattern-card" href={`${base}patterns/${pattern.data.slug}/`}>
-          <span class="pattern-number">PATTERN {String(pattern.data.patternId).padStart(3, '0')}</span>
-          <h3>{pattern.data.title}</h3>
-          <p>{pattern.data.summary}</p>
-          <div class="tags"><span class="tag">{pattern.data.family}</span><span class="tag">{pattern.data.difficulty}</span><span class="tag">{pattern.data.evidenceStatus}</span></div>
+    <div class="family-grid">
+      {familyCards.map((family, index) => (
+        <a class="family-card" href={`${base}patterns/?family=${encodeURIComponent(family.id)}#catalog-results`}>
+          <div class="family-card-top"><span class="family-index">{String(index+1).padStart(2,'0')}</span><strong>{family.count} patrones</strong></div>
+          <h3>{family.nameEs}</h3>
+          <p>{family.description}</p>
+          <span class="family-card-link">Explorar familia →</span>
         </a>
       ))}
     </div>
+    <div class="actions"><a class="button primary" href={`${base}patterns/`}>Ver el catálogo completo</a></div>
   </section>
 
   <section class="section">
@@ -62,3 +64,15 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 </BaseLayout>
+
+<style>
+.family-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:1rem}
+.family-card{display:flex;flex-direction:column;min-height:205px;padding:1.3rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(23,35,58,.85),rgba(16,23,38,.85));text-decoration:none;transition:transform .18s,border-color .18s}
+.family-card:hover,.family-card:focus-visible{transform:translateY(-3px);border-color:var(--accent-2);outline-offset:3px}
+.family-card-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.8rem}
+.family-index{color:var(--accent-2);font-weight:800;letter-spacing:.12em}
+.family-card h3{font-size:1.25rem;margin:1.1rem 0 .5rem}
+.family-card p{color:var(--muted);font-size:.91rem;line-height:1.55;margin:0 0 1rem}
+.family-card-link{margin-top:auto;color:var(--accent-2);font-weight:700;font-size:.88rem}
+@media(prefers-reduced-motion:reduce){.family-card{transition:none}.family-card:hover{transform:none}}
+</style>
