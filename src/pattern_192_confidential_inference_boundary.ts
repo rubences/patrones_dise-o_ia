@@ -1,0 +1,3 @@
+/** P10 privacy pattern 192: deterministic educational policy/metric, not a privacy certification. */
+export class ConfidentialInferenceBoundary{authorize(request:{attested:boolean;measurement:string;approvedMeasurements:ReadonlySet<string>;encryptedInput:boolean;debugEnabled:boolean}){if(!request.attested||!request.encryptedInput||request.debugEnabled||!request.approvedMeasurements.has(request.measurement))throw Error("confidential boundary denied");return {allowed:true as const,requiresRealAttestation:true as const};}}
+export const PATTERN_192_META={id:192,family:"privacy-confidential-ai",maturity:"experimental"} as const;
