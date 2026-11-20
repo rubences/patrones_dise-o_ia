@@ -4,7 +4,7 @@ slug: two-stage-context-compaction
 title: "Two-Stage Context Compaction"
 summary: "Patrón de referencia para two-stage context compaction con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agent-runtime-harness
-legacyGroup: 30
+legacyGroup: 35
 level: workflow
 difficulty: advanced
 maturity: emerging
