@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import taxonomy from '../../../../catalog/taxonomy.json';
 import PatternDiagram from '../../components/lab/PatternDiagram.astro';
 import { buildPatternGraph } from '../../lib/lab/pattern-graph';
 
@@ -25,6 +26,7 @@ const graph = buildPatternGraph(
  allPatterns.map(p=>({patternId:p.data.patternId,slug:p.data.slug,title:p.data.title,summary:p.data.summary,related:p.data.related,combinesWith:p.data.combinesWith}))
 );
 const toc = headings.filter((heading) => heading.depth === 2);
+const family = taxonomy.families.find((item)=>item.id===entry.data.family);
 const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${entry.data.sourceFile}`;
 ---
 
@@ -32,7 +34,7 @@ const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${e
   <div class="pattern-shell">
     <article>
       <header class="pattern-header">
-        <p class="eyebrow">Pattern {String(entry.data.patternId).padStart(3, '0')} · {entry.data.family}</p>
+        <p class="eyebrow"><a href={`${import.meta.env.BASE_URL}patterns/?family=${encodeURIComponent(entry.data.family)}#catalog-results`}>{family?.nameEs ?? entry.data.family}</a> · Pattern {String(entry.data.patternId).padStart(3, '0')}</p>
         <h1>{entry.data.title}</h1>
         <p class="lead">{entry.data.summary}</p>
 
