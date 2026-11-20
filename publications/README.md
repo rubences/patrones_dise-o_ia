@@ -6,7 +6,7 @@ Este directorio organiza las **dos obras editoriales independientes** derivadas 
 
 El repositorio mantiene tres capas deliberadamente separadas:
 
-1. **Referencia abierta y ejecutable**: `content/patterns/`, `catalog/`, `src/`, web y Evidence Pack. Es la fuente técnica trazable de los 102 patrones.
+1. **Referencia abierta y ejecutable**: `content/patterns/`, `catalog/`, `src/`, web y Evidence Pack. Es la fuente técnica trazable de los 122 patrones.
 2. **Monografía internacional de investigación (EN)**: una obra de síntesis y contribución arquitectónica para investigadores, arquitectos de software y especialistas en sistemas de IA.
 3. **Manual universitario (ES)**: una obra didáctica basada en resultados de aprendizaje, laboratorios, ejercicios, rúbricas y un proyecto integrador.
 

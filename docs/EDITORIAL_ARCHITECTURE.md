@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Convertir el repositorio de 102 implementaciones TypeScript en una única fuente de conocimiento capaz de alimentar tres productos sincronizados:
+Convertir el repositorio de 122 implementaciones TypeScript en una única fuente de conocimiento capaz de alimentar tres productos sincronizados:
 
 1. **Web navegable** — catálogo, búsqueda, filtros, learning paths y relaciones.
 2. **Libro** — narrativa técnica, capítulos, arquitecturas compuestas y referencias.
@@ -17,7 +17,7 @@ catalog/taxonomy.json
 
 catalog/patterns.json
         |
-        +--> inventario maestro 102/102: identidad, slug, familia, grupo histórico y sourceFile
+        +--> inventario maestro 122/122: identidad, slug, familia, grupo histórico y sourceFile
 
 content/patterns/*.md
         |
@@ -33,8 +33,8 @@ El **estado de publicación se deriva de la presencia de una ficha canónica en 
 
 ## Estado de la Fase 1
 
-- Implementaciones TypeScript: **102/102**.
-- Inventario maestro: **102/102**.
+- Implementaciones TypeScript: **122/122**.
+- Inventario maestro: **122/122**.
 - Fichas canónicas publicadas: **9/102**.
 - Primer bloque editorial cerrado: patrones **1–8**.
 - Ficha de referencia de Knowledge & Context: patrón **25 — RAG**.
@@ -181,3 +181,8 @@ Safety & Security, Reliability, Production & FinOps, Evaluation & QA y Human Exp
 - `RESUMEN_EJECUTIVO_PLAN_ACCION.md` describe una fase anterior y debe tratarse como documento histórico.
 - `web/package-lock.json` debe fijarse cuando se cierre la primera estabilización del subproyecto web.
 - El libro PDF/EPUB se añadirá una vez estabilizada la convención de capítulos en varios bloques.
+
+
+## Segunda generación 103–122
+
+Se añaden cuatro macrofamilias: AI Platforms & Factories, Development & Governance, Data & Graph Foundations y Model Adaptation & PEFT. Los IDs 1–102 permanecen inmutables.

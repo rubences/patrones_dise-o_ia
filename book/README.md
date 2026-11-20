@@ -1,6 +1,6 @@
 # Libro — Patrones IA
 
-El libro **no mantiene una copia manual** de las 102 fichas. `scripts/build-book.mjs` ensambla el manuscrito desde `content/patterns/`, usando el orden de `catalog/taxonomy.json` y el material introductorio de `book/frontmatter/`.
+El libro **no mantiene una copia manual** de las 122 fichas. `scripts/build-book.mjs` ensambla el manuscrito desde `content/patterns/`, usando el orden de `catalog/taxonomy.json` y el material introductorio de `book/frontmatter/`.
 
 ```bash
 node scripts/validate-editorial.mjs

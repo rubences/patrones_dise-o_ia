@@ -11,9 +11,9 @@ git push origin book-v1.0.0
 
 El push del tag activa `.github/workflows/release-book.yml`. El workflow reconstruye todo desde el commit etiquetado y no reutiliza binarios locales:
 
-1. valida las 102 fichas canónicas;
+1. valida las 122 fichas canónicas;
 2. genera el Evidence Pack;
-3. ensambla el manuscrito de 102 patrones / 10 macrofamilias;
+3. ensambla el manuscrito de 122 patrones / 14 macrofamilias;
 4. renderiza HTML, EPUB y PDF con Quarto/Typst;
 5. genera manifests y notas de release desde los datos del build;
 6. ejecuta el hardening suite;

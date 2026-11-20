@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
-const expectedCatalogSize = 102;
+const expectedCatalogSize = JSON.parse(readFileSync(join(root, 'catalog', 'taxonomy.json'), 'utf8')).catalogSize;
 const errors = [];
 const warnings = [];
 

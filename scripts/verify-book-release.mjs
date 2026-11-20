@@ -36,7 +36,8 @@ const manifest = {
   artifacts,
 };
 
-if (manifest.patternCount !== 102 || manifest.familyCount !== 10) {
+const taxonomy = JSON.parse(readFileSync(join(projectRoot, 'catalog', 'taxonomy.json'), 'utf8'));
+if (manifest.patternCount !== taxonomy.catalogSize || manifest.familyCount !== taxonomy.families.length) {
   throw new Error(`Release incompleta: ${manifest.patternCount} patrones / ${manifest.familyCount} familias`);
 }
 

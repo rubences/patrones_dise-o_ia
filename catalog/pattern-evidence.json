@@ -3,178 +3,389 @@
   "patterns": [
     {
       "patternId": 3,
-      "references": ["shinn-2023-reflexion"],
+      "references": [
+        "shinn-2023-reflexion"
+      ],
       "scopeNote": "Reflexion es una instancia investigada de reflexión verbal con memoria episódica; respalda esta familia de diseño, no implica que toda implementación del patrón 3 reproduzca sus resultados."
     },
     {
       "patternId": 4,
-      "references": ["madaan-2023-self-refine"],
+      "references": [
+        "madaan-2023-self-refine"
+      ],
       "scopeNote": "Self-Refine aporta evidencia primaria para ciclos iterativos de generación, feedback y refinamiento sobre tareas concretas; respalda Evaluator Optimizer como familia de control, pero no garantiza mejora monotónica ni elimina sesgos cuando generador y evaluador comparten modelo."
     },
     {
       "patternId": 5,
-      "references": ["schick-2023-toolformer"],
+      "references": [
+        "schick-2023-toolformer"
+      ],
       "scopeNote": "Toolformer aporta evidencia primaria sobre aprendizaje de uso de APIs; el patrón Tool Use del repositorio es más general y no presupone el método de entrenamiento de Toolformer."
     },
     {
       "patternId": 6,
-      "references": ["wang-2023-plan-and-solve"],
+      "references": [
+        "wang-2023-plan-and-solve"
+      ],
       "scopeNote": "Plan-and-Solve separa planificación y ejecución de subtareas en prompting de razonamiento; respalda la separación arquitectónica del patrón Planning, no garantiza mejores planes en cualquier dominio, modelo o agente."
     },
     {
       "patternId": 7,
-      "references": ["wu-2024-autogen"],
+      "references": [
+        "wu-2024-autogen"
+      ],
       "scopeNote": "AutoGen demuestra una infraestructura para componer múltiples agentes conversables con LLM, humanos y herramientas; respalda topologías multiagente, no establece que varios agentes superen siempre a una solución monolítica."
     },
     {
       "patternId": 25,
-      "references": ["lewis-2020-rag", "es-2024-ragas"],
+      "references": [
+        "lewis-2020-rag",
+        "es-2024-ragas"
+      ],
       "scopeNote": "Lewis et al. formalizan RAG y RAGAs separa dimensiones de evaluación de retrieval, fidelidad y generación; ninguna referencia implica una mejora universal para cualquier corpus, retriever, modelo o métrica."
     },
     {
       "patternId": 26,
-      "references": ["wei-2022-cot"],
+      "references": [
+        "wei-2022-cot"
+      ],
       "scopeNote": "La referencia fundacional evalúa Chain-of-Thought prompting en modelos y benchmarks concretos; la ficha separa ese resultado empírico del uso general de descomposición en workflows."
     },
     {
       "patternId": 27,
-      "references": ["yao-2023-react"],
+      "references": [
+        "yao-2023-react"
+      ],
       "scopeNote": "ReAct ofrece una instancia primaria de bucle donde el modelo alterna razonamiento, acción y nueva observación; respalda la estructura de Agentic Loop, pero no demuestra que toda iteración sea útil ni que el agente deba controlar herramientas sin límites externos."
     },
     {
       "patternId": 28,
-      "references": ["schick-2023-toolformer"],
+      "references": [
+        "schick-2023-toolformer"
+      ],
       "scopeNote": "Toolformer estudia la inserción y selección de llamadas a APIs dentro de la generación, aportando un antecedente directo para Function Calling; no equivale a los contratos JSON, esquemas ni semántica de autorización de las APIs comerciales modernas."
     },
     {
       "patternId": 36,
-      "references": ["yao-2023-tot"],
+      "references": [
+        "yao-2023-tot"
+      ],
       "scopeNote": "Tree of Thoughts se valida en tareas de búsqueda específicas; sus mejoras de benchmark no deben extrapolarse a cualquier dominio, modelo o política de branching."
     },
     {
       "patternId": 38,
-      "references": ["shazeer-2017-moe"],
+      "references": [
+        "shazeer-2017-moe"
+      ],
       "scopeNote": "Shazeer et al. introducen una capa Mixture-of-Experts con gating entrenable y activación dispersa de expertos; respalda el principio de especialización y selección condicional, pero sus resultados de capacidad y coste pertenecen a la arquitectura y benchmarks estudiados."
     },
     {
       "patternId": 39,
-      "references": ["chen-2023-frugalgpt"],
+      "references": [
+        "chen-2023-frugalgpt"
+      ],
       "scopeNote": "FrugalGPT formula cascadas de modelos con selección secuencial y umbrales orientados a coste y calidad; respalda el patrón Cascade, pero sus ahorros y mejoras publicados dependen de precios, modelos, funciones de scoring, datasets y presupuesto concretos."
     },
     {
       "patternId": 41,
-      "references": ["khattab-2020-colbert"],
+      "references": [
+        "khattab-2020-colbert"
+      ],
       "scopeNote": "ColBERT aporta evidencia primaria para ranking neuronal mediante late interaction entre query y pasajes; respalda una familia de retrieval/ranking, no prescribe ColBERT como mejor opción para todo RAG ni conserva sus resultados fuera de sus datasets."
     },
     {
       "patternId": 42,
-      "references": ["wang-2023-self-consistency"],
+      "references": [
+        "wang-2023-self-consistency"
+      ],
       "scopeNote": "Self-Consistency marginaliza múltiples rutas de razonamiento y muestra ganancias en benchmarks concretos; coste y beneficio dependen del número de muestras y de la tarea."
     },
     {
       "patternId": 49,
-      "references": ["jiang-2023-llmlingua"],
+      "references": [
+        "jiang-2023-llmlingua"
+      ],
       "scopeNote": "LLMLingua aporta evidencia primaria para compresión de prompts con presupuesto de tokens y evaluación empírica de pérdida de rendimiento; respalda Prompt Compression, pero una tasa de compresión concreta no debe extrapolarse a otros modelos, dominios o requisitos de fidelidad."
     },
     {
       "patternId": 51,
-      "references": ["packer-2023-memgpt"],
+      "references": [
+        "packer-2023-memgpt"
+      ],
       "scopeNote": "MemGPT estudia gestión jerárquica de memoria y movimiento de información entre contexto activo y almacenamiento externo para interacciones prolongadas; respalda Long-Term Memory como arquitectura, no demuestra memoria ilimitada ni ausencia de errores de recuperación."
     },
     {
       "patternId": 52,
-      "references": ["lewis-2020-rag", "gao-2023-alce"],
+      "references": [
+        "lewis-2020-rag",
+        "gao-2023-alce"
+      ],
       "scopeNote": "RAG fundamenta generación condicionada por evidencia recuperada y ALCE evalúa soporte de afirmaciones mediante citas; juntas respaldan Grounding como vínculo explícito con fuentes, sin garantizar veracidad si la evidencia recuperada es errónea, incompleta o mal atribuida."
     },
     {
       "patternId": 53,
-      "references": ["nist-ai-600-1"],
+      "references": [
+        "nist-ai-600-1"
+      ],
       "scopeNote": "NIST AI 600-1 estructura riesgos y acciones de gestión para IA generativa y justifica controles por capas; no certifica que un guardrail concreto sea suficiente ni convierte una lista de filtros en conformidad automática."
     },
     {
       "patternId": 54,
-      "references": ["yao-2023-react"],
+      "references": [
+        "yao-2023-react"
+      ],
       "scopeNote": "ReAct estudia la intercalación de razonamiento y acciones sobre entornos concretos; la referencia no convierte acciones del LLM en autorizadas ni seguras por definición."
     },
     {
       "patternId": 60,
-      "references": ["wu-2024-autogen"],
+      "references": [
+        "wu-2024-autogen"
+      ],
       "scopeNote": "AutoGen permite definir patrones conversacionales y coordinación entre agentes especializados, aportando un antecedente primario para Orchestrator-Workers; no valida una única topología ni elimina la necesidad de contratos, límites y observabilidad."
     },
     {
       "patternId": 62,
-      "references": ["bai-2022-constitutional-ai"],
+      "references": [
+        "bai-2022-constitutional-ai"
+      ],
       "scopeNote": "Constitutional AI describe un proceso de entrenamiento con crítica/revisión y RLAIF; una lista de reglas insertada solo en prompt no equivale al procedimiento completo del trabajo original."
     },
     {
       "patternId": 69,
-      "references": ["nist-ai-100-2e2025"],
+      "references": [
+        "nist-ai-100-2e2025"
+      ],
       "scopeNote": "NIST clasifica direct e indirect prompt injection entre los ataques relevantes para GenAI; la guía respalda el modelo de amenaza, no garantiza que una defensa heurística concreta sea suficiente."
     },
     {
       "patternId": 70,
-      "references": ["nist-ai-100-2e2025", "madry-2018-adversarial-training"],
+      "references": [
+        "nist-ai-100-2e2025",
+        "madry-2018-adversarial-training"
+      ],
       "scopeNote": "NIST AI 100-2e2025 formaliza taxonomías de ataques y mitigaciones, mientras Madry et al. estudian robust optimization frente a una clase definida de adversarios; respaldan Adversarial Robustness, no una resistencia universal frente a ataques desconocidos o fuera del threat model."
     },
     {
       "patternId": 72,
-      "references": ["nist-sp-800-162-abac"],
+      "references": [
+        "nist-sp-800-162-abac"
+      ],
       "scopeNote": "NIST SP 800-162 define ABAC mediante atributos de sujeto, objeto, operación y entorno evaluados contra políticas; respalda separar autorización de generación del modelo, pero no convierte una decisión probabilística del LLM en un control de acceso fiable."
     },
     {
       "patternId": 73,
-      "references": ["zheng-2023-llm-as-judge"],
+      "references": [
+        "zheng-2023-llm-as-judge"
+      ],
       "scopeNote": "MT-Bench y Chatbot Arena estudian LLM-as-a-Judge y documentan sesgos de posición, verbosidad y auto-favorecimiento; respaldan el patrón como técnica de evaluación escalable, no como sustituto infalible de evaluación humana o métricas externas."
     },
     {
       "patternId": 74,
-      "references": ["perez-2022-red-teaming-lms"],
+      "references": [
+        "perez-2022-red-teaming-lms"
+      ],
       "scopeNote": "Perez et al. muestran generación automatizada de casos adversariales con otro modelo como herramienta de red teaming; el método descubre clases de fallos, pero no demuestra cobertura exhaustiva ni reemplaza análisis humano, threat modeling o pruebas especializadas."
     },
     {
       "patternId": 77,
-      "references": ["opentelemetry-semconv-1-44"],
+      "references": [
+        "opentelemetry-semconv-1-44"
+      ],
       "scopeNote": "OpenTelemetry define convenciones semánticas comunes para trazas, métricas, logs y eventos, proporcionando una base interoperable de observabilidad; las convenciones GenAI específicas continúan evolucionando y deben versionarse, no asumirse estables por extensión."
     },
     {
       "patternId": 81,
-      "references": ["chen-2023-frugalgpt"],
+      "references": [
+        "chen-2023-frugalgpt"
+      ],
       "scopeNote": "FrugalGPT demuestra que una política puede enrutar entre modelos de distinto coste y capacidad según scoring y presupuesto; respalda Model Fallback como composición escalonada, pero fallback operativo también exige reglas de compatibilidad, seguridad y degradación no cubiertas por el paper."
     },
     {
       "patternId": 82,
-      "references": ["mcp-2026-07-28"],
+      "references": [
+        "mcp-2026-07-28"
+      ],
       "scopeNote": "La especificación 2026-07-28 es la referencia normativa del protocolo. Las implementaciones deben declarar la revisión soportada: el SDK o una demo anterior no adquieren automáticamente la semántica de esta revisión."
     },
     {
       "patternId": 86,
-      "references": ["jiang-2023-llmlingua", "packer-2023-memgpt"],
+      "references": [
+        "jiang-2023-llmlingua",
+        "packer-2023-memgpt"
+      ],
       "scopeNote": "LLMLingua estudia reducción selectiva del contenido y MemGPT gestión explícita de contexto limitado mediante memoria jerárquica; respaldan Context Compaction como estrategia, pero compactar implica riesgo de pérdida semántica y requiere evaluación específica de la tarea."
     },
     {
       "patternId": 93,
-      "references": ["leviathan-2023-speculative-decoding"],
+      "references": [
+        "leviathan-2023-speculative-decoding"
+      ],
       "scopeNote": "Speculative Decoding ejecuta propuestas de un modelo aproximador y las verifica con el modelo objetivo preservando la distribución del algoritmo descrito; respalda Speculative Execution, pero esa propiedad no se transfiere automáticamente a workflows agénticos especulativos arbitrarios."
     },
     {
       "patternId": 97,
-      "references": ["ouyang-2022-instructgpt"],
+      "references": [
+        "ouyang-2022-instructgpt"
+      ],
       "scopeNote": "InstructGPT entrena un reward model a partir de rankings humanos y optimiza el modelo con feedback humano; respalda Preference Learning, pero las preferencias reflejan la población y protocolo de etiquetado y no equivalen a valores universales ni preferencias permanentes del usuario."
     },
     {
       "patternId": 98,
-      "references": ["gao-2023-alce"],
+      "references": [
+        "gao-2023-alce"
+      ],
       "scopeNote": "ALCE define un benchmark end-to-end y métricas para respuestas con citas y evidencia recuperada; respalda evaluación de atribución y soporte, pero la mera presencia de una cita no prueba por sí sola que una afirmación sea correcta o completa."
     },
     {
       "patternId": 99,
-      "references": ["wang-2023-self-instruct"],
+      "references": [
+        "wang-2023-self-instruct"
+      ],
       "scopeNote": "Self-Instruct genera, filtra y reutiliza instrucciones, entradas y salidas sintéticas para instruction tuning; respalda Synthetic Data como pipeline de bootstrapping, pero los datos generados siguen requiriendo controles de calidad, diversidad, contaminación y sesgo."
     },
     {
       "patternId": 102,
-      "references": ["madry-2018-adversarial-training"],
+      "references": [
+        "madry-2018-adversarial-training"
+      ],
       "scopeNote": "Madry et al. formulan entrenamiento adversarial como robust optimization frente a una clase de adversarios de primer orden; respalda el principio de Adversarial Training Loop, pero sus garantías y resultados no se extrapolan a LLMs, agentes o amenazas no modeladas."
+    },
+    {
+      "patternId": 103,
+      "references": [
+        "moreno-vozmediano-2026-ai-factories"
+      ],
+      "scopeNote": "La arquitectura IEEE Access respalda AI Factory como infraestructura por capas y multi-tenant; el patrón del repositorio amplía el lifecycle a registries, evaluación y gobierno sin presentar una implementación concreta como universal."
+    },
+    {
+      "patternId": 104,
+      "references": [
+        "webb-2025-brain-inspired-planner"
+      ],
+      "scopeNote": "El Modular Agentic Planner evalúa módulos especializados de monitorización, predicción, evaluación, descomposición y coordinación; respalda Cognitive Core modular sin equivalencia neurobiológica ni transferencia automática de benchmarks."
+    },
+    {
+      "patternId": 105,
+      "references": [
+        "piskala-2026-sdd"
+      ],
+      "scopeNote": "La referencia sistematiza SDD y sus niveles de rigor; respalda la especificación como source of truth, mientras que el valor operativo depende del dominio y del coste de mantener la spec."
+    },
+    {
+      "patternId": 107,
+      "references": [
+        "apache-iceberg-spec",
+        "google-2026-borderless-lakehouse",
+        "apache-gravitino-catalogs"
+      ],
+      "scopeNote": "Iceberg respalda snapshots/tablas abiertas, Google documenta una arquitectura open lakehouse para agentes y Gravitino federación de catálogos; no se exige un proveedor concreto ni se infiere rendimiento universal."
+    },
+    {
+      "patternId": 108,
+      "references": [
+        "apache-gravitino-catalogs"
+      ],
+      "scopeNote": "Gravitino documenta resolución federada de objetos sin copiar contenidos y herencia de tags/policies; respalda Metadata Fabric como arquitectura, no como estándar único."
+    },
+    {
+      "patternId": 109,
+      "references": [
+        "iso-gql-39075-2024",
+        "w3c-shacl",
+        "typedgraph-tgs-0-6"
+      ],
+      "scopeNote": "GQL estandariza property graphs, SHACL valida grafos RDF y TGS aporta tipado comunitario reciente; el patrón combina conceptos manteniendo explícito el distinto estatus normativo de cada fuente."
+    },
+    {
+      "patternId": 110,
+      "references": [
+        "edge-2024-graphrag"
+      ],
+      "scopeNote": "GraphRAG de Edge et al. usa grafo de entidades, comunidades y resúmenes para preguntas globales; sus mejoras corresponden a las tareas estudiadas y no implican superioridad universal sobre RAG vectorial."
+    },
+    {
+      "patternId": 111,
+      "references": [
+        "dong-2026-ea-graphrag"
+      ],
+      "scopeNote": "EA-GraphRAG enruta entre dense RAG, graph retrieval y fusión según complejidad; umbrales, features y ganancias requieren calibración local."
+    },
+    {
+      "patternId": 112,
+      "references": [
+        "sarthi-2024-raptor"
+      ],
+      "scopeNote": "RAPTOR construye jerarquías mediante clustering y resúmenes recursivos; respalda retrieval jerárquico sin garantizar que cualquier summarizer preserve detalles críticos."
+    },
+    {
+      "patternId": 113,
+      "references": [
+        "asai-2024-self-rag"
+      ],
+      "scopeNote": "Self-RAG aprende señales de retrieval y reflexión; la demo modela el control conceptual y no reproduce el entrenamiento de reflection tokens."
+    },
+    {
+      "patternId": 114,
+      "references": [
+        "yan-2026-crag"
+      ],
+      "scopeNote": "CRAG evalúa y corrige contexto con un agent core y herramientas; sus resultados no validan automáticamente cualquier evaluador, búsqueda externa o política de fallback."
+    },
+    {
+      "patternId": 115,
+      "references": [
+        "hu-2022-lora"
+      ],
+      "scopeNote": "LoRA congela pesos base y aprende actualizaciones low-rank; rank, target modules y calidad dependen del modelo y tarea."
+    },
+    {
+      "patternId": 116,
+      "references": [
+        "dettmers-2023-qlora"
+      ],
+      "scopeNote": "QLoRA combina base 4-bit y adapters LoRA; cifras de memoria y calidad pertenecen a sus experimentos y no son garantías para cualquier hardware o modelo."
+    },
+    {
+      "patternId": 117,
+      "references": [
+        "zhang-2023-adalora"
+      ],
+      "scopeNote": "AdaLoRA redistribuye el presupuesto low-rank según importancia; la función de importancia y el schedule deben validarse por workload."
+    },
+    {
+      "patternId": 118,
+      "references": [
+        "liu-2024-dora"
+      ],
+      "scopeNote": "DoRA descompone magnitud y dirección y adapta la dirección con LoRA; mejoras observadas no se trasladan automáticamente a toda tarea o modelo."
+    },
+    {
+      "patternId": 119,
+      "references": [
+        "meng-2024-pissa"
+      ],
+      "scopeNote": "PiSSA inicializa adapters desde componentes principales y congela residual; costes y mejoras dependen de rank, modelo y benchmark."
+    },
+    {
+      "patternId": 120,
+      "references": [
+        "hayou-2024-lora-plus"
+      ],
+      "scopeNote": "LoRA+ usa learning rates distintos para A y B; la ratio óptima y speedups no son universales."
+    },
+    {
+      "patternId": 121,
+      "references": [
+        "kalajdzievski-2023-rslora"
+      ],
+      "scopeNote": "rsLoRA propone escalado por raíz del rank para estabilizar ranks mayores; no implica que aumentar rank mejore todas las tareas."
+    },
+    {
+      "patternId": 122,
+      "references": [
+        "li-2024-loftq"
+      ],
+      "scopeNote": "LoftQ coordina cuantización e inicialización low-rank; no garantiza superioridad para todos los cuantizadores o precisiones."
     }
   ]
 }
