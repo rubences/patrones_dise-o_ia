@@ -17,10 +17,10 @@ La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio d
 
 ```text
 catalog/taxonomy.json
-        └── 34 macrofamilias, vocabulario, niveles y madurez
+        └── 35 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
-        └── inventario maestro 290/290
+        └── inventario maestro 300/300
 
 content/patterns/*.md
         └── ficha editorial canónica de cada patrón
@@ -39,12 +39,12 @@ publications/*/publication.json
 
 ## Estado actual
 
-- Implementaciones TypeScript: **290/290**.
-- Inventario maestro: **290/290**.
-- Fichas canónicas: **290/290**.
+- Implementaciones TypeScript: **300/300**.
+- Inventario maestro: **300/300**.
+- Fichas canónicas: **300/300**.
 - Macrofamilias: **26**.
 - Grupos de trazabilidad: **39**.
-- Evidencia primaria/oficial: **54/290 patrones**.
+- Evidencia primaria/oficial: **54/300 patrones**.
 - Fuentes primarias/oficiales registradas: **51**.
 - Baseline: **P7.0**, política `fail-closed`.
 - Publicaciones: **2**, ambas en `editor-contact-ready`.
@@ -178,7 +178,7 @@ Antes de merge:
 
 1. **Web lockfile**: `web/` no dispone todavía de `package-lock.json`; se fija Astro a versión exacta, pero queda pendiente fijar transitivas.
 2. **Protección de `main`**: el repositorio aún no tiene branch protection/ruleset que haga obligatorio el CI a nivel de GitHub.
-3. **Cobertura de evidencia**: 54/290 es un baseline, no cobertura completa.
+3. **Cobertura de evidencia**: 54/300 es un baseline, no cobertura completa.
 4. **Submission blockers**: las dos publicaciones siguen en `editor-contact-ready`; ningún envío debe saltarse el gate de derechos/datos.
 5. **GDD**: mantener como experimental hasta disponer de formalización/evaluación propia o evidencia directa.
 
@@ -226,3 +226,7 @@ Los patrones 271–280 de inferencia adaptativa se integraron en `src/`, `conten
 ## P12.2 — Integración canónica de identidad
 
 Los patrones 281–290 de identidad y confianza delegada se integraron en `src/`, `content/patterns/`, catálogo, taxonomía, exportaciones y scripts. Estado experimental; evidencia `needs-review`. Quedan 75 candidatos P12 en investigación. CI no verificada.
+
+## P12.3 — Integración canónica de ingeniería de contexto
+
+Los patrones 291–300 se integraron en `src/`, `content/patterns/`, catálogo, taxonomía, exportaciones y scripts. Estado experimental; evidencia `needs-review`. Quedan 65 candidatos P12 en investigación. CI no verificada.
