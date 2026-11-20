@@ -1,4 +1,4 @@
-# Patrones IA — 134 patrones de diseño para sistemas inteligentes
+# Patrones IA — 190 patrones de diseño para sistemas inteligentes
 
 [![Editorial, Hardening, Publication and Web CI](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/web-ci.yml/badge.svg)](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/web-ci.yml)
 [![Deploy Patrones IA Web](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/deploy-web.yml/badge.svg)](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/deploy-web.yml)
@@ -7,15 +7,15 @@
 
 **Web:** https://rubences.github.io/patrones_dise-o_ia/
 
-> **Estado actual — v18.0.0 / P7.0:** 134/134 implementaciones · 134/134 fichas canónicas · 15 macrofamilias · 28 grupos de trazabilidad · 54/134 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
+> **Estado actual — v19.0.0 / P7.0:** 190/190 implementaciones · 190/190 fichas canónicas · 22 macrofamilias · 35 grupos de trazabilidad · 54/190 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
 
 ## Qué mantiene el repositorio
 
 | Capa | Fuente de verdad | Propósito |
 |---|---|---|
-| Código | `src/pattern_*.ts` | 134 implementaciones TypeScript de referencia |
+| Código | `src/pattern_*.ts` | 190 implementaciones TypeScript de referencia |
 | Inventario | `catalog/patterns.json` | ID, slug, familia, grupo histórico y fichero fuente |
-| Taxonomía | `catalog/taxonomy.json` | 15 macrofamilias, niveles, madurez y vocabulario editorial |
+| Taxonomía | `catalog/taxonomy.json` | 22 macrofamilias, niveles, madurez y vocabulario editorial |
 | Fichas | `content/patterns/*.md` | contenido canónico para web y edición de referencia |
 | Evidencia | `catalog/references.json` + `catalog/pattern-evidence.json` | fuentes primarias/oficiales y límites de interpretación |
 | Web | `web/` | catálogo Astro, evidencia, libro y publicaciones |
@@ -25,7 +25,7 @@
 
 La regla editorial es **single source of truth**: código, catálogo, fichas, Evidence Pack, web y libro técnico deben poder reconstruirse sin mantener copias manuales divergentes.
 
-## 15 macrofamilias
+## 22 macrofamilias
 
 | # | Familia | Patrones | Alcance |
 |---:|---|---:|---|
@@ -119,7 +119,7 @@ CI añade además la suite de regresión/hardening, el build Astro, el render Qu
 
 ## Edición técnica reproducible
 
-La edición de referencia se deriva de las 134 fichas canónicas; **no es ninguno de los dos manuscritos comerciales**.
+La edición de referencia se deriva de las 190 fichas canónicas; **no es ninguno de los dos manuscritos comerciales**.
 
 ```bash
 node scripts/build-evidence-pack.mjs
@@ -160,7 +160,7 @@ Para estado operativo utiliza este README, `docs/EDITORIAL_ARCHITECTURE.md`, `ca
 
 ## Deuda técnica y próximos cierres
 
-- ampliar la evidencia primaria más allá de 54/134 sin rebajar el criterio de alcance;
+- ampliar la evidencia primaria más allá de 54/190 sin rebajar el criterio de alcance;
 - generar y versionar `web/package-lock.json`;
 - activar una ruleset/branch protection para que `main` exija CI desde GitHub, no solo por convención;
 - resolver blockers de submission y derechos de figuras antes de cualquier envío externo;
@@ -178,3 +178,7 @@ El código se publica bajo **MIT** salvo indicación contraria. Las publicacione
 ## P8 — Interoperabilidad MCP y A2A (123–134)
 
 Doce implementaciones y fichas canónicas de referencia: capability adapter, policy gateway, trusted tool registry, workflow handle, MRTR elicitation, host-controlled sampling, Agent Card trust, task lifecycle, MCP–A2A bridge, tool poisoning defense, argument-aware least privilege y cross-protocol tracing. **No son implementaciones completas ni certificadas de los protocolos.** La evidencia primaria P7.0 continúa en 54 patrones; P8 permanece `needs-review` hasta vincular referencias oficiales con alcance validado. Ver `research/p8-patterns/INTEROPERABILIDAD_12_FICHAS.md`.
+
+## P9 — Siete macrofamilias y 56 contratos experimentales
+
+Los IDs 135–190 cuentan con implementación de contrato TypeScript y ficha canónica, clasificados como **experimentales** y `needs-review`. No constituyen algoritmos completos de aprendizaje, gobierno certificado, DevOps autónomo, ingeniería de datos, inferencia edge ni razonamiento causal. La evidencia primaria validada permanece en 54 patrones / 51 fuentes (P7.0). Los benchmarks y las pruebas de integración deben completarse antes de alegar prestaciones o conformidad.
