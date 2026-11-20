@@ -1,0 +1,3 @@
+/** P10 211: educational deterministic research contract, not scientific validation. */
+export class AutomatedReplicationWorkflow{compare(original:{metric:number;seed:number;digest:string},replica:{metric:number;seed:number;digest:string},tolerance:number){if(![original.metric,replica.metric,tolerance].every(Number.isFinite)||tolerance<0||!original.digest||!replica.digest)throw Error("invalid replication");return {sameDataset:original.digest===replica.digest,sameSeed:original.seed===replica.seed,metricWithinTolerance:Math.abs(original.metric-replica.metric)<=tolerance};}}
+export const PATTERN_211_META={id:211,family:"ai-scientific-discovery",maturity:"experimental"} as const;
