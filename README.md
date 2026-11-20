@@ -1,123 +1,59 @@
-# 🏛️ Patrones de Diseño para Sistemas Agénticos de IA
+# Patrones IA — 122 patrones de diseño para sistemas inteligentes
 
-Biblioteca abierta de **102 patrones de diseño para sistemas de IA y agentes**, implementados en TypeScript y acompañados por una ficha editorial canónica orientada a aprendizaje, arquitectura y producción.
+Biblioteca abierta de **122 patrones de diseño para sistemas de IA**, implementados en TypeScript y acompañados por fichas editoriales canónicas para arquitectura, docencia e investigación.
 
-El proyecto combina los **23 patrones Gang of Four** con patrones modernos de agentes, RAG, razonamiento, multiagente, seguridad, evaluación, resiliencia, FinOps, interoperabilidad, privacidad y experiencia de usuario.
+> Estado editorial: **122/122 implementaciones · 122/122 fichas canónicas**.
 
-> Estado editorial: **102/102 implementaciones · 102/102 fichas canónicas**.
+## Qué contiene
 
-## 🌐 Web
+- src/ — 122 implementaciones de referencia.
+- content/patterns/ — 122 fichas canónicas.
+- catalog/ — taxonomía, inventario, evidencia primaria y relaciones.
+- web/ — catálogo Astro navegable.
+- book/ — edición técnica reproducible en Markdown/HTML/EPUB/PDF.
+- publications/ — dos obras editoriales independientes.
+- research/NEXT_GENERATION_PATTERNS_2026.md — investigación de la ampliación 103–122.
 
-La versión navegable del catálogo se publica con Astro y GitHub Pages:
+## 14 macrofamilias
 
-**https://rubences.github.io/patrones_dise-o_ia/**
+| # | Familia | Alcance |
+|---:|---|---|
+| 1 | Foundations | GoF y principios reutilizables |
+| 2 | Agentic Workflows | tools, planning, reflexión y orquestación |
+| 3 | Knowledge & Context | RAG, memoria, grounding y retrieval avanzado |
+| 4 | Reasoning | CoT, ToT, Self-Consistency y evaluadores |
+| 5 | Multi-Agent | coordinación, delegación y estado compartido |
+| 6 | Safety & Security | guardrails, permisos, sandboxing y red teaming |
+| 7 | Reliability | retry, circuit breaker, checkpointing y fallback |
+| 8 | Production & FinOps | observabilidad, coste, streaming y operación |
+| 9 | Evaluation & QA | judge, A/B, regresión y evidencia |
+| 10 | Human Experience | escalado, aclaración y preferencias |
+| 11 | AI Platforms & Factories | AI Factory y Cognitive Core |
+| 12 | Development & Governance | SDD y GDD |
+| 13 | Data & Graph Foundations | Open Data Lakehouse, metadata fabric y typed graphs |
+| 14 | Model Adaptation & PEFT | LoRA, QLoRA y derivados |
 
-La web es la superficie principal de lectura. Cada ficha canónica vive en `content/patterns/` y documenta propósito, aplicabilidad, relaciones, limitaciones de la implementación actual y consideraciones de producción.
+## Segunda generación: patrones 103–122
 
-## 📚 Qué contiene el repositorio
+- **103–104:** AI Factory y Agent Brain / Cognitive Core.
+- **105–106:** Spec-Driven Development y Graph-Driven Development.
+- **107–109:** Open Data Lakehouse, Federated Metadata Fabric y Typed Knowledge Graph.
+- **110–114:** GraphRAG, Adaptive GraphRAG, RAPTOR, Self-RAG y CRAG.
+- **115–122:** LoRA, QLoRA, AdaLoRA, DoRA, PiSSA, LoRA+, rsLoRA y LoftQ.
 
-- `src/` — 102 implementaciones ejecutables en TypeScript.
-- `content/patterns/` — 102 capítulos/fichas canónicas para libro y web.
-- `catalog/patterns.json` — catálogo maestro y taxonomía de cada patrón.
-- `catalog/taxonomy.json` — familias editoriales y grupos históricos.
-- `web/` — sitio Astro generado desde el contenido canónico.
-- `scripts/validate-editorial.mjs` — gate de integridad entre código, catálogo y publicación.
+GDD se usa como terminología **experimental del proyecto**, no como supuesto estándar académico. Para «RGA», el catálogo adopta **GraphRAG / Graph-Augmented Generation** porque no se encontró un acrónimo RGA normalizado y estable para una técnica única.
 
-## 🧭 Familias del catálogo
+## Evidencia
 
-| Familia | Ejemplos |
-|---|---|
-| Gang of Four | Factory, Adapter, Observer, Command, State, Visitor |
-| Agentic Workflows | Pipeline, Router, Tool Use, Planning, Agentic Loop, Function Calling, MCP |
-| Reasoning | Chain of Thought, Tree of Thought, Self-Consistency, ReAct, Debate, Meta-Prompting |
-| Knowledge & Context | RAG, Knowledge Graph, Retrieval Ranking, Long-Term Memory, Grounding, Context Compaction |
-| Multi-Agent | Multi-Agent, Agent Swarm, Task Delegation, Orchestrator-Workers, Agent Registry, Blackboard |
-| Reliability | Checkpointing, Circuit Breaker, Bulkhead, Retry, Rollback, Structured Output, Idempotency |
-| Safety & Security | Guardrails, Prompt Injection Defense, Access Control, Code Sandboxing, PII Redaction, Tool Validation |
-| Evaluation & QA | LLM-as-Judge, Red Teaming, A/B Testing, Regression Testing, Synthetic Data |
-| Production & FinOps | Semantic Cache, Prompt Compression, Observability, Token Budget, Streaming, Canary Release, Cost Attribution |
-| Human Experience | Persona, Human Handoff, Clarification Loop, Preference Learning, Citation Attribution |
+El Evidence Pack separa implementación, referencias editoriales, fuentes primarias/estándares y scope notes. El baseline P7.0 exige **54 patrones con evidencia primaria/oficial y 50 fuentes registradas**. Medium se usa solo como señal secundaria de práctica industrial.
 
-## 🚀 Inicio rápido
+## Dos publicaciones
 
-Requisitos: Node.js compatible con el proyecto y, para los ejemplos que llaman a un LLM, `OPENAI_API_KEY`.
+- **Research EN:** *Architectural Design Patterns for Edge and Generative AI*.
+- **Teaching ES:** *Patrones de Diseño en Inteligencia Artificial: Manual Práctico y Laboratorios*.
 
-```bash
-npm install
-export OPENAI_API_KEY=sk-...
+La monografía incorpora AI Factory, Cognitive Core, Open Lakehouse, typed graphs, GraphRAG y PEFT como piezas de un argumento arquitectónico; el manual los transforma en prácticas de especificación, datos, retrieval y adaptación.
 
-# Ejecutar un patrón concreto
-npm run pattern:25   # RAG
-npm run pattern:45   # Circuit Breaker
-npm run pattern:54   # ReAct
-npm run pattern:101  # Tool Call Validation Gate
+## Licencia
 
-# Ejecutar el catálogo completo
-for i in {1..102}; do npm run pattern:$i; done
-```
-
-No todos los patrones requieren una API key: varias implementaciones de resiliencia, privacidad, coordinación y operación son deterministas o simuladas localmente.
-
-## 🧪 Validación editorial y web
-
-El repositorio incluye un gate que comprueba que las 102 implementaciones, los 102 registros del catálogo y las 102 fichas editoriales permanezcan alineados.
-
-```bash
-node scripts/validate-editorial.mjs
-
-cd web
-npm install
-npm run build
-```
-
-Los pull requests editoriales ejecutan ambos pasos en CI antes de fusionarse a `main`.
-
-## 📖 Cómo leer cada patrón
-
-La ficha canónica no replica sin más el comentario del código. Distingue cuatro niveles:
-
-1. **Patrón conceptual** — qué problema resuelve y por qué existe.
-2. **Implementación del repositorio** — qué hace realmente el ejemplo TypeScript.
-3. **Límites y evidencia** — qué claims no deben generalizarse sin benchmark o verificación.
-4. **Producción** — controles, observabilidad, seguridad, persistencia o evaluación necesarios para un sistema real.
-
-Esta distinción es intencional. Cifras de precisión, ahorro de tokens, coste o fiabilidad dependen del modelo, dataset, tráfico, configuración y benchmark; por ello no se presentan en el README como propiedades universales del patrón.
-
-## 🧱 Principios editoriales
-
-- **Código y documentación deben coincidir.** Una demo pedagógica se identifica como tal.
-- **Los porcentajes requieren contexto experimental.** No se convierten en promesas generales.
-- **Seguridad no es prompting.** Autorización, aislamiento, validación y auditoría se tratan como controles separados.
-- **Los scores de un LLM no son verdad calibrada por defecto.** Se documentan los límites de jueces, confianza y consenso.
-- **La web y el futuro libro se generan desde las fichas canónicas**, evitando mantener dos narrativas independientes.
-
-## 🗺️ Ruta recomendada de aprendizaje
-
-Para una primera lectura:
-
-`1 Pipeline → 2 Router → 5 Tool Use → 6 Planning → 25 RAG → 27 Agentic Loop → 28 Function Calling → 45 Circuit Breaker → 53 Guardrails → 77 Observability → 101 Tool Call Validation`
-
-Después puede profundizarse por familia desde la web.
-
-## 🛠️ Estado y siguiente fase
-
-La fase de **cobertura editorial** está completada: 102/102.
-
-La siguiente etapa del proyecto es de **hardening técnico y evidencia**: corregir defectos descubiertos durante la auditoría, ampliar tests, sustituir simplificaciones pedagógicas por contratos más robustos donde aporte valor y añadir benchmarks reproducibles para cualquier claim cuantitativo.
-
-El estado operativo y prioridades se mantienen en [`RESUMEN_EJECUTIVO_PLAN_ACCION.md`](RESUMEN_EJECUTIVO_PLAN_ACCION.md).
-
-## 🤝 Contribución
-
-Las contribuciones deberían incluir, según corresponda:
-
-- cambios de implementación;
-- tests que reproduzcan el comportamiento esperado o el bug corregido;
-- actualización de la ficha canónica si cambia el comportamiento;
-- evidencia o benchmark reproducible para nuevos claims cuantitativos.
-
-Antes de abrir un PR, ejecuta el validador editorial y el build de la web.
-
-## 📄 Licencia
-
-MIT.
+MIT para el código salvo indicación contraria. Las publicaciones y futuras cesiones editoriales se gobiernan por su gate contractual específico.
