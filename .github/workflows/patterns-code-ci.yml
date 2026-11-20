@@ -20,6 +20,7 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'research/p10/privacy/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -69,6 +70,8 @@ jobs:
         run: npx tsc --noEmit --project research/p10/privacy/tsconfig.json
       - name: Test P10 staged privacy contracts
         run: npx --yes tsx@4.20.6 --test tests/p10_privacy_patterns.test.ts
+      - name: Test P10 privacy integration workflow
+        run: npx --yes tsx@4.20.6 --test tests/p10_privacy_integration.test.ts
       - name: Generate and validate quality report
         run: |
           node scripts/report-pattern-quality.mjs
