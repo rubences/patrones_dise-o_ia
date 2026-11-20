@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
   "version": "21.1.0",
-  "description": "270 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "description": "280 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
