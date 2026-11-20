@@ -1,0 +1,3 @@
+/** P12 333: educational semantic data contract; not production interoperability certification. */
+export class Pattern333Contract{verify(required:{feature:string;version:string}[],available:{feature:string;version:string}[]){if([...required,...available].some(x=>!x.feature.trim()||!x.version.trim()))throw Error("invalid features");const registry=new Map(available.map(x=>[x.feature,x.version]));const mismatches=required.filter(x=>registry.get(x.feature)!==x.version).map(x=>x.feature);return {compatible:mismatches.length===0,mismatches};}}
+export const PATTERN_333_META={id:333,family:"ai-data-contracts",maturity:"experimental"} as const;
