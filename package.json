@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.2.0",
-  "description": "290 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "21.3.0",
+  "description": "300 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -297,7 +297,17 @@
     "pattern:287": "node --loader ts-node/esm src/pattern_287_credential_rotation_continuity_gate.ts",
     "pattern:288": "node --loader ts-node/esm src/pattern_288_delegation_chain_audit.ts",
     "pattern:289": "node --loader ts-node/esm src/pattern_289_agent_impersonation_detection.ts",
-    "pattern:290": "node --loader ts-node/esm src/pattern_290_least_privilege_capability_discovery.ts"
+    "pattern:290": "node --loader ts-node/esm src/pattern_290_least_privilege_capability_discovery.ts",
+    "pattern:291": "node --loader ts-node/esm src/pattern_291_context_relevance_budget_allocator.ts",
+    "pattern:292": "node --loader ts-node/esm src/pattern_292_instruction_hierarchy_conflict_resolver.ts",
+    "pattern:293": "node --loader ts-node/esm src/pattern_293_evidence_freshness_context_gate.ts",
+    "pattern:294": "node --loader ts-node/esm src/pattern_294_context_window_fragmentation_planner.ts",
+    "pattern:295": "node --loader ts-node/esm src/pattern_295_source_diversity_retrieval_selector.ts",
+    "pattern:296": "node --loader ts-node/esm src/pattern_296_long_context_position_bias_auditor.ts",
+    "pattern:297": "node --loader ts-node/esm src/pattern_297_retrieval_redundancy_suppressor.ts",
+    "pattern:298": "node --loader ts-node/esm src/pattern_298_context_injection_isolation_boundary.ts",
+    "pattern:299": "node --loader ts-node/esm src/pattern_299_task_specific_context_compiler.ts",
+    "pattern:300": "node --loader ts-node/esm src/pattern_300_context_sufficiency_stop_rule.ts"
   },
   "keywords": [
     "openai",
