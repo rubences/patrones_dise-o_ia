@@ -1,0 +1,3 @@
+/** P12 360: educational AI deployment contract; not a production release controller. */
+export class Pattern360Contract{validate(manifest:{releaseId:string;commit:string;modelDigest:string;promptDigest:string;approver:string}){if(!manifest.releaseId.trim()||!manifest.approver.trim()||!/^[a-f0-9]{40}$/i.test(manifest.commit)||!/^[a-f0-9]{64}$/i.test(manifest.modelDigest)||!/^[a-f0-9]{64}$/i.test(manifest.promptDigest))throw Error("invalid provenance manifest");return {...manifest,verified:false as const,limitation:"metadata shape does not prove authenticity" as const};}}
+export const PATTERN_360_META={id:360,family:"ai-deployment-lifecycle",maturity:"experimental"} as const;
