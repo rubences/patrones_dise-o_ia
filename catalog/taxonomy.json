@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 300,
+  "catalogSize": 310,
   "families": [
     {
       "id": "foundations",
@@ -212,6 +212,12 @@
       "name": "Context Engineering & Information Economics",
       "nameEs": "Ingeniería de Contexto y Economía de la Información",
       "description": "Relevancia, suficiencia, frescura, selección y seguridad del contexto para agentes."
+    },
+    {
+      "id": "ai-accessibility-inclusion",
+      "name": "Accessible, Inclusive & Multilingual AI",
+      "nameEs": "IA Accesible, Inclusiva y Multilingüe",
+      "description": "Accesibilidad, adaptación lingüística, formatos regionales, equidad y tecnologías de asistencia."
     }
   ],
   "levels": [
@@ -429,6 +435,10 @@
     {
       "id": 48,
       "name": "Ingeniería de Contexto"
+    },
+    {
+      "id": 49,
+      "name": "Accesibilidad e Inclusión Multilingüe"
     }
   ]
 }
