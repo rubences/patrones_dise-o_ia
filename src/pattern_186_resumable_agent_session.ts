@@ -1,0 +1,3 @@
+/** PATRÓN 186 — ResumableAgentSession. Referencia pedagógica: no ejecuta efectos externos. */
+export class ResumableAgentSession{private sessions=new Map<string,{owner:string;checkpoint:string}>();save(id:string,owner:string,checkpoint:string){if(!id||!owner||!checkpoint)throw Error("invalid checkpoint");this.sessions.set(id,{owner,checkpoint});}resume(id:string,owner:string){const s=this.sessions.get(id);if(!s||s.owner!==owner)throw Error("resume denied");return s.checkpoint;}}
+export const PATTERN_186_META={id:186,name:"ResumableAgentSession",family:"agent-runtime-harness",maturity:"emerging"} as const;
