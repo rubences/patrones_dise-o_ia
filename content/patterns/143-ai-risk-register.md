@@ -34,7 +34,8 @@ Separar registro de decisiones, autorización, evidencia y revisión independien
 
 ## Implementación del repositorio
 
-`src/pattern_143_ai_risk_register.ts` es un contrato pedagógico de registros autorizados, no un sistema de cumplimiento regulatorio.
+Registro de riesgo con probabilidad, impacto, mitigación y puntuación. Implementación TypeScript determinista en `src/pattern_143_ai_risk_register.ts`, con pruebas positivas y negativas en `tests/p9_governance_patterns.test.ts`. **No constituye certificación regulatoria ni validación jurídica.**
+
 
 ## Producción
 
