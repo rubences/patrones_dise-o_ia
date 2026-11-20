@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 190,
+  "catalogSize": 222,
   "families": [
     {
       "id": "foundations",
@@ -134,6 +134,30 @@
       "name": "Agent Runtime, Harness & Execution Control",
       "nameEs": "Entorno de Ejecución de Agentes",
       "description": "Patrones de entorno de ejecución de agentes con contratos y validación."
+    },
+    {
+      "id": "privacy-confidential-ai",
+      "name": "Privacy-Preserving & Confidential AI",
+      "nameEs": "IA de Privacidad y Computación Confidencial",
+      "description": "Contratos de privacidad, minimización, consentimiento, atestación y evaluación de ataques."
+    },
+    {
+      "id": "multimodal-embodied-ai",
+      "name": "Multimodal & Embodied Agent Systems",
+      "nameEs": "Agentes Multimodales y Sistemas Físicos",
+      "description": "Fusión, percepción-acción, simulación, seguridad y supervisión humana de agentes embodied."
+    },
+    {
+      "id": "ai-scientific-discovery",
+      "name": "AI Experimentation & Scientific Discovery",
+      "nameEs": "Experimentación y Descubrimiento Científico con IA",
+      "description": "Hipótesis, diseño experimental, trazabilidad, replicación y evaluación estadística."
+    },
+    {
+      "id": "ai-economics-mechanisms",
+      "name": "AI Economics, Markets & Mechanism Design",
+      "nameEs": "Economía de Agentes y Diseño de Mecanismos",
+      "description": "Presupuestos, incentivos, subastas, asignación de recursos y auditoría económica."
     }
   ],
   "levels": [
@@ -299,6 +323,22 @@
     {
       "id": 35,
       "name": "Agent Runtime, Harness & Execution Control"
+    },
+    {
+      "id": 36,
+      "name": "Privacidad y Computación Confidencial"
+    },
+    {
+      "id": 37,
+      "name": "Agentes Multimodales y Embodied"
+    },
+    {
+      "id": 38,
+      "name": "Experimentación y Descubrimiento Científico"
+    },
+    {
+      "id": 39,
+      "name": "Economía de Agentes y Mercados"
     }
   ]
 }
