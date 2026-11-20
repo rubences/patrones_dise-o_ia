@@ -4,7 +4,7 @@ slug: causal-intervention-planner
 title: "Causal Intervention Planner"
 summary: "Contrato experimental para causal intervention planner con restricciones explícitas y evaluación reproducible."
 family: causal-neurosymbolic-ai
-legacyGroup: 36
+legacyGroup: 34
 level: architecture
 difficulty: advanced
 maturity: experimental
