@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 320,
+  "catalogSize": 330,
   "patterns": [
     {
       "id": 1,
@@ -3740,6 +3740,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/320-energy-rebound-effect-auditor.md"
+    },
+    {
+      "id": 321,
+      "name": "Agent Incident Evidence Freeze",
+      "slug": "agent-incident-evidence-freeze",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_321_agent_incident_evidence_freeze.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/321-agent-incident-evidence-freeze.md"
+    },
+    {
+      "id": 322,
+      "name": "Prompt Injection Incident Triage",
+      "slug": "prompt-injection-incident-triage",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_322_prompt_injection_incident_triage.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/322-prompt-injection-incident-triage.md"
+    },
+    {
+      "id": 323,
+      "name": "Compromised Agent Containment",
+      "slug": "compromised-agent-containment",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_323_compromised_agent_containment.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/323-compromised-agent-containment.md"
+    },
+    {
+      "id": 324,
+      "name": "Model Artifact Forensic Timeline",
+      "slug": "model-artifact-forensic-timeline",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_324_model_artifact_forensic_timeline.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/324-model-artifact-forensic-timeline.md"
+    },
+    {
+      "id": 325,
+      "name": "Agent Recovery Readiness Gate",
+      "slug": "agent-recovery-readiness-gate",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_325_agent_recovery_readiness_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/325-agent-recovery-readiness-gate.md"
+    },
+    {
+      "id": 326,
+      "name": "Cross-Agent Blast Radius Estimator",
+      "slug": "cross-agent-blast-radius-estimator",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_326_cross_agent_blast_radius_estimator.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/326-cross-agent-blast-radius-estimator.md"
+    },
+    {
+      "id": 327,
+      "name": "Security Incident Replay Harness",
+      "slug": "security-incident-replay-harness",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_327_security_incident_replay_harness.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/327-security-incident-replay-harness.md"
+    },
+    {
+      "id": 328,
+      "name": "Post-Incident Policy Patch Verification",
+      "slug": "post-incident-policy-patch-verification",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_328_post_incident_policy_patch_verification.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/328-post-incident-policy-patch-verification.md"
+    },
+    {
+      "id": 329,
+      "name": "Evidence Chain of Custody Validator",
+      "slug": "evidence-chain-of-custody-validator",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_329_evidence_chain_of_custody_validator.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/329-evidence-chain-of-custody-validator.md"
+    },
+    {
+      "id": 330,
+      "name": "AI Incident Lessons-to-Controls Loop",
+      "slug": "ai-incident-lessons-to-controls-loop",
+      "family": "ai-incident-forensics",
+      "legacyGroup": 51,
+      "sourceFile": "src/pattern_330_ai_incident_lessons_to_controls_loop.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/330-ai-incident-lessons-to-controls-loop.md"
     }
   ]
 }
