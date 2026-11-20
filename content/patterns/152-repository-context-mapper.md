@@ -4,7 +4,7 @@ slug: repository-context-mapper
 title: "Repository Context Mapper"
 summary: "Patrón de referencia para repository context mapper con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agentic-software-engineering
-legacyGroup: 29
+legacyGroup: 31
 level: workflow
 difficulty: advanced
 maturity: emerging
