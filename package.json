@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "17.0.0",
-  "description": "122 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "18.0.0",
+  "description": "134 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -129,7 +129,19 @@
     "pattern:119": "node --loader ts-node/esm src/pattern_119_pissa.ts",
     "pattern:120": "node --loader ts-node/esm src/pattern_120_lora_plus.ts",
     "pattern:121": "node --loader ts-node/esm src/pattern_121_rslora.ts",
-    "pattern:122": "node --loader ts-node/esm src/pattern_122_loftq.ts"
+    "pattern:122": "node --loader ts-node/esm src/pattern_122_loftq.ts",
+    "pattern:123": "node --loader ts-node/esm src/pattern_123_mcp_capability_adapter.ts",
+    "pattern:124": "node --loader ts-node/esm src/pattern_124_mcp_policy_gateway.ts",
+    "pattern:125": "node --loader ts-node/esm src/pattern_125_trusted_tool_registry.ts",
+    "pattern:126": "node --loader ts-node/esm src/pattern_126_explicit_workflow_handle.ts",
+    "pattern:127": "node --loader ts-node/esm src/pattern_127_mrtr_human_elicitation.ts",
+    "pattern:128": "node --loader ts-node/esm src/pattern_128_host_controlled_sampling.ts",
+    "pattern:129": "node --loader ts-node/esm src/pattern_129_a2a_agent_card_trust.ts",
+    "pattern:130": "node --loader ts-node/esm src/pattern_130_a2a_task_lifecycle.ts",
+    "pattern:131": "node --loader ts-node/esm src/pattern_131_mcp_a2a_bridge.ts",
+    "pattern:132": "node --loader ts-node/esm src/pattern_132_tool_poisoning_defense.ts",
+    "pattern:133": "node --loader ts-node/esm src/pattern_133_argument_aware_least_privilege.ts",
+    "pattern:134": "node --loader ts-node/esm src/pattern_134_cross_protocol_trace_context.ts"
   },
   "keywords": [
     "openai",
