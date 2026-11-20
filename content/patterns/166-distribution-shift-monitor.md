@@ -4,7 +4,7 @@ slug: distribution-shift-monitor
 title: "Distribution Shift Monitor"
 summary: "Contrato de referencia experimental para distribution shift monitor con validación y procedencia explícitas."
 family: data-centric-ai
-legacyGroup: 34
+legacyGroup: 32
 level: architecture
 difficulty: advanced
 maturity: experimental
