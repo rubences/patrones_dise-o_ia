@@ -1,0 +1,3 @@
+/** P10 216: educational economic mechanism; not strategyproofness, fairness or market compliance proof. */
+export class IncentiveCompatibleTaskAuction{select(bids:{bidder:string;cost:number}[]){if(bids.length<2||new Set(bids.map(b=>b.bidder)).size!==bids.length||bids.some(b=>!b.bidder.trim()||!Number.isFinite(b.cost)||b.cost<0))throw Error("invalid bids");const ranked=[...bids].sort((a,b)=>a.cost-b.cost||a.bidder.localeCompare(b.bidder));return {winner:ranked[0].bidder,payment:ranked[1].cost,mechanism:"illustrative second-price procurement" as const};}}
+export const PATTERN_216_META={id:216,family:"ai-economics-mechanisms",maturity:"experimental"} as const;
