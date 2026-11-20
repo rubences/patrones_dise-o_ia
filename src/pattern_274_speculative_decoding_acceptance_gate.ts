@@ -1,0 +1,3 @@
+/** P12 274: educational inference-time control; not model-quality or sampling guarantee. */
+export class Pattern274Contract{accept(draft:string[],verified:string[]){if(draft.some(x=>!x)||verified.some(x=>!x))throw Error("invalid tokens");let accepted=0;while(accepted<draft.length&&accepted<verified.length&&draft[accepted]===verified[accepted])accepted++;return {acceptedPrefix:accepted,rejected:draft.length-accepted,limitation:"token equality is not probabilistic speculative sampling" as const};}}
+export const PATTERN_274_META={id:274,family:"inference-compute-optimization",maturity:"experimental"} as const;
