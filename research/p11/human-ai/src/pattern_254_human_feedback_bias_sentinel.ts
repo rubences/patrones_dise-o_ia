@@ -1,0 +1,3 @@
+/** P11 254: educational human-AI collaboration contract, not clinical or safety validation. */
+export class Pattern254Contract{assess(groups:{group:string;count:number}[],maxGap:number){if(groups.length<2||new Set(groups.map(g=>g.group)).size!==groups.length||groups.some(g=>!g.group.trim()||!Number.isInteger(g.count)||g.count<0)||!Number.isFinite(maxGap)||maxGap<0)throw Error("invalid feedback");const counts=groups.map(g=>g.count);const gap=Math.max(...counts)-Math.min(...counts);return {gap,flagged:gap>maxGap,limitation:"count imbalance is not a fairness test" as const};}}
+export const PATTERN_254_META={id:254,family:"adaptive-human-ai-collaboration",maturity:"experimental"} as const;
