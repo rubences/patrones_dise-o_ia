@@ -180,6 +180,9 @@ jobs:
       - name: Test P15 bounded autonomy contracts
         run: npx --yes tsx@4.20.6 --test tests/p15_bounded_autonomy_patterns.test.ts
 
+      - name: Test Interactive Lab graph model
+        run: node --experimental-strip-types --test tests/interactive-lab-pattern-graph.test.mjs tests/interactive-lab-diagram-smoke.test.mjs
+
       - name: Install web dependencies
         working-directory: web
         run: npm install

@@ -1,6 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PatternDiagram from '../../components/lab/PatternDiagram.astro';
+import { buildPatternGraph } from '../../lib/lab/pattern-graph';
 
 export async function getStaticPaths() {
   const entries = await getCollection('patterns');
@@ -18,6 +20,10 @@ const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 const allPatterns = await getCollection('patterns');
 const related = allPatterns.filter((candidate) => entry.data.related.includes(candidate.data.patternId));
+const graph = buildPatternGraph(
+ {patternId:entry.data.patternId,slug:entry.data.slug,title:entry.data.title,summary:entry.data.summary,related:entry.data.related,combinesWith:entry.data.combinesWith},
+ allPatterns.map(p=>({patternId:p.data.patternId,slug:p.data.slug,title:p.data.title,summary:p.data.summary,related:p.data.related,combinesWith:p.data.combinesWith}))
+);
 const toc = headings.filter((heading) => heading.depth === 2);
 const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${entry.data.sourceFile}`;
 ---
@@ -43,6 +49,8 @@ const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${e
           {entry.data.tags.map((tag) => <span class="tag">{tag}</span>)}
         </div>
       </header>
+
+      <PatternDiagram graph={graph} base={import.meta.env.BASE_URL} />
 
       <div class="prose">
         <Content />

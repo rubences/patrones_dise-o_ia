@@ -153,8 +153,8 @@ export { ejecutarSpeculativo } from "./pattern_93_speculative_execution.js";
 export { MonitorSalud } from "./pattern_94_health_check.js";
 
 // ── GRUPO 22: Experiencia de Usuario (95–99) ─────────────────────
-export { MotorEscalacion } from "./pattern_95_human_escalation.js";
-export { GestorClarificacion } from "./pattern_96_clarification_loop.js";
+export { PoliticaEscalacion, GestorHandoff, AgenteConHandoff } from "./pattern_95_human_escalation.js";
+export { ClarificationLoop } from "./pattern_96_clarification_loop.js";
 export { AprendizPreferencias } from "./pattern_97_preference_learning.js";
 export { GestorCitas } from "./pattern_98_citation_attribution.js";
 export { GeneradorDatosSinteticos } from "./pattern_99_synthetic_data.js";

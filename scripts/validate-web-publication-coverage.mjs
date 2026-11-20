@@ -1,4 +1,4 @@
-import {readFileSync,existsSync} from 'node:fs';
+import {readFileSync,existsSync,readdirSync} from 'node:fs';
 import {resolve,join} from 'node:path';
 const root=resolve(import.meta.dirname,'..');
 const read=p=>JSON.parse(readFileSync(join(root,p),'utf8'));
@@ -12,8 +12,10 @@ assert(catalog.patterns.length===365,'Missing catalog entries');
 assert(taxonomy.catalogSize===365,'Taxonomy out of sync');
 assert(taxonomy.families.length===42,'Unexpected family count');
 const all=new Set(catalog.patterns.map(p=>p.id));
+const sheets=new Set(readdirSync(join(root,'content/patterns')).filter(name=>name.endsWith('.md')));
 for(const p of catalog.patterns){
- assert(existsSync(join(root,p.canonicalContent)),`Missing sheet ${p.id}`);
+ const sheet=p.canonicalContent ?? [...sheets].find(name=>name.startsWith(String(p.id).padStart(3,'0')+'-'))?.replace(/^/,'content/patterns/');
+ assert(!!sheet&&existsSync(join(root,sheet)),`Missing sheet ${p.id}`);
  assert(existsSync(join(root,p.sourceFile)),`Missing source ${p.id}`);
 }
 for(const pub of publications){
