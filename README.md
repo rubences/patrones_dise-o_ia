@@ -71,7 +71,7 @@ Medium y otras fuentes de práctica industrial pueden orientar investigación, p
 
 ## Web y catálogo
 
-La web pública ofrece catálogo, filtros, fichas, Evidence Pack, edición de referencia y estado de las publicaciones:
+La web pública organiza las 365 fichas en 42 macrofamilias navegables desde la portada y el catálogo, con búsqueda, filtros, diagramas SVG de relaciones por patrón, Evidence Pack, edición de referencia y estado de las publicaciones:
 
 - Inicio: https://rubences.github.io/patrones_dise-o_ia/
 - Catálogo: https://rubences.github.io/patrones_dise-o_ia/patterns/
@@ -200,3 +200,7 @@ Cinco contratos experimentales de límites de autonomía, aprobación de automod
 ## Publicaciones y web en v22.0.0
 
 El catálogo Astro obtiene sus 365 fichas desde `content/patterns/` y los IDs desde `catalog/patterns.json`. Las dos publicaciones independientes incorporan los patrones 341–365 mediante referencias por capítulo: decisiones y control, evaluación e integridad, y autonomía acotada. La ampliación no cambia el baseline de evidencia primaria (54 patrones y 51 fuentes), ni convierte los contratos experimentales en validaciones científicas.
+
+## Interactive Lab — navegación por macrofamilias
+
+La portada muestra una tarjeta por macrofamilia (nombre, descripción y número de patrones), en lugar de desplegar las 365 fichas de una vez. El catálogo mantiene secciones por familia, búsqueda textual, filtros y enlaces profundos `patterns/?family=<id>#catalog-results`. Las fichas incluyen un enlace de regreso a su familia y conservan el visor SVG de relaciones. Los diagramas representan relaciones declaradas, no flujos de ejecución validados. El editor de arquitecturas y las simulaciones siguen siendo objetivos de fases posteriores.
