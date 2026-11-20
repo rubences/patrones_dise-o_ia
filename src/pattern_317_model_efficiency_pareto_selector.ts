@@ -1,0 +1,3 @@
+/** P12 317: educational sustainability control; energy and carbon values are externally supplied estimates. */
+export class Pattern317Contract{frontier(models:{id:string;quality:number;energy:number}[]){if(!models.length||new Set(models.map(m=>m.id)).size!==models.length||models.some(m=>!m.id.trim()||![m.quality,m.energy].every(Number.isFinite)||m.quality<0||m.quality>1||m.energy<0))throw Error("invalid model metrics");return models.filter(m=>!models.some(n=>n.id!==m.id&&n.quality>=m.quality&&n.energy<=m.energy&&(n.quality>m.quality||n.energy<m.energy))).map(m=>m.id);}}
+export const PATTERN_317_META={id:317,family:"ai-energy-sustainability",maturity:"experimental"} as const;
