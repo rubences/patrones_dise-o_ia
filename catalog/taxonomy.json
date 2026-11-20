@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 122,
+  "catalogSize": 134,
   "families": [
     {
       "id": "foundations",
@@ -86,6 +86,12 @@
       "name": "Model Adaptation & PEFT",
       "nameEs": "Adaptación de Modelos y PEFT",
       "description": "Fine-tuning eficiente, adapters low-rank, cuantización e inicialización especializada."
+    },
+    {
+      "id": "agent-interoperability",
+      "name": "Agent Interoperability & Protocols",
+      "nameEs": "Interoperabilidad y Protocolos Agénticos",
+      "description": "MCP, A2A, descubrimiento, autorización, delegación y trazabilidad entre agentes."
     }
   ],
   "levels": [
@@ -219,6 +225,10 @@
     {
       "id": 27,
       "name": "Model Adaptation & PEFT"
+    },
+    {
+      "id": 28,
+      "name": "Protocolos e Interoperabilidad Agéntica"
     }
   ]
 }
