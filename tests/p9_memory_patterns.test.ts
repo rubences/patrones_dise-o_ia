@@ -1,0 +1,18 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {Pattern135Contract} from "../src/pattern_135_episodic_memory_consolidation.js";
+import {Pattern136Contract} from "../src/pattern_136_semantic_memory_distillation.js";
+import {Pattern137Contract} from "../src/pattern_137_experience_replay.js";
+import {Pattern138Contract} from "../src/pattern_138_selective_forgetting.js";
+import {Pattern139Contract} from "../src/pattern_139_memory_provenance.js";
+import {Pattern140Contract} from "../src/pattern_140_temporal_memory_decay.js";
+import {Pattern141Contract} from "../src/pattern_141_continual_learning_gate.js";
+import {Pattern142Contract} from "../src/pattern_142_cross_trajectory_abstraction.js";
+test("135 consolidation filters by importance and tenant",()=>{const m=new Pattern135Contract();m.put("a","alice","critical",0.9,1);m.put("b","alice","minor",0.2,2);m.put("c","bob","private",1,3);assert.deepEqual(m.consolidate("alice",0.8).map(x=>x.id),["a"]);assert.throws(()=>m.get("c","alice"));});
+test("136 distillation deduplicates and requires sources",()=>{const m=new Pattern136Contract();assert.equal(m.distill([{id:"1",text:"Fact",source:"doc"},{id:"2",text:" fact ",source:"doc"}]).length,1);assert.throws(()=>m.distill([{id:"3",text:"bad",source:""}]));});
+test("137 replay isolates actors and bounds history",()=>{const m=new Pattern137Contract();m.record("1","a","x","ok");m.record("2","b","y","fail");m.record("3","a","z","ok");assert.deepEqual(m.replay("a",1).map(x=>x.id),["3"]);assert.throws(()=>m.replay("a",0));});
+test("138 forgetting expires records and respects ownership",()=>{const m=new Pattern138Contract();m.put("a","a","v",10);m.put("b","b","v",10);assert.equal(m.forget("a",10),1);assert.throws(()=>m.get("a","a",9));assert.equal(m.get("b","b",9),"v");});
+test("139 provenance requires source and enforces ownership",()=>{const m=new Pattern139Contract();assert.throws(()=>m.record("x","a","v","","v1"));m.record("x","a","v","doc","v1");assert.equal(m.trace("x","a").sourceId,"doc");assert.throws(()=>m.trace("x","b"));});
+test("140 half life decays deterministically",()=>{const m=new Pattern140Contract();assert.equal(m.score(1,0,100,100),0.5);assert.throws(()=>m.score(1,100,0,100));});
+test("141 gate rejects regression and excess forgetting",()=>{const m=new Pattern141Contract();assert.equal(m.evaluate({accuracy:.8,forgetting:.1},{accuracy:.9,forgetting:.12},.05).accepted,true);assert.equal(m.evaluate({accuracy:.8,forgetting:.1},{accuracy:.9,forgetting:.3},.05).accepted,false);});
+test("142 abstraction counts distinct trajectory steps",()=>{const m=new Pattern142Contract();const r=m.summarize([{id:"1",actor:"a",steps:["plan","plan","act"]},{id:"2",actor:"a",steps:["plan"]},{id:"3",actor:"b",steps:["secret"]}],"a");assert.deepEqual(r,[{step:"plan",frequency:2},{step:"act",frequency:1}]);});
