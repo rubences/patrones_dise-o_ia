@@ -1,14 +1,11 @@
 name: Deploy Patrones IA Web
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - 'Editorial, Hardening, Publication and Web CI'
+    types: [completed]
     branches: [main]
-    paths:
-      - 'catalog/**'
-      - 'content/**'
-      - 'publications/**'
-      - 'web/**'
-      - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
 permissions:
@@ -22,10 +19,13 @@ concurrency:
 
 jobs:
   build:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout validated revision
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -49,6 +49,7 @@ jobs:
           path: web/dist
 
   deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
