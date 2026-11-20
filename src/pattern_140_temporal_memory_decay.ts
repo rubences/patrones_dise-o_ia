@@ -1,3 +1,3 @@
-/** Pattern 140: Temporal Memory Decay. Educational contract only, not a production integration. */
-export class Pattern140Contract{private readonly records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid record");this.records.set(id,{actor,value});}get(id:string,actor:string){const entry=this.records.get(id);if(!entry||entry.actor!==actor)throw Error("access denied");return entry.value;}delete(id:string,actor:string){this.get(id,actor);return this.records.delete(id);}}
+/** Pattern 140: differentiated, deterministic reference implementation; no LLM training is performed. */
+export class Pattern140Contract {score(initial:number,createdAt:number,now:number,halfLifeMs:number){if(!Number.isFinite(initial)||initial<0||!Number.isFinite(createdAt)||!Number.isFinite(now)||now<createdAt||!Number.isFinite(halfLifeMs)||halfLifeMs<=0)throw Error("invalid decay");return initial*Math.pow(0.5,(now-createdAt)/halfLifeMs);}}
 export const PATTERN_140_META={id:140,name:"Temporal Memory Decay",family:"continual-learning-memory",maturity:"experimental"} as const;
