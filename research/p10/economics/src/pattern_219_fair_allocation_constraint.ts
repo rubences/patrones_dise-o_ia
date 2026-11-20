@@ -1,0 +1,3 @@
+/** P10 219: educational economic mechanism; not strategyproofness, fairness or market compliance proof. */
+export class FairAllocationConstraint{assess(allocations:{group:string;units:number}[],maxGap:number){if(allocations.length<2||!Number.isFinite(maxGap)||maxGap<0||allocations.some(a=>!a.group.trim()||!Number.isFinite(a.units)||a.units<0))throw Error("invalid fairness input");const values=allocations.map(a=>a.units);const gap=Math.max(...values)-Math.min(...values);return {gap,accepted:gap<=maxGap};}}
+export const PATTERN_219_META={id:219,family:"ai-economics-mechanisms",maturity:"experimental"} as const;
