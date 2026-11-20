@@ -2,7 +2,7 @@ import type {ArchitectureDiagram,ArchitectureNode,ArchitecturePort,ArchitectureE
 export type ArchitectureValidation = {ok:true;diagram:ArchitectureDiagram}|{ok:false;errors:string[]};
 const kinds=new Set<EdgeKind>(['data','control','tool-call','delegation','evidence']);
 const record=(x:unknown):x is Record<string,unknown>=>typeof x==='object'&&x!==null&&!Array.isArray(x);
-const safeText=(x:unknown,max:number)=>typeof x==='string'&&x.trim().length>0&&x.length<=max&&!/[<>\\u0000-\\u001f]/.test(x);
+const safeText=(x:unknown,max:number)=>typeof x==='string'&&x.trim().length>0&&x.length<=max&&!/[<>\u0000-\u001f]/.test(x);
 const id=(x:unknown)=>typeof x==='string'&&/^[a-zA-Z0-9_-]{1,80}$/.test(x);
 export function validateArchitecture(value:unknown,knownPatternIds:ReadonlySet<number>):ArchitectureValidation {
  const errors:string[]=[];const fail=(msg:string)=>errors.push(msg);
