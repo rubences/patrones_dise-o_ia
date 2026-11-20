@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 340,
+  "catalogSize": 350,
   "patterns": [
     {
       "id": 1,
@@ -3980,6 +3980,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/340-data-lineage-impact-propagator.md"
+    },
+    {
+      "id": 341,
+      "name": "Decision Provenance Ledger",
+      "slug": "decision-provenance-ledger",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_341_decision_provenance_ledger.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/341-decision-provenance-ledger.md"
+    },
+    {
+      "id": 342,
+      "name": "Risk-Adaptive Action Authorization",
+      "slug": "risk-adaptive-action-authorization",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_342_risk_adaptive_action_authorization.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/342-risk-adaptive-action-authorization.md"
+    },
+    {
+      "id": 343,
+      "name": "Counterfactual Decision Review",
+      "slug": "counterfactual-decision-review",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_343_counterfactual_decision_review.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/343-counterfactual-decision-review.md"
+    },
+    {
+      "id": 344,
+      "name": "Decision Confidence Calibration",
+      "slug": "decision-confidence-calibration",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_344_decision_confidence_calibration.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/344-decision-confidence-calibration.md"
+    },
+    {
+      "id": 345,
+      "name": "Reversible Action Planner",
+      "slug": "reversible-action-planner",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_345_reversible_action_planner.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/345-reversible-action-planner.md"
+    },
+    {
+      "id": 346,
+      "name": "Policy-Constrained Decision Optimizer",
+      "slug": "policy-constrained-decision-optimizer",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_346_policy_constrained_decision_optimizer.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/346-policy-constrained-decision-optimizer.md"
+    },
+    {
+      "id": 347,
+      "name": "Multi-Stakeholder Decision Arbitration",
+      "slug": "multi-stakeholder-decision-arbitration",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_347_multi_stakeholder_decision_arbitration.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/347-multi-stakeholder-decision-arbitration.md"
+    },
+    {
+      "id": 348,
+      "name": "Decision-to-Outcome Feedback Loop",
+      "slug": "decision-to-outcome-feedback-loop",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_348_decision_to_outcome_feedback_loop.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/348-decision-to-outcome-feedback-loop.md"
+    },
+    {
+      "id": 349,
+      "name": "Autonomous Action Budget Controller",
+      "slug": "autonomous-action-budget-controller",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_349_autonomous_action_budget_controller.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/349-autonomous-action-budget-controller.md"
+    },
+    {
+      "id": 350,
+      "name": "Operational Decision Assurance Gate",
+      "slug": "operational-decision-assurance-gate",
+      "family": "agentic-decision-control",
+      "legacyGroup": 53,
+      "sourceFile": "src/pattern_350_operational_decision_assurance_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/350-operational-decision-assurance-gate.md"
     }
   ]
 }
