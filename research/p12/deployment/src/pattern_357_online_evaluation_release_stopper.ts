@@ -1,0 +1,3 @@
+/** P12 357: educational AI deployment contract; not a production release controller. */
+export class Pattern357Contract{assess(observations:{quality:number;latencyMs:number}[],minimumQuality:number,maxLatencyMs:number){if(!observations.length||![minimumQuality,maxLatencyMs].every(Number.isFinite)||minimumQuality<0||minimumQuality>1||maxLatencyMs<0||observations.some(x=>!Number.isFinite(x.quality)||x.quality<0||x.quality>1||!Number.isFinite(x.latencyMs)||x.latencyMs<0))throw Error("invalid evaluation");const failures=observations.filter(x=>x.quality<minimumQuality||x.latencyMs>maxLatencyMs).length;return {stop:failures>0,failures};}}
+export const PATTERN_357_META={id:357,family:"ai-deployment-lifecycle",maturity:"experimental"} as const;
