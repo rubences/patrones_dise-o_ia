@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.7.0",
-  "description": "340 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "21.8.0",
+  "description": "350 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -347,7 +347,17 @@
     "pattern:337": "node --loader ts-node/esm src/pattern_337_data_contract_breaking_change_detector.ts",
     "pattern:338": "node --loader ts-node/esm src/pattern_338_schema_to_ontology_consistency_gate.ts",
     "pattern:339": "node --loader ts-node/esm src/pattern_339_multimodal_metadata_contract.ts",
-    "pattern:340": "node --loader ts-node/esm src/pattern_340_data_lineage_impact_propagator.ts"
+    "pattern:340": "node --loader ts-node/esm src/pattern_340_data_lineage_impact_propagator.ts",
+    "pattern:341": "node --loader ts-node/esm src/pattern_341_decision_provenance_ledger.ts",
+    "pattern:342": "node --loader ts-node/esm src/pattern_342_risk_adaptive_action_authorization.ts",
+    "pattern:343": "node --loader ts-node/esm src/pattern_343_counterfactual_decision_review.ts",
+    "pattern:344": "node --loader ts-node/esm src/pattern_344_decision_confidence_calibration.ts",
+    "pattern:345": "node --loader ts-node/esm src/pattern_345_reversible_action_planner.ts",
+    "pattern:346": "node --loader ts-node/esm src/pattern_346_policy_constrained_decision_optimizer.ts",
+    "pattern:347": "node --loader ts-node/esm src/pattern_347_multi_stakeholder_decision_arbitration.ts",
+    "pattern:348": "node --loader ts-node/esm src/pattern_348_decision_to_outcome_feedback_loop.ts",
+    "pattern:349": "node --loader ts-node/esm src/pattern_349_autonomous_action_budget_controller.ts",
+    "pattern:350": "node --loader ts-node/esm src/pattern_350_operational_decision_assurance_gate.ts"
   },
   "keywords": [
     "openai",
