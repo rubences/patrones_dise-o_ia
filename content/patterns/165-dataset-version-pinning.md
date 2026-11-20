@@ -34,7 +34,8 @@ Exigir contratos verificables y registrar decisiones por dataset, versión, prop
 
 ## Implementación del repositorio
 
-`src/pattern_165_dataset_version_pinning.ts` es un contrato educativo de registros; no ejecuta detección estadística ni entrenamiento.
+Fija versión y digest de un dataset, rechazando sustituciones silenciosas. Implementación TypeScript de referencia: `src/pattern_165_dataset_version_pinning.ts`. Pruebas positivas y negativas: `tests/p9_data_quality_patterns.test.ts`. Los límites metodológicos deben conservarse al evaluar casos reales.
+
 
 ## Producción
 
