@@ -1,0 +1,3 @@
+/** P11 265: educational knowledge engineering contract; no semantic correctness certification. */
+export class Pattern265Contract{detect(facts:{subject:string;predicate:string;value:string}[]){const seen=new Map<string,string>(),conflicts:{subject:string;predicate:string;values:string[]}[]=[];for(const f of facts){if(!f.subject.trim()||!f.predicate.trim()||!f.value.trim())throw Error("invalid fact");const key=JSON.stringify([f.subject,f.predicate]),prior=seen.get(key);if(prior!==undefined&&prior!==f.value)conflicts.push({subject:f.subject,predicate:f.predicate,values:[prior,f.value]});else seen.set(key,f.value);}return conflicts;}}
+export const PATTERN_265_META={id:265,family:"autonomous-knowledge-engineering",maturity:"experimental"} as const;
