@@ -1,0 +1,3 @@
+/** P10 204: deterministic simulation-only reference; no physical safety certification. */
+export class PhysicalWorldStateEstimator{update(prior:{position:number;velocity:number},measurement:{position:number;confidence:number},dt:number){if(![prior.position,prior.velocity,measurement.position,measurement.confidence,dt].every(Number.isFinite)||dt<0||measurement.confidence<0||measurement.confidence>1)throw Error("invalid state");const predicted=prior.position+prior.velocity*dt;return {position:predicted*(1-measurement.confidence)+measurement.position*measurement.confidence,velocity:prior.velocity};}}
+export const PATTERN_204_META={id:204,family:"multimodal-embodied-ai",maturity:"experimental"} as const;
