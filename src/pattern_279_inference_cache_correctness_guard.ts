@@ -1,0 +1,3 @@
+/** P12 279: educational inference-time control; not model-quality or sampling guarantee. */
+export class Pattern279Contract{valid(entry:{model:string;promptDigest:string;policyVersion:string;expiresAt:number},request:{model:string;promptDigest:string;policyVersion:string;now:number}){if(!entry.model.trim()||!entry.promptDigest.trim()||!entry.policyVersion.trim()||![entry.expiresAt,request.now].every(Number.isFinite))throw Error("invalid cache");return entry.model===request.model&&entry.promptDigest===request.promptDigest&&entry.policyVersion===request.policyVersion&&request.now<entry.expiresAt;}}
+export const PATTERN_279_META={id:279,family:"inference-compute-optimization",maturity:"experimental"} as const;
