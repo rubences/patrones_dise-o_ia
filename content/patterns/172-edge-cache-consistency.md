@@ -4,7 +4,7 @@ slug: edge-cache-consistency
 title: "Edge Cache Consistency"
 summary: "Contrato experimental para edge cache consistency con decisiones explícitas de recursos y disponibilidad."
 family: edge-distributed-ai
-legacyGroup: 35
+legacyGroup: 33
 level: architecture
 difficulty: advanced
 maturity: experimental
