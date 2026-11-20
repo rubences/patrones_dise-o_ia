@@ -34,7 +34,8 @@ Explicitar precondiciones, propietario y estado; medir degradación y capacidad 
 
 ## Implementación del repositorio
 
-`src/pattern_171_federated_update_gate.ts` es un contrato educativo, no ejecuta inferencia edge ni protocolos distribuidos.
+Valida cliente permitido, número de muestras y norma de actualización; no realiza agregación federada segura. Contrato TypeScript determinista: `src/pattern_171_federated_update_gate.ts`; pruebas de regresión: `tests/p9_edge_patterns.test.ts`. No se ha medido rendimiento real en hardware edge ni se implementan servicios distribuidos completos.
+
 
 ## Producción
 
