@@ -1,0 +1,3 @@
+/** P12 326: educational incident response reference; no forensic chain-of-custody certification. */
+export class Pattern326Contract{reachable(start:string,edges:{from:string;to:string}[],maxHops:number){if(!start.trim()||!Number.isInteger(maxHops)||maxHops<0||edges.some(e=>!e.from.trim()||!e.to.trim()))throw Error("invalid graph");const affected=new Set([start]);let frontier=[start];for(let hop=0;hop<maxHops;hop++){const next:string[]=[];for(const e of edges)if(frontier.includes(e.from)&&!affected.has(e.to)){affected.add(e.to);next.push(e.to);}frontier=next;if(!frontier.length)break;}return [...affected].sort();}}
+export const PATTERN_326_META={id:326,family:"ai-incident-forensics",maturity:"experimental"} as const;
