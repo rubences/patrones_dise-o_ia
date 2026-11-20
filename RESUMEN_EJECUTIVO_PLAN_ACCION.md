@@ -7,17 +7,22 @@
 | Fichas editoriales canónicas | **122/122** |
 | Macrofamilias | **14** |
 | Grupos de trazabilidad | **27** |
-| Patrones con evidencia primaria mínima | **54** |
-| Fuentes primarias/oficiales mínimas | **50** |
+| Patrones con evidencia primaria/oficial | **54/122** |
+| Fuentes primarias/oficiales registradas | **51** |
+| Baseline de evidencia | **P7.0 · fail-closed** |
+| Publicaciones | **2 · editor-contact-ready** |
 
 ## Ampliación 103–122
 
-AI Factory, Cognitive Core, SDD/GDD, Open Data Lakehouse, federación de metadatos, grafos tipados, GraphRAG/RAG avanzado y una familia completa LoRA/PEFT.
-GDD permanece experimental y no se contabiliza como metodología con evidencia primaria directa.
+La segunda generación incorpora AI Factory, Cognitive Core, SDD/GDD, Open Data Lakehouse, federación de metadatos, grafos tipados, GraphRAG/RAG avanzado y una familia LoRA/PEFT.
 
-## Próximos pasos
+GDD permanece explícitamente **experimental** y no se contabiliza dentro del mínimo de evidencia primaria P7.0.
 
-1. Validar CI 122/14.
-2. Integrar la nueva generación en los dos índices editoriales.
-3. Crear laboratorios Open Lakehouse, GraphRAG y LoRA.
-4. Diseñar la composición AI Factory + Open Data Lakehouse + Typed Graph + GraphRAG + Cognitive Core.
+## Próximos cierres
+
+1. Ampliar evidencia primaria más allá de 54/122 sin rebajar los scope notes.
+2. Resolver blockers y derechos de figuras de las dos publicaciones antes de cualquier envío.
+3. Fijar `web/package-lock.json` para reproducibilidad transitiva.
+4. Activar branch protection/ruleset para exigir CI en `main`.
+5. Ejecutar benchmarks de composiciones completas antes de publicar claims cuantitativos.
+6. Mantener sincronizados README, web, dossiers y edición de referencia mediante el gate de consistencia.
