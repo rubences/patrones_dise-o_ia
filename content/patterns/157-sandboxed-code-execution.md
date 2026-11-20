@@ -4,7 +4,7 @@ slug: sandboxed-code-execution
 title: "Sandboxed Code Execution"
 summary: "Patrón de referencia para sandboxed code execution con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agentic-software-engineering
-legacyGroup: 29
+legacyGroup: 31
 level: workflow
 difficulty: advanced
 maturity: emerging
