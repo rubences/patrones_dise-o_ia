@@ -1,0 +1,3 @@
+/** P12 308: educational accessibility contract; not WCAG or equality certification. */
+export class Pattern308Contract{select(options:{id:string;bytes:number;accessible:boolean}[],budgetBytes:number){if(!Number.isInteger(budgetBytes)||budgetBytes<0||options.some(x=>!x.id.trim()||!Number.isInteger(x.bytes)||x.bytes<0))throw Error("invalid bandwidth");const best=[...options].filter(x=>x.accessible&&x.bytes<=budgetBytes).sort((a,b)=>a.bytes-b.bytes||a.id.localeCompare(b.id))[0];if(!best)throw Error("no accessible option within budget");return best.id;}}
+export const PATTERN_308_META={id:308,family:"ai-accessibility-inclusion",maturity:"experimental"} as const;
