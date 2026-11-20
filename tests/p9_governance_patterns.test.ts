@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern143Contract} from "../src/pattern_143_ai_risk_register.js";
+import {Pattern144Contract} from "../src/pattern_144_evidence_backed_assurance_case.js";
+import {Pattern145Contract} from "../src/pattern_145_policy_to_control_traceability.js";
+import {Pattern146Contract} from "../src/pattern_146_human_accountability_gate.js";
+import {Pattern147Contract} from "../src/pattern_147_model_and_data_card_registry.js";
+import {Pattern148Contract} from "../src/pattern_148_regulatory_change_impact.js";
+import {Pattern149Contract} from "../src/pattern_149_conformity_evidence_ledger.js";
+import {Pattern150Contract} from "../src/pattern_150_independent_safety_review.js";
+test("143 risk score and ownership",()=>{const r=new Pattern143Contract();r.register("r","a",4,5,"mitigate");assert.equal(r.assess("r","a").score,20);assert.throws(()=>r.assess("r","b"));assert.throws(()=>r.register("x","a",6,1,"mitigate"));});
+test("144 assurance claim requires evidence",()=>{const a=new Pattern144Contract();a.addClaim("c","a","safe");assert.equal(a.evaluate("c","a").supported,false);a.attach("c","a","report-1");assert.equal(a.evaluate("c","a").supported,true);assert.throws(()=>a.attach("c","b","fake"));});
+test("145 policy-to-control coverage",()=>{const p=new Pattern145Contract();p.registerPolicy("policy","a");assert.equal(p.coverage("policy","a").covered,false);p.link("policy","a","control");assert.equal(p.coverage("policy","a").covered,true);assert.throws(()=>p.link("policy","b","other"));});
+test("146 independent human accountability",()=>{const g=new Pattern146Contract();g.request("r","author");assert.throws(()=>g.decide("r","author","approved"));assert.throws(()=>g.authorize("r"));g.decide("r","reviewer","approved");assert.equal(g.authorize("r"),true);});
+test("147 model/data card version and owner",()=>{const c=new Pattern147Contract();c.register("m","a","model","1.0","limitations");assert.equal(c.get("m","a").version,"1.0");assert.throws(()=>c.get("m","b"));});
+test("148 regulatory impact graph",()=>{const r=new Pattern148Contract();r.map("req-1","control-a");r.map("req-2","control-a");r.map("req-2","control-b");assert.deepEqual(r.impact(["req-1","req-2"]),["control-a","control-b"]);});
+test("149 evidence ledger detects invalid digests",()=>{const l=new Pattern149Contract();l.append("e1","a","a".repeat(64));l.append("e2","b","b".repeat(64));assert.equal(l.verify(),true);assert.equal(l.list("a").length,1);assert.throws(()=>l.append("e3","a","invalid"));});
+test("150 safety review requires independent reviewer",()=>{const r=new Pattern150Contract();assert.throws(()=>r.submit("id","a","a",0));r.submit("id","a","b",1);assert.equal(r.status("id").approved,false);});
