@@ -4,7 +4,7 @@ slug: edge-to-cloud-failover
 title: "Edge-to-Cloud Failover"
 summary: "Contrato experimental para edge-to-cloud failover con decisiones explícitas de recursos y disponibilidad."
 family: edge-distributed-ai
-legacyGroup: 35
+legacyGroup: 33
 level: architecture
 difficulty: advanced
 maturity: experimental
