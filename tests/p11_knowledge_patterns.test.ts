@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern263Contract} from "../research/p11/knowledge/src/pattern_263_ontology_change_proposal_agent.js";
+import {Pattern264Contract} from "../research/p11/knowledge/src/pattern_264_entity_resolution_evidence_gate.js";
+import {Pattern265Contract} from "../research/p11/knowledge/src/pattern_265_knowledge_graph_contradiction_resolver.js";
+import {Pattern266Contract} from "../research/p11/knowledge/src/pattern_266_schema_evolution_compatibility_guard.js";
+import {Pattern267Contract} from "../research/p11/knowledge/src/pattern_267_knowledge_freshness_decay_policy.js";
+import {Pattern268Contract} from "../research/p11/knowledge/src/pattern_268_graph_provenance_reconciliation.js";
+import {Pattern269Contract} from "../research/p11/knowledge/src/pattern_269_ontology_alignment_confidence_gate.js";
+import {Pattern270Contract} from "../research/p11/knowledge/src/pattern_270_knowledge_repair_human_approval.js";
+test("263 proposal requires author and definition",()=>{const x=new Pattern263Contract();assert.equal(x.propose("entity","definition","reviewer").status,"pending");assert.throws(()=>x.propose("entity","","reviewer"));});
+test("264 entity resolution returns candidate not certainty",()=>{const x=new Pattern264Contract();assert.equal(x.assess({id:"a",aliases:["X"]},{id:"b",aliases:["X"]}).candidateMatch,true);assert.equal(x.assess({id:"a",aliases:[]},{id:"b",aliases:[]}).candidateMatch,false);});
+test("265 detects conflicting values for same subject and predicate",()=>{const x=new Pattern265Contract();assert.equal(x.detect([{subject:"s",predicate:"p",value:"a"},{subject:"s",predicate:"p",value:"b"}]).length,1);});
+test("266 detects breaking schema changes",()=>{const x=new Pattern266Contract();assert.deepEqual(x.assess({required:["id","name"]},{fields:["id"]}).missing,["name"]);});
+test("267 freshness halves at half-life",()=>{const x=new Pattern267Contract();assert.equal(x.score(10,10),.5);assert.throws(()=>x.score(1,0));});
+test("268 provenance reconciliation is deduplicated",()=>{const x=new Pattern268Contract();assert.deepEqual(x.reconcile(["b","a"],["a","c"]),["a","b","c"]);});
+test("269 alignment gate checks threshold",()=>{const x=new Pattern269Contract();assert.equal(x.assess(2,4,.6).accepted,false);assert.throws(()=>x.assess(5,4,.5));});
+test("270 repair requires affirmative human approval",()=>{const x=new Pattern270Contract();assert.throws(()=>x.authorize("p","reviewer",false));assert.equal(x.authorize("p","reviewer",true).authorized,true);});
