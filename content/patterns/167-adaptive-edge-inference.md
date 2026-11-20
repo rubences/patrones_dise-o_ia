@@ -4,7 +4,7 @@ slug: adaptive-edge-inference
 title: "Adaptive Edge Inference"
 summary: "Contrato experimental para adaptive edge inference con decisiones explícitas de recursos y disponibilidad."
 family: edge-distributed-ai
-legacyGroup: 35
+legacyGroup: 33
 level: architecture
 difficulty: advanced
 maturity: experimental
