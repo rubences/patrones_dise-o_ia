@@ -471,3 +471,15 @@ export * from "./pattern_337_data_contract_breaking_change_detector.js";
 export * from "./pattern_338_schema_to_ontology_consistency_gate.js";
 export * from "./pattern_339_multimodal_metadata_contract.js";
 export * from "./pattern_340_data_lineage_impact_propagator.js";
+
+// P13: Agentic Decision Intelligence & Operational Control (341–350)
+export * from "./pattern_341_decision_provenance_ledger.js";
+export * from "./pattern_342_risk_adaptive_action_authorization.js";
+export * from "./pattern_343_counterfactual_decision_review.js";
+export * from "./pattern_344_decision_confidence_calibration.js";
+export * from "./pattern_345_reversible_action_planner.js";
+export * from "./pattern_346_policy_constrained_decision_optimizer.js";
+export * from "./pattern_347_multi_stakeholder_decision_arbitration.js";
+export * from "./pattern_348_decision_to_outcome_feedback_loop.js";
+export * from "./pattern_349_autonomous_action_budget_controller.js";
+export * from "./pattern_350_operational_decision_assurance_gate.js";
