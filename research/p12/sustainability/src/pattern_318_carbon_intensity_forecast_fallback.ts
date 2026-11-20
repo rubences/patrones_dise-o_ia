@@ -1,0 +1,3 @@
+/** P12 318: educational sustainability control; energy and carbon values are externally supplied estimates. */
+export class Pattern318Contract{resolve(forecast:number|null,observed:number|null,conservativeDefault:number){if(!Number.isFinite(conservativeDefault)||conservativeDefault<0||[forecast,observed].some(v=>v!==null&&(!Number.isFinite(v)||v<0)))throw Error("invalid carbon intensity");return forecast!==null?{value:forecast,source:"forecast" as const}:observed!==null?{value:observed,source:"observed" as const}:{value:conservativeDefault,source:"default" as const};}}
+export const PATTERN_318_META={id:318,family:"ai-energy-sustainability",maturity:"experimental"} as const;
