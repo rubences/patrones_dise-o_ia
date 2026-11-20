@@ -1,0 +1,157 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Patrón 001 · Pipeline para redactar un post",
+    "locale": "es",
+    "quality_profile": "showcase",
+    "output": "dist/archify-build/pattern-001-pipeline.html",
+    "repository": {
+      "url": "https://github.com/rubences/patrones_dise-o_ia",
+      "provider": "github",
+      "revision": "39991a1877b9f7e2baefea52e19488e542918a5c"
+    }
+  },
+  "lanes": [
+    {
+      "id": "solicitud",
+      "label": "Entrada"
+    },
+    {
+      "id": "modelo",
+      "label": "Generación LLM"
+    },
+    {
+      "id": "salida",
+      "label": "Resultado"
+    }
+  ],
+  "mainPath": [
+    "tema",
+    "esquema",
+    "borrador",
+    "titulo",
+    "post"
+  ],
+  "nodes": [
+    {
+      "id": "tema",
+      "lane": "solicitud",
+      "col": 0,
+      "type": "external",
+      "label": "Tema",
+      "sublabel": "Petición del usuario",
+      "sources": [
+        {
+          "path": "src/pattern_1_pipeline.ts",
+          "line": 91,
+          "end_line": 102
+        }
+      ]
+    },
+    {
+      "id": "esquema",
+      "lane": "modelo",
+      "col": 1,
+      "type": "backend",
+      "label": "Crear esquema",
+      "sublabel": "Exactamente 3 puntos",
+      "sources": [
+        {
+          "path": "src/pattern_1_pipeline.ts",
+          "line": 31,
+          "end_line": 56
+        }
+      ]
+    },
+    {
+      "id": "borrador",
+      "lane": "modelo",
+      "col": 2,
+      "type": "backend",
+      "label": "Escribir borrador",
+      "sublabel": "A partir del esquema",
+      "sources": [
+        {
+          "path": "src/pattern_1_pipeline.ts",
+          "line": 58,
+          "end_line": 78
+        }
+      ]
+    },
+    {
+      "id": "titulo",
+      "lane": "modelo",
+      "col": 3,
+      "type": "backend",
+      "label": "Inventar título",
+      "sublabel": "A partir del borrador",
+      "sources": [
+        {
+          "path": "src/pattern_1_pipeline.ts",
+          "line": 80,
+          "end_line": 92
+        }
+      ]
+    },
+    {
+      "id": "post",
+      "lane": "salida",
+      "col": 4,
+      "type": "frontend",
+      "label": "Entregar post",
+      "sublabel": "Esquema, texto y título",
+      "sources": [
+        {
+          "path": "src/pattern_1_pipeline.ts",
+          "line": 100,
+          "end_line": 120
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "tema_esquema",
+      "from": "tema",
+      "to": "esquema",
+      "label": "tema"
+    },
+    {
+      "id": "esquema_borrador",
+      "from": "esquema",
+      "to": "borrador",
+      "label": "3 puntos"
+    },
+    {
+      "id": "borrador_titulo",
+      "from": "borrador",
+      "to": "titulo",
+      "label": "texto"
+    },
+    {
+      "id": "titulo_post",
+      "from": "titulo",
+      "to": "post",
+      "label": "resultado"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Contrato",
+      "items": [
+        "La salida de cada etapa alimenta la siguiente",
+        "El primer paso valida un esquema con tres puntos"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Alcance",
+      "items": [
+        "Describe la implementación de referencia del patrón 001",
+        "No ejecuta llamadas a un modelo durante la visualización"
+      ]
+    }
+  ]
+}
