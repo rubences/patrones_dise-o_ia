@@ -1,3 +1,3 @@
-/** P9 171 Federated Update Gate: educational contract, not production infrastructure. */
-export class Pattern171Contract{private records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid");this.records.set(id,{actor,value});}get(id:string,actor:string){const v=this.records.get(id);if(!v||v.actor!==actor)throw Error("denied");return v.value;}}
+/** P9 171 Federated Update Gate: deterministic scheduling/policy reference, not an edge runtime. */
+export class Pattern171Contract{validate(update:{client:string;sampleCount:number;norm:number},limits:{maxNorm:number;minSamples:number},allow:ReadonlySet<string>){if(!allow.has(update.client)||!Number.isInteger(update.sampleCount)||update.sampleCount<limits.minSamples||!Number.isFinite(update.norm)||update.norm<0||update.norm>limits.maxNorm)throw Error("federated update denied");return {accepted:true,client:update.client};}}
 export const PATTERN_171_META={id:171,name:"Federated Update Gate",family:"edge-distributed-ai",maturity:"experimental"} as const;
