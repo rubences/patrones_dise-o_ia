@@ -1,0 +1,3 @@
+/** P12 302: educational accessibility contract; not WCAG or equality certification. */
+export class Pattern302Contract{assess(requiredFacts:string[],simplifiedFacts:string[]){if(!requiredFacts.length||[...requiredFacts,...simplifiedFacts].some(x=>!x.trim()))throw Error("invalid facts");const covered=new Set(simplifiedFacts),missing=[...new Set(requiredFacts)].filter(x=>!covered.has(x));return {preserved:missing.length===0,missing,limitation:"exact fact labels do not prove semantic fidelity" as const};}}
+export const PATTERN_302_META={id:302,family:"ai-accessibility-inclusion",maturity:"experimental"} as const;
