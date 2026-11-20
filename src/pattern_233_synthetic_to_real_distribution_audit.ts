@@ -1,0 +1,3 @@
+/** P11 233: educational synthetic-data contract; not privacy or fidelity certification. */
+export class Pattern233Contract{compare(synthetic:number[],real:number[],maxMeanGap:number){if(!synthetic.length||!real.length||![...synthetic,...real,maxMeanGap].every(Number.isFinite)||maxMeanGap<0)throw Error("invalid distributions");const mean=(xs:number[])=>xs.reduce((a,b)=>a+b,0)/xs.length;const meanGap=Math.abs(mean(synthetic)-mean(real));return {meanGap,accepted:meanGap<=maxMeanGap,limitation:"mean gap alone cannot establish distributional equivalence" as const};}}
+export const PATTERN_233_META={id:233,family:"trustworthy-synthetic-simulation",maturity:"experimental"} as const;
