@@ -1,3 +1,3 @@
-/** P9 180 World Model Rollout: educational contract, not production infrastructure. */
-export class Pattern180Contract{private records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid");this.records.set(id,{actor,value});}get(id:string,actor:string){const v=this.records.get(id);if(!v||v.actor!==actor)throw Error("denied");return v.value;}}
+/** P9 180 World Model Rollout: deterministic illustrative model; no causal identification claims. */
+export class Pattern180Contract{rollout(initial:number,actions:number[],transition:(state:number,action:number)=>number,maxSteps:number){if(!Number.isFinite(initial)||!Number.isInteger(maxSteps)||maxSteps<0||actions.length>maxSteps)throw Error("invalid rollout");const states=[initial];for(const action of actions){const next=transition(states[states.length-1],action);if(!Number.isFinite(next))throw Error("unstable world model");states.push(next);}return states;}}
 export const PATTERN_180_META={id:180,name:"World Model Rollout",family:"causal-neurosymbolic-ai",maturity:"experimental"} as const;
