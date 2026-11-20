@@ -4,7 +4,7 @@ slug: experience-replay
 title: "Experience Replay"
 summary: "Contrato arquitectónico experimental para experience replay con trazabilidad, autorización y pruebas negativas."
 family: continual-learning-memory
-legacyGroup: 31
+legacyGroup: 29
 level: architecture
 difficulty: advanced
 maturity: experimental
