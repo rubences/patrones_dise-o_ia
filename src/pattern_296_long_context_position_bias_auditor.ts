@@ -1,0 +1,3 @@
+/** P12 296: deterministic educational context engineering reference, not LLM safety certification. */
+export class Pattern296Contract{audit(positions:{position:number;accuracy:number}[],maxGap:number){if(!positions.length||!Number.isFinite(maxGap)||maxGap<0||maxGap>1||positions.some(x=>!Number.isFinite(x.position)||x.position<0||!Number.isFinite(x.accuracy)||x.accuracy<0||x.accuracy>1))throw Error("invalid audit");const values=positions.map(x=>x.accuracy),gap=Math.max(...values)-Math.min(...values);return {gap,flagged:gap>maxGap,limitation:"descriptive disparity does not prove position caused the gap" as const};}}
+export const PATTERN_296_META={id:296,family:"context-engineering",maturity:"experimental"} as const;
