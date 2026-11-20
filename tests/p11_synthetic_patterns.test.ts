@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern231Contract} from "../research/p11/synthetic/src/pattern_231_synthetic_data_provenance_tag.js";
+import {Pattern232Contract} from "../research/p11/synthetic/src/pattern_232_privacy_leakage_similarity_gate.js";
+import {Pattern233Contract} from "../research/p11/synthetic/src/pattern_233_synthetic_to_real_distribution_audit.js";
+import {Pattern234Contract} from "../research/p11/synthetic/src/pattern_234_scenario_coverage_generator.js";
+import {Pattern235Contract} from "../research/p11/synthetic/src/pattern_235_counterfactual_scenario_sampler.js";
+import {Pattern236Contract} from "../research/p11/synthetic/src/pattern_236_synthetic_label_quality_gate.js";
+import {Pattern237Contract} from "../research/p11/synthetic/src/pattern_237_simulation_fidelity_contract.js";
+import {Pattern238Contract} from "../research/p11/synthetic/src/pattern_238_synthetic_dataset_release_gate.js";
+test("231 provenance requires digest-shaped lineage",()=>{const x=new Pattern231Contract();assert.equal(x.tag("d","g",["a".repeat(64)]).synthetic,true);assert.throws(()=>x.tag("d","g",["wrong"]));});
+test("232 exact-match leakage blocks memorized samples",()=>{const x=new Pattern232Contract();assert.equal(x.assess(["secret"],["secret"],0).accepted,false);assert.equal(x.assess(["new"],["secret"],0).accepted,true);});
+test("233 mean shift flags synthetic-real mismatch",()=>{const x=new Pattern233Contract();assert.equal(x.compare([1,1],[4,4],1).accepted,false);assert.throws(()=>x.compare([],[],1));});
+test("234 coverage reports missing scenarios without duplicates",()=>{assert.deepEqual(new Pattern234Contract().missing(["rare","rare","common"],["common"]),["rare"]);});
+test("235 intervention does not mutate original state",()=>{const x=new Pattern235Contract();const base={a:1};assert.deepEqual(x.intervene(base,"a",2),{a:2});assert.equal(base.a,1);assert.throws(()=>x.intervene(base,"unknown",2));});
+test("236 synthetic label agreement enforces threshold",()=>{const x=new Pattern236Contract();assert.equal(x.agreement(["a","b"],["a","x"],.75).accepted,false);assert.equal(x.agreement(["a"],["a"],1).accepted,true);});
+test("237 fidelity MAE rejects poor simulation",()=>{const x=new Pattern237Contract();assert.equal(x.assess([1,2],[1,4],.5).accepted,false);assert.equal(x.assess([1],[1],0).accepted,true);});
+test("238 release fails closed on missing privacy clearance",()=>{const x=new Pattern238Contract();assert.throws(()=>x.authorize({provenance:true,privacy:false,quality:true,license:true}));assert.equal(x.authorize({provenance:true,privacy:true,quality:true,license:true}).approved,true);});
