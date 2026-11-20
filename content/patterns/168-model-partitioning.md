@@ -4,7 +4,7 @@ slug: model-partitioning
 title: "Model Partitioning"
 summary: "Contrato experimental para model partitioning con decisiones explícitas de recursos y disponibilidad."
 family: edge-distributed-ai
-legacyGroup: 35
+legacyGroup: 33
 level: architecture
 difficulty: advanced
 maturity: experimental
