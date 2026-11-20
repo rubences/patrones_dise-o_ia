@@ -1,0 +1,12 @@
+import { strict as assert } from "node:assert";
+import { test } from "node:test";
+import { Pattern361Contract } from "../src/pattern_361_autonomy_boundary_enforcement.js";
+import { Pattern362Contract } from "../src/pattern_362_agent_self_modification_approval_gate.js";
+import { Pattern363Contract } from "../src/pattern_363_cross_agent_invariant_monitor.js";
+import { Pattern364Contract } from "../src/pattern_364_safe_autonomy_degradation_controller.js";
+import { Pattern365Contract } from "../src/pattern_365_end_to_end_agentic_assurance_case.js";
+test("361 denies out-of-bound action",()=>assert.deepEqual(new Pattern361Contract().check(["read","write"],["read"]).denied,["write"]));
+test("362 fails closed without approval",()=>assert.equal(new Pattern362Contract().approve({id:"c",testsPassed:true,reviewed:false,rollbackReady:true}).pass,false));
+test("363 flags invalid agent",()=>assert.deepEqual(new Pattern363Contract().inspect([{agent:"a",valid:false}]).invalid,["a"]));
+test("364 degrades on high risk",()=>assert.equal(new Pattern364Contract().mode(0.9,true).mode,"halt"));
+test("365 requires verified claims",()=>assert.equal(new Pattern365Contract().assess([{id:"c",evidence:[],verified:true}]).pass,false));
