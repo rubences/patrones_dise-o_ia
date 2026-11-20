@@ -1,0 +1,3 @@
+/** P12 280: educational inference-time control; not model-quality or sampling guarantee. */
+export class Pattern280Contract{choose<T extends {id:string;score:number;verified:boolean}>(candidates:T[]){if(!candidates.length||candidates.some(x=>!x.id.trim()||!Number.isFinite(x.score))||new Set(candidates.map(x=>x.id)).size!==candidates.length)throw Error("invalid search");return [...candidates].filter(x=>x.verified).sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id))[0]?.id??null;}}
+export const PATTERN_280_META={id:280,family:"inference-compute-optimization",maturity:"experimental"} as const;
