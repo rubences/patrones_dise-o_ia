@@ -1,59 +1,176 @@
 # Patrones IA — 122 patrones de diseño para sistemas inteligentes
 
-Biblioteca abierta de **122 patrones de diseño para sistemas de IA**, implementados en TypeScript y acompañados por fichas editoriales canónicas para arquitectura, docencia e investigación.
+[![Editorial, Hardening, Publication and Web CI](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/web-ci.yml/badge.svg)](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/web-ci.yml)
+[![Deploy Patrones IA Web](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/deploy-web.yml/badge.svg)](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/deploy-web.yml)
 
-> Estado editorial: **122/122 implementaciones · 122/122 fichas canónicas**.
+**Patrones IA** es una biblioteca abierta y un lenguaje de patrones para diseñar sistemas de inteligencia artificial: agentes, RAG y grafos, AI Factories, seguridad, fiabilidad, evaluación, operación y adaptación eficiente de modelos.
 
-## Qué contiene
+**Web:** https://rubences.github.io/patrones_dise-o_ia/
 
-- src/ — 122 implementaciones de referencia.
-- content/patterns/ — 122 fichas canónicas.
-- catalog/ — taxonomía, inventario, evidencia primaria y relaciones.
-- web/ — catálogo Astro navegable.
-- book/ — edición técnica reproducible en Markdown/HTML/EPUB/PDF.
-- publications/ — dos obras editoriales independientes.
-- research/NEXT_GENERATION_PATTERNS_2026.md — investigación de la ampliación 103–122.
+> **Estado actual — v17.0.0 / P7.0:** 122/122 implementaciones · 122/122 fichas canónicas · 14 macrofamilias · 27 grupos de trazabilidad · 54/122 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
+
+## Qué mantiene el repositorio
+
+| Capa | Fuente de verdad | Propósito |
+|---|---|---|
+| Código | `src/pattern_*.ts` | 122 implementaciones TypeScript de referencia |
+| Inventario | `catalog/patterns.json` | ID, slug, familia, grupo histórico y fichero fuente |
+| Taxonomía | `catalog/taxonomy.json` | 14 macrofamilias, niveles, madurez y vocabulario editorial |
+| Fichas | `content/patterns/*.md` | contenido canónico para web y edición de referencia |
+| Evidencia | `catalog/references.json` + `catalog/pattern-evidence.json` | fuentes primarias/oficiales y límites de interpretación |
+| Web | `web/` | catálogo Astro, evidencia, libro y publicaciones |
+| Edición técnica | `book/` + `scripts/build-book.mjs` | Markdown/HTML/EPUB/PDF reproducibles |
+| Publicaciones | `publications/` | dos obras editoriales independientes |
+| Investigación | `research/` | ampliaciones y terminología experimental |
+
+La regla editorial es **single source of truth**: código, catálogo, fichas, Evidence Pack, web y libro técnico deben poder reconstruirse sin mantener copias manuales divergentes.
 
 ## 14 macrofamilias
 
-| # | Familia | Alcance |
-|---:|---|---|
-| 1 | Foundations | GoF y principios reutilizables |
-| 2 | Agentic Workflows | tools, planning, reflexión y orquestación |
-| 3 | Knowledge & Context | RAG, memoria, grounding y retrieval avanzado |
-| 4 | Reasoning | CoT, ToT, Self-Consistency y evaluadores |
-| 5 | Multi-Agent | coordinación, delegación y estado compartido |
-| 6 | Safety & Security | guardrails, permisos, sandboxing y red teaming |
-| 7 | Reliability | retry, circuit breaker, checkpointing y fallback |
-| 8 | Production & FinOps | observabilidad, coste, streaming y operación |
-| 9 | Evaluation & QA | judge, A/B, regresión y evidencia |
-| 10 | Human Experience | escalado, aclaración y preferencias |
-| 11 | AI Platforms & Factories | AI Factory y Cognitive Core |
-| 12 | Development & Governance | SDD y GDD |
-| 13 | Data & Graph Foundations | Open Data Lakehouse, metadata fabric y typed graphs |
-| 14 | Model Adaptation & PEFT | LoRA, QLoRA y derivados |
+| # | Familia | Patrones | Alcance |
+|---:|---|---:|---|
+| 1 | Foundations | 23 | GoF y principios reutilizables reinterpretados para IA |
+| 2 | Agentic Workflows | 11 | tools, planning, reflexión y orquestación |
+| 3 | Knowledge & Context | 12 | RAG, memoria, grounding y retrieval avanzado |
+| 4 | Reasoning | 8 | CoT, ToT, Self-Consistency y evaluadores |
+| 5 | Multi-Agent | 7 | coordinación, delegación y estado compartido |
+| 6 | Safety & Security | 11 | guardrails, permisos, sandboxing y defensa adversarial |
+| 7 | Reliability | 12 | retry, circuit breaker, checkpointing y fallback |
+| 8 | Production & FinOps | 11 | observabilidad, coste, rendimiento y operación |
+| 9 | Evaluation & QA | 6 | judge, A/B, regresión, red teaming y evidencia |
+| 10 | Human Experience | 6 | escalado, aclaración, preferencias y atribución |
+| 11 | AI Platforms & Factories | 2 | AI Factory y Cognitive Core |
+| 12 | Development & Governance | 2 | SDD y GDD |
+| 13 | Data & Graph Foundations | 3 | Open Data Lakehouse, metadata fabric y typed graphs |
+| 14 | Model Adaptation & PEFT | 8 | LoRA, QLoRA y variantes de adaptación eficiente |
 
-## Segunda generación: patrones 103–122
+## Segunda generación — patrones 103–122
 
 - **103–104:** AI Factory y Agent Brain / Cognitive Core.
 - **105–106:** Spec-Driven Development y Graph-Driven Development.
 - **107–109:** Open Data Lakehouse, Federated Metadata Fabric y Typed Knowledge Graph.
-- **110–114:** GraphRAG, Adaptive GraphRAG, RAPTOR, Self-RAG y CRAG.
+- **110–114:** GraphRAG, Adaptive GraphRAG Router, RAPTOR, Self-RAG y Corrective RAG.
 - **115–122:** LoRA, QLoRA, AdaLoRA, DoRA, PiSSA, LoRA+, rsLoRA y LoftQ.
 
-GDD se usa como terminología **experimental del proyecto**, no como supuesto estándar académico. Para «RGA», el catálogo adopta **GraphRAG / Graph-Augmented Generation** porque no se encontró un acrónimo RGA normalizado y estable para una técnica única.
+**GDD (106)** es terminología experimental definida por este proyecto; no se presenta como metodología académica estandarizada y por eso queda fuera del mínimo de evidencia primaria P7.0. Para el concepto que en algunos contextos se abrevia de forma ambigua como “RGA”, el catálogo utiliza nombres explícitos como **GraphRAG / Graph-Augmented Generation**.
 
-## Evidencia
+## Evidencia y rigor
 
-El Evidence Pack separa implementación, referencias editoriales, fuentes primarias/estándares y scope notes. El baseline P7.0 exige **54 patrones con evidencia primaria/oficial y 50 fuentes registradas**. Medium se usa solo como señal secundaria de práctica industrial.
+El Evidence Pack separa cuatro cosas que no deben confundirse:
 
-## Dos publicaciones
+1. que exista una implementación;
+2. que exista una ficha editorial;
+3. que haya una referencia relacionada;
+4. que exista evidencia primaria/oficial aplicable al alcance concreto del patrón.
 
-- **Research EN:** *Architectural Design Patterns for Edge and Generative AI*.
-- **Teaching ES:** *Patrones de Diseño en Inteligencia Artificial: Manual Práctico y Laboratorios*.
+El baseline **P7.0** es fail-closed y exige como mínimo **54 patrones** con evidencia primaria/oficial y **51 fuentes** registradas. Cada relación patrón–fuente incorpora un `scopeNote` para evitar extrapolar benchmarks, garantías de seguridad o resultados experimentales fuera del contexto estudiado.
 
-La monografía incorpora AI Factory, Cognitive Core, Open Lakehouse, typed graphs, GraphRAG y PEFT como piezas de un argumento arquitectónico; el manual los transforma en prácticas de especificación, datos, retrieval y adaptación.
+Medium y otras fuentes de práctica industrial pueden orientar investigación, pero **no sustituyen evidencia primaria, estándares o documentación oficial**.
 
-## Licencia
+## Web y catálogo
 
-MIT para el código salvo indicación contraria. Las publicaciones y futuras cesiones editoriales se gobiernan por su gate contractual específico.
+La web pública ofrece catálogo, filtros, fichas, Evidence Pack, edición de referencia y estado de las publicaciones:
+
+- Inicio: https://rubences.github.io/patrones_dise-o_ia/
+- Catálogo: https://rubences.github.io/patrones_dise-o_ia/patterns/
+- Evidencia: https://rubences.github.io/patrones_dise-o_ia/evidence/
+- Libro técnico: https://rubences.github.io/patrones_dise-o_ia/book/
+- Publicaciones: https://rubences.github.io/patrones_dise-o_ia/publications/
+
+Desarrollo local:
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+> Deuda conocida: `web/` todavía no dispone de `package-lock.json`; la dependencia directa de Astro está fijada a una versión exacta, pero las dependencias transitivas no quedan totalmente reproducibles hasta incorporar el lockfile.
+
+## Código
+
+Requisitos usados por CI: **Node.js 24**.
+
+```bash
+npm ci
+npm run pattern:25
+npm run pattern:82
+npm run pattern:110
+npm run pattern:115
+```
+
+La API pública unificada está en `src/index.ts`. Los gates de consistencia verifican que todos los IDs del catálogo tengan implementación, script ejecutable y export público.
+
+## Validación
+
+Los principales gates son:
+
+```bash
+node scripts/validate-editorial.mjs
+node scripts/validate-repository-consistency.mjs
+node scripts/validate-publications.mjs
+node scripts/validate-submission-readiness.mjs
+node scripts/validate-evidence-registry.mjs
+node scripts/build-evidence-pack.mjs
+node scripts/build-book.mjs
+```
+
+CI añade además la suite de regresión/hardening, el build Astro, el render Quarto/Typst, el paquete RA-MA y los artefactos distribuibles del libro.
+
+## Edición técnica reproducible
+
+La edición de referencia se deriva de las 122 fichas canónicas; **no es ninguno de los dos manuscritos comerciales**.
+
+```bash
+node scripts/build-evidence-pack.mjs
+node scripts/build-book.mjs
+quarto render dist/book/patrones-ia-manuscript.md
+```
+
+El pipeline genera Markdown, HTML, EPUB y PDF, además de manifests y hashes SHA-256. Las releases estables usan tags `book-v*`.
+
+## Dos publicaciones independientes
+
+### Research EN
+
+**Architectural Design Patterns for Edge and Generative AI**  
+*A Pattern Language for Agentic, Distributed, Reliable and Secure AI Systems*
+
+Estado: **editor-contact-ready**, no `submission-ready`. La propuesta mantiene blockers fail-closed sobre perfil/afiliaciones aprobadas, selección de publicaciones, calendario, figuras y verificación del formulario editorial.
+
+### Teaching ES
+
+**Patrones de Diseño en Inteligencia Artificial: Manual Práctico y Laboratorios**  
+*De agentes y RAG a arquitecturas seguras, observables y desplegables*
+
+Estado: **editor-contact-ready**, no `submission-ready`. El paquete RA-MA se genera y valida en CI; los datos privados nunca se versionan en el repositorio.
+
+Ambas obras comparten IDs, código, taxonomía y Evidence Pack, pero **no son traducciones entre sí**: tesis, estructura, prosa, casos, figuras, ejercicios y validación son independientes.
+
+## Documentación histórica
+
+Los siguientes documentos de la primera etapa se conservan por trazabilidad, pero **no describen el estado actual**:
+
+- `INDEX_DOCUMENTOS_INVESTIGACION.md`
+- `INVESTIGACION_EXHAUSTIVA_PATRONES.md`
+- `PRESENTACION_VISUAL_PATRONES.md`
+- `REFERENCIA_RAPIDA_PATRONES.md`
+
+Para estado operativo utiliza este README, `docs/EDITORIAL_ARCHITECTURE.md`, `catalog/` y los reportes generados por CI.
+
+## Deuda técnica y próximos cierres
+
+- ampliar la evidencia primaria más allá de 54/122 sin rebajar el criterio de alcance;
+- generar y versionar `web/package-lock.json`;
+- activar una ruleset/branch protection para que `main` exija CI desde GitHub, no solo por convención;
+- resolver blockers de submission y derechos de figuras antes de cualquier envío externo;
+- convertir GDD en una contribución formal evaluable o mantenerlo explícitamente como patrón experimental;
+- ejecutar y publicar benchmarks de composiciones completas antes de introducir claims cuantitativos.
+
+## Licencia y derechos
+
+El código se publica bajo **MIT** salvo indicación contraria. Las publicaciones, figuras, materiales docentes y futuras cesiones editoriales se gobiernan mediante `publications/common/CONTRACT_RIGHTS_GATE.md`.
+
+---
+
+**Principio del proyecto:** una ausencia de evidencia permanece visible; nunca se transforma en una cifra, una garantía o una referencia inventada.
