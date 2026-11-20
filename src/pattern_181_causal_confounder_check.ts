@@ -1,3 +1,3 @@
-/** P9 181 Causal Confounder Check: educational contract, not production infrastructure. */
-export class Pattern181Contract{private records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid");this.records.set(id,{actor,value});}get(id:string,actor:string){const v=this.records.get(id);if(!v||v.actor!==actor)throw Error("denied");return v.value;}}
+/** P9 181 Causal Confounder Check: deterministic illustrative model; no causal identification claims. */
+export class Pattern181Contract{flag(treatmentParents:string[],outcomeParents:string[],adjustedFor:string[]){const shared=[...new Set(treatmentParents.filter(x=>outcomeParents.includes(x)))];const missing=shared.filter(x=>!adjustedFor.includes(x));return {potentialConfounders:shared,unadjusted:missing,requiresCausalReview:missing.length>0,limitation:"shared parents are a heuristic, not sufficient identification" as const};}}
 export const PATTERN_181_META={id:181,name:"Causal Confounder Check",family:"causal-neurosymbolic-ai",maturity:"experimental"} as const;
