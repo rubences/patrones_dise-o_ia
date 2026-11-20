@@ -11,6 +11,15 @@ assert(catalog.patterns.length===tax.catalogSize,"catalog count mismatch");
 assert(families.size===tax.families.length,"duplicate family");
 assert(groups.size===tax.legacyGroups.length,"duplicate group");
 const referenceIds=new Set(refs.references.map(x=>x.id));
+const sheetNames=readdirSync(join(root,"content/patterns")).filter(x=>x.endsWith(".md"));
+const sheetById=new Map();
+for(const filename of sheetNames){
+  const match=filename.match(/^(\d+)-/);
+  if(!match){errors.push("unrecognized sheet name "+filename);continue;}
+  const id=Number(match[1]);
+  if(sheetById.has(id))errors.push("duplicate canonical sheet for "+id);
+  sheetById.set(id,join("content/patterns",filename));
+}
 const evidenceIds=new Set(mapping.patterns.map(x=>x.patternId));
 for(const record of catalog.patterns){
   const {id,slug,sourceFile,canonicalContent,family,legacyGroup,evidenceStatus}=record;
@@ -19,9 +28,11 @@ for(const record of catalog.patterns){
   assert(families.has(family),"unknown family "+id);
   assert(groups.has(legacyGroup),"unknown group "+id);
   assert(existsSync(join(root,sourceFile)),"missing source "+id);
-  assert(existsSync(join(root,canonicalContent)),"missing sheet "+id);
-  if(!existsSync(join(root,canonicalContent)))continue;
-  const sheet=readFileSync(join(root,canonicalContent),"utf8");
+  const resolvedSheet=canonicalContent??sheetById.get(id);
+  assert(!!resolvedSheet&&existsSync(join(root,resolvedSheet)),"missing sheet "+id);
+  if(!resolvedSheet||!existsSync(join(root,resolvedSheet)))continue;
+  if(canonicalContent)assert(canonicalContent===sheetById.get(id),"canonical path mismatch "+id);
+  const sheet=readFileSync(join(root,resolvedSheet),"utf8");
   for(const [key,value] of Object.entries({patternId:id,slug,family,legacyGroup,sourceFile,evidenceStatus})){
     const line=sheet.match(new RegExp("^"+key+":\\s*(.*)$","m"))?.[1]?.trim().replace(/^["']|["']$/g,"");
     assert(line===String(value),"frontmatter mismatch "+id+" "+key);
