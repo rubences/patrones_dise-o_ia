@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.9.0",
-  "description": "360 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "22.0.0",
+  "description": "365 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -367,7 +367,12 @@
     "pattern:357": "node --loader ts-node/esm src/pattern_357_benchmark_reproducibility_manifest.ts",
     "pattern:358": "node --loader ts-node/esm src/pattern_358_human_evaluation_adjudication_queue.ts",
     "pattern:359": "node --loader ts-node/esm src/pattern_359_production_evaluation_drift_sentinel.ts",
-    "pattern:360": "node --loader ts-node/esm src/pattern_360_evaluation_release_evidence_gate.ts"
+    "pattern:360": "node --loader ts-node/esm src/pattern_360_evaluation_release_evidence_gate.ts",
+    "pattern:361": "node --loader ts-node/esm src/pattern_361_autonomy_boundary_enforcement.ts",
+    "pattern:362": "node --loader ts-node/esm src/pattern_362_agent_self_modification_approval_gate.ts",
+    "pattern:363": "node --loader ts-node/esm src/pattern_363_cross_agent_invariant_monitor.ts",
+    "pattern:364": "node --loader ts-node/esm src/pattern_364_safe_autonomy_degradation_controller.ts",
+    "pattern:365": "node --loader ts-node/esm src/pattern_365_end_to_end_agentic_assurance_case.ts"
   },
   "keywords": [
     "openai",
