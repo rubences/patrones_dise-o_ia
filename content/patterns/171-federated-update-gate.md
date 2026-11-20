@@ -4,7 +4,7 @@ slug: federated-update-gate
 title: "Federated Update Gate"
 summary: "Contrato experimental para federated update gate con decisiones explícitas de recursos y disponibilidad."
 family: edge-distributed-ai
-legacyGroup: 35
+legacyGroup: 33
 level: architecture
 difficulty: advanced
 maturity: experimental
