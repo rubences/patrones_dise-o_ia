@@ -1,0 +1,3 @@
+/** P12 314: educational sustainability control; energy and carbon values are externally supplied estimates. */
+export class Pattern314Contract{attribute(events:{id:string;kwh:number;kgCO2ePerKwh:number}[]){if(!events.length||new Set(events.map(e=>e.id)).size!==events.length||events.some(e=>!e.id.trim()||![e.kwh,e.kgCO2ePerKwh].every(Number.isFinite)||e.kwh<0||e.kgCO2ePerKwh<0))throw Error("invalid attribution");const entries=events.map(e=>({id:e.id,estimatedKgCO2e:e.kwh*e.kgCO2ePerKwh}));return {entries,totalEstimatedKgCO2e:entries.reduce((a,e)=>a+e.estimatedKgCO2e,0)};}}
+export const PATTERN_314_META={id:314,family:"ai-energy-sustainability",maturity:"experimental"} as const;
