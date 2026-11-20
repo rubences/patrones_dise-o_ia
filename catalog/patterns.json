@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 310,
+  "catalogSize": 320,
   "patterns": [
     {
       "id": 1,
@@ -3620,6 +3620,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/310-accessibility-regression-sentinel.md"
+    },
+    {
+      "id": 311,
+      "name": "Carbon-Aware Inference Scheduler",
+      "slug": "carbon-aware-inference-scheduler",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_311_carbon_aware_inference_scheduler.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/311-carbon-aware-inference-scheduler.md"
+    },
+    {
+      "id": 312,
+      "name": "Energy Budget Per Request Gate",
+      "slug": "energy-budget-per-request-gate",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_312_energy_budget_per_request_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/312-energy-budget-per-request-gate.md"
+    },
+    {
+      "id": 313,
+      "name": "Green Region Placement Policy",
+      "slug": "green-region-placement-policy",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_313_green_region_placement_policy.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/313-green-region-placement-policy.md"
+    },
+    {
+      "id": 314,
+      "name": "Compute Carbon Attribution Ledger",
+      "slug": "compute-carbon-attribution-ledger",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_314_compute_carbon_attribution_ledger.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/314-compute-carbon-attribution-ledger.md"
+    },
+    {
+      "id": 315,
+      "name": "Sustainability SLO Tradeoff Controller",
+      "slug": "sustainability-slo-tradeoff-controller",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_315_sustainability_slo_tradeoff_controller.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/315-sustainability-slo-tradeoff-controller.md"
+    },
+    {
+      "id": 316,
+      "name": "Hardware Utilization Waste Detector",
+      "slug": "hardware-utilization-waste-detector",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_316_hardware_utilization_waste_detector.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/316-hardware-utilization-waste-detector.md"
+    },
+    {
+      "id": 317,
+      "name": "Model Efficiency Pareto Selector",
+      "slug": "model-efficiency-pareto-selector",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_317_model_efficiency_pareto_selector.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/317-model-efficiency-pareto-selector.md"
+    },
+    {
+      "id": 318,
+      "name": "Carbon Intensity Forecast Fallback",
+      "slug": "carbon-intensity-forecast-fallback",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_318_carbon_intensity_forecast_fallback.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/318-carbon-intensity-forecast-fallback.md"
+    },
+    {
+      "id": 319,
+      "name": "Sustainable Batch Formation",
+      "slug": "sustainable-batch-formation",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_319_sustainable_batch_formation.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/319-sustainable-batch-formation.md"
+    },
+    {
+      "id": 320,
+      "name": "Energy Rebound Effect Auditor",
+      "slug": "energy-rebound-effect-auditor",
+      "family": "ai-energy-sustainability",
+      "legacyGroup": 50,
+      "sourceFile": "src/pattern_320_energy_rebound_effect_auditor.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/320-energy-rebound-effect-auditor.md"
     }
   ]
 }
