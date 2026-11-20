@@ -61,6 +61,9 @@ jobs:
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
 
+      - name: Validate complete catalog referential integrity
+        run: node scripts/validate-catalog-integrity.mjs
+
       - name: Validate repository consistency
         run: node scripts/validate-repository-consistency.mjs
 
