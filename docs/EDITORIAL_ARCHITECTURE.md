@@ -17,10 +17,10 @@ La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio d
 
 ```text
 catalog/taxonomy.json
-        └── 32 macrofamilias, vocabulario, niveles y madurez
+        └── 33 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
-        └── inventario maestro 270/270
+        └── inventario maestro 280/280
 
 content/patterns/*.md
         └── ficha editorial canónica de cada patrón
@@ -39,12 +39,12 @@ publications/*/publication.json
 
 ## Estado actual
 
-- Implementaciones TypeScript: **270/270**.
-- Inventario maestro: **270/270**.
-- Fichas canónicas: **270/270**.
+- Implementaciones TypeScript: **280/280**.
+- Inventario maestro: **280/280**.
+- Fichas canónicas: **280/280**.
 - Macrofamilias: **26**.
 - Grupos de trazabilidad: **39**.
-- Evidencia primaria/oficial: **54/270 patrones**.
+- Evidencia primaria/oficial: **54/280 patrones**.
 - Fuentes primarias/oficiales registradas: **51**.
 - Baseline: **P7.0**, política `fail-closed`.
 - Publicaciones: **2**, ambas en `editor-contact-ready`.
@@ -178,7 +178,7 @@ Antes de merge:
 
 1. **Web lockfile**: `web/` no dispone todavía de `package-lock.json`; se fija Astro a versión exacta, pero queda pendiente fijar transitivas.
 2. **Protección de `main`**: el repositorio aún no tiene branch protection/ruleset que haga obligatorio el CI a nivel de GitHub.
-3. **Cobertura de evidencia**: 54/270 es un baseline, no cobertura completa.
+3. **Cobertura de evidencia**: 54/280 es un baseline, no cobertura completa.
 4. **Submission blockers**: las dos publicaciones siguen en `editor-contact-ready`; ningún envío debe saltarse el gate de derechos/datos.
 5. **GDD**: mantener como experimental hasta disponer de formalización/evaluación propia o evidencia directa.
 
@@ -218,3 +218,7 @@ Los patrones 191–222 están incorporados al catálogo principal con madurez `e
 32. Autonomous Knowledge Engineering
 
 Los patrones 223–270 son contratos experimentales con `evidenceStatus: needs-review`; la incorporación al catálogo no certifica seguridad ni prueba CI satisfactoria.
+
+## P12.1 — Integración canónica parcial
+
+Los patrones 271–280 de inferencia adaptativa se integraron en `src/`, `content/patterns/`, `catalog/`, `src/index.ts` y scripts. Estado experimental; evidencia `needs-review`. Los 85 candidatos restantes P12 continúan en investigación. CI no verificada.
