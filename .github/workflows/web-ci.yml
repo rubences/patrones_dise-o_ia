@@ -79,6 +79,9 @@ jobs:
       - name: Build reproducible evidence pack
         run: node scripts/build-evidence-pack.mjs
 
+      - name: Generate per-family quality and evidence report
+        run: node scripts/report-pattern-quality.mjs
+
       - name: Assemble canonical reference manuscript
         run: node scripts/build-book.mjs
 
@@ -184,6 +187,8 @@ jobs:
             dist/book/RELEASE_NOTES.md
             dist/evidence/evidence-pack.json
             dist/evidence/EVIDENCE_REPORT.md
+            dist/quality/pattern-quality.json
+            dist/quality/PATTERN_QUALITY_REPORT.md
             dist/submissions/manifest.json
             dist/submissions/submission-readiness-report.json
             dist/submissions/SUBMISSION_READINESS_REPORT.md
