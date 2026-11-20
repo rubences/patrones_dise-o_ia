@@ -4,7 +4,7 @@ slug: read-only-parallel-fanout
 title: "Read-Only Parallel Fanout"
 summary: "Patrón de referencia para read-only parallel fanout con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agent-runtime-harness
-legacyGroup: 30
+legacyGroup: 35
 level: workflow
 difficulty: advanced
 maturity: emerging
