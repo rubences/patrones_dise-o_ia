@@ -1,0 +1,3 @@
+/** P10 220: educational economic mechanism; not strategyproofness, fairness or market compliance proof. */
+export class MarketManipulationSentinel{flag(bids:{bidder:string;price:number}[],maxRelativeSpread:number){if(bids.length<2||!Number.isFinite(maxRelativeSpread)||maxRelativeSpread<0||bids.some(b=>!b.bidder.trim()||!Number.isFinite(b.price)||b.price<=0))throw Error("invalid market");const prices=bids.map(b=>b.price);const min=Math.min(...prices),max=Math.max(...prices);return {suspicious:(max-min)/min>maxRelativeSpread,heuristicOnly:true as const};}}
+export const PATTERN_220_META={id:220,family:"ai-economics-mechanisms",maturity:"experimental"} as const;
