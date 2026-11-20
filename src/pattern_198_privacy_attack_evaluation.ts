@@ -1,3 +1,0 @@
-/** P10 privacy pattern 198: deterministic educational policy/metric, not a privacy certification. */
-export class PrivacyAttackEvaluation{evaluate(predictions:boolean[],truth:boolean[]){if(!predictions.length||predictions.length!==truth.length)throw Error("invalid evaluation");let correct=0,tp=0,fp=0,tn=0,fn=0;for(let i=0;i<truth.length;i++){if(predictions[i]===truth[i])correct++;if(predictions[i]&&truth[i])tp++;else if(predictions[i])fp++;else if(truth[i])fn++;else tn++;}return {accuracy:correct/truth.length,tp,fp,tn,fn,limitation:"descriptive attack metrics only; not a privacy guarantee" as const};}}
-export const PATTERN_198_META={id:198,family:"privacy-confidential-ai",maturity:"experimental"} as const;
