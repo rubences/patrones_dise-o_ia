@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern159Contract} from "../src/pattern_159_data_contract_gate.js";
+import {Pattern160Contract} from "../src/pattern_160_dataset_lineage_graph.js";
+import {Pattern161Contract} from "../src/pattern_161_schema_drift_sentinel.js";
+import {Pattern162Contract} from "../src/pattern_162_label_quality_audit.js";
+import {Pattern163Contract} from "../src/pattern_163_data_contamination_firewall.js";
+import {Pattern164Contract} from "../src/pattern_164_synthetic_data_quality_gate.js";
+import {Pattern165Contract} from "../src/pattern_165_dataset_version_pinning.js";
+import {Pattern166Contract} from "../src/pattern_166_distribution_shift_monitor.js";
+test("159 schema rejects wrong types and unknown keys",()=>{const g=new Pattern159Contract({age:{type:"number",required:true}});assert.equal(g.validate({age:20}).valid,true);assert.equal(g.validate({age:"20",extra:1}).valid,false);});
+test("160 lineage resolves ancestors and rejects cycles",()=>{const g=new Pattern160Contract();g.add("b",["a"]);g.add("c",["b"]);assert.deepEqual(g.ancestors("c"),["a","b"]);assert.throws(()=>g.add("a",["c"]));});
+test("161 schema drift distinguishes added removed changed",()=>{const g=new Pattern161Contract();assert.deepEqual(g.compare({a:"string",b:"number"},{a:"number",c:"boolean"}),{drift:true,added:["c"],removed:["b"],changed:["a"]});});
+test("162 label audit detects conflicts",()=>{const g=new Pattern162Contract();const r=g.audit([{id:"x",label:"yes"},{id:"x",label:"no"},{id:"z",label:""}]);assert.deepEqual(r.conflicts,["x"]);assert.equal(r.missing.length,1);});
+test("163 contamination detects exact digest overlaps",()=>{const g=new Pattern163Contract();g.protect(["a".repeat(64)]);assert.equal(g.check(["a".repeat(64)]).allowed,false);assert.throws(()=>g.protect(["bad"]));});
+test("164 synthetic quality checks duplicates and missing",()=>{const g=new Pattern164Contract();assert.equal(g.evaluate([{x:1},{x:1}],["x"],0.1).accepted,false);assert.equal(g.evaluate([{x:1},{x:2}],["x"],0).accepted,true);});
+test("165 version pin rejects replacement",()=>{const g=new Pattern165Contract();g.pin("dataset","v1","a".repeat(64));assert.equal(g.verify("dataset","v1","a".repeat(64)),true);assert.throws(()=>g.pin("dataset","v2","b".repeat(64)));});
+test("166 mean shift monitor checks threshold",()=>{const g=new Pattern166Contract();assert.equal(g.compare([1,1],[3,3],1).shift,true);assert.equal(g.compare([1,1],[1,1],0).shift,false);assert.throws(()=>g.compare([],[],1));});
