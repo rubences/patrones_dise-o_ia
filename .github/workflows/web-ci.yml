@@ -82,6 +82,9 @@ jobs:
       - name: Generate per-family quality and evidence report
         run: node scripts/report-pattern-quality.mjs
 
+      - name: Validate generated per-family quality report
+        run: node scripts/validate-pattern-quality-report.mjs
+
       - name: Assemble canonical reference manuscript
         run: node scripts/build-book.mjs
 
