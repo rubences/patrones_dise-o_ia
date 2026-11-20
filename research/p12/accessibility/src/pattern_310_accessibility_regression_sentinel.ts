@@ -1,0 +1,3 @@
+/** P12 310: educational accessibility contract; not WCAG or equality certification. */
+export class Pattern310Contract{compare(previous:{check:string;passed:boolean}[],current:{check:string;passed:boolean}[]){if([...previous,...current].some(x=>!x.check.trim())||new Set(previous.map(x=>x.check)).size!==previous.length||new Set(current.map(x=>x.check)).size!==current.length)throw Error("invalid checks");const currentMap=new Map(current.map(x=>[x.check,x.passed]));const regressions=previous.filter(x=>x.passed&&currentMap.get(x.check)!==true).map(x=>x.check);return {regressions,passed:regressions.length===0};}}
+export const PATTERN_310_META={id:310,family:"ai-accessibility-inclusion",maturity:"experimental"} as const;
