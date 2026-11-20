@@ -4,7 +4,7 @@ slug: controlled-deployment-promotion
 title: "Controlled Deployment Promotion"
 summary: "Patrón de referencia para controlled deployment promotion con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agentic-software-engineering
-legacyGroup: 29
+legacyGroup: 31
 level: workflow
 difficulty: advanced
 maturity: emerging
