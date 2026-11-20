@@ -4,7 +4,7 @@ slug: runtime-capability-lease
 title: "Runtime Capability Lease"
 summary: "Patrón de referencia para runtime capability lease con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agent-runtime-harness
-legacyGroup: 30
+legacyGroup: 35
 level: workflow
 difficulty: advanced
 maturity: emerging
