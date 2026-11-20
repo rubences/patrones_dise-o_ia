@@ -4,7 +4,7 @@ slug: evidence-backed-assurance-case
 title: "Evidence-Backed Assurance Case"
 summary: "Contrato experimental de gobierno de IA para evidence-backed assurance case con revisión y evidencia de decisiones."
 family: ai-governance-assurance
-legacyGroup: 32
+legacyGroup: 30
 level: architecture
 difficulty: advanced
 maturity: experimental
