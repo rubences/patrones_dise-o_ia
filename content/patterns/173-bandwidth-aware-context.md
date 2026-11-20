@@ -34,7 +34,8 @@ Explicitar precondiciones, propietario y estado; medir degradación y capacidad 
 
 ## Implementación del repositorio
 
-`src/pattern_173_bandwidth_aware_context.ts` es un contrato educativo, no ejecuta inferencia edge ni protocolos distribuidos.
+Prioriza fragmentos de contexto dentro de un presupuesto de bytes; selección heurística, no óptimo global. Contrato TypeScript determinista: `src/pattern_173_bandwidth_aware_context.ts`; pruebas de regresión: `tests/p9_edge_patterns.test.ts`. No se ha medido rendimiento real en hardware edge ni se implementan servicios distribuidos completos.
+
 
 ## Producción
 
