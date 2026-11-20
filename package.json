@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.1.0",
-  "description": "280 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "21.2.0",
+  "description": "290 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -287,7 +287,17 @@
     "pattern:277": "node --loader ts-node/esm src/pattern_277_uncertainty_triggered_deliberation.ts",
     "pattern:278": "node --loader ts-node/esm src/pattern_278_parallel_candidate_consensus_budget.ts",
     "pattern:279": "node --loader ts-node/esm src/pattern_279_inference_cache_correctness_guard.ts",
-    "pattern:280": "node --loader ts-node/esm src/pattern_280_verifier_guided_search_controller.ts"
+    "pattern:280": "node --loader ts-node/esm src/pattern_280_verifier_guided_search_controller.ts",
+    "pattern:281": "node --loader ts-node/esm src/pattern_281_agent_workload_identity_binding.ts",
+    "pattern:282": "node --loader ts-node/esm src/pattern_282_delegated_credential_scope_attenuation.ts",
+    "pattern:283": "node --loader ts-node/esm src/pattern_283_agent_to_agent_mutual_authentication.ts",
+    "pattern:284": "node --loader ts-node/esm src/pattern_284_ephemeral_tool_credential_broker.ts",
+    "pattern:285": "node --loader ts-node/esm src/pattern_285_cross_tenant_delegation_boundary.ts",
+    "pattern:286": "node --loader ts-node/esm src/pattern_286_identity_aware_memory_access.ts",
+    "pattern:287": "node --loader ts-node/esm src/pattern_287_credential_rotation_continuity_gate.ts",
+    "pattern:288": "node --loader ts-node/esm src/pattern_288_delegation_chain_audit.ts",
+    "pattern:289": "node --loader ts-node/esm src/pattern_289_agent_impersonation_detection.ts",
+    "pattern:290": "node --loader ts-node/esm src/pattern_290_least_privilege_capability_discovery.ts"
   },
   "keywords": [
     "openai",
