@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 330,
+  "catalogSize": 340,
   "patterns": [
     {
       "id": 1,
@@ -3860,6 +3860,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/330-ai-incident-lessons-to-controls-loop.md"
+    },
+    {
+      "id": 331,
+      "name": "Semantic Data Contract Registry",
+      "slug": "semantic-data-contract-registry",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_331_semantic_data_contract_registry.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/331-semantic-data-contract-registry.md"
+    },
+    {
+      "id": 332,
+      "name": "Training Serving Schema Parity Gate",
+      "slug": "training-serving-schema-parity-gate",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_332_training_serving_schema_parity_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/332-training-serving-schema-parity-gate.md"
+    },
+    {
+      "id": 333,
+      "name": "Feature Definition Version Pinning",
+      "slug": "feature-definition-version-pinning",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_333_feature_definition_version_pinning.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/333-feature-definition-version-pinning.md"
+    },
+    {
+      "id": 334,
+      "name": "Data Usage Purpose Contract",
+      "slug": "data-usage-purpose-contract",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_334_data_usage_purpose_contract.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/334-data-usage-purpose-contract.md"
+    },
+    {
+      "id": 335,
+      "name": "Cross-Organization Vocabulary Mapping",
+      "slug": "cross-organization-vocabulary-mapping",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_335_cross_organization_vocabulary_mapping.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/335-cross-organization-vocabulary-mapping.md"
+    },
+    {
+      "id": 336,
+      "name": "Dataset Temporal Validity Guard",
+      "slug": "dataset-temporal-validity-guard",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_336_dataset_temporal_validity_guard.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/336-dataset-temporal-validity-guard.md"
+    },
+    {
+      "id": 337,
+      "name": "Data Contract Breaking Change Detector",
+      "slug": "data-contract-breaking-change-detector",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_337_data_contract_breaking_change_detector.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/337-data-contract-breaking-change-detector.md"
+    },
+    {
+      "id": 338,
+      "name": "Schema-to-Ontology Consistency Gate",
+      "slug": "schema-to-ontology-consistency-gate",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_338_schema_to_ontology_consistency_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/338-schema-to-ontology-consistency-gate.md"
+    },
+    {
+      "id": 339,
+      "name": "Multimodal Metadata Contract",
+      "slug": "multimodal-metadata-contract",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_339_multimodal_metadata_contract.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/339-multimodal-metadata-contract.md"
+    },
+    {
+      "id": 340,
+      "name": "Data Lineage Impact Propagator",
+      "slug": "data-lineage-impact-propagator",
+      "family": "ai-data-contracts",
+      "legacyGroup": 52,
+      "sourceFile": "src/pattern_340_data_lineage_impact_propagator.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/340-data-lineage-impact-propagator.md"
     }
   ]
 }
