@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 360,
+  "catalogSize": 365,
   "patterns": [
     {
       "id": 1,
@@ -4220,6 +4220,66 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/360-evaluation-release-evidence-gate.md"
+    },
+    {
+      "id": 361,
+      "name": "Autonomy Boundary Enforcement",
+      "slug": "autonomy-boundary-enforcement",
+      "family": "bounded-agentic-autonomy",
+      "legacyGroup": 55,
+      "sourceFile": "src/pattern_361_autonomy_boundary_enforcement.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/361-autonomy-boundary-enforcement.md"
+    },
+    {
+      "id": 362,
+      "name": "Agent Self-Modification Approval Gate",
+      "slug": "agent-self-modification-approval-gate",
+      "family": "bounded-agentic-autonomy",
+      "legacyGroup": 55,
+      "sourceFile": "src/pattern_362_agent_self_modification_approval_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/362-agent-self-modification-approval-gate.md"
+    },
+    {
+      "id": 363,
+      "name": "Cross-Agent Invariant Monitor",
+      "slug": "cross-agent-invariant-monitor",
+      "family": "bounded-agentic-autonomy",
+      "legacyGroup": 55,
+      "sourceFile": "src/pattern_363_cross_agent_invariant_monitor.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/363-cross-agent-invariant-monitor.md"
+    },
+    {
+      "id": 364,
+      "name": "Safe Autonomy Degradation Controller",
+      "slug": "safe-autonomy-degradation-controller",
+      "family": "bounded-agentic-autonomy",
+      "legacyGroup": 55,
+      "sourceFile": "src/pattern_364_safe_autonomy_degradation_controller.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/364-safe-autonomy-degradation-controller.md"
+    },
+    {
+      "id": 365,
+      "name": "End-to-End Agentic Assurance Case",
+      "slug": "end-to-end-agentic-assurance-case",
+      "family": "bounded-agentic-autonomy",
+      "legacyGroup": 55,
+      "sourceFile": "src/pattern_365_end_to_end_agentic_assurance_case.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/365-end-to-end-agentic-assurance-case.md"
     }
   ]
 }
