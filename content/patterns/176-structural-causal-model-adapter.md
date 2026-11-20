@@ -34,7 +34,8 @@ Separar supuestos, datos, modelo, decisión y evidencia con trazabilidad.
 
 ## Implementación del repositorio
 
-`src/pattern_176_structural_causal_model_adapter.ts` es un contrato educativo, no estima modelos causales ni ejecuta simulación del mundo.
+Evalúa ecuaciones estructurales acíclicas con intervenciones explícitas; requiere funciones y supuestos aportados externamente. Referencia determinista: `src/pattern_176_structural_causal_model_adapter.ts`. Pruebas positivas y negativas: `tests/p9_causal_patterns.test.ts`. **No se afirma identificación causal, corrección formal ni rendimiento en benchmarks.**
+
 
 ## Producción
 
