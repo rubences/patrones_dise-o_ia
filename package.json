@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.8.0",
-  "description": "350 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "21.9.0",
+  "description": "360 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -357,7 +357,17 @@
     "pattern:347": "node --loader ts-node/esm src/pattern_347_multi_stakeholder_decision_arbitration.ts",
     "pattern:348": "node --loader ts-node/esm src/pattern_348_decision_to_outcome_feedback_loop.ts",
     "pattern:349": "node --loader ts-node/esm src/pattern_349_autonomous_action_budget_controller.ts",
-    "pattern:350": "node --loader ts-node/esm src/pattern_350_operational_decision_assurance_gate.ts"
+    "pattern:350": "node --loader ts-node/esm src/pattern_350_operational_decision_assurance_gate.ts",
+    "pattern:351": "node --loader ts-node/esm src/pattern_351_evaluation_dataset_contamination_gate.ts",
+    "pattern:352": "node --loader ts-node/esm src/pattern_352_temporal_holdout_integrity_gate.ts",
+    "pattern:353": "node --loader ts-node/esm src/pattern_353_agent_trajectory_coverage_matrix.ts",
+    "pattern:354": "node --loader ts-node/esm src/pattern_354_evaluation_judge_disagreement_monitor.ts",
+    "pattern:355": "node --loader ts-node/esm src/pattern_355_adversarial_scenario_mutation_harness.ts",
+    "pattern:356": "node --loader ts-node/esm src/pattern_356_evaluation_evidence_freshness_gate.ts",
+    "pattern:357": "node --loader ts-node/esm src/pattern_357_benchmark_reproducibility_manifest.ts",
+    "pattern:358": "node --loader ts-node/esm src/pattern_358_human_evaluation_adjudication_queue.ts",
+    "pattern:359": "node --loader ts-node/esm src/pattern_359_production_evaluation_drift_sentinel.ts",
+    "pattern:360": "node --loader ts-node/esm src/pattern_360_evaluation_release_evidence_gate.ts"
   },
   "keywords": [
     "openai",
