@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 280,
+  "catalogSize": 290,
   "patterns": [
     {
       "id": 1,
@@ -3260,6 +3260,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/280-verifier-guided-search-controller.md"
+    },
+    {
+      "id": 281,
+      "name": "Agent Workload Identity Binding",
+      "slug": "agent-workload-identity-binding",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_281_agent_workload_identity_binding.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/281-agent-workload-identity-binding.md"
+    },
+    {
+      "id": 282,
+      "name": "Delegated Credential Scope Attenuation",
+      "slug": "delegated-credential-scope-attenuation",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_282_delegated_credential_scope_attenuation.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/282-delegated-credential-scope-attenuation.md"
+    },
+    {
+      "id": 283,
+      "name": "Agent-to-Agent Mutual Authentication",
+      "slug": "agent-to-agent-mutual-authentication",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_283_agent_to_agent_mutual_authentication.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/283-agent-to-agent-mutual-authentication.md"
+    },
+    {
+      "id": 284,
+      "name": "Ephemeral Tool Credential Broker",
+      "slug": "ephemeral-tool-credential-broker",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_284_ephemeral_tool_credential_broker.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/284-ephemeral-tool-credential-broker.md"
+    },
+    {
+      "id": 285,
+      "name": "Cross-Tenant Delegation Boundary",
+      "slug": "cross-tenant-delegation-boundary",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_285_cross_tenant_delegation_boundary.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/285-cross-tenant-delegation-boundary.md"
+    },
+    {
+      "id": 286,
+      "name": "Identity-Aware Memory Access",
+      "slug": "identity-aware-memory-access",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_286_identity_aware_memory_access.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/286-identity-aware-memory-access.md"
+    },
+    {
+      "id": 287,
+      "name": "Credential Rotation Continuity Gate",
+      "slug": "credential-rotation-continuity-gate",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_287_credential_rotation_continuity_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/287-credential-rotation-continuity-gate.md"
+    },
+    {
+      "id": 288,
+      "name": "Delegation Chain Audit",
+      "slug": "delegation-chain-audit",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_288_delegation_chain_audit.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/288-delegation-chain-audit.md"
+    },
+    {
+      "id": 289,
+      "name": "Agent Impersonation Detection",
+      "slug": "agent-impersonation-detection",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_289_agent_impersonation_detection.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/289-agent-impersonation-detection.md"
+    },
+    {
+      "id": 290,
+      "name": "Least-Privilege Capability Discovery",
+      "slug": "least-privilege-capability-discovery",
+      "family": "agent-identity-trust",
+      "legacyGroup": 47,
+      "sourceFile": "src/pattern_290_least_privilege_capability_discovery.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/290-least-privilege-capability-discovery.md"
     }
   ]
 }
