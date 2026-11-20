@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 270,
+  "catalogSize": 280,
   "families": [
     {
       "id": "foundations",
@@ -194,6 +194,12 @@
       "name": "Autonomous Knowledge Engineering",
       "nameEs": "Ingeniería Autónoma del Conocimiento",
       "description": "Evolución de ontologías, procedencia, resolución de entidades y reparación."
+    },
+    {
+      "id": "inference-compute-optimization",
+      "name": "Inference-Time Compute & Adaptive Reasoning",
+      "nameEs": "Cómputo en Inferencia y Razonamiento Adaptativo",
+      "description": "Control de presupuestos, deliberación, verificación y cachés en inferencia."
     }
   ],
   "levels": [
@@ -399,6 +405,10 @@
     {
       "id": 45,
       "name": "Ingeniería del Conocimiento"
+    },
+    {
+      "id": 46,
+      "name": "Inferencia y Razonamiento Adaptativo"
     }
   ]
 }
