@@ -4,7 +4,7 @@ slug: counterfactual-evaluation
 title: "Counterfactual Evaluation"
 summary: "Contrato experimental para counterfactual evaluation con restricciones explícitas y evaluación reproducible."
 family: causal-neurosymbolic-ai
-legacyGroup: 36
+legacyGroup: 34
 level: architecture
 difficulty: advanced
 maturity: experimental
