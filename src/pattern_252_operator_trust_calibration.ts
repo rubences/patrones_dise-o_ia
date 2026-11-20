@@ -1,0 +1,3 @@
+/** P11 252: educational human-AI collaboration contract, not clinical or safety validation. */
+export class Pattern252Contract{assess(confidence:number,observedAccuracy:number,maxGap:number){if(![confidence,observedAccuracy,maxGap].every(Number.isFinite)||confidence<0||confidence>1||observedAccuracy<0||observedAccuracy>1||maxGap<0||maxGap>1)throw Error("invalid calibration");const gap=Math.abs(confidence-observedAccuracy);return {gap,calibrated:gap<=maxGap,limitation:"single aggregate gap is not a calibration curve" as const};}}
+export const PATTERN_252_META={id:252,family:"adaptive-human-ai-collaboration",maturity:"experimental"} as const;
