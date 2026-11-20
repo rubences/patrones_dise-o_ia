@@ -4,7 +4,7 @@ slug: data-contamination-firewall
 title: "Data Contamination Firewall"
 summary: "Contrato de referencia experimental para data contamination firewall con validación y procedencia explícitas."
 family: data-centric-ai
-legacyGroup: 34
+legacyGroup: 32
 level: architecture
 difficulty: advanced
 maturity: experimental
