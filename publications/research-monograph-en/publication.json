@@ -35,7 +35,7 @@
     "CRC Press / Taylor & Francis",
     "Wiley-IEEE Press"
   ],
-  "distinctiveContribution": "A research-oriented pattern language spanning agentic control, AI Factory, open data/graph foundations, advanced retrieval, security, resilience, Edge-Mesh-Cloud deployment and parameter-efficient model adaptation, with explicit validation boundaries.",
+  "distinctiveContribution": "Research synthesis of 365 catalogued patterns, with new decision governance, evaluation integrity and bounded autonomy contracts treated as experimental research artefacts rather than validated claims.",
   "chapters": [
     {
       "number": 1,
@@ -67,9 +67,17 @@
         28,
         54,
         60,
-        104
+        104,
+        341,
+        342,
+        345,
+        346,
+        349,
+        350,
+        361,
+        364
       ],
-      "originalContribution": "Builds a control-plane model for agentic workflows and compares orchestration structures using explicit termination, evaluation and authority boundaries. Introduces the Agent Brain / Cognitive Core as a modular planning and control architecture."
+      "originalContribution": "Builds a control-plane model for agentic workflows and compares orchestration structures using explicit termination, evaluation and authority boundaries. Introduces the Agent Brain / Cognitive Core as a modular planning and control architecture. The additional pattern IDs provide experimental reference contracts and teaching/research questions, not empirical validation."
     },
     {
       "number": 3,
@@ -138,9 +146,11 @@
         60,
         63,
         65,
-        87
+        87,
+        347,
+        363
       ],
-      "originalContribution": "Develops coordination topologies, delegation contracts and shared-state models for multi-agent systems, including failure propagation and conflict handling."
+      "originalContribution": "Develops coordination topologies, delegation contracts and shared-state models for multi-agent systems, including failure propagation and conflict handling. The additional pattern IDs provide experimental reference contracts and teaching/research questions, not empirical validation."
     },
     {
       "number": 7,
@@ -174,9 +184,11 @@
         89,
         100,
         101,
-        102
+        102,
+        362,
+        365
       ],
-      "originalContribution": "Treats model output and tool use as untrusted inputs, composing preventive, detective and recovery controls into a defense-in-depth architecture."
+      "originalContribution": "Treats model output and tool use as untrusted inputs, composing preventive, detective and recovery controls into a defense-in-depth architecture. The additional pattern IDs provide experimental reference contracts and teaching/research questions, not empirical validation."
     },
     {
       "number": 9,
@@ -197,9 +209,20 @@
         119,
         120,
         121,
-        122
+        122,
+        344,
+        348,
+        351,
+        352,
+        353,
+        354,
+        356,
+        357,
+        358,
+        359,
+        360
       ],
-      "originalContribution": "Defines cross-layer measurements for quality, latency, tokens, cost, regressions and experiment integrity so architectural choices can be falsified and compared. Adds PEFT as an architectural decision space connecting quality, memory, training cost, reproducibility and deployment lifecycle."
+      "originalContribution": "Defines cross-layer measurements for quality, latency, tokens, cost, regressions and experiment integrity so architectural choices can be falsified and compared. Adds PEFT as an architectural decision space connecting quality, memory, training cost, reproducibility and deployment lifecycle. The additional pattern IDs provide experimental reference contracts and teaching/research questions, not empirical validation."
     },
     {
       "number": 10,
@@ -255,9 +278,11 @@
         76,
         77,
         99,
-        102
+        102,
+        343,
+        355
       ],
-      "originalContribution": "Defines benchmark design, ablations, adversarial evaluation, threats to validity and a reproducible research agenda for pattern-level and composition-level evidence."
+      "originalContribution": "Defines benchmark design, ablations, adversarial evaluation, threats to validity and a reproducible research agenda for pattern-level and composition-level evidence. The additional pattern IDs provide experimental reference contracts and teaching/research questions, not empirical validation."
     }
   ]
 }
