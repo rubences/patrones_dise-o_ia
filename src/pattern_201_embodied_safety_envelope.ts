@@ -1,0 +1,3 @@
+/** P10 201: deterministic simulation-only reference; no physical safety certification. */
+export class EmbodiedSafetyEnvelope{enforce(command:{velocity:number;force:number},limits:{maxVelocity:number;maxForce:number}){if(![command.velocity,command.force,limits.maxVelocity,limits.maxForce].every(Number.isFinite)||limits.maxVelocity<=0||limits.maxForce<=0||Math.abs(command.velocity)>limits.maxVelocity||Math.abs(command.force)>limits.maxForce)throw Error("safety envelope exceeded");return {...command};}}
+export const PATTERN_201_META={id:201,family:"multimodal-embodied-ai",maturity:"experimental"} as const;
