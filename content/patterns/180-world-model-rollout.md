@@ -4,7 +4,7 @@ slug: world-model-rollout
 title: "World Model Rollout"
 summary: "Contrato experimental para world model rollout con restricciones explícitas y evaluación reproducible."
 family: causal-neurosymbolic-ai
-legacyGroup: 36
+legacyGroup: 34
 level: architecture
 difficulty: advanced
 maturity: experimental
