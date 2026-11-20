@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateArchitecture} from '../web/src/lib/lab/architecture-validation.ts';
+const known=new Set([1,2]);
+const port=(id,direction,kind='data')=>({id,direction,kind});
+const valid=()=>({schemaVersion:1,id:'demo',title:'Arquitectura de ejemplo',patternIds:[1,2],nodes:[{id:'a',patternId:1,label:'Fuente',position:{x:0,y:0},ports:[port('out','output')]},{id:'b',patternId:2,label:'Destino',position:{x:100,y:20},ports:[port('in','input')]}],edges:[{id:'e1',source:'a',sourcePort:'out',target:'b',targetPort:'in',kind:'data'}]});
+test('accepts valid typed architecture',()=>{const r=validateArchitecture(valid(),known);assert.equal(r.ok,true);if(r.ok)assert.equal(r.diagram.edges.length,1)});
+test('rejects duplicate node IDs',()=>{const d=valid();d.nodes[1].id='a';assert.equal(validateArchitecture(d,known).ok,false)});
+test('rejects missing endpoint',()=>{const d=valid();d.edges[0].target='missing';assert.equal(validateArchitecture(d,known).ok,false)});
+test('rejects wrong port direction',()=>{const d=valid();d.nodes[1].ports[0].direction='output';assert.equal(validateArchitecture(d,known).ok,false)});
+test('rejects incompatible edge kind',()=>{const d=valid();d.edges[0].kind='control';assert.equal(validateArchitecture(d,known).ok,false)});
+test('rejects future schema version',()=>{const d=valid();d.schemaVersion=2;assert.equal(validateArchitecture(d,known).ok,false)});
+test('rejects unknown pattern',()=>{const d=valid();d.nodes[1].patternId=999;assert.equal(validateArchitecture(d,known).ok,false)});
+test('rejects HTML-like labels',()=>{const d=valid();d.nodes[0].label='<img src=x onerror=alert(1)>';assert.equal(validateArchitecture(d,known).ok,false)});
+test('rejects nonfinite coordinates',()=>{const d=valid();d.nodes[0].position.x=Infinity;assert.equal(validateArchitecture(d,known).ok,false)});
+test('rejects duplicate edge IDs',()=>{const d=valid();d.edges.push({...d.edges[0]});assert.equal(validateArchitecture(d,known).ok,false)});
