@@ -4,7 +4,7 @@ slug: regulatory-change-impact
 title: "Regulatory Change Impact"
 summary: "Contrato experimental de gobierno de IA para regulatory change impact con revisión y evidencia de decisiones."
 family: ai-governance-assurance
-legacyGroup: 32
+legacyGroup: 30
 level: architecture
 difficulty: advanced
 maturity: experimental
