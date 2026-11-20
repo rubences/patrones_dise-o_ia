@@ -27,3 +27,7 @@ Fecha: 2026-11-20. Estado: **NO VERIFICADO**. Esta lista describe comprobaciones
 ## Criterio de publicación
 
 No declarar release estable, seguridad certificada, rendimiento medido o cumplimiento regulatorio sin resultados reproducibles y evidencia asociada. Un build verde prueba los gates definidos, no propiedades que los gates no evalúan.
+
+## Pipeline técnico independiente (20-11-2026)
+
+Se ha añadido `.github/workflows/patterns-code-ci.yml` para ejecutar de forma separada validación editorial, integridad referencial, `tsc --noEmit`, contratos P8/P9, regresiones de seguridad e informe de calidad. Se activa con cambios en código, catálogo o tests, y admite `workflow_dispatch` para ejecución manual desde GitHub Actions. Este workflow no sustituye al principal de Quarto/Astro y publicación. **El resultado de ejecución sigue pendiente de confirmación**; crear un workflow no demuestra que pase.
