@@ -1,0 +1,34 @@
+---
+import type { PatternGraph } from '../../lib/lab/pattern-graph';
+interface Props { graph: PatternGraph; base: string }
+const { graph, base } = Astro.props;
+const nodes = graph.nodes.map((n,i) => {
+ const angle=(i-1)*2*Math.PI/Math.max(1,graph.nodes.length-1)-Math.PI/2;
+ return {...n,x:i===0?360:360+Math.cos(angle)*245,y:i===0?170:170+Math.sin(angle)*112};
+});
+const byId=new Map(nodes.map(n=>[n.id,n]));
+---
+<section class="lab-diagram" data-lab-diagram data-base={base} data-slugs={JSON.stringify(Object.fromEntries(nodes.map(n=>[n.patternId,n.slug])))} aria-label="Relaciones arquitectónicas">
+ <h2>Mapa interactivo de relaciones</h2>
+ <p>Relaciones declaradas en el catálogo; no representan un flujo de ejecución verificado.</p>
+ <div class="lab-toolbar"><button type="button" data-zoom="in" aria-label="Ampliar">+</button><button type="button" data-zoom="out" aria-label="Reducir">−</button><button type="button" data-zoom="reset">Restablecer</button></div>
+ <svg data-graph viewBox="0 0 720 340" role="group" aria-label="Diagrama de relaciones entre patrones">
+  {graph.edges.map(e=>{const a=byId.get(e.source),b=byId.get(e.target);return a&&b&&<line x1={a.x} y1={a.y} x2={b.x} y2={b.y} class:list={['lab-edge',{'composition':e.kind==='combines-with'}]}/>})}
+  {nodes.map(n=><g data-node data-id={n.patternId} data-title={n.title} data-summary={n.summary} tabindex="0" role="button" aria-label={`Patrón ${n.patternId}: ${n.title}`} transform={`translate(${n.x} ${n.y})`}><rect x="-91" y="-27" width="182" height="54" rx="12" class:list={['lab-node-box',{'primary':n.primary}]}/><text y="-6" text-anchor="middle" class="lab-id">#{n.patternId}</text><text y="13" text-anchor="middle" class="lab-label">{n.title.length>24?n.title.slice(0,22)+'…':n.title}</text></g>)}
+ </svg>
+ <div class="lab-detail" aria-live="polite"><strong data-detail-title>Selecciona un nodo</strong><p data-detail-summary>Haz clic o utiliza Tab y Enter para inspeccionar un patrón.</p><a data-detail-link hidden>Ver ficha</a></div>
+ <div class="lab-alternative"><h3>Relaciones en texto</h3>{graph.edges.length===0?<p>Sin relaciones declaradas.</p>:<ul>{graph.edges.map(e=>{const target=byId.get(e.target);return target&&<li>{e.kind==='related'?'Relacionado':'Combina con'}: <a href={`${base}patterns/${target.slug}/`}>{target.patternId} · {target.title}</a></li>})}</ul>}</div>
+</section>
+<script>
+ document.querySelectorAll<HTMLElement>('[data-lab-diagram]').forEach(root=>{
+  const svg=root.querySelector<SVGSVGElement>('[data-graph]');if(!svg)return;
+  let zoom=1;root.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach(b=>b.addEventListener('click',()=>{zoom=b.dataset.zoom==='reset'?1:Math.max(.75,Math.min(2,zoom+(b.dataset.zoom==='in'?.25:-.25)));const w=720/zoom,h=340/zoom;svg.setAttribute('viewBox',`${360-w/2} ${170-h/2} ${w} ${h}`)}));
+  const title=root.querySelector<HTMLElement>('[data-detail-title]'),summary=root.querySelector<HTMLElement>('[data-detail-summary]'),link=root.querySelector<HTMLAnchorElement>('[data-detail-link]');
+  const slugs=JSON.parse(root.dataset.slugs||'{}');const nodes=[...root.querySelectorAll<SVGGElement>('[data-node]')];
+  const select=(node:SVGGElement)=>{nodes.forEach(n=>n.classList.toggle('selected',n===node));if(title)title.textContent=node.dataset.title||'';if(summary)summary.textContent=node.dataset.summary||'';if(link){const slug=slugs[node.dataset.id||''];link.hidden=!slug;if(slug)link.href=`${root.dataset.base}patterns/${slug}/`;}};
+  nodes.forEach((n,i)=>{n.addEventListener('click',()=>select(n));n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(n)}else if(['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();const d=e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1;nodes[(i+d+nodes.length)%nodes.length]?.focus();}})});
+ });
+</script>
+<style>
+ .lab-diagram{margin:1.5rem 0;padding:1.1rem;border:1px solid var(--line);border-radius:18px;background:rgba(18,27,45,.45)}.lab-diagram h2{margin:0}.lab-diagram>p{color:var(--muted)}.lab-toolbar{display:flex;gap:.5rem}.lab-toolbar button{border:1px solid var(--line);background:transparent;color:inherit;border-radius:8px;padding:.45rem .8rem;cursor:pointer}.lab-diagram svg{width:100%;height:auto;min-height:230px}.lab-edge{stroke:#8195ad;stroke-width:2}.lab-edge.composition{stroke:#2dd4bf;stroke-dasharray:6 4}[data-node]{cursor:pointer;outline:none}.lab-node-box{fill:#17263c;stroke:#8294b1;stroke-width:1.5}.lab-node-box.primary{stroke:#2dd4bf;stroke-width:3}[data-node]:focus .lab-node-box,[data-node].selected .lab-node-box{stroke:#fbbf24;stroke-width:3}.lab-id{fill:#5eead4;font-size:12px}.lab-label{fill:#fff;font-size:11px}.lab-detail{border:1px solid var(--line);border-radius:10px;padding:.8rem}.lab-alternative{margin-top:1rem}
+</style>
