@@ -483,3 +483,15 @@ export * from "./pattern_347_multi_stakeholder_decision_arbitration.js";
 export * from "./pattern_348_decision_to_outcome_feedback_loop.js";
 export * from "./pattern_349_autonomous_action_budget_controller.js";
 export * from "./pattern_350_operational_decision_assurance_gate.js";
+
+// P14: AI Evaluation Integrity & Evidence Assurance (351–360)
+export * from "./pattern_351_evaluation_dataset_contamination_gate.js";
+export * from "./pattern_352_temporal_holdout_integrity_gate.js";
+export * from "./pattern_353_agent_trajectory_coverage_matrix.js";
+export * from "./pattern_354_evaluation_judge_disagreement_monitor.js";
+export * from "./pattern_355_adversarial_scenario_mutation_harness.js";
+export * from "./pattern_356_evaluation_evidence_freshness_gate.js";
+export * from "./pattern_357_benchmark_reproducibility_manifest.js";
+export * from "./pattern_358_human_evaluation_adjudication_queue.js";
+export * from "./pattern_359_production_evaluation_drift_sentinel.js";
+export * from "./pattern_360_evaluation_release_evidence_gate.js";
