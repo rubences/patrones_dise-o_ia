@@ -47,7 +47,8 @@ Separar host, contrato, autorización, ejecución, persistencia y telemetría me
 
 ## Implementación del repositorio
 
-`src/pattern_132_tool_poisoning_defense.ts` contiene una implementación TypeScript de referencia con invariantes básicos. No implementa un servidor completo ni certifica conformidad MCP/A2A.
+`src/pattern_132_tool_poisoning_defense.ts` aplica indicadores heurísticos limitados en inglés y español, limita el tamaño de metadatos y marca **toda descripción remota como no confiable** incluso cuando no activa ninguna regla. Su salida `safe: true` significa exclusivamente que no coincidió con los indicadores; **no certifica ausencia de inyección**. El host debe aplicar autorización de herramientas, separación entre datos e instrucciones, límites de efectos y aislamiento. Pruebas: `tests/p9_security_hardening.test.ts`. No implementa transporte ni conformidad MCP/A2A.
+
 
 ## Cuándo utilizarlo
 
