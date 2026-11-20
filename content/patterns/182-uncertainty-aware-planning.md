@@ -4,7 +4,7 @@ slug: uncertainty-aware-planning
 title: "Uncertainty-Aware Planning"
 summary: "Contrato experimental para uncertainty-aware planning con restricciones explícitas y evaluación reproducible."
 family: causal-neurosymbolic-ai
-legacyGroup: 36
+legacyGroup: 34
 level: architecture
 difficulty: advanced
 maturity: experimental
