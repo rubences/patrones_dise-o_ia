@@ -4,7 +4,7 @@ slug: conformity-evidence-ledger
 title: "Conformity Evidence Ledger"
 summary: "Contrato experimental de gobierno de IA para conformity evidence ledger con revisión y evidencia de decisiones."
 family: ai-governance-assurance
-legacyGroup: 32
+legacyGroup: 30
 level: architecture
 difficulty: advanced
 maturity: experimental
