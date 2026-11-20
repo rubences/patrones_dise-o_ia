@@ -35,7 +35,11 @@ for(const record of catalog.patterns){
   const sheet=readFileSync(join(root,resolvedSheet),"utf8");
   for(const [key,value] of Object.entries({patternId:id,slug,family,legacyGroup,sourceFile,evidenceStatus})){
     const line=sheet.match(new RegExp("^"+key+":\\s*(.*)$","m"))?.[1]?.trim().replace(/^["']|["']$/g,"");
-    if(key==="evidenceStatus" && value==="needs-review" && line==="partially-verified") {\n      // Catalog status is deliberately conservative; retain the more specific editorial annotation.\n      continue;\n    }\n    assert(line===String(value),"frontmatter mismatch "+id+" "+key);
+    if(key==="evidenceStatus" && value==="needs-review" && line==="partially-verified") {
+      // Catalog status is deliberately conservative; retain the more specific editorial annotation.
+      continue;
+    }
+    assert(line===String(value),"frontmatter mismatch "+id+" "+key);
   }
   const references=sheet.match(/^references:\s*\[([^\]]*)\]/m)?.[1]?.split(",").map(x=>x.trim()).filter(Boolean)||[];
   for(const ref of references)assert(referenceIds.has(ref),"unregistered reference "+id+" "+ref);
