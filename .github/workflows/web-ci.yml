@@ -135,7 +135,7 @@ jobs:
       - name: Install root dependencies
         run: npm ci
 
-      - name: Strict TypeScript typecheck for all 190 pattern modules
+      - name: Strict TypeScript typecheck for all 222 pattern modules
         run: npx tsc --noEmit --project tsconfig.json
 
       - name: Run hardening regression tests
