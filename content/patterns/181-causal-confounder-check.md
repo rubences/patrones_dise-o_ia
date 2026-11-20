@@ -4,7 +4,7 @@ slug: causal-confounder-check
 title: "Causal Confounder Check"
 summary: "Contrato experimental para causal confounder check con restricciones explícitas y evaluación reproducible."
 family: causal-neurosymbolic-ai
-legacyGroup: 36
+legacyGroup: 34
 level: architecture
 difficulty: advanced
 maturity: experimental
