@@ -1,0 +1,3 @@
+/** P12 341: educational adversarial evaluation contract; no safety certification. */
+export class Pattern341Contract{evaluate(turns:{role:"user"|"tool";attack:boolean;policyViolated:boolean}[]){if(!turns.length||turns.some(t=>!["user","tool"].includes(t.role)))throw Error("invalid turns");const attacks=turns.filter(t=>t.attack);return {attempts:attacks.length,violations:attacks.filter(t=>t.policyViolated).length,passed:attacks.every(t=>!t.policyViolated),limitation:"attack labels and violation flags are externally supplied" as const};}}
+export const PATTERN_341_META={id:341,family:"ai-agent-evaluation-redteam",maturity:"experimental"} as const;
