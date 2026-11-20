@@ -4,7 +4,7 @@ slug: ai-risk-register
 title: "AI Risk Register"
 summary: "Contrato experimental de gobierno de IA para ai risk register con revisión y evidencia de decisiones."
 family: ai-governance-assurance
-legacyGroup: 32
+legacyGroup: 30
 level: architecture
 difficulty: advanced
 maturity: experimental
