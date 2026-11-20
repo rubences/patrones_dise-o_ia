@@ -1,0 +1,3 @@
+/** P12 313: educational sustainability control; energy and carbon values are externally supplied estimates. */
+export class Pattern313Contract{choose(regions:{id:string;carbonIntensity:number;latencyMs:number;eligible:boolean}[],maxLatencyMs:number){if(!Number.isFinite(maxLatencyMs)||maxLatencyMs<0||regions.some(r=>!r.id.trim()||![r.carbonIntensity,r.latencyMs].every(Number.isFinite)||r.carbonIntensity<0||r.latencyMs<0))throw Error("invalid placement");const best=[...regions].filter(r=>r.eligible&&r.latencyMs<=maxLatencyMs).sort((a,b)=>a.carbonIntensity-b.carbonIntensity||a.id.localeCompare(b.id))[0];if(!best)throw Error("no eligible region");return best.id;}}
+export const PATTERN_313_META={id:313,family:"ai-energy-sustainability",maturity:"experimental"} as const;
