@@ -34,7 +34,8 @@ Explicitar precondiciones, propietario y estado; medir degradación y capacidad 
 
 ## Implementación del repositorio
 
-`src/pattern_167_adaptive_edge_inference.ts` es un contrato educativo, no ejecuta inferencia edge ni protocolos distribuidos.
+Selecciona una opción edge disponible que cumpla límites de latencia y memoria. Contrato TypeScript determinista: `src/pattern_167_adaptive_edge_inference.ts`; pruebas de regresión: `tests/p9_edge_patterns.test.ts`. No se ha medido rendimiento real en hardware edge ni se implementan servicios distribuidos completos.
+
 
 ## Producción
 
