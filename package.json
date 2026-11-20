@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.4.0",
-  "description": "310 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "21.5.0",
+  "description": "320 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -317,7 +317,17 @@
     "pattern:307": "node --loader ts-node/esm src/pattern_307_reading_complexity_adaptive_output.ts",
     "pattern:308": "node --loader ts-node/esm src/pattern_308_low_bandwidth_inclusive_experience.ts",
     "pattern:309": "node --loader ts-node/esm src/pattern_309_language_equity_evaluation_harness.ts",
-    "pattern:310": "node --loader ts-node/esm src/pattern_310_accessibility_regression_sentinel.ts"
+    "pattern:310": "node --loader ts-node/esm src/pattern_310_accessibility_regression_sentinel.ts",
+    "pattern:311": "node --loader ts-node/esm src/pattern_311_carbon_aware_inference_scheduler.ts",
+    "pattern:312": "node --loader ts-node/esm src/pattern_312_energy_budget_per_request_gate.ts",
+    "pattern:313": "node --loader ts-node/esm src/pattern_313_green_region_placement_policy.ts",
+    "pattern:314": "node --loader ts-node/esm src/pattern_314_compute_carbon_attribution_ledger.ts",
+    "pattern:315": "node --loader ts-node/esm src/pattern_315_sustainability_slo_tradeoff_controller.ts",
+    "pattern:316": "node --loader ts-node/esm src/pattern_316_hardware_utilization_waste_detector.ts",
+    "pattern:317": "node --loader ts-node/esm src/pattern_317_model_efficiency_pareto_selector.ts",
+    "pattern:318": "node --loader ts-node/esm src/pattern_318_carbon_intensity_forecast_fallback.ts",
+    "pattern:319": "node --loader ts-node/esm src/pattern_319_sustainable_batch_formation.ts",
+    "pattern:320": "node --loader ts-node/esm src/pattern_320_energy_rebound_effect_auditor.ts"
   },
   "keywords": [
     "openai",
