@@ -1,0 +1,3 @@
+/** P12 307: educational accessibility contract; not WCAG or equality certification. */
+export class Pattern307Contract{select(variants:{level:number;text:string}[],requestedLevel:number){if(!variants.length||!Number.isInteger(requestedLevel)||requestedLevel<0||variants.some(x=>!Number.isInteger(x.level)||x.level<0||!x.text.trim()))throw Error("invalid reading level");return [...variants].sort((a,b)=>Math.abs(a.level-requestedLevel)-Math.abs(b.level-requestedLevel)||a.level-b.level)[0].text;}}
+export const PATTERN_307_META={id:307,family:"ai-accessibility-inclusion",maturity:"experimental"} as const;
