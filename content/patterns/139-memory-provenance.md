@@ -34,7 +34,8 @@ Mantener operaciones explícitas y autorizadas, con estado y procedencia auditab
 
 ## Implementación del repositorio
 
-`src/pattern_139_memory_provenance.ts` contiene una abstracción mínima de almacenamiento por actor; no implementa un algoritmo de aprendizaje ni reproduce benchmarks.
+Registro de fuente y versión por memoria con control de acceso; no verifica veracidad de la fuente. El código en `src/pattern_139_memory_provenance.ts` es una implementación de referencia determinista, sin llamadas a modelos externos. Pruebas: `tests/p9_memory_patterns.test.ts`.
+
 
 ## Producción
 
