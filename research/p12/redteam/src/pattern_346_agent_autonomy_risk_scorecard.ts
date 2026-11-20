@@ -1,0 +1,3 @@
+/** P12 346: educational adversarial evaluation contract; no safety certification. */
+export class Pattern346Contract{score(dimensions:{name:string;severity:number;likelihood:number}[]){if(!dimensions.length||dimensions.some(x=>!x.name.trim()||![x.severity,x.likelihood].every(Number.isFinite)||x.severity<0||x.severity>1||x.likelihood<0||x.likelihood>1))throw Error("invalid risk");return {score:dimensions.reduce((a,x)=>a+x.severity*x.likelihood,0)/dimensions.length,requiresHumanReview:true as const};}}
+export const PATTERN_346_META={id:346,family:"ai-agent-evaluation-redteam",maturity:"experimental"} as const;
