@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.6.0",
-  "description": "330 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "21.7.0",
+  "description": "340 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -337,7 +337,17 @@
     "pattern:327": "node --loader ts-node/esm src/pattern_327_security_incident_replay_harness.ts",
     "pattern:328": "node --loader ts-node/esm src/pattern_328_post_incident_policy_patch_verification.ts",
     "pattern:329": "node --loader ts-node/esm src/pattern_329_evidence_chain_of_custody_validator.ts",
-    "pattern:330": "node --loader ts-node/esm src/pattern_330_ai_incident_lessons_to_controls_loop.ts"
+    "pattern:330": "node --loader ts-node/esm src/pattern_330_ai_incident_lessons_to_controls_loop.ts",
+    "pattern:331": "node --loader ts-node/esm src/pattern_331_semantic_data_contract_registry.ts",
+    "pattern:332": "node --loader ts-node/esm src/pattern_332_training_serving_schema_parity_gate.ts",
+    "pattern:333": "node --loader ts-node/esm src/pattern_333_feature_definition_version_pinning.ts",
+    "pattern:334": "node --loader ts-node/esm src/pattern_334_data_usage_purpose_contract.ts",
+    "pattern:335": "node --loader ts-node/esm src/pattern_335_cross_organization_vocabulary_mapping.ts",
+    "pattern:336": "node --loader ts-node/esm src/pattern_336_dataset_temporal_validity_guard.ts",
+    "pattern:337": "node --loader ts-node/esm src/pattern_337_data_contract_breaking_change_detector.ts",
+    "pattern:338": "node --loader ts-node/esm src/pattern_338_schema_to_ontology_consistency_gate.ts",
+    "pattern:339": "node --loader ts-node/esm src/pattern_339_multimodal_metadata_contract.ts",
+    "pattern:340": "node --loader ts-node/esm src/pattern_340_data_lineage_impact_propagator.ts"
   },
   "keywords": [
     "openai",
