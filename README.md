@@ -1,4 +1,4 @@
-# Patrones IA — 350 patrones de diseño para sistemas inteligentes
+# Patrones IA — 360 patrones de diseño para sistemas inteligentes
 
 [![Editorial, Hardening, Publication and Web CI](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/web-ci.yml/badge.svg)](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/web-ci.yml)
 [![Deploy Patrones IA Web](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/deploy-web.yml/badge.svg)](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/deploy-web.yml)
@@ -7,7 +7,7 @@
 
 **Web:** https://rubences.github.io/patrones_dise-o_ia/
 
-> **Estado actual — v21.8.0 / P7.0:** 350/350 implementaciones · 350/350 fichas canónicas · 40 macrofamilias · 53 grupos de trazabilidad · 54/350 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
+> **Estado actual — v21.9.0 / P7.0:** 360/360 implementaciones · 360/360 fichas canónicas · 41 macrofamilias · 54 grupos de trazabilidad · 54/360 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
 
 ## Qué mantiene el repositorio
 
@@ -15,7 +15,7 @@
 |---|---|---|
 | Código | `src/pattern_*.ts` | 190 implementaciones TypeScript de referencia |
 | Inventario | `catalog/patterns.json` | ID, slug, familia, grupo histórico y fichero fuente |
-| Taxonomía | `catalog/taxonomy.json` | 40 macrofamilias, niveles, madurez y vocabulario editorial |
+| Taxonomía | `catalog/taxonomy.json` | 41 macrofamilias, niveles, madurez y vocabulario editorial |
 | Fichas | `content/patterns/*.md` | contenido canónico para web y edición de referencia |
 | Evidencia | `catalog/references.json` + `catalog/pattern-evidence.json` | fuentes primarias/oficiales y límites de interpretación |
 | Web | `web/` | catálogo Astro, evidencia, libro y publicaciones |
@@ -25,7 +25,7 @@
 
 La regla editorial es **single source of truth**: código, catálogo, fichas, Evidence Pack, web y libro técnico deben poder reconstruirse sin mantener copias manuales divergentes.
 
-## 40 macrofamilias
+## 41 macrofamilias
 
 | # | Familia | Patrones | Alcance |
 |---:|---|---:|---|
@@ -160,7 +160,7 @@ Para estado operativo utiliza este README, `docs/EDITORIAL_ARCHITECTURE.md`, `ca
 
 ## Deuda técnica y próximos cierres
 
-- ampliar la evidencia primaria más allá de 54/350 sin rebajar el criterio de alcance;
+- ampliar la evidencia primaria más allá de 54/360 sin rebajar el criterio de alcance;
 - generar y versionar `web/package-lock.json`;
 - activar una ruleset/branch protection para que `main` exija CI desde GitHub, no solo por convención;
 - resolver blockers de submission y derechos de figuras antes de cualquier envío externo;
@@ -186,3 +186,7 @@ Los IDs 135–190 cuentan con implementación de contrato TypeScript y ficha can
 ## P13 — Inteligencia de decisión y control operacional (341–350)
 
 Diez contratos experimentales de decisión con validaciones deterministas, auditoría básica, aprobación, presupuesto y umbral de riesgo. Las fichas identifican explícitamente que los gates de referencia no implementan todavía la semántica específica completa de cada patrón. Evidencia: `needs-review`.
+
+## P14 — Integridad de evaluación y evidencias (351–360)
+
+Diez contratos deterministas experimentales sobre contaminación, partición temporal, cobertura de trayectorias, desacuerdo de jueces, mutaciones adversariales, frescura de evidencias, reproducibilidad, adjudicación, deriva y publicación. Evidencia científica específica: `needs-review`.
