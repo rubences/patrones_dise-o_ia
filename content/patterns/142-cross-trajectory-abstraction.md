@@ -34,7 +34,8 @@ Mantener operaciones explícitas y autorizadas, con estado y procedencia auditab
 
 ## Implementación del repositorio
 
-`src/pattern_142_cross_trajectory_abstraction.ts` contiene una abstracción mínima de almacenamiento por actor; no implementa un algoritmo de aprendizaje ni reproduce benchmarks.
+Abstracción de pasos recurrentes entre trayectorias del mismo actor; no infiere reglas causales. El código en `src/pattern_142_cross_trajectory_abstraction.ts` es una implementación de referencia determinista, sin llamadas a modelos externos. Pruebas: `tests/p9_memory_patterns.test.ts`.
+
 
 ## Producción
 
