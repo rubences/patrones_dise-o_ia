@@ -1,0 +1,3 @@
+/** P12 271: educational inference-time control; not model-quality or sampling guarantee. */
+export class Pattern271Contract{allocate(tasks:{id:string;priority:number;requested:number}[],budget:number){if(!Number.isInteger(budget)||budget<0||tasks.some(t=>!t.id.trim()||!Number.isFinite(t.priority)||!Number.isInteger(t.requested)||t.requested<0)||new Set(tasks.map(t=>t.id)).size!==tasks.length)throw Error("invalid budget");let remaining=budget;return [...tasks].sort((a,b)=>b.priority-a.priority||a.id.localeCompare(b.id)).map(t=>{const allocated=Math.min(t.requested,remaining);remaining-=allocated;return {id:t.id,allocated};});}}
+export const PATTERN_271_META={id:271,family:"inference-compute-optimization",maturity:"experimental"} as const;
