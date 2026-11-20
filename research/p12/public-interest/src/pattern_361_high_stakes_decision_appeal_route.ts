@@ -1,0 +1,3 @@
+/** P12 361: educational public-interest governance contract; not legal compliance certification. */
+export class Pattern361Contract{route(decision:{id:string;highImpact:boolean;appealRequested:boolean;humanReviewerAvailable:boolean}){if(!decision.id.trim())throw Error("invalid decision");const required=decision.highImpact&&decision.appealRequested;return {decisionId:decision.id,requiresHumanReview:required,canProceed:!required||decision.humanReviewerAvailable,limitation:"reviewer availability is an external assertion" as const};}}
+export const PATTERN_361_META={id:361,family:"ai-public-interest-governance",maturity:"experimental"} as const;
