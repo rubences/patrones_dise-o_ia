@@ -45,10 +45,10 @@ jobs:
           node scripts/build-evidence-pack.mjs
           node scripts/build-book.mjs
 
-      - name: Setup Quarto and TinyTeX
+      - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          tinytex: true
+          version: '1.10.18'
 
       - name: Render HTML, EPUB and PDF
         run: |
@@ -57,7 +57,7 @@ jobs:
           # repo-root dist/release so verification/upload paths are deterministic.
           quarto render dist/book/patrones-ia-manuscript.md --to html --output patrones-ia.html --toc --number-sections
           quarto render dist/book/patrones-ia-manuscript.md --to epub --output patrones-ia.epub --toc --number-sections
-          quarto render dist/book/patrones-ia-manuscript.md --to pdf --output patrones-ia.pdf --toc --number-sections --pdf-engine=xelatex
+          quarto render dist/book/patrones-ia-manuscript.md --to typst --output patrones-ia.pdf --toc --number-sections
 
           mkdir -p dist/release
           mv dist/book/patrones-ia.html dist/release/patrones-ia.html
