@@ -1,0 +1,3 @@
+/** P12 319: educational sustainability control; energy and carbon values are externally supplied estimates. */
+export class Pattern319Contract{pack(requests:{id:string;tokens:number}[],maxTokens:number){if(!Number.isInteger(maxTokens)||maxTokens<=0||requests.some(x=>!x.id.trim()||!Number.isInteger(x.tokens)||x.tokens<=0||x.tokens>maxTokens)||new Set(requests.map(x=>x.id)).size!==requests.length)throw Error("invalid batch");const batches:string[][]=[];let current:string[]=[],used=0;for(const r of requests){if(used+r.tokens>maxTokens){batches.push(current);current=[];used=0;}current.push(r.id);used+=r.tokens;}if(current.length)batches.push(current);return batches;}}
+export const PATTERN_319_META={id:319,family:"ai-energy-sustainability",maturity:"experimental"} as const;
