@@ -1,0 +1,75 @@
+name: Patterns TypeScript and Contract CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'catalog/**'
+      - 'content/patterns/**'
+      - 'scripts/validate-catalog-integrity.mjs'
+      - 'scripts/report-pattern-quality.mjs'
+      - 'scripts/validate-pattern-quality-report.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/patterns-code-ci.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'catalog/**'
+      - 'content/patterns/**'
+      - 'scripts/validate-catalog-integrity.mjs'
+      - 'scripts/report-pattern-quality.mjs'
+      - 'scripts/validate-pattern-quality-report.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/patterns-code-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: patterns-code-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typecheck-and-contracts:
+    name: Typecheck and contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate editorial catalog
+        run: node scripts/validate-editorial.mjs
+      - name: Validate referential integrity
+        run: node scripts/validate-catalog-integrity.mjs
+      - name: Typecheck all pattern modules
+        run: npx tsc --noEmit --project tsconfig.json
+      - name: P8 interoperability contracts
+        run: npx --yes tsx@4.20.6 tests/p8_interoperability_contracts.ts
+      - name: P9 catalog contracts
+        run: npx --yes tsx@4.20.6 tests/p9_catalog_contracts.ts
+      - name: P9 and security regressions
+        run: npx --yes tsx@4.20.6 --test tests/p9_*.test.ts
+      - name: Generate and validate quality report
+        run: |
+          node scripts/report-pattern-quality.mjs
+          node scripts/validate-pattern-quality-report.mjs
+      - name: Upload quality report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: patterns-quality-${{ github.sha }}
+          path: dist/quality/
+          if-no-files-found: ignore
