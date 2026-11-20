@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { readFileSync } from 'node:fs';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import taxonomy from '../../../../catalog/taxonomy.json';
 
 const canonicalSheets = await getCollection('patterns');
 const canonicalById = new Map(canonicalSheets.map((pattern) => [pattern.data.patternId, pattern]));
@@ -33,14 +34,14 @@ const patterns = masterCatalog.patterns
   })
   .sort((a, b) => a.id - b.id);
 
-const families = [...new Set(patterns.map((pattern) => pattern.family))].sort();
+const families = taxonomy.families.map((family) => ({...family,items:patterns.filter((pattern)=>pattern.family===family.id)})).filter((family)=>family.items.length>0);
 const publishedCount = patterns.filter((pattern) => pattern.editorialStatus === 'published').length;
 ---
 
 <BaseLayout title="Catálogo — Patrones IA" description="Explora el catálogo maestro actualizado de patrones de diseño para sistemas de IA.">
   <section class="catalog-hero">
     <p class="eyebrow">Pattern catalog · {patterns.length} patrones · {families.length} macrofamilias</p>
-    <h1>Explorar patrones.</h1>
+    <h1>Explorar por macrofamilias.</h1>
     <p class="lead">
       El inventario maestro y sus fichas se generan desde la fuente canónica. Los contratos experimentales se identifican como tales;
       las pendientes enlazan directamente con la implementación TypeScript existente.
@@ -48,9 +49,9 @@ const publishedCount = patterns.filter((pattern) => pattern.editorialStatus === 
 
     <div class="catalog-toolbar" aria-label="Filtros del catálogo">
       <input id="pattern-search" type="search" placeholder="Buscar RAG, seguridad, agente..." aria-label="Buscar patrones" />
-      <select id="family-filter" aria-label="Filtrar por familia">
+      <select id="family-filter" aria-label="Filtrar por macrofamilia">
         <option value="">Todas las familias</option>
-        {families.map((family) => <option value={family}>{family}</option>)}
+        {families.map((family) => <option value={family.id}>{family.nameEs} ({family.items.length})</option>)}
       </select>
       <select id="status-filter" aria-label="Filtrar por estado editorial">
         <option value="">Todos los estados</option>
@@ -64,31 +65,38 @@ const publishedCount = patterns.filter((pattern) => pattern.editorialStatus === 
     </p>
   </section>
 
-  <section class="section" style="padding-top: 1rem;">
-    <div id="pattern-grid" class="card-grid">
-      {patterns.map((pattern) => (
-        <a
-          class:list={['pattern-card', { 'pattern-card--pending': !pattern.canonical }]}
-          href={pattern.href}
-          target={pattern.canonical ? undefined : '_blank'}
-          rel={pattern.canonical ? undefined : 'noreferrer'}
-          data-pattern-card
-          data-family={pattern.family}
-          data-status={pattern.editorialStatus}
-          data-search={`${pattern.title} ${pattern.summary} ${pattern.family} ${pattern.slug}`.toLowerCase()}
-        >
-          <span class="pattern-number">PATTERN {String(pattern.id).padStart(3, '0')}</span>
-          <h3>{pattern.title}</h3>
-          <p>{pattern.summary}</p>
-          <div class="tags">
-            <span class="tag">{pattern.family}</span>
-            <span class="tag">{pattern.editorialStatus}</span>
-            <span class="tag">{pattern.evidenceStatus}</span>
+  <section class="section" id="catalog-results" style="padding-top: 1rem;">
+    <nav class="family-jump" aria-label="Índice de macrofamilias">
+      {families.map((family) => <a href={`#family-${family.id}`} data-family-jump={family.id}>{family.nameEs} <span>{family.items.length}</span></a>)}
+    </nav>
+    <div id="pattern-grid">
+      {families.map((family) => (
+        <section class="family-section" id={`family-${family.id}`} data-family-section={family.id}>
+          <header class="family-heading">
+            <div><p class="eyebrow">{family.name}</p><h2>{family.nameEs}</h2><p>{family.description}</p></div>
+            <span class="family-total">{family.items.length} patrones</span>
+          </header>
+          <div class="card-grid">
+            {family.items.map((pattern) => (
+              <a
+                class:list={['pattern-card', { 'pattern-card--pending': !pattern.canonical }]}
+                href={pattern.href}
+                target={pattern.canonical ? undefined : '_blank'}
+                rel={pattern.canonical ? undefined : 'noreferrer'}
+                data-pattern-card
+                data-family={pattern.family}
+                data-status={pattern.editorialStatus}
+                data-search={`${pattern.id} ${pattern.title} ${pattern.summary} ${pattern.family} ${family.nameEs} ${pattern.slug}`.toLowerCase()}
+              >
+                <span class="pattern-number">PATTERN {String(pattern.id).padStart(3, '0')}</span>
+                <h3>{pattern.title}</h3>
+                <p>{pattern.summary}</p>
+                <div class="tags"><span class="tag">{pattern.difficulty}</span><span class="tag">{pattern.editorialStatus}</span><span class="tag">{pattern.evidenceStatus}</span></div>
+                <p class="pattern-card__cta">{pattern.canonical ? 'Leer ficha y diagrama →' : 'Ver implementación TypeScript ↗'}</p>
+              </a>
+            ))}
           </div>
-          <p class="pattern-card__cta">
-            {pattern.canonical ? 'Leer ficha completa →' : 'Ver implementación TypeScript ↗'}
-          </p>
-        </a>
+        </section>
       ))}
     </div>
   </section>
@@ -99,6 +107,8 @@ const publishedCount = patterns.filter((pattern) => pattern.editorialStatus === 
     const status = document.querySelector('#status-filter');
     const count = document.querySelector('#result-count');
     const cards = Array.from(document.querySelectorAll('[data-pattern-card]'));
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-family-section]'));
+    const jumps = Array.from(document.querySelectorAll<HTMLElement>('[data-family-jump]'));
 
     const applyFilters = () => {
       const query = search instanceof HTMLInputElement ? search.value.trim().toLowerCase() : '';
@@ -116,11 +126,31 @@ const publishedCount = patterns.filter((pattern) => pattern.editorialStatus === 
         if (show) visible += 1;
       }
 
+      for (const section of sections) section.hidden = !section.querySelector('[data-pattern-card]:not([hidden])');
+      for (const jump of jumps) jump.hidden = !sections.some(s => s.dataset.familySection === jump.dataset.familyJump && !s.hidden);
       if (count) count.textContent = `${visible} patrón(es) visible(s)`;
     };
 
+    const params = new URLSearchParams(window.location.search);
+    const requestedFamily = params.get('family');
+    if (family instanceof HTMLSelectElement && requestedFamily && [...family.options].some(o=>o.value===requestedFamily)) family.value=requestedFamily;
+    applyFilters();
     search?.addEventListener('input', applyFilters);
     family?.addEventListener('change', applyFilters);
     status?.addEventListener('change', applyFilters);
   </script>
 </BaseLayout>
+
+<style>
+.family-jump{display:flex;flex-wrap:wrap;gap:.55rem;margin:0 0 2.5rem}
+.family-jump a{padding:.48rem .75rem;border:1px solid var(--line);border-radius:999px;background:var(--panel);text-decoration:none;font-size:.82rem;color:var(--text)}
+.family-jump a:hover,.family-jump a:focus-visible{border-color:var(--accent-2)}
+.family-jump span{color:var(--accent-2);font-weight:700;margin-left:.3rem}
+.family-section{scroll-margin-top:2rem;margin-bottom:3.2rem}
+.family-heading{display:flex;justify-content:space-between;gap:1.2rem;align-items:start;border-bottom:1px solid var(--line);padding-bottom:1.2rem;margin-bottom:1.2rem}
+.family-heading h2{font-size:clamp(1.7rem,3vw,2.5rem);margin:0}
+.family-heading p:not(.eyebrow){color:var(--muted);margin:.5rem 0 0}
+.family-total{white-space:nowrap;color:var(--accent-2);font-weight:700}
+[data-family-section][hidden],[data-family-jump][hidden],[data-pattern-card][hidden]{display:none!important}
+@media(max-width:600px){.family-heading{flex-direction:column}.family-jump{max-height:180px;overflow:auto}}
+</style>
