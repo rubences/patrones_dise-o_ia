@@ -1,0 +1,3 @@
+/** P10 213: educational deterministic research contract, not scientific validation. */
+export class ActiveLearningExperimentSelector{select(candidates:{id:string;uncertainty:number;cost:number}[],budget:number){if(!Number.isFinite(budget)||budget<0||candidates.some(c=>!c.id.trim()||!Number.isFinite(c.uncertainty)||c.uncertainty<0||!Number.isFinite(c.cost)||c.cost<=0)||new Set(candidates.map(c=>c.id)).size!==candidates.length)throw Error("invalid candidates");return [...candidates].sort((a,b)=>b.uncertainty/b.cost-a.uncertainty/a.cost||a.id.localeCompare(b.id)).filter(c=>c.cost<=budget)[0]?.id??null;}}
+export const PATTERN_213_META={id:213,family:"ai-scientific-discovery",maturity:"experimental"} as const;
