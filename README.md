@@ -7,13 +7,13 @@
 
 **Web:** https://rubences.github.io/patrones_dise-o_ia/
 
-> **Estado actual — v22.0.0 / P7.0:** 365/365 implementaciones · 365/365 fichas canónicas · 42 macrofamilias · 55 grupos de trazabilidad · 54/365 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
+> **Estado actual — v22.0.0 / catálogo P15, evidencia baseline P7.0:** 365/365 implementaciones · 365/365 fichas canónicas · 42 macrofamilias · 55 grupos de trazabilidad · 54/365 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
 
 ## Qué mantiene el repositorio
 
 | Capa | Fuente de verdad | Propósito |
 |---|---|---|
-| Código | `src/pattern_*.ts` | 190 implementaciones TypeScript de referencia |
+| Código | `src/pattern_*.ts` | 365 implementaciones TypeScript de referencia |
 | Inventario | `catalog/patterns.json` | ID, slug, familia, grupo histórico y fichero fuente |
 | Taxonomía | `catalog/taxonomy.json` | 42 macrofamilias, niveles, madurez y vocabulario editorial |
 | Fichas | `content/patterns/*.md` | contenido canónico para web y edición de referencia |
@@ -26,6 +26,8 @@
 La regla editorial es **single source of truth**: código, catálogo, fichas, Evidence Pack, web y libro técnico deben poder reconstruirse sin mantener copias manuales divergentes.
 
 ## 42 macrofamilias
+
+La taxonomía completa y sus recuentos se mantienen en `catalog/taxonomy.json`; la tabla histórica siguiente muestra solo las primeras 14 familias.
 
 | # | Familia | Patrones | Alcance |
 |---:|---|---:|---|
@@ -119,7 +121,7 @@ CI añade además la suite de regresión/hardening, el build Astro, el render Qu
 
 ## Edición técnica reproducible
 
-La edición de referencia se deriva de las 190 fichas canónicas; **no es ninguno de los dos manuscritos comerciales**.
+La edición de referencia se deriva de las 365 fichas canónicas; **no es ninguno de los dos manuscritos comerciales**.
 
 ```bash
 node scripts/build-evidence-pack.mjs
@@ -194,3 +196,7 @@ Diez contratos deterministas experimentales sobre contaminación, partición tem
 ## P15 — Autonomía acotada y aseguramiento (361–365)
 
 Cinco contratos experimentales de límites de autonomía, aprobación de automodificación, invariantes multiagente, degradación segura y argumentación de aseguramiento. Su existencia no equivale a certificación de seguridad ni validación empírica. Evidencia: `needs-review`.
+
+## Publicaciones y web en v22.0.0
+
+El catálogo Astro obtiene sus 365 fichas desde `content/patterns/` y los IDs desde `catalog/patterns.json`. Las dos publicaciones independientes incorporan los patrones 341–365 mediante referencias por capítulo: decisiones y control, evaluación e integridad, y autonomía acotada. La ampliación no cambia el baseline de evidencia primaria (54 patrones y 51 fuentes), ni convierte los contratos experimentales en validaciones científicas.
