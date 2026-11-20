@@ -1,0 +1,3 @@
+/** P10 200: deterministic simulation-only reference; no physical safety certification. */
+export class PerceptionToActionContract{authorize(perception:{timestamp:number;confidence:number},action:{kind:string},now:number,maxAge:number,minConfidence:number){if(!action.kind||![perception.timestamp,perception.confidence,now,maxAge,minConfidence].every(Number.isFinite)||maxAge<0||minConfidence<0||minConfidence>1||perception.timestamp>now||now-perception.timestamp>maxAge||perception.confidence<minConfidence)throw Error("unsafe action");return {authorized:true as const,kind:action.kind};}}
+export const PATTERN_200_META={id:200,family:"multimodal-embodied-ai",maturity:"experimental"} as const;
