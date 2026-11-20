@@ -1,0 +1,3 @@
+/** P12 328: educational incident response reference; no forensic chain-of-custody certification. */
+export class Pattern328Contract{verify(cases:{id:string;wasBlocked:boolean;nowBlocked:boolean;legitimate:boolean}[]){if(!cases.length||cases.some(x=>!x.id.trim())||new Set(cases.map(x=>x.id)).size!==cases.length)throw Error("invalid policy cases");const regressions=cases.filter(x=>x.legitimate&&x.nowBlocked||!x.legitimate&&!x.nowBlocked).map(x=>x.id);return {passed:regressions.length===0,regressions};}}
+export const PATTERN_328_META={id:328,family:"ai-incident-forensics",maturity:"experimental"} as const;
