@@ -10,7 +10,7 @@
  *  Importación por categoría:
  *  import { agenticos, seguridad, qa } from 'patrones-agentes-ia'
  *
- *  190 patrones exportados en 22 macrofamilias.
+ *  222 patrones exportados en 26 macrofamilias.
  */
 
 // ── Utilidades comunes ────────────────────────────────────────────
