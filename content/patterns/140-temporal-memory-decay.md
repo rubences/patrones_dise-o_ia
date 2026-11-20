@@ -34,7 +34,8 @@ Mantener operaciones explícitas y autorizadas, con estado y procedencia auditab
 
 ## Implementación del repositorio
 
-`src/pattern_140_temporal_memory_decay.ts` contiene una abstracción mínima de almacenamiento por actor; no implementa un algoritmo de aprendizaje ni reproduce benchmarks.
+Decaimiento exponencial con semivida configurable y reloj explícito; no modela olvido humano. El código en `src/pattern_140_temporal_memory_decay.ts` es una implementación de referencia determinista, sin llamadas a modelos externos. Pruebas: `tests/p9_memory_patterns.test.ts`.
+
 
 ## Producción
 
