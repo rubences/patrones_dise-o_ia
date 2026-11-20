@@ -5,6 +5,9 @@
 - 122/122 fichas canónicas.
 - 14 macrofamilias.
 - 27 grupos de trazabilidad.
-- P7.0: 54 patrones / 50 fuentes con baseline primario fail-closed.
+- P7.0: 54/122 patrones con evidencia primaria/oficial.
+- 51 fuentes primarias/oficiales registradas.
+- 2 publicaciones en `editor-contact-ready`.
+- Web y edición de referencia generadas por CI.
 
-Regla: PR → CI completa → merge a main.
+Regla operativa: PR → gates completos → merge a `main` → verificación de CI/Pages.
