@@ -37,7 +37,7 @@ Do not accept ambiguity around the following items:
 
 ### Open repository and companion website
 
-- Can the 102-pattern catalogue remain public?
+- Can the 122-pattern catalogue remain public?
 - Can code remain under its existing open-source licence?
 - Can errata, updates, notebooks, examples and datasets remain openly accessible?
 - Is there an embargo, and if so, exactly which files does it affect and for how long?
