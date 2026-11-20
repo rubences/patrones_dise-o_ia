@@ -4,8 +4,8 @@
 
 Patrones IA mantiene una única base técnica y editorial capaz de producir, de forma trazable:
 
-1. **134 implementaciones TypeScript**;
-2. **134 fichas canónicas**;
+1. **190 implementaciones TypeScript**;
+2. **190 fichas canónicas**;
 3. una **web navegable**;
 4. una **edición técnica reproducible** en Markdown/HTML/EPUB/PDF;
 5. dos **obras editoriales independientes**;
@@ -17,10 +17,10 @@ La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio d
 
 ```text
 catalog/taxonomy.json
-        └── 15 macrofamilias, vocabulario, niveles y madurez
+        └── 22 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
-        └── inventario maestro 134/134
+        └── inventario maestro 190/190
 
 content/patterns/*.md
         └── ficha editorial canónica de cada patrón
@@ -39,12 +39,12 @@ publications/*/publication.json
 
 ## Estado actual
 
-- Implementaciones TypeScript: **134/134**.
-- Inventario maestro: **134/134**.
-- Fichas canónicas: **134/134**.
+- Implementaciones TypeScript: **190/190**.
+- Inventario maestro: **190/190**.
+- Fichas canónicas: **190/190**.
 - Macrofamilias: **14**.
 - Grupos de trazabilidad: **27**.
-- Evidencia primaria/oficial: **54/134 patrones**.
+- Evidencia primaria/oficial: **54/190 patrones**.
 - Fuentes primarias/oficiales registradas: **51**.
 - Baseline: **P7.0**, política `fail-closed`.
 - Publicaciones: **2**, ambas en `editor-contact-ready`.
@@ -178,7 +178,7 @@ Antes de merge:
 
 1. **Web lockfile**: `web/` no dispone todavía de `package-lock.json`; se fija Astro a versión exacta, pero queda pendiente fijar transitivas.
 2. **Protección de `main`**: el repositorio aún no tiene branch protection/ruleset que haga obligatorio el CI a nivel de GitHub.
-3. **Cobertura de evidencia**: 54/134 es un baseline, no cobertura completa.
+3. **Cobertura de evidencia**: 54/190 es un baseline, no cobertura completa.
 4. **Submission blockers**: las dos publicaciones siguen en `editor-contact-ready`; ningún envío debe saltarse el gate de derechos/datos.
 5. **GDD**: mantener como experimental hasta disponer de formalización/evaluación propia o evidencia directa.
 
@@ -194,3 +194,7 @@ Antes de merge:
 ## P8 — Interoperabilidad agéntica
 
 Patrones 123–134 incorporan contratos pedagógicos MCP/A2A. Nueva macrofamilia `agent-interoperability` y grupo histórico 28. No se atribuyen pruebas de conformidad ni resultados empíricos a estas referencias; el baseline de evidencia P7.0 permanece sin cambios.
+
+## P9 — Siete macrofamilias y 56 contratos experimentales
+
+Los IDs 135–190 cuentan con implementación de contrato TypeScript y ficha canónica, clasificados como **experimentales** y `needs-review`. No constituyen algoritmos completos de aprendizaje, gobierno certificado, DevOps autónomo, ingeniería de datos, inferencia edge ni razonamiento causal. La evidencia primaria validada permanece en 54 patrones / 51 fuentes (P7.0). Los benchmarks y las pruebas de integración deben completarse antes de alegar prestaciones o conformidad.
