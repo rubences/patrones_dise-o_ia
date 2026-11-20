@@ -1,3 +1,3 @@
-/** P9 173 Bandwidth-Aware Context: educational contract, not production infrastructure. */
-export class Pattern173Contract{private records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid");this.records.set(id,{actor,value});}get(id:string,actor:string){const v=this.records.get(id);if(!v||v.actor!==actor)throw Error("denied");return v.value;}}
+/** P9 173 Bandwidth-Aware Context: deterministic scheduling/policy reference, not an edge runtime. */
+export class Pattern173Contract{select(chunks:{id:string;bytes:number;priority:number}[],maxBytes:number){if(!Number.isInteger(maxBytes)||maxBytes<0||chunks.some(x=>!x.id||!Number.isInteger(x.bytes)||x.bytes<0||!Number.isFinite(x.priority)))throw Error("invalid context budget");let used=0;const selected:string[]=[];for(const c of [...chunks].sort((a,b)=>b.priority-a.priority||a.bytes-b.bytes)){if(used+c.bytes<=maxBytes){used+=c.bytes;selected.push(c.id);}}return {selected,usedBytes:used};}}
 export const PATTERN_173_META={id:173,name:"Bandwidth-Aware Context",family:"edge-distributed-ai",maturity:"experimental"} as const;
