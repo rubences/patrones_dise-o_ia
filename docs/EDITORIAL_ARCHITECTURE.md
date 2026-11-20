@@ -4,8 +4,8 @@
 
 Patrones IA mantiene una única base técnica y editorial capaz de producir, de forma trazable:
 
-1. **222 implementaciones TypeScript**;
-2. **222 fichas canónicas**;
+1. **270 implementaciones TypeScript**;
+2. **270 fichas canónicas**;
 3. una **web navegable**;
 4. una **edición técnica reproducible** en Markdown/HTML/EPUB/PDF;
 5. dos **obras editoriales independientes**;
@@ -17,10 +17,10 @@ La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio d
 
 ```text
 catalog/taxonomy.json
-        └── 26 macrofamilias, vocabulario, niveles y madurez
+        └── 32 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
-        └── inventario maestro 222/222
+        └── inventario maestro 270/270
 
 content/patterns/*.md
         └── ficha editorial canónica de cada patrón
@@ -39,12 +39,12 @@ publications/*/publication.json
 
 ## Estado actual
 
-- Implementaciones TypeScript: **222/222**.
-- Inventario maestro: **222/222**.
-- Fichas canónicas: **222/222**.
+- Implementaciones TypeScript: **270/270**.
+- Inventario maestro: **270/270**.
+- Fichas canónicas: **270/270**.
 - Macrofamilias: **26**.
 - Grupos de trazabilidad: **39**.
-- Evidencia primaria/oficial: **54/222 patrones**.
+- Evidencia primaria/oficial: **54/270 patrones**.
 - Fuentes primarias/oficiales registradas: **51**.
 - Baseline: **P7.0**, política `fail-closed`.
 - Publicaciones: **2**, ambas en `editor-contact-ready`.
@@ -178,7 +178,7 @@ Antes de merge:
 
 1. **Web lockfile**: `web/` no dispone todavía de `package-lock.json`; se fija Astro a versión exacta, pero queda pendiente fijar transitivas.
 2. **Protección de `main`**: el repositorio aún no tiene branch protection/ruleset que haga obligatorio el CI a nivel de GitHub.
-3. **Cobertura de evidencia**: 54/222 es un baseline, no cobertura completa.
+3. **Cobertura de evidencia**: 54/270 es un baseline, no cobertura completa.
 4. **Submission blockers**: las dos publicaciones siguen en `editor-contact-ready`; ningún envío debe saltarse el gate de derechos/datos.
 5. **GDD**: mantener como experimental hasta disponer de formalización/evaluación propia o evidencia directa.
 
@@ -207,3 +207,14 @@ Los IDs 135–190 cuentan con implementación de contrato TypeScript y ficha can
 26. AI Economics, Markets & Mechanism Design
 
 Los patrones 191–222 están incorporados al catálogo principal con madurez `experimental` y evidencia `needs-review`. La integración en `main` no certifica seguridad ni equivale a una ejecución satisfactoria de CI.
+
+## P11 — Macrofamilias 27–32
+
+27. AI Observability & Behavioral Diagnostics
+28. Trustworthy Synthetic Data & Simulation
+29. AI Supply Chain & Model Artifact Security
+30. Adaptive Human–AI Collaboration
+31. Formal Verification & Runtime Assurance
+32. Autonomous Knowledge Engineering
+
+Los patrones 223–270 son contratos experimentales con `evidenceStatus: needs-review`; la incorporación al catálogo no certifica seguridad ni prueba CI satisfactoria.
