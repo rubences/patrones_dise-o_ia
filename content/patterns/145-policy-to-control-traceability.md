@@ -34,7 +34,8 @@ Separar registro de decisiones, autorización, evidencia y revisión independien
 
 ## Implementación del repositorio
 
-`src/pattern_145_policy_to_control_traceability.ts` es un contrato pedagógico de registros autorizados, no un sistema de cumplimiento regulatorio.
+Mapa de requisitos a controles y comprobación de cobertura. Implementación TypeScript determinista en `src/pattern_145_policy_to_control_traceability.ts`, con pruebas positivas y negativas en `tests/p9_governance_patterns.test.ts`. **No constituye certificación regulatoria ni validación jurídica.**
+
 
 ## Producción
 
