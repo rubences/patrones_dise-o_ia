@@ -1,3 +1,6 @@
+> [!WARNING]
+> **Documento histórico.** Refleja una fase anterior del repositorio y conserva hipótesis, huecos y estimaciones que ya no describen el estado actual. **No usar como estado operativo ni como evidencia de rendimiento.** Para el estado vigente consulta `README.md`, `docs/EDITORIAL_ARCHITECTURE.md`, `catalog/` y el Evidence Pack generado por CI.
+
 # ⚡ REFERENCIA RÁPIDA: PATRONES DISEÑO IA
 
 **Última actualización:** 2026-08-10  

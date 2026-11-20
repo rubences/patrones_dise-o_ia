@@ -2,187 +2,191 @@
 
 ## Objetivo
 
-Convertir el repositorio de 122 implementaciones TypeScript en una única fuente de conocimiento capaz de alimentar tres productos sincronizados:
+Patrones IA mantiene una única base técnica y editorial capaz de producir, de forma trazable:
 
-1. **Web navegable** — catálogo, búsqueda, filtros, learning paths y relaciones.
-2. **Libro** — narrativa técnica, capítulos, arquitecturas compuestas y referencias.
-3. **Código ejecutable** — implementación TypeScript asociada a cada patrón.
+1. **122 implementaciones TypeScript**;
+2. **122 fichas canónicas**;
+3. una **web navegable**;
+4. una **edición técnica reproducible** en Markdown/HTML/EPUB/PDF;
+5. dos **obras editoriales independientes**;
+6. un **Evidence Pack** versionado.
+
+La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio debe propagarse por build a las superficies derivadas.
 
 ## Fuentes de verdad
 
 ```text
 catalog/taxonomy.json
-        |
-        +--> macrofamilias y vocabulario editorial
+        └── 14 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
-        |
-        +--> inventario maestro 122/122: identidad, slug, familia, grupo histórico y sourceFile
+        └── inventario maestro 122/122
 
 content/patterns/*.md
-        |
-        +--> presencia del fichero = ficha editorial publicada
-        +--> metadatos y contenido canónico para web/libro
+        └── ficha editorial canónica de cada patrón
 
 src/pattern_*.ts
-        |
-        +--> implementación ejecutable
+        └── implementación ejecutable
+
+catalog/references.json
+catalog/pattern-evidence.json
+catalog/evidence-baseline.json
+        └── evidencia primaria/oficial + scope notes + baseline P7.0
+
+publications/*/publication.json
+        └── arquitectura de las dos obras editoriales
 ```
 
-El **estado de publicación se deriva de la presencia de una ficha canónica en `content/patterns/`**. No se mantiene un segundo flag mutable para evitar divergencias entre inventario y contenido.
-
-## Estado de la Fase 1
+## Estado actual
 
 - Implementaciones TypeScript: **122/122**.
 - Inventario maestro: **122/122**.
-- Fichas canónicas publicadas: **9/102**.
-- Primer bloque editorial cerrado: patrones **1–8**.
-- Ficha de referencia de Knowledge & Context: patrón **25 — RAG**.
-
-### Fichas publicadas
-
-1. Pipeline
-2. Router
-3. Reflection
-4. Evaluator-Optimizer
-5. Tool Use
-6. Planning
-7. Multi-Agent
-8. Human-in-the-Loop
-25. Retrieval-Augmented Generation (RAG)
+- Fichas canónicas: **122/122**.
+- Macrofamilias: **14**.
+- Grupos de trazabilidad: **27**.
+- Evidencia primaria/oficial: **54/122 patrones**.
+- Fuentes primarias/oficiales registradas: **51**.
+- Baseline: **P7.0**, política `fail-closed`.
+- Publicaciones: **2**, ambas en `editor-contact-ready`.
+- Edición de referencia: Markdown + HTML + EPUB + PDF.
+- Web: Astro + GitHub Pages.
 
 ## Taxonomía principal
 
-La navegación pública utiliza diez macrofamilias:
+1. Foundations
+2. Agentic Workflows
+3. Knowledge & Context
+4. Reasoning
+5. Multi-Agent
+6. Safety & Security
+7. Reliability
+8. Production & FinOps
+9. Evaluation & QA
+10. Human Experience
+11. AI Platforms & Factories
+12. Development & Governance
+13. Data & Graph Foundations
+14. Model Adaptation & PEFT
 
-- Foundations
-- Agentic Workflows
-- Knowledge & Context
-- Reasoning
-- Multi-Agent
-- Safety & Security
-- Reliability
-- Production & FinOps
-- Evaluation & QA
-- Human Experience
-
-Los 23 grupos históricos del README se conservan como `legacyGroup` para trazabilidad, pero no constituyen la navegación principal del libro.
-
-## Contrato mínimo de una ficha
-
-Toda ficha canónica debe declarar:
-
-- `patternId`
-- `slug`
-- `title`
-- `summary`
-- `family`
-- `legacyGroup`
-- `level`
-- `difficulty`
-- `maturity`
-- `llmRequired`
-- `stateful`
-- `evidenceStatus`
-- `sourceFile`
-- `tags`
-- `related`
-- `combinesWith`
-- `antiPatterns`
-- `references`
-
-Astro valida este contrato durante el build mediante Content Collections y Zod.
-
-## Estructura recomendada de capítulo
-
-Cada patrón debe cubrir, como mínimo:
-
-1. Propósito.
-2. Problema.
-3. Solución.
-4. Estructura o arquitectura.
-5. Implementación existente en el repositorio.
-6. Aplicabilidad.
-7. Cuándo no utilizarlo.
-8. Failure modes.
-9. Seguridad.
-10. Observabilidad.
-11. Coste y latencia.
-12. Evaluación.
-13. Patrones relacionados y combinaciones.
-14. Estado editorial/evidencia.
-
-Los capítulos más maduros pueden ampliar este núcleo con variantes, pseudocódigo, ejemplos end-to-end, benchmarks y bibliografía comentada.
-
-## Política de evidencia
-
-Tres estados controlan qué afirmaciones pueden presentarse como consolidadas:
-
-- `verified`: afirmaciones materiales respaldadas por evidencia revisada y trazable.
-- `partially-verified`: núcleo sustentado, pero existen claims, métricas o variantes pendientes de revisión.
-- `needs-review`: ficha técnicamente útil, pero todavía no apta para presentar métricas o afirmaciones empíricas como verificadas.
-
-Una métrica presente en comentarios o documentación histórica del repositorio **no se convierte automáticamente en evidencia editorial**.
-
-## Separación patrón / demo
-
-La edición debe distinguir siempre entre:
-
-- la definición conceptual del patrón;
-- las propiedades de la implementación TypeScript concreta;
-- simplificaciones pedagógicas de la demo;
-- requisitos adicionales para producción.
-
-Ejemplos detectados en el primer bloque:
-
-- Reflection usa puntuaciones numéricas demostrativas fijas.
-- Planning materializa parte del plan mediante estructuras codificadas.
-- Multi-Agent genera la confianza de la demo con aleatoriedad.
-- Human-in-the-Loop simula la decisión humana y simplifica la clasificación de riesgo.
-- Tool Use simula herramientas y detección textual en vez de despacho estructurado real.
-
-Estas simplificaciones se documentan de forma explícita en las fichas para evitar convertirlas en propiedades generales del patrón.
-
-## Definition of Done editorial
-
-Una ficha está lista para publicarse cuando:
-
-- existe su implementación TypeScript y el `sourceFile` coincide;
-- ID, slug, familia y grupo histórico son coherentes con el inventario maestro;
-- el build de Astro valida el frontmatter;
-- problema y solución están expresados en términos de fuerzas de diseño, no solo de código;
-- las limitaciones de la demo están separadas del patrón conceptual;
-- se documentan failure modes y seguridad cuando sean relevantes;
-- las relaciones con otros patrones son justificables;
-- las métricas cuantitativas disponen de evidencia o se omiten;
-- el validador editorial finaliza en PASS.
-
-## Roadmap editorial inmediato
-
-### Bloque 2 — Foundations / GoF
-
-Normalizar los 23 patrones clásicos reinterpretados para IA: 9–24 y 29–35.
-
-### Bloque 3 — Knowledge & Context
-
-Completar RAG con Knowledge Graph, Retrieval Ranking, Long-Term Memory, Grounding, Contextual Compression y Context Compaction.
-
-### Bloque 4 — Reasoning y Multi-Agent
-
-Migrar Tree of Thought, Self-Consistency, ReAct, Scratchpad, Few-Shot, Zero-Shot CoT y las variantes multiagente avanzadas.
-
-### Bloques posteriores
-
-Safety & Security, Reliability, Production & FinOps, Evaluation & QA y Human Experience.
-
-## Deuda conocida no bloqueante
-
-- El README histórico conserva un heading residual `Mapa Completo de 99 Patrones`.
-- `RESUMEN_EJECUTIVO_PLAN_ACCION.md` describe una fase anterior y debe tratarse como documento histórico.
-- `web/package-lock.json` debe fijarse cuando se cierre la primera estabilización del subproyecto web.
-- El libro PDF/EPUB se añadirá una vez estabilizada la convención de capítulos en varios bloques.
-
+Los 27 `legacyGroup` se conservan para trazabilidad histórica y no sustituyen esta navegación editorial.
 
 ## Segunda generación 103–122
 
-Se añaden cuatro macrofamilias: AI Platforms & Factories, Development & Governance, Data & Graph Foundations y Model Adaptation & PEFT. Los IDs 1–102 permanecen inmutables.
+La ampliación añade:
+
+- AI Factory y Cognitive Core;
+- Spec-Driven Development y Graph-Driven Development;
+- Open Data Lakehouse, federación de metadatos y grafos tipados;
+- GraphRAG, Adaptive GraphRAG, RAPTOR, Self-RAG y Corrective RAG;
+- LoRA, QLoRA, AdaLoRA, DoRA, PiSSA, LoRA+, rsLoRA y LoftQ.
+
+Los IDs 1–102 permanecen inmutables. **GDD (106)** es una construcción experimental del proyecto y no se presenta como estándar académico; por ese motivo no forma parte del mínimo de evidencia primaria P7.0.
+
+## Contrato de una ficha canónica
+
+Cada ficha debe mantener, como mínimo:
+
+- `patternId`, `slug`, `title`, `summary`;
+- `family` y `legacyGroup`;
+- nivel, dificultad y madurez;
+- requisitos LLM/estado;
+- `evidenceStatus`;
+- `sourceFile`;
+- tags, relaciones, combinaciones y antipatrón cuando proceda.
+
+El cuerpo editorial debe diferenciar el patrón conceptual de la simplificación concreta de la demo.
+
+## Contrato editorial recomendado
+
+1. propósito;
+2. problema y fuerzas;
+3. solución;
+4. intuición/estructura visual;
+5. participantes;
+6. flujo;
+7. implementación;
+8. caso de uso;
+9. cuándo usarlo;
+10. cuándo no usarlo;
+11. ventajas y trade-offs;
+12. failure modes;
+13. seguridad;
+14. observabilidad;
+15. coste/latencia;
+16. evaluación;
+17. variantes;
+18. relaciones;
+19. composiciones;
+20. referencias y límites de evidencia.
+
+## Modelo de evidencia
+
+El repositorio distingue:
+
+- **implementación**: existe código;
+- **ficha**: existe contenido editorial;
+- **referencia editorial**: fuente relacionada;
+- **evidencia primaria/oficial**: paper, estándar, guía gubernamental o documentación oficial con alcance explícito.
+
+El baseline P7.0 exige **54 patrones** y **51 fuentes** como mínimo. El validador bloquea regresiones del baseline.
+
+Una referencia no autoriza a:
+
+- extrapolar un benchmark a cualquier modelo/tarea;
+- llamar “seguro” a un control heurístico;
+- convertir una configuración en mejora empírica;
+- atribuir a una demo garantías que no implementa.
+
+## Productos derivados
+
+### Web
+
+`web/` consume las fichas y catálogos. Las páginas deben derivar conteos de las fuentes de verdad siempre que sea posible.
+
+### Edición de referencia
+
+`scripts/build-book.mjs` ensambla el corpus canónico. Quarto genera HTML/EPUB/PDF. Los manifests incorporan hashes y métricas de cobertura.
+
+### Research monograph EN
+
+La monografía organiza el material por preguntas de investigación y composición arquitectónica. No es una traducción del catálogo.
+
+### Teaching manual ES
+
+El manual convierte el sustrato técnico en secuencias didácticas, laboratorios, ejercicios y rúbricas. Tampoco es una traducción de la monografía.
+
+## Gates
+
+Antes de merge:
+
+- `validate-editorial.mjs`;
+- `validate-repository-consistency.mjs`;
+- `validate-publications.mjs`;
+- `validate-submission-readiness.mjs`;
+- `validate-evidence-registry.mjs`;
+- Evidence Pack;
+- ensamblado/render del libro;
+- tests de hardening/regresión;
+- build Astro;
+- paquete editorial RA-MA.
+
+## Documentación histórica
+
+`INDEX_DOCUMENTOS_INVESTIGACION.md`, `INVESTIGACION_EXHAUSTIVA_PATRONES.md`, `PRESENTACION_VISUAL_PATRONES.md` y `REFERENCIA_RAPIDA_PATRONES.md` se conservan únicamente como trazabilidad de fases previas. Deben llevar un aviso histórico y no pueden usarse como estado operativo.
+
+## Deuda conocida
+
+1. **Web lockfile**: `web/` no dispone todavía de `package-lock.json`; se fija Astro a versión exacta, pero queda pendiente fijar transitivas.
+2. **Protección de `main`**: el repositorio aún no tiene branch protection/ruleset que haga obligatorio el CI a nivel de GitHub.
+3. **Cobertura de evidencia**: 54/122 es un baseline, no cobertura completa.
+4. **Submission blockers**: las dos publicaciones siguen en `editor-contact-ready`; ningún envío debe saltarse el gate de derechos/datos.
+5. **GDD**: mantener como experimental hasta disponer de formalización/evaluación propia o evidencia directa.
+
+## Próximos pasos
+
+- ampliar cobertura primaria con prioridad en patrones sin fuente;
+- cerrar la reproducibilidad del subproyecto web;
+- activar ruleset de `main`;
+- resolver blockers editoriales y derechos de figuras;
+- ejecutar experimentos de composición antes de introducir claims cuantitativos;
+- mantener la ampliación 103–122 integrada en ambas publicaciones sin convertir el corpus técnico en una copia de los manuscritos.

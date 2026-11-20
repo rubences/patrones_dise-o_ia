@@ -35,6 +35,9 @@ jobs:
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
 
+      - name: Validate repository consistency
+        run: node scripts/validate-repository-consistency.mjs
+
       - name: Validate dual publication architecture
         run: node scripts/validate-publications.mjs
 

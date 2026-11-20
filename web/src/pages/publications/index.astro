@@ -2,15 +2,17 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import research from '../../../../publications/research-monograph-en/publication.json';
 import teaching from '../../../../publications/teaching-manual-es/publication.json';
+import taxonomy from '../../../../catalog/taxonomy.json';
 
 const base = import.meta.env.BASE_URL;
+const catalogSize = taxonomy.catalogSize;
 ---
 
 <BaseLayout title="Publicaciones — Patrones IA" description="Dos obras editoriales independientes derivadas del corpus técnico Patrones IA.">
   <section class="catalog-hero">
     <p class="eyebrow">PUBLISH · TWO DISTINCT WORKS</p>
     <h1>Un corpus técnico. Dos obras editoriales.</h1>
-    <p class="lead">La web y el repositorio mantienen la referencia canónica de 102 patrones. Sobre esa base se desarrollan una monografía internacional de investigación en inglés y un manual universitario práctico en español. No son traducciones: comparten sustrato técnico, no manuscrito narrativo.</p>
+    <p class="lead">La web y el repositorio mantienen la referencia canónica de {catalogSize} patrones. Sobre esa base se desarrollan una monografía internacional de investigación en inglés y un manual universitario práctico en español. No son traducciones: comparten sustrato técnico, no manuscrito narrativo.</p>
     <div class="actions">
       <a class="button primary" href={`${base}publications/readiness/`}>Preparación editorial</a>
       <a class="button" href={`${base}book/`}>Edición de referencia</a>
@@ -42,7 +44,7 @@ const base = import.meta.env.BASE_URL;
       <p>IDs, código, taxonomía y Evidence Pack son compartidos. Tesis, prosa, estructura, casos, figuras, ejercicios y validación pertenecen a cada obra.</p>
     </div>
     <div class="card-grid">
-      <article class="pattern-card"><span class="pattern-number">SHARED</span><h3>Referencia técnica</h3><p>102 patrones, implementaciones, taxonomía, relaciones y evidencia primaria.</p></article>
+      <article class="pattern-card"><span class="pattern-number">SHARED</span><h3>Referencia técnica</h3><p>{catalogSize} patrones, implementaciones, taxonomía, relaciones y evidencia primaria.</p></article>
       <article class="pattern-card"><span class="pattern-number">EN · ORIGINAL</span><h3>Investigación</h3><p>MCP, sistemas agénticos, seguridad, resiliencia, Edge–Mesh–Cloud y casos de alta exigencia con validación científica.</p></article>
       <article class="pattern-card"><span class="pattern-number">ES · ORIGINAL</span><h3>Docencia</h3><p>Python, Docker, n8n, laboratorios, ejercicios, rúbricas, evaluación formativa y capstone.</p></article>
     </div>

@@ -7,11 +7,11 @@
 
 ## Propuesta en una frase
 
-Manual universitario progresivo que convierte un catálogo real de 102 patrones de IA en prácticas reproducibles con Python, Docker, n8n y APIs LLM, incorporando evaluación, seguridad, observabilidad y rúbricas.
+Manual universitario progresivo que convierte un catálogo real de 122 patrones de IA en prácticas reproducibles con Python, Docker, n8n y APIs LLM, incorporando evaluación, seguridad, observabilidad y rúbricas.
 
 ## Presentación editorial breve
 
-El libro está diseñado como material docente para asignaturas de grado y máster relacionadas con Inteligencia Artificial, Ingeniería de Software, Ciberseguridad y Sistemas Distribuidos. Su aportación diferencial es evitar un enfoque centrado únicamente en prompts o demostraciones aisladas: el estudiante aprende a diseñar sistemas completos mediante patrones, a medir su comportamiento, a justificar decisiones arquitectónicas y a introducir controles de seguridad y recuperación desde el inicio. Cada módulo combina objetivos de aprendizaje, explicación conceptual, implementación guiada, laboratorio, errores frecuentes, actividades de ampliación, preguntas de reflexión y rúbrica. La obra se apoya en un repositorio abierto con 102 implementaciones TypeScript y un catálogo web, pero el manual desarrolla una narrativa pedagógica propia en Python y herramientas accesibles al alumnado. El recorrido culmina en un proyecto integrador de servicio de IA en producción.
+El libro está diseñado como material docente para asignaturas de grado y máster relacionadas con Inteligencia Artificial, Ingeniería de Software, Ciberseguridad y Sistemas Distribuidos. Su aportación diferencial es evitar un enfoque centrado únicamente en prompts o demostraciones aisladas: el estudiante aprende a diseñar sistemas completos mediante patrones, a medir su comportamiento, a justificar decisiones arquitectónicas y a introducir controles de seguridad y recuperación desde el inicio. Cada módulo combina objetivos de aprendizaje, explicación conceptual, implementación guiada, laboratorio, errores frecuentes, actividades de ampliación, preguntas de reflexión y rúbrica. La obra se apoya en un repositorio abierto con 122 implementaciones TypeScript y un catálogo web, pero el manual desarrolla una narrativa pedagógica propia en Python y herramientas accesibles al alumnado. El recorrido culmina en un proyecto integrador de servicio de IA en producción.
 
 ## Público objetivo
 
@@ -105,7 +105,7 @@ El libro se posicionará por cinco rasgos acumulativos:
 - rúbricas editables;
 - soluciones para profesorado separadas del material público cuando sea necesario;
 - cuestionarios y actividades de ampliación;
-- mapas de correspondencia entre módulos y los 102 patrones del catálogo.
+- mapas de correspondencia entre módulos y los 122 patrones del catálogo.
 
 ## Gate de envío
 

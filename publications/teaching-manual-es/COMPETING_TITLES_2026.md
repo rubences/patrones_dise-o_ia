@@ -14,7 +14,7 @@ El mercado español ya ofrece numerosos manuales sobre ChatGPT, IA generativa, p
 - seguridad, privacidad, resiliencia y observabilidad integradas en las prácticas;
 - laboratorios reproducibles con tests y escenarios negativos;
 - rúbricas y resultados de aprendizaje;
-- companion web/repositorio de 102 patrones;
+- companion web/repositorio de 122 patrones;
 - independencia respecto de un proveedor concreto.
 
 ## RA-MA — títulos cercanos
