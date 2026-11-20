@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 350,
+  "catalogSize": 360,
   "patterns": [
     {
       "id": 1,
@@ -4100,6 +4100,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/350-operational-decision-assurance-gate.md"
+    },
+    {
+      "id": 351,
+      "name": "Evaluation Dataset Contamination Gate",
+      "slug": "evaluation-dataset-contamination-gate",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_351_evaluation_dataset_contamination_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/351-evaluation-dataset-contamination-gate.md"
+    },
+    {
+      "id": 352,
+      "name": "Temporal Holdout Integrity Gate",
+      "slug": "temporal-holdout-integrity-gate",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_352_temporal_holdout_integrity_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/352-temporal-holdout-integrity-gate.md"
+    },
+    {
+      "id": 353,
+      "name": "Agent Trajectory Coverage Matrix",
+      "slug": "agent-trajectory-coverage-matrix",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_353_agent_trajectory_coverage_matrix.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/353-agent-trajectory-coverage-matrix.md"
+    },
+    {
+      "id": 354,
+      "name": "Evaluation Judge Disagreement Monitor",
+      "slug": "evaluation-judge-disagreement-monitor",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_354_evaluation_judge_disagreement_monitor.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/354-evaluation-judge-disagreement-monitor.md"
+    },
+    {
+      "id": 355,
+      "name": "Adversarial Scenario Mutation Harness",
+      "slug": "adversarial-scenario-mutation-harness",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_355_adversarial_scenario_mutation_harness.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/355-adversarial-scenario-mutation-harness.md"
+    },
+    {
+      "id": 356,
+      "name": "Evaluation Evidence Freshness Gate",
+      "slug": "evaluation-evidence-freshness-gate",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_356_evaluation_evidence_freshness_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/356-evaluation-evidence-freshness-gate.md"
+    },
+    {
+      "id": 357,
+      "name": "Benchmark Reproducibility Manifest",
+      "slug": "benchmark-reproducibility-manifest",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_357_benchmark_reproducibility_manifest.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/357-benchmark-reproducibility-manifest.md"
+    },
+    {
+      "id": 358,
+      "name": "Human Evaluation Adjudication Queue",
+      "slug": "human-evaluation-adjudication-queue",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_358_human_evaluation_adjudication_queue.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/358-human-evaluation-adjudication-queue.md"
+    },
+    {
+      "id": 359,
+      "name": "Production Evaluation Drift Sentinel",
+      "slug": "production-evaluation-drift-sentinel",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_359_production_evaluation_drift_sentinel.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/359-production-evaluation-drift-sentinel.md"
+    },
+    {
+      "id": 360,
+      "name": "Evaluation Release Evidence Gate",
+      "slug": "evaluation-release-evidence-gate",
+      "family": "ai-evaluation-integrity",
+      "legacyGroup": 54,
+      "sourceFile": "src/pattern_360_evaluation_release_evidence_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/360-evaluation-release-evidence-gate.md"
     }
   ]
 }
