@@ -11,6 +11,7 @@ on:
       - 'research/p10/science/**'
       - 'research/p10/economics/**'
       - 'research/p11/formal/**'
+      - 'research/p11/supply-chain/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -29,6 +30,7 @@ on:
       - 'research/p10/science/**'
       - 'research/p10/economics/**'
       - 'research/p11/formal/**'
+      - 'research/p11/supply-chain/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -96,6 +98,10 @@ jobs:
         run: npx tsc --noEmit --project research/p11/formal/tsconfig.json
       - name: Test P11 formal runtime assurance contracts
         run: npx --yes tsx@4.20.6 --test tests/p11_formal_patterns.test.ts
+      - name: Typecheck P11 supply-chain security research
+        run: npx tsc --noEmit --project research/p11/supply-chain/tsconfig.json
+      - name: Test P11 supply-chain contracts
+        run: npx --yes tsx@4.20.6 --test tests/p11_supply_chain_patterns.test.ts
       - name: Generate and validate quality report
         run: |
           node scripts/report-pattern-quality.mjs
