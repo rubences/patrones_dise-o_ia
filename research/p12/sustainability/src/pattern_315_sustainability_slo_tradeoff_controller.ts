@@ -1,0 +1,3 @@
+/** P12 315: educational sustainability control; energy and carbon values are externally supplied estimates. */
+export class Pattern315Contract{select(options:{id:string;latencyMs:number;estimatedJoules:number}[],maxLatencyMs:number){if(!Number.isFinite(maxLatencyMs)||maxLatencyMs<0||options.some(x=>!x.id.trim()||![x.latencyMs,x.estimatedJoules].every(Number.isFinite)||x.latencyMs<0||x.estimatedJoules<0))throw Error("invalid SLO");return [...options].filter(x=>x.latencyMs<=maxLatencyMs).sort((a,b)=>a.estimatedJoules-b.estimatedJoules||a.id.localeCompare(b.id))[0]?.id??null;}}
+export const PATTERN_315_META={id:315,family:"ai-energy-sustainability",maturity:"experimental"} as const;
