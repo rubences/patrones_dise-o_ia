@@ -156,6 +156,9 @@ jobs:
       - name: Test MCP and evidence hardening
         run: npx --yes tsx@4.20.6 --test tests/p9_security_hardening.test.ts
 
+      - name: Test MCP policy and trusted registry hardening
+        run: npx --yes tsx@4.20.6 --test tests/p9_mcp_policy_registry_hardening.test.ts
+
       - name: Install web dependencies
         working-directory: web
         run: npm install
