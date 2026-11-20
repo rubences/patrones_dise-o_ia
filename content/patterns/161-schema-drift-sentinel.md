@@ -4,7 +4,7 @@ slug: schema-drift-sentinel
 title: "Schema Drift Sentinel"
 summary: "Contrato de referencia experimental para schema drift sentinel con validación y procedencia explícitas."
 family: data-centric-ai
-legacyGroup: 34
+legacyGroup: 32
 level: architecture
 difficulty: advanced
 maturity: experimental
