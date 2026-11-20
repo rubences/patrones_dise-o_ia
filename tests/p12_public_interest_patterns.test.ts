@@ -1,0 +1,11 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern361Contract} from "../research/p12/public-interest/src/pattern_361_high_stakes_decision_appeal_route.js";
+import {Pattern362Contract} from "../research/p12/public-interest/src/pattern_362_affected_party_notification_contract.js";
+import {Pattern363Contract} from "../research/p12/public-interest/src/pattern_363_public_sector_ai_transparency_record.js";
+import {Pattern364Contract} from "../research/p12/public-interest/src/pattern_364_human_contestability_evidence_gate.js";
+import {Pattern365Contract} from "../research/p12/public-interest/src/pattern_365_impact_assessment_update_trigger.js";
+test("361 high-impact appeal requires available human reviewer",()=>{const x=new Pattern361Contract();assert.equal(x.route({id:"d",highImpact:true,appealRequested:true,humanReviewerAvailable:false}).canProceed,false);assert.equal(x.route({id:"d",highImpact:true,appealRequested:true,humanReviewerAvailable:true}).canProceed,true);});
+test("362 notification requires reason appeal route and delivery",()=>{const x=new Pattern362Contract();assert.deepEqual(x.assess({decisionId:"d",recipientId:"p",channel:"email",reasonProvided:true,appealRouteProvided:false,delivered:false}).missing,["appeal-route","delivery"]);});
+test("363 transparency record flags missing public contact",()=>{const x=new Pattern363Contract();const record={systemId:"s",purpose:"assistance",responsibleBody:"agency",humanOversight:"review",version:"1",publicContact:""};assert.equal(x.validate(record).publishable,false);assert.deepEqual(x.validate(record).missing,["publicContact"]);});
+test("364 contestability requires evidence and correction channel",()=>{const x=new Pattern364Contract();assert.equal(x.assess({decisionId:"d",explanationAvailable:true,supportingEvidenceAvailable:true,humanReviewAvailable:true,correctionChannelAvailable:false}).contestable,false);});
+test("365 impact assessment reacts to changed population or incident",()=>{const x=new Pattern365Contract();assert.equal(x.assess({modelChanged:false,purposeChanged:false,dataChanged:false,affectedPopulationChanged:true,incidentOccurred:false}).reassessmentRequired,true);assert.equal(x.assess({modelChanged:false,purposeChanged:false,dataChanged:false,affectedPopulationChanged:false,incidentOccurred:false}).reassessmentRequired,false);});
