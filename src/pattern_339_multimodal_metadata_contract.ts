@@ -1,0 +1,3 @@
+/** P12 339: educational semantic data contract; not production interoperability certification. */
+export class Pattern339Contract{validate(assets:{id:string;modality:"text"|"image"|"audio"|"video";mime:string;provenance:string}[]){if(!assets.length||assets.some(x=>!x.id.trim()||!x.mime.trim()||!x.provenance.trim()||!["text","image","audio","video"].includes(x.modality))||new Set(assets.map(x=>x.id)).size!==assets.length)throw Error("invalid multimodal metadata");return {valid:true as const,count:assets.length};}}
+export const PATTERN_339_META={id:339,family:"ai-data-contracts",maturity:"experimental"} as const;
