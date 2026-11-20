@@ -34,7 +34,8 @@ Explicitar precondiciones, propietario y estado; medir degradación y capacidad 
 
 ## Implementación del repositorio
 
-`src/pattern_172_edge_cache_consistency.ts` es un contrato educativo, no ejecuta inferencia edge ni protocolos distribuidos.
+Aplica versiones crecientes a caché y rechaza lecturas obsoletas. Contrato TypeScript determinista: `src/pattern_172_edge_cache_consistency.ts`; pruebas de regresión: `tests/p9_edge_patterns.test.ts`. No se ha medido rendimiento real en hardware edge ni se implementan servicios distribuidos completos.
+
 
 ## Producción
 
