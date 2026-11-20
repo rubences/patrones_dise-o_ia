@@ -4,7 +4,7 @@ slug: independent-safety-review
 title: "Independent Safety Review"
 summary: "Contrato experimental de gobierno de IA para independent safety review con revisión y evidencia de decisiones."
 family: ai-governance-assurance
-legacyGroup: 32
+legacyGroup: 30
 level: architecture
 difficulty: advanced
 maturity: experimental
