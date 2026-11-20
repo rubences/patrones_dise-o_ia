@@ -8,13 +8,16 @@ on:
       - 'book/**'
       - 'publications/**'
       - 'scripts/**'
-      - 'src/pattern_*.ts'
+      - 'src/**'
       - 'tests/**'
+      - 'README.md'
+      - '*.md'
+      - 'docs/**'
+      - 'research/**'
       - 'package.json'
       - 'package-lock.json'
       - 'web/**'
-      - '.github/workflows/web-ci.yml'
-      - '.github/workflows/release-book.yml'
+      - '.github/workflows/**'
   push:
     branches: [main]
     paths:
@@ -23,13 +26,16 @@ on:
       - 'book/**'
       - 'publications/**'
       - 'scripts/**'
-      - 'src/pattern_*.ts'
+      - 'src/**'
       - 'tests/**'
+      - 'README.md'
+      - '*.md'
+      - 'docs/**'
+      - 'research/**'
       - 'package.json'
       - 'package-lock.json'
       - 'web/**'
-      - '.github/workflows/web-ci.yml'
-      - '.github/workflows/release-book.yml'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 env:
@@ -54,6 +60,9 @@ jobs:
 
       - name: Validate editorial catalog
         run: node scripts/validate-editorial.mjs
+
+      - name: Validate repository consistency
+        run: node scripts/validate-repository-consistency.mjs
 
       - name: Validate dual publication architecture
         run: node scripts/validate-publications.mjs
