@@ -10,7 +10,7 @@
  *  Importación por categoría:
  *  import { agenticos, seguridad, qa } from 'patrones-agentes-ia'
  *
- *  79 patrones exportados en 10 categorías.
+ *  122 patrones exportados en 14 macrofamilias.
  */
 
 // ── Utilidades comunes ────────────────────────────────────────────
@@ -222,3 +222,28 @@ export const seguridadAgentes = {
   ValidadorLlamadasHerramienta: "pattern_101",
   ArenaAdversarial: "pattern_102",
 } as const;
+
+// ── GRUPO 24: AI Platforms & Factories (103–104) ──
+export { AIFactory } from "./pattern_103_ai_factory.js";
+export { CognitiveCore } from "./pattern_104_agent_brain_cognitive_core.js";
+// ── GRUPO 25: Development Governance (105–106) ──
+export { SpecDrivenLifecycle } from "./pattern_105_spec_driven_development.js";
+export { GraphDrivenDevelopment } from "./pattern_106_graph_driven_development.js";
+// ── GRUPO 26: Data & Graph Foundations / Advanced RAG (107–114) ──
+export { OpenDataLakehouse } from "./pattern_107_open_data_lakehouse.js";
+export { FederatedMetadataFabric } from "./pattern_108_federated_metadata_fabric.js";
+export { TypedKnowledgeGraph } from "./pattern_109_typed_knowledge_graph.js";
+export { GraphRAG } from "./pattern_110_graphrag.js";
+export { AdaptiveGraphRAGRouter } from "./pattern_111_adaptive_graphrag_router.js";
+export { RaptorIndex } from "./pattern_112_hierarchical_retrieval_raptor.js";
+export { SelfRAGController } from "./pattern_113_self_rag.js";
+export { CorrectiveRAG } from "./pattern_114_corrective_rag.js";
+// ── GRUPO 27: Model Adaptation & PEFT (115–122) ──
+export { LoRAConfig } from "./pattern_115_lora.js";
+export { QLoRAConfig } from "./pattern_116_qlora.js";
+export { AdaLoRAAllocator } from "./pattern_117_adalora.js";
+export { DoRAConfig } from "./pattern_118_dora.js";
+export { PiSSAConfig } from "./pattern_119_pissa.js";
+export { LoRAPlusConfig } from "./pattern_120_lora_plus.js";
+export { RankStabilizedLoRA } from "./pattern_121_rslora.js";
+export { LoftQConfig } from "./pattern_122_loftq.js";

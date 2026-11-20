@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "16.0.0",
-  "description": "102 patrones de diseño para sistemas agénticos de IA: GoF completo, Agénticos, Ciberseguridad, QA, Observabilidad, Token Budget, Streaming, MCP, Resiliencia multi-proveedor, Coordinación emergente, Privacidad, Operación en producción, Experiencia de usuario y Seguridad de Agentes Autónomos — usable como librería npm",
+  "version": "17.0.0",
+  "description": "122 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -109,7 +109,27 @@
     "pattern:99": "node --loader ts-node/esm src/pattern_99_synthetic_data.ts",
     "pattern:100": "node --loader ts-node/esm src/pattern_100_tool_output_sanitization.ts",
     "pattern:101": "node --loader ts-node/esm src/pattern_101_tool_call_validation.ts",
-    "pattern:102": "node --loader ts-node/esm src/pattern_102_adversarial_training_loop.ts"
+    "pattern:102": "node --loader ts-node/esm src/pattern_102_adversarial_training_loop.ts",
+    "pattern:103": "node --loader ts-node/esm src/pattern_103_ai_factory.ts",
+    "pattern:104": "node --loader ts-node/esm src/pattern_104_agent_brain_cognitive_core.ts",
+    "pattern:105": "node --loader ts-node/esm src/pattern_105_spec_driven_development.ts",
+    "pattern:106": "node --loader ts-node/esm src/pattern_106_graph_driven_development.ts",
+    "pattern:107": "node --loader ts-node/esm src/pattern_107_open_data_lakehouse.ts",
+    "pattern:108": "node --loader ts-node/esm src/pattern_108_federated_metadata_fabric.ts",
+    "pattern:109": "node --loader ts-node/esm src/pattern_109_typed_knowledge_graph.ts",
+    "pattern:110": "node --loader ts-node/esm src/pattern_110_graphrag.ts",
+    "pattern:111": "node --loader ts-node/esm src/pattern_111_adaptive_graphrag_router.ts",
+    "pattern:112": "node --loader ts-node/esm src/pattern_112_hierarchical_retrieval_raptor.ts",
+    "pattern:113": "node --loader ts-node/esm src/pattern_113_self_rag.ts",
+    "pattern:114": "node --loader ts-node/esm src/pattern_114_corrective_rag.ts",
+    "pattern:115": "node --loader ts-node/esm src/pattern_115_lora.ts",
+    "pattern:116": "node --loader ts-node/esm src/pattern_116_qlora.ts",
+    "pattern:117": "node --loader ts-node/esm src/pattern_117_adalora.ts",
+    "pattern:118": "node --loader ts-node/esm src/pattern_118_dora.ts",
+    "pattern:119": "node --loader ts-node/esm src/pattern_119_pissa.ts",
+    "pattern:120": "node --loader ts-node/esm src/pattern_120_lora_plus.ts",
+    "pattern:121": "node --loader ts-node/esm src/pattern_121_rslora.ts",
+    "pattern:122": "node --loader ts-node/esm src/pattern_122_loftq.ts"
   },
   "keywords": [
     "openai",

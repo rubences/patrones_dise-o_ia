@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "verifiedOn": "2026-09-10",
+  "verifiedOn": "2026-11-20",
   "references": [
     {
       "id": "lewis-2020-rag",
@@ -319,6 +319,248 @@
       "venue": "ICLR 2018",
       "url": "https://openreview.net/forum?id=rJzIBfZAb",
       "identifier": "arXiv:1706.06083",
+      "primary": true
+    },
+    {
+      "id": "moreno-vozmediano-2026-ai-factories",
+      "type": "paper",
+      "title": "A Layered Architecture for AI Factories",
+      "authors": "Rafael Moreno-Vozmediano, Carlos Núñez-Gómez, Eduardo Huedo, Rubén S. Montero, Ignacio M. Llorente",
+      "year": 2026,
+      "venue": "IEEE Access 14",
+      "url": "https://doi.org/10.1109/ACCESS.2026.3710579",
+      "identifier": "DOI:10.1109/ACCESS.2026.3710579",
+      "primary": true
+    },
+    {
+      "id": "webb-2025-brain-inspired-planner",
+      "type": "paper",
+      "title": "A brain-inspired agentic architecture to improve planning with LLMs",
+      "authors": "Taylor Webb, Shanka Subhra Mondal, Ida Momennejad",
+      "year": 2025,
+      "venue": "Nature Communications 16",
+      "url": "https://doi.org/10.1038/s41467-025-63804-5",
+      "identifier": "DOI:10.1038/s41467-025-63804-5",
+      "primary": true
+    },
+    {
+      "id": "piskala-2026-sdd",
+      "type": "paper",
+      "title": "Spec-Driven Development: From Code to Contract in the Age of AI Coding Assistants",
+      "authors": "Deepak Babu Piskala",
+      "year": 2026,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2602.00180",
+      "identifier": "arXiv:2602.00180",
+      "primary": true
+    },
+    {
+      "id": "apache-iceberg-spec",
+      "type": "standard",
+      "title": "Apache Iceberg Table Specification",
+      "authors": "Apache Iceberg Project",
+      "year": 2026,
+      "venue": "Apache Iceberg",
+      "url": "https://iceberg.apache.org/spec/",
+      "identifier": "Apache-Iceberg-Spec",
+      "primary": true
+    },
+    {
+      "id": "google-2026-borderless-lakehouse",
+      "type": "official-documentation",
+      "title": "Agentic AI use case: Build a borderless open data lakehouse",
+      "authors": "Google Cloud Architecture Center",
+      "year": 2026,
+      "venue": "Google Cloud",
+      "url": "https://docs.cloud.google.com/architecture/agentic-ai-build-multicloud-open-data-lakehouse",
+      "identifier": "Google-Cloud-Architecture:2026-10-14",
+      "primary": true
+    },
+    {
+      "id": "apache-gravitino-catalogs",
+      "type": "official-documentation",
+      "title": "Catalogs and Schemas",
+      "authors": "Apache Gravitino Project",
+      "year": 2026,
+      "venue": "Apache Gravitino",
+      "url": "https://gravitino.apache.org/docs/next/catalogs-and-schemas/",
+      "identifier": "Apache-Gravitino:Catalogs-Schemas",
+      "primary": true
+    },
+    {
+      "id": "iso-gql-39075-2024",
+      "type": "standard",
+      "title": "ISO/IEC 39075:2024 Information technology — Database languages — GQL",
+      "authors": "ISO/IEC JTC 1/SC 32",
+      "year": 2024,
+      "venue": "ISO",
+      "url": "https://www.iso.org/standard/76120.html",
+      "identifier": "ISO/IEC 39075:2024",
+      "primary": true
+    },
+    {
+      "id": "w3c-shacl",
+      "type": "standard",
+      "title": "Shapes Constraint Language (SHACL)",
+      "authors": "World Wide Web Consortium",
+      "year": 2017,
+      "venue": "W3C Recommendation",
+      "url": "https://www.w3.org/TR/shacl/",
+      "identifier": "W3C-SHACL",
+      "primary": true
+    },
+    {
+      "id": "typedgraph-tgs-0-6",
+      "type": "official-documentation",
+      "title": "Typed Graph Schema (TGS) 0.6",
+      "authors": "Volodymyr Pavlyshyn",
+      "year": 2026,
+      "venue": "TypedGraph community specification",
+      "url": "https://typedgraph.org/spec/tgs/v0.6/",
+      "identifier": "TGS:0.6",
+      "primary": true
+    },
+    {
+      "id": "edge-2024-graphrag",
+      "type": "paper",
+      "title": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+      "authors": "Darren Edge et al.",
+      "year": 2024,
+      "venue": "Microsoft Research",
+      "url": "https://www.microsoft.com/en-us/research/publication/from-local-to-global-a-graph-rag-approach-to-query-focused-summarization/",
+      "identifier": "arXiv:2404.16130",
+      "primary": true
+    },
+    {
+      "id": "dong-2026-ea-graphrag",
+      "type": "paper",
+      "title": "Use Graph When It Needs: Efficiently and Adaptively Integrating Retrieval-Augmented Generation with Graphs",
+      "authors": "Su Dong, Qinggang Zhang, Yilin Xiao, Shengyuan Chen, Chuang Zhou, Xiao Huang",
+      "year": 2026,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2602.03578",
+      "identifier": "arXiv:2602.03578",
+      "primary": true
+    },
+    {
+      "id": "sarthi-2024-raptor",
+      "type": "paper",
+      "title": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval",
+      "authors": "Parth Sarthi, Salman Abdullah, Aditi Tuli, Shubh Khanna, Anna Goldie, Christopher D. Manning",
+      "year": 2024,
+      "venue": "ICLR 2024",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/8a2acd174940dbca361a6398a4f9df91-Abstract-Conference.html",
+      "identifier": "arXiv:2401.18059",
+      "primary": true
+    },
+    {
+      "id": "asai-2024-self-rag",
+      "type": "paper",
+      "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "authors": "Akari Asai, Zeqi Wu, Yizhong Wang, Avirup Sil, Hannaneh Hajishirzi",
+      "year": 2024,
+      "venue": "ICLR 2024",
+      "url": "https://openreview.net/forum?id=hSyW5go0v8",
+      "identifier": "OpenReview:hSyW5go0v8",
+      "primary": true
+    },
+    {
+      "id": "yan-2026-crag",
+      "type": "paper",
+      "title": "Corrective Retrieval Augmented Generation",
+      "authors": "Shi-Qi Yan, Jia-Chen Gu, Yun Zhu, Zhen-Hua Ling",
+      "year": 2026,
+      "venue": "Findings of IJCNLP-AACL 2026",
+      "url": "https://aclanthology.org/2026.findings-aacl.151/",
+      "identifier": "DOI:10.18653/2026.findings-aacl.151",
+      "primary": true
+    },
+    {
+      "id": "hu-2022-lora",
+      "type": "paper",
+      "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+      "authors": "Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, Weizhu Chen",
+      "year": 2022,
+      "venue": "ICLR 2022",
+      "url": "https://openreview.net/forum?id=nZeVKeeFYf9",
+      "identifier": "arXiv:2106.09685",
+      "primary": true
+    },
+    {
+      "id": "dettmers-2023-qlora",
+      "type": "paper",
+      "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+      "authors": "Tim Dettmers, Artidoro Pagnoni, Ari Holtzman, Luke Zettlemoyer",
+      "year": 2023,
+      "venue": "NeurIPS 2023",
+      "url": "https://papers.nips.cc/paper/2023/hash/1feb87871436031bdc0f2beaa62a049b-Abstract-Conference.html",
+      "identifier": "DOI:10.52202/075280-0441",
+      "primary": true
+    },
+    {
+      "id": "zhang-2023-adalora",
+      "type": "paper",
+      "title": "Adaptive Budget Allocation for Parameter-Efficient Fine-Tuning",
+      "authors": "Qingru Zhang, Minshuo Chen, Alexander Bukharin, Pengcheng He, Yu Cheng, Weizhu Chen, Tuo Zhao",
+      "year": 2023,
+      "venue": "ICLR 2023",
+      "url": "https://openreview.net/forum?id=lq62uWRJjiY",
+      "identifier": "OpenReview:lq62uWRJjiY",
+      "primary": true
+    },
+    {
+      "id": "liu-2024-dora",
+      "type": "paper",
+      "title": "DoRA: Weight-Decomposed Low-Rank Adaptation",
+      "authors": "Shih-Yang Liu et al.",
+      "year": 2024,
+      "venue": "ICML 2024",
+      "url": "https://proceedings.mlr.press/v235/liu24bn.html",
+      "identifier": "PMLR:v235:liu24bn",
+      "primary": true
+    },
+    {
+      "id": "meng-2024-pissa",
+      "type": "paper",
+      "title": "PiSSA: Principal Singular Values and Singular Vectors Adaptation of Large Language Models",
+      "authors": "Fanxu Meng, Zhaohui Wang, Muhan Zhang",
+      "year": 2024,
+      "venue": "NeurIPS 2024",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/db36f4d603cc9e3a2a5e10b93e6428f2-Abstract-Conference.html",
+      "identifier": "DOI:10.52202/079017-3846",
+      "primary": true
+    },
+    {
+      "id": "hayou-2024-lora-plus",
+      "type": "paper",
+      "title": "LoRA+: Efficient Low Rank Adaptation of Large Models",
+      "authors": "Soufiane Hayou, Nikhil Ghosh, Bin Yu",
+      "year": 2024,
+      "venue": "ICML 2024",
+      "url": "https://proceedings.mlr.press/v235/hayou24a.html",
+      "identifier": "PMLR:v235:hayou24a",
+      "primary": true
+    },
+    {
+      "id": "kalajdzievski-2023-rslora",
+      "type": "paper",
+      "title": "A Rank Stabilization Scaling Factor for Fine-Tuning with LoRA",
+      "authors": "Damjan Kalajdzievski",
+      "year": 2023,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2312.03732",
+      "identifier": "arXiv:2312.03732",
+      "primary": true
+    },
+    {
+      "id": "li-2024-loftq",
+      "type": "paper",
+      "title": "LoftQ: LoRA-Fine-Tuning-aware Quantization for Large Language Models",
+      "authors": "Yixiao Li, Yifan Yu, Chen Liang, Nikos Karampatziakis, Pengcheng He, Weizhu Chen, Tuo Zhao",
+      "year": 2024,
+      "venue": "ICLR 2024",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/39ec972afab01e0d8ddc6834a9d12ac1-Abstract-Conference.html",
+      "identifier": "ICLR:2024:39ec972",
       "primary": true
     }
   ]
