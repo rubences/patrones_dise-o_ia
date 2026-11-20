@@ -1,0 +1,3 @@
+/** Pattern 161: Schema Drift Sentinel. Educational contract only, not a production integration. */
+export class Pattern161Contract{private readonly records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid record");this.records.set(id,{actor,value});}get(id:string,actor:string){const entry=this.records.get(id);if(!entry||entry.actor!==actor)throw Error("access denied");return entry.value;}delete(id:string,actor:string){this.get(id,actor);return this.records.delete(id);}}
+export const PATTERN_161_META={id:161,name:"Schema Drift Sentinel",family:"data-centric-ai",maturity:"experimental"} as const;
