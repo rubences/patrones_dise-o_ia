@@ -1,0 +1,3 @@
+/** Pattern 146: Human Accountability Gate. Educational contract only, not a production integration. */
+export class Pattern146Contract{private readonly records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid record");this.records.set(id,{actor,value});}get(id:string,actor:string){const entry=this.records.get(id);if(!entry||entry.actor!==actor)throw Error("access denied");return entry.value;}delete(id:string,actor:string){this.get(id,actor);return this.records.delete(id);}}
+export const PATTERN_146_META={id:146,name:"Human Accountability Gate",family:"ai-governance-assurance",maturity:"experimental"} as const;
