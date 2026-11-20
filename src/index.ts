@@ -495,3 +495,10 @@ export * from "./pattern_357_benchmark_reproducibility_manifest.js";
 export * from "./pattern_358_human_evaluation_adjudication_queue.js";
 export * from "./pattern_359_production_evaluation_drift_sentinel.js";
 export * from "./pattern_360_evaluation_release_evidence_gate.js";
+
+// P15: Bounded Autonomy & Agentic Assurance (361–365)
+export * from "./pattern_361_autonomy_boundary_enforcement.js";
+export * from "./pattern_362_agent_self_modification_approval_gate.js";
+export * from "./pattern_363_cross_agent_invariant_monitor.js";
+export * from "./pattern_364_safe_autonomy_degradation_controller.js";
+export * from "./pattern_365_end_to_end_agentic_assurance_case.js";
