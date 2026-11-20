@@ -129,6 +129,9 @@ jobs:
       - name: Run hardening regression tests
         run: npx --yes tsx@4.20.6 --test tests/hardening/*.test.ts
 
+      - name: Verify P8 interoperability contracts
+        run: npx --yes tsx@4.20.6 tests/p8_interoperability_contracts.ts
+
       - name: Install web dependencies
         working-directory: web
         run: npm install
