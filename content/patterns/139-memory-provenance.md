@@ -4,7 +4,7 @@ slug: memory-provenance
 title: "Memory Provenance"
 summary: "Contrato arquitectónico experimental para memory provenance con trazabilidad, autorización y pruebas negativas."
 family: continual-learning-memory
-legacyGroup: 31
+legacyGroup: 29
 level: architecture
 difficulty: advanced
 maturity: experimental
