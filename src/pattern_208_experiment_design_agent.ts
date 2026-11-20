@@ -1,0 +1,3 @@
+/** P10 208: educational deterministic research contract, not scientific validation. */
+export class ExperimentDesignAgent{allocate(subjects:string[],arms:string[],seed:number){if(!subjects.length||arms.length<2||new Set(subjects).size!==subjects.length||new Set(arms).size!==arms.length||arms.some(a=>!a.trim())||!Number.isInteger(seed))throw Error("invalid design");let state=seed>>>0;const shuffled=[...subjects];for(let i=shuffled.length-1;i>0;i--){state=(Math.imul(state,1664525)+1013904223)>>>0;const j=state%(i+1);[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}return shuffled.map((subject,i)=>({subject,arm:arms[i%arms.length]}));}}
+export const PATTERN_208_META={id:208,family:"ai-scientific-discovery",maturity:"experimental"} as const;
