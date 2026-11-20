@@ -4,7 +4,7 @@ slug: energy-aware-model-router
 title: "Energy-Aware Model Router"
 summary: "Contrato experimental para energy-aware model router con decisiones explícitas de recursos y disponibilidad."
 family: edge-distributed-ai
-legacyGroup: 35
+legacyGroup: 33
 level: architecture
 difficulty: advanced
 maturity: experimental
