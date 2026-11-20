@@ -1,0 +1,3 @@
+/** P12 365: educational public-interest governance contract; not legal compliance certification. */
+export class Pattern365Contract{assess(changes:{modelChanged:boolean;purposeChanged:boolean;dataChanged:boolean;affectedPopulationChanged:boolean;incidentOccurred:boolean}){const triggers=(Object.keys(changes) as (keyof typeof changes)[]).filter(k=>changes[k]===true);return {reassessmentRequired:triggers.length>0,triggers,limitation:"trigger rules must be adapted to applicable law and context" as const};}}
+export const PATTERN_365_META={id:365,family:"ai-public-interest-governance",maturity:"experimental"} as const;
