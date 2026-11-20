@@ -4,8 +4,8 @@
 
 Patrones IA mantiene una única base técnica y editorial capaz de producir, de forma trazable:
 
-1. **122 implementaciones TypeScript**;
-2. **122 fichas canónicas**;
+1. **134 implementaciones TypeScript**;
+2. **134 fichas canónicas**;
 3. una **web navegable**;
 4. una **edición técnica reproducible** en Markdown/HTML/EPUB/PDF;
 5. dos **obras editoriales independientes**;
@@ -17,10 +17,10 @@ La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio d
 
 ```text
 catalog/taxonomy.json
-        └── 14 macrofamilias, vocabulario, niveles y madurez
+        └── 15 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
-        └── inventario maestro 122/122
+        └── inventario maestro 134/134
 
 content/patterns/*.md
         └── ficha editorial canónica de cada patrón
@@ -39,12 +39,12 @@ publications/*/publication.json
 
 ## Estado actual
 
-- Implementaciones TypeScript: **122/122**.
-- Inventario maestro: **122/122**.
-- Fichas canónicas: **122/122**.
+- Implementaciones TypeScript: **134/134**.
+- Inventario maestro: **134/134**.
+- Fichas canónicas: **134/134**.
 - Macrofamilias: **14**.
 - Grupos de trazabilidad: **27**.
-- Evidencia primaria/oficial: **54/122 patrones**.
+- Evidencia primaria/oficial: **54/134 patrones**.
 - Fuentes primarias/oficiales registradas: **51**.
 - Baseline: **P7.0**, política `fail-closed`.
 - Publicaciones: **2**, ambas en `editor-contact-ready`.
@@ -178,7 +178,7 @@ Antes de merge:
 
 1. **Web lockfile**: `web/` no dispone todavía de `package-lock.json`; se fija Astro a versión exacta, pero queda pendiente fijar transitivas.
 2. **Protección de `main`**: el repositorio aún no tiene branch protection/ruleset que haga obligatorio el CI a nivel de GitHub.
-3. **Cobertura de evidencia**: 54/122 es un baseline, no cobertura completa.
+3. **Cobertura de evidencia**: 54/134 es un baseline, no cobertura completa.
 4. **Submission blockers**: las dos publicaciones siguen en `editor-contact-ready`; ningún envío debe saltarse el gate de derechos/datos.
 5. **GDD**: mantener como experimental hasta disponer de formalización/evaluación propia o evidencia directa.
 
@@ -190,3 +190,7 @@ Antes de merge:
 - resolver blockers editoriales y derechos de figuras;
 - ejecutar experimentos de composición antes de introducir claims cuantitativos;
 - mantener la ampliación 103–122 integrada en ambas publicaciones sin convertir el corpus técnico en una copia de los manuscritos.
+
+## P8 — Interoperabilidad agéntica
+
+Patrones 123–134 incorporan contratos pedagógicos MCP/A2A. Nueva macrofamilia `agent-interoperability` y grupo histórico 28. No se atribuyen pruebas de conformidad ni resultados empíricos a estas referencias; el baseline de evidencia P7.0 permanece sin cambios.
