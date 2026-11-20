@@ -6,10 +6,10 @@ on:
       - 'content/**'
       - 'catalog/**'
       - 'book/**'
-      - 'scripts/build-book.mjs'
-      - 'scripts/build-evidence-pack.mjs'
-      - 'scripts/verify-book-release.mjs'
-      - 'scripts/lib/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'web/package.json'
       - '.github/workflows/book-artifacts.yml'
   push:
     branches: [main]
@@ -17,15 +17,18 @@ on:
       - 'content/**'
       - 'catalog/**'
       - 'book/**'
-      - 'scripts/build-book.mjs'
-      - 'scripts/build-evidence-pack.mjs'
-      - 'scripts/verify-book-release.mjs'
-      - 'scripts/lib/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'web/package.json'
       - '.github/workflows/book-artifacts.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+env:
+  QUARTO_VERSION: '1.10.18'
 
 jobs:
   render-book:
@@ -42,13 +45,15 @@ jobs:
       - name: Build canonical evidence and manuscript
         run: |
           node scripts/validate-editorial.mjs
+          node scripts/validate-repository-consistency.mjs
+          node scripts/validate-evidence-registry.mjs
           node scripts/build-evidence-pack.mjs
           node scripts/build-book.mjs
 
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: '1.10.18'
+          version: ${{ env.QUARTO_VERSION }}
 
       - name: Render HTML, EPUB and PDF
         run: |
@@ -69,7 +74,7 @@ jobs:
         run: node scripts/verify-book-release.mjs
 
       - name: Upload distributable edition
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: patrones-ia-book-${{ github.sha }}
           retention-days: 30
