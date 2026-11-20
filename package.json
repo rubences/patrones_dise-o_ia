@@ -1,7 +1,7 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.5.0",
-  "description": "320 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
+  "version": "21.6.0",
+  "description": "330 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
@@ -327,7 +327,17 @@
     "pattern:317": "node --loader ts-node/esm src/pattern_317_model_efficiency_pareto_selector.ts",
     "pattern:318": "node --loader ts-node/esm src/pattern_318_carbon_intensity_forecast_fallback.ts",
     "pattern:319": "node --loader ts-node/esm src/pattern_319_sustainable_batch_formation.ts",
-    "pattern:320": "node --loader ts-node/esm src/pattern_320_energy_rebound_effect_auditor.ts"
+    "pattern:320": "node --loader ts-node/esm src/pattern_320_energy_rebound_effect_auditor.ts",
+    "pattern:321": "node --loader ts-node/esm src/pattern_321_agent_incident_evidence_freeze.ts",
+    "pattern:322": "node --loader ts-node/esm src/pattern_322_prompt_injection_incident_triage.ts",
+    "pattern:323": "node --loader ts-node/esm src/pattern_323_compromised_agent_containment.ts",
+    "pattern:324": "node --loader ts-node/esm src/pattern_324_model_artifact_forensic_timeline.ts",
+    "pattern:325": "node --loader ts-node/esm src/pattern_325_agent_recovery_readiness_gate.ts",
+    "pattern:326": "node --loader ts-node/esm src/pattern_326_cross_agent_blast_radius_estimator.ts",
+    "pattern:327": "node --loader ts-node/esm src/pattern_327_security_incident_replay_harness.ts",
+    "pattern:328": "node --loader ts-node/esm src/pattern_328_post_incident_policy_patch_verification.ts",
+    "pattern:329": "node --loader ts-node/esm src/pattern_329_evidence_chain_of_custody_validator.ts",
+    "pattern:330": "node --loader ts-node/esm src/pattern_330_ai_incident_lessons_to_controls_loop.ts"
   },
   "keywords": [
     "openai",
