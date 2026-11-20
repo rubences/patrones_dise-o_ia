@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 122,
+  "catalogSize": 134,
   "patterns": [
     {
       "id": 1,
@@ -1364,6 +1364,150 @@
       "editorialStatus": "published",
       "evidenceStatus": "partially-verified",
       "canonicalContent": "content/patterns/122-loftq.md"
+    },
+    {
+      "id": 123,
+      "name": "MCP Capability Adapter",
+      "slug": "mcp-capability-adapter",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_123_mcp_capability_adapter.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/123-mcp-capability-adapter.md"
+    },
+    {
+      "id": 124,
+      "name": "MCP Policy Gateway",
+      "slug": "mcp-policy-gateway",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_124_mcp_policy_gateway.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/124-mcp-policy-gateway.md"
+    },
+    {
+      "id": 125,
+      "name": "Trusted Tool Registry",
+      "slug": "trusted-tool-registry",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_125_trusted_tool_registry.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/125-trusted-tool-registry.md"
+    },
+    {
+      "id": 126,
+      "name": "Explicit Workflow Handle",
+      "slug": "explicit-workflow-handle",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_126_explicit_workflow_handle.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/126-explicit-workflow-handle.md"
+    },
+    {
+      "id": 127,
+      "name": "MRTR Human Elicitation",
+      "slug": "mrtr-human-elicitation",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_127_mrtr_human_elicitation.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/127-mrtr-human-elicitation.md"
+    },
+    {
+      "id": 128,
+      "name": "Host-Controlled Sampling",
+      "slug": "host-controlled-sampling",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_128_host_controlled_sampling.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/128-host-controlled-sampling.md"
+    },
+    {
+      "id": 129,
+      "name": "A2A Agent Card Trust",
+      "slug": "a2a-agent-card-trust",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_129_a2a_agent_card_trust.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/129-a2a-agent-card-trust.md"
+    },
+    {
+      "id": 130,
+      "name": "A2A Task Lifecycle",
+      "slug": "a2a-task-lifecycle",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_130_a2a_task_lifecycle.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/130-a2a-task-lifecycle.md"
+    },
+    {
+      "id": 131,
+      "name": "MCP–A2A Bridge",
+      "slug": "mcp-a2a-bridge",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_131_mcp_a2a_bridge.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/131-mcp-a2a-bridge.md"
+    },
+    {
+      "id": 132,
+      "name": "Tool Poisoning Defense",
+      "slug": "tool-poisoning-defense",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_132_tool_poisoning_defense.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/132-tool-poisoning-defense.md"
+    },
+    {
+      "id": 133,
+      "name": "Argument-Aware Least Privilege",
+      "slug": "argument-aware-least-privilege",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_133_argument_aware_least_privilege.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/133-argument-aware-least-privilege.md"
+    },
+    {
+      "id": 134,
+      "name": "Cross-Protocol Trace Context",
+      "slug": "cross-protocol-trace-context",
+      "family": "agent-interoperability",
+      "legacyGroup": 28,
+      "sourceFile": "src/pattern_134_cross_protocol_trace_context.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/134-cross-protocol-trace-context.md"
     }
   ]
 }
