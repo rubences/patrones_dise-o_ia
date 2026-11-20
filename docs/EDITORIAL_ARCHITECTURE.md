@@ -17,10 +17,10 @@ La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio d
 
 ```text
 catalog/taxonomy.json
-        └── 36 macrofamilias, vocabulario, niveles y madurez
+        └── 37 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
-        └── inventario maestro 310/310
+        └── inventario maestro 320/320
 
 content/patterns/*.md
         └── ficha editorial canónica de cada patrón
@@ -39,12 +39,12 @@ publications/*/publication.json
 
 ## Estado actual
 
-- Implementaciones TypeScript: **310/310**.
-- Inventario maestro: **310/310**.
-- Fichas canónicas: **310/310**.
+- Implementaciones TypeScript: **320/320**.
+- Inventario maestro: **320/320**.
+- Fichas canónicas: **320/320**.
 - Macrofamilias: **26**.
 - Grupos de trazabilidad: **39**.
-- Evidencia primaria/oficial: **54/310 patrones**.
+- Evidencia primaria/oficial: **54/320 patrones**.
 - Fuentes primarias/oficiales registradas: **51**.
 - Baseline: **P7.0**, política `fail-closed`.
 - Publicaciones: **2**, ambas en `editor-contact-ready`.
@@ -178,7 +178,7 @@ Antes de merge:
 
 1. **Web lockfile**: `web/` no dispone todavía de `package-lock.json`; se fija Astro a versión exacta, pero queda pendiente fijar transitivas.
 2. **Protección de `main`**: el repositorio aún no tiene branch protection/ruleset que haga obligatorio el CI a nivel de GitHub.
-3. **Cobertura de evidencia**: 54/310 es un baseline, no cobertura completa.
+3. **Cobertura de evidencia**: 54/320 es un baseline, no cobertura completa.
 4. **Submission blockers**: las dos publicaciones siguen en `editor-contact-ready`; ningún envío debe saltarse el gate de derechos/datos.
 5. **GDD**: mantener como experimental hasta disponer de formalización/evaluación propia o evidencia directa.
 
@@ -234,3 +234,7 @@ Los patrones 291–300 se integraron en `src/`, `content/patterns/`, catálogo, 
 ## P12.4 — Integración canónica de accesibilidad
 
 Los patrones 301–310 se integraron en `src/`, `content/patterns/`, catálogo, taxonomía, exportaciones y scripts. Estado experimental; evidencia `needs-review`. Quedan 55 candidatos P12 en investigación. CI no verificada.
+
+## P12.5 — Integración canónica de sostenibilidad
+
+Los patrones 311–320 se integraron en `src/`, `content/patterns/`, catálogo, taxonomía, exportaciones y scripts. Estado experimental; evidencia `needs-review`. Quedan 45 candidatos P12 en investigación. CI no verificada.
