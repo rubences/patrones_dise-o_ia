@@ -10,7 +10,7 @@
  *  Importación por categoría:
  *  import { agenticos, seguridad, qa } from 'patrones-agentes-ia'
  *
- *  122 patrones exportados en 14 macrofamilias.
+ *  134 patrones exportados en 15 macrofamilias.
  */
 
 // ── Utilidades comunes ────────────────────────────────────────────
@@ -248,7 +248,7 @@ export { LoRAPlusConfig } from "./pattern_120_lora_plus.js";
 export { RankStabilizedLoRA } from "./pattern_121_rslora.js";
 export { LoftQConfig } from "./pattern_122_loftq.js";
 
-// P8: reference implementations (not yet promoted into the canonical 122-pattern catalog)
+// P8: reference implementations (canonical P8 additions: patterns 123–134)
 export { MCPCapabilityAdapter } from "./pattern_123_mcp_capability_adapter.js";
 export { MCPPolicyGateway } from "./pattern_124_mcp_policy_gateway.js";
 export { TrustedToolRegistry } from "./pattern_125_trusted_tool_registry.js";
