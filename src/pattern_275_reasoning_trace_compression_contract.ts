@@ -1,0 +1,3 @@
+/** P12 275: educational inference-time control; not model-quality or sampling guarantee. */
+export class Pattern275Contract{compress(trace:{id:string;important:boolean;summary:string}[],maxItems:number){if(!Number.isInteger(maxItems)||maxItems<0||trace.some(x=>!x.id.trim()||!x.summary.trim()))throw Error("invalid trace");const mandatory=trace.filter(x=>x.important);if(mandatory.length>maxItems)throw Error("critical trace exceeds budget");return [...mandatory,...trace.filter(x=>!x.important).slice(0,maxItems-mandatory.length)];}}
+export const PATTERN_275_META={id:275,family:"inference-compute-optimization",maturity:"experimental"} as const;
