@@ -34,7 +34,8 @@ Exigir contratos verificables y registrar decisiones por dataset, versión, prop
 
 ## Implementación del repositorio
 
-`src/pattern_164_synthetic_data_quality_gate.ts` es un contrato educativo de registros; no ejecuta detección estadística ni entrenamiento.
+Evalúa duplicados exactos y campos obligatorios; no garantiza realismo ni privacidad de datos sintéticos. Implementación TypeScript de referencia: `src/pattern_164_synthetic_data_quality_gate.ts`. Pruebas positivas y negativas: `tests/p9_data_quality_patterns.test.ts`. Los límites metodológicos deben conservarse al evaluar casos reales.
+
 
 ## Producción
 
