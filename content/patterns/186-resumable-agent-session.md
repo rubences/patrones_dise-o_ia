@@ -4,7 +4,7 @@ slug: resumable-agent-session
 title: "Resumable Agent Session"
 summary: "Patrón de referencia para resumable agent session con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agent-runtime-harness
-legacyGroup: 30
+legacyGroup: 35
 level: workflow
 difficulty: advanced
 maturity: emerging
