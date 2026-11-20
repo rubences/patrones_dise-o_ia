@@ -92,6 +92,48 @@
       "name": "Agent Interoperability & Protocols",
       "nameEs": "Interoperabilidad y Protocolos Agénticos",
       "description": "MCP, A2A, descubrimiento, autorización, delegación y trazabilidad entre agentes."
+    },
+    {
+      "id": "continual-learning-memory",
+      "name": "Learning, Memory & Continual Adaptation",
+      "nameEs": "Aprendizaje, Memoria y Adaptación Continua",
+      "description": "Consolidación, recuperación, olvido y adaptación persistente de agentes."
+    },
+    {
+      "id": "ai-governance-assurance",
+      "name": "AI Governance, Compliance & Assurance",
+      "nameEs": "Gobierno, Cumplimiento y Aseguramiento de IA",
+      "description": "Gestión de riesgos, controles, evidencias, conformidad y responsabilidad."
+    },
+    {
+      "id": "agentic-software-engineering",
+      "name": "Agentic Software Engineering & DevOps",
+      "nameEs": "Ingeniería de Software Agéntica y DevOps",
+      "description": "Desarrollo, pruebas, revisión, CI/CD y despliegue gobernado por agentes."
+    },
+    {
+      "id": "data-centric-ai",
+      "name": "Data-Centric AI & Data Quality Engineering",
+      "nameEs": "IA Centrada en Datos y Calidad",
+      "description": "Contratos, calidad, linaje, deriva, curación y versionado de datasets."
+    },
+    {
+      "id": "edge-distributed-ai",
+      "name": "Edge, Distributed & Resource-Aware AI",
+      "nameEs": "IA Distribuida, Edge y Consciente de Recursos",
+      "description": "Inferencia particionada, desconexiones, energía, latencia y privacidad."
+    },
+    {
+      "id": "causal-neurosymbolic-ai",
+      "name": "Causal, Neuro-Symbolic & World-Model AI",
+      "nameEs": "IA Causal, Neurosimbólica y Modelos del Mundo",
+      "description": "Causalidad, restricciones simbólicas, planificación y modelos del entorno."
+    },
+    {
+      "id": "agent-runtime-harness",
+      "name": "Agent Runtime, Harness & Execution Control",
+      "nameEs": "Entorno de Ejecución y Control de Agentes",
+      "description": "Iteración acotada, herramientas, sesiones reanudables y control de efectos."
     }
   ],
   "levels": [
