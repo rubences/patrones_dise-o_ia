@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 290,
+  "catalogSize": 300,
   "patterns": [
     {
       "id": 1,
@@ -3380,6 +3380,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/290-least-privilege-capability-discovery.md"
+    },
+    {
+      "id": 291,
+      "name": "Context Relevance Budget Allocator",
+      "slug": "context-relevance-budget-allocator",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_291_context_relevance_budget_allocator.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/291-context-relevance-budget-allocator.md"
+    },
+    {
+      "id": 292,
+      "name": "Instruction Hierarchy Conflict Resolver",
+      "slug": "instruction-hierarchy-conflict-resolver",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_292_instruction_hierarchy_conflict_resolver.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/292-instruction-hierarchy-conflict-resolver.md"
+    },
+    {
+      "id": 293,
+      "name": "Evidence Freshness Context Gate",
+      "slug": "evidence-freshness-context-gate",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_293_evidence_freshness_context_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/293-evidence-freshness-context-gate.md"
+    },
+    {
+      "id": 294,
+      "name": "Context Window Fragmentation Planner",
+      "slug": "context-window-fragmentation-planner",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_294_context_window_fragmentation_planner.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/294-context-window-fragmentation-planner.md"
+    },
+    {
+      "id": 295,
+      "name": "Source Diversity Retrieval Selector",
+      "slug": "source-diversity-retrieval-selector",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_295_source_diversity_retrieval_selector.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/295-source-diversity-retrieval-selector.md"
+    },
+    {
+      "id": 296,
+      "name": "Long-Context Position Bias Auditor",
+      "slug": "long-context-position-bias-auditor",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_296_long_context_position_bias_auditor.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/296-long-context-position-bias-auditor.md"
+    },
+    {
+      "id": 297,
+      "name": "Retrieval Redundancy Suppressor",
+      "slug": "retrieval-redundancy-suppressor",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_297_retrieval_redundancy_suppressor.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/297-retrieval-redundancy-suppressor.md"
+    },
+    {
+      "id": 298,
+      "name": "Context Injection Isolation Boundary",
+      "slug": "context-injection-isolation-boundary",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_298_context_injection_isolation_boundary.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/298-context-injection-isolation-boundary.md"
+    },
+    {
+      "id": 299,
+      "name": "Task-Specific Context Compiler",
+      "slug": "task-specific-context-compiler",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_299_task_specific_context_compiler.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/299-task-specific-context-compiler.md"
+    },
+    {
+      "id": 300,
+      "name": "Context Sufficiency Stop Rule",
+      "slug": "context-sufficiency-stop-rule",
+      "family": "context-engineering",
+      "legacyGroup": 48,
+      "sourceFile": "src/pattern_300_context_sufficiency_stop_rule.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/300-context-sufficiency-stop-rule.md"
     }
   ]
 }
