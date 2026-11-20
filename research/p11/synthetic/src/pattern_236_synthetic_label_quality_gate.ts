@@ -1,0 +1,3 @@
+/** P11 236: educational synthetic-data contract; not privacy or fidelity certification. */
+export class Pattern236Contract{agreement(reference:string[],predicted:string[],minimum:number){if(!reference.length||reference.length!==predicted.length||![minimum].every(Number.isFinite)||minimum<0||minimum>1||[...reference,...predicted].some(x=>!x.trim()))throw Error("invalid labels");const score=reference.filter((x,i)=>x===predicted[i]).length/reference.length;return {agreement:score,accepted:score>=minimum};}}
+export const PATTERN_236_META={id:236,family:"trustworthy-synthetic-simulation",maturity:"experimental"} as const;
