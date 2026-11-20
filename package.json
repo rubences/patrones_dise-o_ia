@@ -1,6 +1,6 @@
 {
   "name": "patrones-agentes-ia",
-  "version": "21.0.0",
+  "version": "21.1.0",
   "description": "270 patrones de diseño para sistemas de IA: GoF, agentes, AI Factory, datos/grafos, RAG avanzado, seguridad, fiabilidad, evaluación y adaptación PEFT",
   "type": "module",
   "main": "src/index.ts",
@@ -277,7 +277,17 @@
     "pattern:267": "node --loader ts-node/esm src/pattern_267_knowledge_freshness_decay_policy.ts",
     "pattern:268": "node --loader ts-node/esm src/pattern_268_graph_provenance_reconciliation.ts",
     "pattern:269": "node --loader ts-node/esm src/pattern_269_ontology_alignment_confidence_gate.ts",
-    "pattern:270": "node --loader ts-node/esm src/pattern_270_knowledge_repair_human_approval.ts"
+    "pattern:270": "node --loader ts-node/esm src/pattern_270_knowledge_repair_human_approval.ts",
+    "pattern:271": "node --loader ts-node/esm src/pattern_271_reasoning_effort_budget_scheduler.ts",
+    "pattern:272": "node --loader ts-node/esm src/pattern_272_adaptive_test_time_compute_gate.ts",
+    "pattern:273": "node --loader ts-node/esm src/pattern_273_early_exit_confidence_controller.ts",
+    "pattern:274": "node --loader ts-node/esm src/pattern_274_speculative_decoding_acceptance_gate.ts",
+    "pattern:275": "node --loader ts-node/esm src/pattern_275_reasoning_trace_compression_contract.ts",
+    "pattern:276": "node --loader ts-node/esm src/pattern_276_inference_cascade_escalation_policy.ts",
+    "pattern:277": "node --loader ts-node/esm src/pattern_277_uncertainty_triggered_deliberation.ts",
+    "pattern:278": "node --loader ts-node/esm src/pattern_278_parallel_candidate_consensus_budget.ts",
+    "pattern:279": "node --loader ts-node/esm src/pattern_279_inference_cache_correctness_guard.ts",
+    "pattern:280": "node --loader ts-node/esm src/pattern_280_verifier_guided_search_controller.ts"
   },
   "keywords": [
     "openai",
