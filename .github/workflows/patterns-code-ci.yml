@@ -6,6 +6,7 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'research/p10/privacy/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -64,6 +65,8 @@ jobs:
         run: npx --yes tsx@4.20.6 tests/p9_catalog_contracts.ts
       - name: P9 and security regressions
         run: npx --yes tsx@4.20.6 --test tests/p9_*.test.ts
+      - name: Test P10 staged privacy contracts
+        run: npx --yes tsx@4.20.6 --test tests/p10_privacy_patterns.test.ts
       - name: Generate and validate quality report
         run: |
           node scripts/report-pattern-quality.mjs
