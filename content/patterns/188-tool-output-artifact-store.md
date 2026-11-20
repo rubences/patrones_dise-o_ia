@@ -4,7 +4,7 @@ slug: tool-output-artifact-store
 title: "Tool Output Artifact Store"
 summary: "Patrón de referencia para tool output artifact store con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agent-runtime-harness
-legacyGroup: 30
+legacyGroup: 35
 level: workflow
 difficulty: advanced
 maturity: emerging
