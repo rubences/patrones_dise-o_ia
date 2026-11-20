@@ -34,7 +34,8 @@ Separar registro de decisiones, autorización, evidencia y revisión independien
 
 ## Implementación del repositorio
 
-`src/pattern_147_model_and_data_card_registry.ts` es un contrato pedagógico de registros autorizados, no un sistema de cumplimiento regulatorio.
+Registro versionado de fichas de modelos y datasets con limitaciones declaradas. Implementación TypeScript determinista en `src/pattern_147_model_and_data_card_registry.ts`, con pruebas positivas y negativas en `tests/p9_governance_patterns.test.ts`. **No constituye certificación regulatoria ni validación jurídica.**
+
 
 ## Producción
 
