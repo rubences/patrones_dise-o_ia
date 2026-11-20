@@ -20,7 +20,7 @@ Author monograph with a strong research-to-architecture orientation. The project
 
 Generative-AI systems are increasingly assembled from retrieval, tool ecosystems, agent loops, multi-agent coordination and distributed infrastructure, but these mechanisms are still frequently presented as isolated techniques. This book develops a system-level pattern language that explains how probabilistic AI components can be composed with deterministic boundaries for authority, evidence, security, resilience and distributed execution.
 
-Rather than organizing the book as one recipe per pattern, the monograph uses research questions to examine pattern compositions: secure MCP/tool ecosystems, RAG and evidence architectures, evaluator and reasoning structures, multi-agent coordination, semantic health, resilience, observability and cost. Two application domains—Edge–Mesh–Cloud systems and high-dependability vehicular/C-V2X environments—are used to expose placement, latency, trust and recovery forces that are largely hidden in cloud-only demonstrations. A companion open project provides 102 executable TypeScript pattern implementations, tests and a primary-evidence registry; the book remains an independent research narrative built on top of that reproducible substrate.
+Rather than organizing the book as one recipe per pattern, the monograph uses research questions to examine pattern compositions: secure MCP/tool ecosystems, RAG and evidence architectures, evaluator and reasoning structures, multi-agent coordination, semantic health, resilience, observability and cost. Two application domains—Edge–Mesh–Cloud systems and high-dependability vehicular/C-V2X environments—are used to expose placement, latency, trust and recovery forces that are largely hidden in cloud-only demonstrations. A companion open project provides 122 executable TypeScript pattern implementations, tests and a primary-evidence registry; the book remains an independent research narrative built on top of that reproducible substrate.
 
 ## Why this book is needed
 
@@ -64,7 +64,7 @@ The distinguishing combination is:
 - distributed Edge–Mesh–Cloud placement;
 - high-dependability C-V2X/vehicular exemplar;
 - experiments, ablations, adversarial workloads and threats to validity;
-- open 102-pattern technical/evidence substrate.
+- open 122-pattern technical/evidence substrate.
 
 ## Competing and adjacent books
 
@@ -139,7 +139,7 @@ Planning estimate: **9–12 months after contract**, subject to the experimental
 
 The project already maintains:
 
-- a public catalogue of 102 patterns;
+- a public catalogue of 122 patterns;
 - TypeScript reference implementations;
 - hardening tests;
 - primary evidence registry;
@@ -167,3 +167,7 @@ Rubén Juárez Cádiz works in cybersecurity, artificial intelligence, distribut
 - Getting started / proposal expectations: https://www.springernature.com/gp/authors/publish-a-book/getting-started
 
 This master is not a substitute for the live submission form. Fields and wording must be copied/adapted only after re-opening the current form on the day of submission.
+
+## Next-generation contribution added after market review
+
+The 122-pattern corpus now includes AI Factory, Agent Brain/Cognitive Core, SDD/GDD, Open Data Lakehouse, federated metadata, typed graphs, GraphRAG/RAPTOR/Self-RAG/CRAG and the LoRA/PEFT family. These additions sharpen the proposal around system-level composition and empirical design trade-offs, rather than competing as a generic “agent patterns” title.

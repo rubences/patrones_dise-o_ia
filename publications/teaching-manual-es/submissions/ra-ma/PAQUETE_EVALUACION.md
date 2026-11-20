@@ -17,7 +17,7 @@ Presento para valoración editorial un manual universitario y profesional orient
 
 La obra está concebida para asignaturas de grado y posgrado en Inteligencia Artificial, Ingeniería Informática, Ingeniería de Software, Ciberseguridad y Sistemas Distribuidos. En lugar de centrarse únicamente en prompting o en una plataforma concreta, organiza el aprendizaje desde APIs y contratos hasta RAG, agentes, sistemas multiagente, memoria, seguridad, resiliencia, observabilidad y despliegue. Cada módulo integra objetivos de aprendizaje, explicación conceptual, implementación en Python, laboratorio reproducible, escenarios de fallo, pruebas y rúbrica.
 
-El libro se apoya en un companion site y repositorio abierto con un catálogo técnico de 102 patrones. El texto docente es una obra propia e independiente: utiliza ese catálogo como referencia, pero aporta secuencia pedagógica, prácticas, evaluación y casos específicamente diseñados para formación universitaria.
+El libro se apoya en un companion site y repositorio abierto con un catálogo técnico de 122 patrones. El texto docente es una obra propia e independiente: utiliza ese catálogo como referencia, pero aporta secuencia pedagógica, prácticas, evaluación y casos específicamente diseñados para formación universitaria.
 
 ## Público y encaje académico
 
@@ -178,7 +178,7 @@ Se prevé ofrecer:
 - rúbricas editables;
 - ejercicios de ampliación;
 - material de apoyo al profesorado cuando proceda;
-- enlaces desde el companion site a cada uno de los 102 patrones.
+- enlaces desde el companion site a cada uno de los 122 patrones.
 
 ## Autor
 
@@ -193,7 +193,7 @@ Los títulos actuales de RA-MA cubren ya ChatGPT/OpenAI, IA generativa aplicada 
 - índice: completo a nivel de módulos y objetivos;
 - propuesta editorial: disponible;
 - capítulos muestra: dos borradores completos;
-- companion técnico: operativo con 102 patrones;
+- companion técnico: operativo con 122 patrones;
 - validación automática: integrada en CI;
 - manuscrito completo: en desarrollo tras fase de adquisición editorial.
 
@@ -212,6 +212,10 @@ Fuente: https://www.ra-ma.es/manuscrito/
 
 ## Texto breve para el campo “Mensaje” del formulario
 
-> Estimado equipo editorial: les remito para valoración el proyecto *Patrones de Diseño en Inteligencia Artificial: Manual Práctico y Laboratorios*, concebido como manual universitario para grado y posgrado en áreas TIC. La propuesta combina arquitectura de IA, Python, Docker y laboratorios reproducibles sobre APIs LLM, RAG, agentes, seguridad, fiabilidad y observabilidad. Adjunto índice completo, información de extensión/plazo y dos capítulos muestra. El proyecto dispone además de un companion web y repositorio técnico con 102 patrones. Quedo a su disposición para adaptar extensión, enfoque y calendario a sus criterios editoriales.
+> Estimado equipo editorial: les remito para valoración el proyecto *Patrones de Diseño en Inteligencia Artificial: Manual Práctico y Laboratorios*, concebido como manual universitario para grado y posgrado en áreas TIC. La propuesta combina arquitectura de IA, Python, Docker y laboratorios reproducibles sobre APIs LLM, RAG, agentes, seguridad, fiabilidad y observabilidad. Adjunto índice completo, información de extensión/plazo y dos capítulos muestra. El proyecto dispone además de un companion web y repositorio técnico con 122 patrones. Quedo a su disposición para adaptar extensión, enfoque y calendario a sus criterios editoriales.
 
 Antes del envío real se sustituirá este texto solo si el formulario o el editor publican instrucciones nuevas.
+
+## Ampliación técnica del companion corpus
+
+El companion site/repository contiene ahora 122 patrones. La ampliación 103–122 añade AI Factory, Cognitive Core, SDD/GDD, Open Data Lakehouse, grafos tipados, GraphRAG/RAG avanzado y LoRA/PEFT. La obra docente no reproduce la monografía internacional: estas técnicas aparecen como laboratorios, decisiones de arquitectura y rúbricas de evaluación.

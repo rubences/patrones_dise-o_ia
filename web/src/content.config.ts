@@ -13,6 +13,10 @@ const family = z.enum([
   'production-finops',
   'evaluation-qa',
   'human-experience',
+  'ai-platforms',
+  'development-governance',
+  'data-graph-foundations',
+  'model-adaptation',
 ]);
 
 const patterns = defineCollection({

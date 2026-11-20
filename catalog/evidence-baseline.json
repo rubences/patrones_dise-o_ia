@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "phase": "P7.0-NEXTGEN",
+  "phase": "P7.0",
   "verifiedOn": "2026-11-20",
   "minimumPrimaryPatterns": 54,
-  "minimumPrimaryReferences": 50,
+  "minimumPrimaryReferences": 51,
   "requiredPatternIds": [
     3,
     4,
@@ -61,5 +61,5 @@
     122
   ],
   "policy": "fail-closed",
-  "note": "Next-generation catalog expansion: AI Factory, Cognitive Core, SDD, Open Data Lakehouse, metadata federation, typed graphs, advanced RAG and LoRA/PEFT. GDD (106) is intentionally excluded from the primary-evidence minimum because it is project-defined terminology, not a claimed established academic methodology."
+  "note": "P7.0 NEXTGEN expands the verified corpus with AI Factory, Cognitive Core, SDD, Open Data Lakehouse, metadata federation, typed graphs, advanced RAG and LoRA/PEFT. GDD (106) remains project-defined experimental terminology and is intentionally excluded from the primary-evidence minimum."
 }
