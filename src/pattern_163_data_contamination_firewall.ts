@@ -1,3 +1,3 @@
-/** P9 163 Data Contamination Firewall: educational contract, not production infrastructure. */
-export class Pattern163Contract{private records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid");this.records.set(id,{actor,value});}get(id:string,actor:string){const v=this.records.get(id);if(!v||v.actor!==actor)throw Error("denied");return v.value;}}
+/** P9 163 Data Contamination Firewall: deterministic reference; not production validation. */
+export class Pattern163Contract{private protectedHashes=new Set<string>();protect(hashes:string[]){for(const h of hashes){if(!/^[a-f0-9]{64}$/i.test(h))throw Error("invalid digest");this.protectedHashes.add(h.toLowerCase());}}check(candidateHashes:string[]){const overlaps=candidateHashes.filter(h=>this.protectedHashes.has(h.toLowerCase()));return {allowed:overlaps.length===0,overlaps:[...new Set(overlaps)]};}}
 export const PATTERN_163_META={id:163,name:"Data Contamination Firewall",family:"data-centric-ai",maturity:"experimental"} as const;
