@@ -5,11 +5,11 @@ const patterns = await getCollection('patterns');
 const families = new Set(patterns.map((p) => p.data.family)).size;
 ---
 
-<BaseLayout title="Edición de referencia — Patrones IA" description="Edición técnica reproducible generada desde el catálogo canónico de 102 patrones de diseño para sistemas de IA.">
+<BaseLayout title="Edición de referencia — Patrones IA" description="Edición técnica reproducible generada desde el catálogo canónico de 122 patrones de diseño para sistemas de IA.">
   <section class="catalog-hero">
     <p class="eyebrow">REFERENCE BUILD · OPEN TECHNICAL BASELINE</p>
     <h1>La edición de referencia reproducible.</h1>
-    <p class="lead">Este artefacto ensambla las 102 fichas canónicas en una edición técnica versionada. Sirve como baseline abierta, trazable y verificable; <strong>no es el manuscrito comercial</strong> de la monografía internacional ni del manual universitario.</p>
+    <p class="lead">Este artefacto ensambla las 122 fichas canónicas en una edición técnica versionada. Sirve como baseline abierta, trazable y verificable; <strong>no es el manuscrito comercial</strong> de la monografía internacional ni del manual universitario.</p>
     <div class="actions">
       <a class="button primary" href={`${import.meta.env.BASE_URL}patterns/`}>Explorar los patrones</a>
       <a class="button" href="https://github.com/rubences/patrones_dise-o_ia/actions/workflows/book-artifacts.yml">Builds HTML · EPUB · PDF</a>
@@ -39,15 +39,15 @@ const families = new Set(patterns.map((p) => p.data.family)).size;
       <p>Los binarios no se commitean. GitHub Actions genera HTML, EPUB y PDF, verifica sus firmas y publica un bundle temporal con manifests criptográficos.</p>
     </div>
     <div class="card-grid">
-      <article class="pattern-card"><span class="pattern-number">01 · SOURCE</span><h3>102 fichas</h3><p>Contenido canónico y enlaces a implementaciones TypeScript.</p></article>
-      <article class="pattern-card"><span class="pattern-number">02 · ASSEMBLE</span><h3>10 partes</h3><p>El orden sale de taxonomy.json y el build exige 102 capítulos.</p></article>
+      <article class="pattern-card"><span class="pattern-number">01 · SOURCE</span><h3>{patterns.length} fichas</h3><p>Contenido canónico y enlaces a implementaciones TypeScript.</p></article>
+      <article class="pattern-card"><span class="pattern-number">02 · ASSEMBLE</span><h3>{families} partes</h3><p>El orden sale de taxonomy.json y el build exige 122 capítulos.</p></article>
       <article class="pattern-card"><span class="pattern-number">03 · RENDER</span><h3>HTML · EPUB · PDF</h3><p>Quarto transforma el manuscrito derivado sin alterar la fuente editorial.</p></article>
       <article class="pattern-card"><span class="pattern-number">04 · VERIFY</span><h3>Release manifest</h3><p>Firmas de formato, tamaño y SHA-256 enlazados con corpus y manuscrito.</p></article>
       <div><p class="eyebrow">PIPELINE</p><h2>Referencia canónica, no tercera vía editorial.</h2></div>
       <p>El repositorio ensambla un manuscrito Markdown técnico y lo renderiza en CI a HTML, EPUB y PDF. Las dos publicaciones usan este corpus como sustrato factual y ejecutable, pero escriben narrativa, casos, figuras y contribuciones propias.</p>
     </div>
     <div class="card-grid">
-      <article class="pattern-card"><span class="pattern-number">01 · SOURCE</span><h3>102 fichas</h3><p>Frontmatter estructurado, contenido técnico y enlaces a implementaciones TypeScript.</p></article>
+      <article class="pattern-card"><span class="pattern-number">01 · SOURCE</span><h3>{patterns.length} fichas</h3><p>Frontmatter estructurado, contenido técnico y enlaces a implementaciones TypeScript.</p></article>
       <article class="pattern-card"><span class="pattern-number">02 · RENDER</span><h3>HTML · EPUB · PDF</h3><p>Quarto genera salidas reproducibles desde el mismo baseline técnico.</p></article>
       <article class="pattern-card"><span class="pattern-number">03 · VERIFY</span><h3>Evidence + manifest</h3><p>Hashes, cobertura y estado de evidencia acompañan cada build para reconstruir exactamente la edición.</p></article>
     </div>

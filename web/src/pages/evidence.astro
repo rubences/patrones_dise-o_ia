@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import evidenceMapData from '../../../catalog/pattern-evidence.json';
 import referenceRegistryData from '../../../catalog/references.json';
+import taxonomyData from '../../../catalog/taxonomy.json';
+import evidenceBaselineData from '../../../catalog/evidence-baseline.json';
 import evidenceBaselineData from '../../../catalog/evidence-baseline.json';
 
 type PrimaryReference = {
@@ -35,18 +37,7 @@ const referenceById = new Map<string, PrimaryReference>(primaryReferenceRegistry
 const primaryEvidenceCount = primaryIds.size;
 const primaryReferences = primaryReferenceRegistry.length;
 
-const familyLabels: Record<string, string> = {
-  foundations: 'Fundamentos',
-  'agentic-workflows': 'Flujos Agénticos',
-  'knowledge-context': 'Conocimiento y Contexto',
-  reasoning: 'Razonamiento',
-  'multi-agent': 'Multiagente',
-  'safety-security': 'Seguridad y Safety',
-  reliability: 'Fiabilidad y Resiliencia',
-  'production-finops': 'Producción y FinOps',
-  'evaluation-qa': 'Evaluación y QA',
-  'human-experience': 'Experiencia Humana',
-};
+const familyLabels: Record<string, string> = Object.fromEntries(taxonomyData.families.map((family) => [family.id, family.nameEs]));
 
 const families = Object.entries(familyLabels).map(([id, label]) => {
   const group = patterns.filter((p) => p.data.family === id);
@@ -128,8 +119,8 @@ const primaryRows = evidenceEntries.map((entry) => {
 
   <section class="section">
     <div class="card-grid">
-      <article class="pattern-card"><span class="pattern-number">REPRODUCIBLE</span><h3>Hash del corpus</h3><p>El pipeline CI genera SHA-256 del conjunto de las 102 fichas y del manuscrito ensamblado.</p></article>
-      <article class="pattern-card"><span class="pattern-number">FAIL CLOSED</span><h3>Ausencia ≠ evidencia</h3><p>El baseline P6.2 y los hardenings mantienen explícita la ausencia de medición o fuente primaria.</p></article>
+      <article class="pattern-card"><span class="pattern-number">REPRODUCIBLE</span><h3>Hash del corpus</h3><p>El pipeline CI genera SHA-256 del conjunto de las {total} fichas y del manuscrito ensamblado.</p></article>
+      <article class="pattern-card"><span class="pattern-number">FAIL CLOSED</span><h3>Ausencia ≠ evidencia</h3><p>El baseline {evidenceBaselineData.phase} y los hardenings mantienen explícita la ausencia de medición o fuente primaria.</p></article>
       <article class="pattern-card"><span class="pattern-number">TRACEABLE</span><h3>Registro central</h3><p>Libro, Evidence Pack y esta página resuelven las fuentes verificadas desde el mismo registro versionado.</p></article>
     </div>
   </section>
