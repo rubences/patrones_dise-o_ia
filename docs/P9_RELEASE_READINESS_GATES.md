@@ -31,3 +31,7 @@ No declarar release estable, seguridad certificada, rendimiento medido o cumplim
 ## Pipeline técnico independiente (20-11-2026)
 
 Se ha añadido `.github/workflows/patterns-code-ci.yml` para ejecutar de forma separada validación editorial, integridad referencial, `tsc --noEmit`, contratos P8/P9, regresiones de seguridad e informe de calidad. Se activa con cambios en código, catálogo o tests, y admite `workflow_dispatch` para ejecución manual desde GitHub Actions. Este workflow no sustituye al principal de Quarto/Astro y publicación. **El resultado de ejecución sigue pendiente de confirmación**; crear un workflow no demuestra que pase.
+
+## Cartera P10 (investigación, no producción)
+
+Se ha registrado `research/P10_FOUR_NEW_MACROFAMILIES_32_CANDIDATES.md` con 4 macrofamilias y 32 candidatos (191–222). No aumentar `catalogSize` ni anunciar 26 familias como estado actual hasta disponer de código diferenciado, pruebas, evidencia, fichas y validación de CI. El estado de release P9 sigue sin verificación de ejecución.
