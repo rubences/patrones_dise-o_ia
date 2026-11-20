@@ -1,0 +1,3 @@
+/** P10 privacy pattern 197: deterministic educational policy/metric, not a privacy certification. */
+export class ConsentAwareDataProcessing{private grants=new Map<string,Set<string>>();grant(subject:string,purpose:string){if(!subject||!purpose)throw Error("invalid grant");const purposes=this.grants.get(subject)||new Set<string>();purposes.add(purpose);this.grants.set(subject,purposes);}revoke(subject:string,purpose:string){this.grants.get(subject)?.delete(purpose);}authorize(subject:string,purpose:string){if(!this.grants.get(subject)?.has(purpose))throw Error("consent denied");return true;}}
+export const PATTERN_197_META={id:197,family:"privacy-confidential-ai",maturity:"experimental"} as const;
