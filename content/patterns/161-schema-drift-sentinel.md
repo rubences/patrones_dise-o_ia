@@ -34,7 +34,8 @@ Exigir contratos verificables y registrar decisiones por dataset, versión, prop
 
 ## Implementación del repositorio
 
-`src/pattern_161_schema_drift_sentinel.ts` es un contrato educativo de registros; no ejecuta detección estadística ni entrenamiento.
+Detecta diferencias entre esquemas: campos añadidos, eliminados y tipos cambiados. Implementación TypeScript de referencia: `src/pattern_161_schema_drift_sentinel.ts`. Pruebas positivas y negativas: `tests/p9_data_quality_patterns.test.ts`. Los límites metodológicos deben conservarse al evaluar casos reales.
+
 
 ## Producción
 
