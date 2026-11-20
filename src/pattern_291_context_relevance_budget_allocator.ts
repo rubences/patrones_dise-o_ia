@@ -1,0 +1,3 @@
+/** P12 291: deterministic educational context engineering reference, not LLM safety certification. */
+export class Pattern291Contract{select(items:{id:string;tokens:number;relevance:number}[],budget:number){if(!Number.isInteger(budget)||budget<0||items.some(x=>!x.id.trim()||!Number.isInteger(x.tokens)||x.tokens<=0||!Number.isFinite(x.relevance)||x.relevance<0||x.relevance>1)||new Set(items.map(x=>x.id)).size!==items.length)throw Error("invalid context");let remaining=budget;return [...items].sort((a,b)=>b.relevance/b.tokens-a.relevance/a.tokens||a.id.localeCompare(b.id)).filter(x=>{if(x.tokens>remaining)return false;remaining-=x.tokens;return true;});}}
+export const PATTERN_291_META={id:291,family:"context-engineering",maturity:"experimental"} as const;
