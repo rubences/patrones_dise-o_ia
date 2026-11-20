@@ -15,6 +15,7 @@ on:
       - 'research/p11/observability/**'
       - 'research/p11/synthetic/**'
       - 'research/p11/human-ai/**'
+      - 'research/p11/knowledge/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -37,6 +38,7 @@ on:
       - 'research/p11/observability/**'
       - 'research/p11/synthetic/**'
       - 'research/p11/human-ai/**'
+      - 'research/p11/knowledge/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -120,6 +122,10 @@ jobs:
         run: npx tsc --noEmit --project research/p11/human-ai/tsconfig.json
       - name: Test P11 human-AI collaboration contracts
         run: npx --yes tsx@4.20.6 --test tests/p11_human_ai_patterns.test.ts
+      - name: Typecheck P11 knowledge engineering research
+        run: npx tsc --noEmit --project research/p11/knowledge/tsconfig.json
+      - name: Test P11 knowledge engineering contracts
+        run: npx --yes tsx@4.20.6 --test tests/p11_knowledge_patterns.test.ts
       - name: Generate and validate quality report
         run: |
           node scripts/report-pattern-quality.mjs
