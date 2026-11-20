@@ -1,0 +1,3 @@
+/** P12 330: educational incident response reference; no forensic chain-of-custody certification. */
+export class Pattern330Contract{plan(findings:{id:string;control:string;owner:string;verified:boolean}[]){if(!findings.length||findings.some(f=>!f.id.trim()||!f.control.trim()||!f.owner.trim())||new Set(findings.map(f=>f.id)).size!==findings.length)throw Error("invalid findings");return {open:findings.filter(f=>!f.verified).map(f=>({id:f.id,control:f.control,owner:f.owner})),closed:findings.filter(f=>f.verified).map(f=>f.id)};}}
+export const PATTERN_330_META={id:330,family:"ai-incident-forensics",maturity:"experimental"} as const;
