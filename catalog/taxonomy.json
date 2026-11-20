@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 222,
+  "catalogSize": 270,
   "families": [
     {
       "id": "foundations",
@@ -158,6 +158,42 @@
       "name": "AI Economics, Markets & Mechanism Design",
       "nameEs": "Economía de Agentes y Diseño de Mecanismos",
       "description": "Presupuestos, incentivos, subastas, asignación de recursos y auditoría económica."
+    },
+    {
+      "id": "ai-behavioral-observability",
+      "name": "AI Observability & Behavioral Diagnostics",
+      "nameEs": "Observabilidad y Diagnóstico de Agentes",
+      "description": "Contratos de trazas, atribución, deriva y cobertura de comportamiento."
+    },
+    {
+      "id": "trustworthy-synthetic-simulation",
+      "name": "Trustworthy Synthetic Data & Simulation",
+      "nameEs": "Datos Sintéticos y Simulación Confiable",
+      "description": "Controles de procedencia, privacidad, calidad y fidelidad de datos sintéticos."
+    },
+    {
+      "id": "ai-supply-chain-security",
+      "name": "AI Supply Chain & Model Artifact Security",
+      "nameEs": "Seguridad de la Cadena de Suministro de IA",
+      "description": "Integridad y procedencia de pesos, datos, prompts, dependencias y modelos."
+    },
+    {
+      "id": "adaptive-human-ai-collaboration",
+      "name": "Adaptive Human–AI Collaboration",
+      "nameEs": "Colaboración Adaptativa Humano-IA",
+      "description": "Delegación, confianza, supervisión y trazabilidad de decisiones colaborativas."
+    },
+    {
+      "id": "formal-runtime-assurance",
+      "name": "Formal Verification & Runtime Assurance",
+      "nameEs": "Verificación Formal y Aseguramiento en Ejecución",
+      "description": "Monitores de invariantes, efectos y contratos de seguridad agéntica."
+    },
+    {
+      "id": "autonomous-knowledge-engineering",
+      "name": "Autonomous Knowledge Engineering",
+      "nameEs": "Ingeniería Autónoma del Conocimiento",
+      "description": "Evolución de ontologías, procedencia, resolución de entidades y reparación."
     }
   ],
   "levels": [
@@ -339,6 +375,30 @@
     {
       "id": 39,
       "name": "Economía de Agentes y Mercados"
+    },
+    {
+      "id": 40,
+      "name": "Observabilidad de IA"
+    },
+    {
+      "id": 41,
+      "name": "Datos Sintéticos y Simulación"
+    },
+    {
+      "id": 42,
+      "name": "Seguridad de Artefactos de IA"
+    },
+    {
+      "id": 43,
+      "name": "Colaboración Humano-IA"
+    },
+    {
+      "id": 44,
+      "name": "Verificación y Aseguramiento"
+    },
+    {
+      "id": 45,
+      "name": "Ingeniería del Conocimiento"
     }
   ]
 }
