@@ -1,0 +1,3 @@
+/** Pattern 141: Continual Learning Gate. Educational contract only, not a production integration. */
+export class Pattern141Contract{private readonly records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid record");this.records.set(id,{actor,value});}get(id:string,actor:string){const entry=this.records.get(id);if(!entry||entry.actor!==actor)throw Error("access denied");return entry.value;}delete(id:string,actor:string){this.get(id,actor);return this.records.delete(id);}}
+export const PATTERN_141_META={id:141,name:"Continual Learning Gate",family:"continual-learning-memory",maturity:"experimental"} as const;
