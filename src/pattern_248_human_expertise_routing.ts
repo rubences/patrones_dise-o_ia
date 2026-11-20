@@ -1,0 +1,3 @@
+/** P11 248: educational human-AI collaboration contract, not clinical or safety validation. */
+export class Pattern248Contract{choose(people:{id:string;expertise:number;available:boolean}[]){if(!people.length||new Set(people.map(p=>p.id)).size!==people.length||people.some(p=>!p.id.trim()||!Number.isFinite(p.expertise)||p.expertise<0||p.expertise>1))throw Error("invalid experts");const best=[...people].filter(p=>p.available).sort((a,b)=>b.expertise-a.expertise||a.id.localeCompare(b.id))[0];if(!best)throw Error("no available expert");return best.id;}}
+export const PATTERN_248_META={id:248,family:"adaptive-human-ai-collaboration",maturity:"experimental"} as const;
