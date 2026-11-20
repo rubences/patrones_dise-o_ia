@@ -34,7 +34,7 @@ Separar registro de decisiones, autorización, evidencia y revisión independien
 
 ## Implementación del repositorio
 
-Libro de evidencias con huellas y referencias al registro anterior; no es un log inmutable ni una firma criptográfica. Implementación TypeScript determinista en `src/pattern_149_conformity_evidence_ledger.ts`, con pruebas positivas y negativas en `tests/p9_governance_patterns.test.ts`. **No constituye certificación regulatoria ni validación jurídica.**
+`src/pattern_149_conformity_evidence_ledger.ts` calcula una cadena SHA-256 en memoria sobre ID, propietario, digest de evidencia y hash anterior. `verify()` vuelve a calcular cada eslabón y comprueba la continuidad; **no valida que el digest original corresponda a un archivo**, ni ofrece firma, persistencia inmutable, anclaje externo o resistencia a un atacante con acceso de escritura al proceso. Pruebas: `tests/p9_governance_patterns.test.ts` y `tests/p9_security_hardening.test.ts`. No constituye certificación regulatoria ni validación jurídica.
 
 
 ## Producción
