@@ -1,3 +1,3 @@
-/** P9 177 Neural-Symbolic Constraint Gate: educational contract, not production infrastructure. */
-export class Pattern177Contract{private records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid");this.records.set(id,{actor,value});}get(id:string,actor:string){const v=this.records.get(id);if(!v||v.actor!==actor)throw Error("denied");return v.value;}}
+/** P9 177 Neural-Symbolic Constraint Gate: deterministic illustrative model; no causal identification claims. */
+export class Pattern177Contract{check(candidate:Record<string,number>,constraints:{field:string;min?:number;max?:number}[]){const violations:string[]=[];for(const c of constraints){const v=candidate[c.field];if(!Number.isFinite(v)||c.min!==undefined&&v<c.min||c.max!==undefined&&v>c.max)violations.push(c.field);}return {allowed:violations.length===0,violations};}}
 export const PATTERN_177_META={id:177,name:"Neural-Symbolic Constraint Gate",family:"causal-neurosymbolic-ai",maturity:"experimental"} as const;
