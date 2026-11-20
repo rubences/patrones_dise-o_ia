@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 134,
+  "catalogSize": 190,
   "families": [
     {
       "id": "foundations",
@@ -92,6 +92,48 @@
       "name": "Agent Interoperability & Protocols",
       "nameEs": "Interoperabilidad y Protocolos Agénticos",
       "description": "MCP, A2A, descubrimiento, autorización, delegación y trazabilidad entre agentes."
+    },
+    {
+      "id": "continual-learning-memory",
+      "name": "Learning, Memory & Continual Adaptation",
+      "nameEs": "Aprendizaje, Memoria y Adaptación Continua",
+      "description": "Patrones de aprendizaje, memoria y adaptación continua con contratos y validación."
+    },
+    {
+      "id": "ai-governance-assurance",
+      "name": "AI Governance, Compliance & Assurance",
+      "nameEs": "Gobierno, Cumplimiento y Aseguramiento",
+      "description": "Patrones de gobierno, cumplimiento y aseguramiento con contratos y validación."
+    },
+    {
+      "id": "agentic-software-engineering",
+      "name": "Agentic Software Engineering & DevOps",
+      "nameEs": "Ingeniería de Software Agéntica",
+      "description": "Patrones de ingeniería de software agéntica con contratos y validación."
+    },
+    {
+      "id": "data-centric-ai",
+      "name": "Data-Centric AI & Data Quality Engineering",
+      "nameEs": "IA Centrada en Datos",
+      "description": "Patrones de ia centrada en datos con contratos y validación."
+    },
+    {
+      "id": "edge-distributed-ai",
+      "name": "Edge, Distributed & Resource-Aware AI",
+      "nameEs": "IA Edge y Distribuida",
+      "description": "Patrones de ia edge y distribuida con contratos y validación."
+    },
+    {
+      "id": "causal-neurosymbolic-ai",
+      "name": "Causal, Neuro-Symbolic & World-Model AI",
+      "nameEs": "IA Causal y Neurosimbólica",
+      "description": "Patrones de ia causal y neurosimbólica con contratos y validación."
+    },
+    {
+      "id": "agent-runtime-harness",
+      "name": "Agent Runtime, Harness & Execution Control",
+      "nameEs": "Entorno de Ejecución de Agentes",
+      "description": "Patrones de entorno de ejecución de agentes con contratos y validación."
     }
   ],
   "levels": [
@@ -229,6 +271,34 @@
     {
       "id": 28,
       "name": "Protocolos e Interoperabilidad Agéntica"
+    },
+    {
+      "id": 31,
+      "name": "Learning, Memory & Continual Adaptation"
+    },
+    {
+      "id": 32,
+      "name": "AI Governance, Compliance & Assurance"
+    },
+    {
+      "id": 33,
+      "name": "Agentic Software Engineering & DevOps"
+    },
+    {
+      "id": 34,
+      "name": "Data-Centric AI & Data Quality Engineering"
+    },
+    {
+      "id": 35,
+      "name": "Edge, Distributed & Resource-Aware AI"
+    },
+    {
+      "id": 36,
+      "name": "Causal, Neuro-Symbolic & World-Model AI"
+    },
+    {
+      "id": 37,
+      "name": "Agent Runtime, Harness & Execution Control"
     }
   ]
 }
