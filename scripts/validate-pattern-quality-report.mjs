@@ -1,0 +1,31 @@
+import {readFileSync,existsSync} from "node:fs";
+import {join,resolve} from "node:path";
+const root=resolve(import.meta.dirname,"..");
+const json=p=>JSON.parse(readFileSync(join(root,p),"utf8"));
+const catalog=json("catalog/patterns.json"),taxonomy=json("catalog/taxonomy.json"),mapping=json("catalog/pattern-evidence.json"),references=json("catalog/references.json");
+const reportPath=join(root,"dist/quality/pattern-quality.json"),markdownPath=join(root,"dist/quality/PATTERN_QUALITY_REPORT.md");
+if(!existsSync(reportPath)||!existsSync(markdownPath))throw Error("quality artifacts missing");
+const report=JSON.parse(readFileSync(reportPath,"utf8"));
+const errors=[];const check=(value,message)=>{if(!value)errors.push(message);};
+check(report.catalogSize===catalog.patterns.length,"pattern count mismatch");
+check(report.catalogSize===taxonomy.catalogSize,"taxonomy count mismatch");
+check(report.families===taxonomy.families.length,"family count mismatch");
+check(report.legacyGroups===taxonomy.legacyGroups.length,"group count mismatch");
+check(report.primaryEvidenceMappings===mapping.patterns.length,"evidence mapping count mismatch");
+check(report.primaryReferences===references.references.length,"reference count mismatch");
+const mapped=new Set(mapping.patterns.map(x=>x.patternId));
+let total=0,mappedTotal=0;
+for(const family of taxonomy.families){
+ const rows=catalog.patterns.filter(p=>p.family===family.id);
+ const item=report.familiesBreakdown[family.id];
+ check(!!item,"missing family "+family.id);if(!item)continue;
+ total+=item.total;mappedTotal+=item.withPrimaryEvidenceMapping;
+ check(item.total===rows.length,"family size mismatch "+family.id);
+ check(item.withPrimaryEvidenceMapping===rows.filter(p=>mapped.has(p.id)).length,"family evidence mismatch "+family.id);
+ check(item.needsReview+item.partiallyVerified+item.verified===item.total,"family status mismatch "+family.id);
+}
+check(Object.keys(report.familiesBreakdown).length===taxonomy.families.length,"unexpected family in report");
+check(total===catalog.patterns.length,"family totals mismatch");
+check(mappedTotal===mapping.patterns.length,"evidence totals mismatch");
+check(typeof report.interpretation==="string"&&report.interpretation.includes("not an empirical validation"),"missing evidence limitation");
+if(errors.length){for(const error of errors)console.error("ERROR:",error);process.exitCode=1;}else console.log("Quality report validation PASS");
