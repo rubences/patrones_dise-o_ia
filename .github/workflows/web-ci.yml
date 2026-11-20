@@ -183,6 +183,9 @@ jobs:
       - name: Test Interactive Lab graph model
         run: node --experimental-strip-types --test tests/interactive-lab-pattern-graph.test.mjs tests/interactive-lab-diagram-smoke.test.mjs
 
+      - name: Validate macrofamily navigation
+        run: node --test tests/macrofamilies-navigation.test.mjs
+
       - name: Install web dependencies
         working-directory: web
         run: npm install
