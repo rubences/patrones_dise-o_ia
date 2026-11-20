@@ -34,7 +34,8 @@ Exigir contratos verificables y registrar decisiones por dataset, versión, prop
 
 ## Implementación del repositorio
 
-`src/pattern_166_distribution_shift_monitor.ts` es un contrato educativo de registros; no ejecuta detección estadística ni entrenamiento.
+Compara medias de muestras con umbral explícito; no equivale a una prueba estadística de drift multivariante. Implementación TypeScript de referencia: `src/pattern_166_distribution_shift_monitor.ts`. Pruebas positivas y negativas: `tests/p9_data_quality_patterns.test.ts`. Los límites metodológicos deben conservarse al evaluar casos reales.
+
 
 ## Producción
 
