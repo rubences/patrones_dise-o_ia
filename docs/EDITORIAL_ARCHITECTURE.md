@@ -4,8 +4,8 @@
 
 Patrones IA mantiene una única base técnica y editorial capaz de producir, de forma trazable:
 
-1. **270 implementaciones TypeScript**;
-2. **270 fichas canónicas**;
+1. **365 implementaciones TypeScript**;
+2. **365 fichas canónicas**;
 3. una **web navegable**;
 4. una **edición técnica reproducible** en Markdown/HTML/EPUB/PDF;
 5. dos **obras editoriales independientes**;
@@ -17,10 +17,10 @@ La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio d
 
 ```text
 catalog/taxonomy.json
-        └── 39 macrofamilias, vocabulario, niveles y madurez
+        └── 42 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
-        └── inventario maestro 340/340
+        └── inventario maestro 365/365
 
 content/patterns/*.md
         └── ficha editorial canónica de cada patrón
@@ -39,12 +39,12 @@ publications/*/publication.json
 
 ## Estado actual
 
-- Implementaciones TypeScript: **340/340**.
-- Inventario maestro: **340/340**.
-- Fichas canónicas: **340/340**.
-- Macrofamilias: **26**.
-- Grupos de trazabilidad: **39**.
-- Evidencia primaria/oficial: **54/340 patrones**.
+- Implementaciones TypeScript: **365/365**.
+- Inventario maestro: **365/365**.
+- Fichas canónicas: **365/365**.
+- Macrofamilias: **42**.
+- Grupos de trazabilidad: **55**.
+- Evidencia primaria/oficial: **54/365 patrones**.
 - Fuentes primarias/oficiales registradas: **51**.
 - Baseline: **P7.0**, política `fail-closed`.
 - Publicaciones: **2**, ambas en `editor-contact-ready`.
@@ -68,7 +68,7 @@ publications/*/publication.json
 13. Data & Graph Foundations
 14. Model Adaptation & PEFT
 
-Los 27 `legacyGroup` se conservan para trazabilidad histórica y no sustituyen esta navegación editorial.
+Los 55 `legacyGroup` se conservan para trazabilidad histórica y no sustituyen esta navegación editorial.
 
 ## Segunda generación 103–122
 
@@ -178,7 +178,7 @@ Antes de merge:
 
 1. **Web lockfile**: `web/` no dispone todavía de `package-lock.json`; se fija Astro a versión exacta, pero queda pendiente fijar transitivas.
 2. **Protección de `main`**: el repositorio aún no tiene branch protection/ruleset que haga obligatorio el CI a nivel de GitHub.
-3. **Cobertura de evidencia**: 54/340 es un baseline, no cobertura completa.
+3. **Cobertura de evidencia**: 54/365 es un baseline, no cobertura completa.
 4. **Submission blockers**: las dos publicaciones siguen en `editor-contact-ready`; ningún envío debe saltarse el gate de derechos/datos.
 5. **GDD**: mantener como experimental hasta disponer de formalización/evaluación propia o evidencia directa.
 
@@ -246,3 +246,7 @@ Los patrones 321–330 se integraron en `src/`, `content/patterns/`, catálogo, 
 ## P12.7 — Integración canónica de contratos de datos
 
 Los patrones 331–340 se integraron en `src/`, `content/patterns/`, catálogo, taxonomía, exportaciones y scripts. Estado experimental; evidencia `needs-review`. Quedan 25 candidatos P12 en investigación. CI no verificada.
+
+## P13–P15 — Corpus 341–365
+
+El inventario incorpora decisiones operacionales (341–350), integridad de evaluación (351–360) y autonomía acotada (361–365). La web y la edición técnica deben derivar fichas y cifras del corpus; las dos publicaciones incorporan selecciones por capítulo y mantienen su independencia narrativa. Estado de evidencia de estas 25 fichas: `needs-review`.
