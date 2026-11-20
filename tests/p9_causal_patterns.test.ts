@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern175Contract} from "../src/pattern_175_causal_intervention_planner.js";
+import {Pattern176Contract} from "../src/pattern_176_structural_causal_model_adapter.js";
+import {Pattern177Contract} from "../src/pattern_177_neural_symbolic_constraint_gate.js";
+import {Pattern178Contract} from "../src/pattern_178_counterfactual_evaluation.js";
+import {Pattern179Contract} from "../src/pattern_179_symbolic_proof_trace.js";
+import {Pattern180Contract} from "../src/pattern_180_world_model_rollout.js";
+import {Pattern181Contract} from "../src/pattern_181_causal_confounder_check.js";
+import {Pattern182Contract} from "../src/pattern_182_uncertainty_aware_planning.js";
+test("175 intervention planner enforces cost",()=>{const p=new Pattern175Contract();assert.deepEqual(p.plan([{variable:"x",value:1,cost:2},{variable:"y",value:1,cost:5}],3).map(x=>x.variable),["x"]);assert.throws(()=>p.plan([], -1));});
+test("176 structural equations support do intervention",()=>{const p=new Pattern176Contract();const eq=[{variable:"y",parents:["x"],evaluate:(v:Record<string,number>)=>v.x*2}];assert.equal(p.evaluate(eq,{x:2}).y,4);assert.equal(p.evaluate(eq,{x:2},{y:10}).y,10);assert.throws(()=>p.evaluate([{variable:"x",parents:["y"],evaluate:()=>1},{variable:"y",parents:["x"],evaluate:()=>2}],{}));});
+test("177 symbolic gate rejects constraint violations",()=>{const p=new Pattern177Contract();assert.equal(p.check({x:2},[{field:"x",min:1,max:3}]).allowed,true);assert.deepEqual(p.check({x:4},[{field:"x",max:3}]).violations,["x"]);});
+test("178 counterfactual is explicitly model-based",()=>{const p=new Pattern178Contract();const r=p.compare(x=>x.a*2,{a:1},{field:"a",value:3});assert.equal(r.delta,4);assert.match(r.assumption,/not identified/);});
+test("179 proof trace checks dependencies not soundness",()=>{const p=new Pattern179Contract();assert.equal(p.verify(["A"],[{claim:"B",dependsOn:["A"]}],"B").derivationComplete,true);assert.throws(()=>p.verify([], [{claim:"B",dependsOn:["A"]}],"B"));});
+test("180 rollout respects step budget",()=>{const p=new Pattern180Contract();assert.deepEqual(p.rollout(0,[1,2],(s,a)=>s+a,2),[0,1,3]);assert.throws(()=>p.rollout(0,[1,2],(s,a)=>s+a,1));});
+test("181 confounder heuristic reports missing adjustments",()=>{const p=new Pattern181Contract();assert.deepEqual(p.flag(["z","a"],["z","b"],[]).unadjusted,["z"]);assert.equal(p.flag(["z"],["z"],["z"]).requiresCausalReview,false);});
+test("182 uncertainty-aware planning penalizes risk",()=>{const p=new Pattern182Contract();assert.equal(p.select([{id:"risky",expectedReward:10,uncertainty:5},{id:"safe",expectedReward:8,uncertainty:0}],1).id,"safe");assert.throws(()=>p.select([],1));});
