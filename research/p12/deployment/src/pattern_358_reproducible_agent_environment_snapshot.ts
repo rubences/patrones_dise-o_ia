@@ -1,0 +1,3 @@
+/** P12 358: educational AI deployment contract; not a production release controller. */
+import {createHash} from "node:crypto";export class Pattern358Contract{snapshot(entries:{name:string;version:string}[]){if(!entries.length||entries.some(x=>!x.name.trim()||!x.version.trim())||new Set(entries.map(x=>x.name)).size!==entries.length)throw Error("invalid environment");const canonical=[...entries].sort((a,b)=>a.name.localeCompare(b.name));return {entries:canonical,digest:createHash("sha256").update(JSON.stringify(canonical)).digest("hex")};}}
+export const PATTERN_358_META={id:358,family:"ai-deployment-lifecycle",maturity:"experimental"} as const;
