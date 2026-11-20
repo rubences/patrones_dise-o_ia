@@ -1,0 +1,3 @@
+/** P12 334: educational semantic data contract; not production interoperability certification. */
+export class Pattern334Contract{authorize(record:{tenant:string;allowedPurposes:string[];expiresAt:number},request:{tenant:string;purpose:string;now:number}){if(!record.tenant.trim()||!request.tenant.trim()||!request.purpose.trim()||![record.expiresAt,request.now].every(Number.isFinite)||record.allowedPurposes.some(x=>!x.trim()))throw Error("invalid purpose contract");return record.tenant===request.tenant&&record.allowedPurposes.includes(request.purpose)&&request.now<record.expiresAt;}}
+export const PATTERN_334_META={id:334,family:"ai-data-contracts",maturity:"experimental"} as const;
