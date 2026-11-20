@@ -43,6 +43,17 @@ jobs:
         working-directory: web
         run: npm run build
 
+      - name: Checkout pinned Archify 3.2.0 renderer
+        uses: actions/checkout@v7
+        with:
+          repository: tt-a1i/archify
+          ref: 208acba8d412335185b2056fedf54b3405df43fb
+          path: .tooling/archify
+          persist-credentials: false
+
+      - name: Generate and browser-validate Archify diagrams
+        run: node scripts/build-archify-diagrams.mjs
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
