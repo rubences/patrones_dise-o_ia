@@ -4,7 +4,7 @@ slug: bounded-agent-iteration
 title: "Bounded Agent Iteration"
 summary: "Patrón de referencia para bounded agent iteration con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agent-runtime-harness
-legacyGroup: 30
+legacyGroup: 35
 level: workflow
 difficulty: advanced
 maturity: emerging
