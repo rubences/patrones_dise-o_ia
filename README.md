@@ -204,3 +204,15 @@ El catálogo Astro obtiene sus 365 fichas desde `content/patterns/` y los IDs de
 ## Interactive Lab — navegación por macrofamilias
 
 La portada muestra una tarjeta por macrofamilia (nombre, descripción y número de patrones), en lugar de desplegar las 365 fichas de una vez. El catálogo mantiene secciones por familia, búsqueda textual, filtros y enlaces profundos `patterns/?family=<id>#catalog-results`. Las fichas incluyen un enlace de regreso a su familia y conservan el visor SVG de relaciones. Los diagramas representan relaciones declaradas, no flujos de ejecución validados. El editor de arquitecturas y las simulaciones siguen siendo objetivos de fases posteriores.
+
+## Interactive Lab · Diagramas Archify
+
+La navegación del catálogo conserva sus **365 patrones y 42 macrofamilias**. Los diagramas técnicos seleccionados se construyen con **Archify 3.2.0**, fijado al commit `208acba8d412335185b2056fedf54b3405df43fb` y distribuido bajo Apache-2.0 (licencia y NOTICE en `web/public/archify/`). El generador convierte definiciones JSON, con referencias al código fuente, en HTML interactivo autónomo validado durante CI y el despliegue de GitHub Pages.
+
+- Laboratorio: `/lab/` → arquitectura actual de la web.
+- Patrón 001 (Pipeline): diagrama de workflow generado desde `src/pattern_1_pipeline.ts`.
+- Resto de fichas: mantienen el visor SVG de relaciones hasta que exista un diagrama Archify revisado.
+- Archivos fuente: `diagrams/archify/*.json`; registro: `web/src/data/archify-diagrams.mjs`.
+- Generación: `node scripts/build-archify-diagrams.mjs` tras tener el checkout de Archify fijado bajo `.tooling/archify` y el build Astro en `web/dist`.
+
+Los HTML generados se cargan localmente desde GitHub Pages, no dependen de servicios externos durante la visualización y no ejecutan modelos ni herramientas. Los diagramas no son por sí mismos evidencias empíricas. El editor visual de arquitecturas y la persistencia local continúan como parte de la fase 2 del plan Superpowers.

@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Patrones IA · arquitectura web y laboratorio",
+    "locale": "es",
+    "quality_profile": "showcase",
+    "output": "dist/archify-build/interactive-lab.html",
+    "repository": {
+      "url": "https://github.com/rubences/patrones_dise-o_ia",
+      "provider": "github",
+      "revision": "39991a1877b9f7e2baefea52e19488e542918a5c"
+    }
+  },
+  "components": [
+    {
+      "id": "catalogo",
+      "type": "database",
+      "label": "Catálogo JSON",
+      "sublabel": "365 patrones",
+      "pos": [
+        40,
+        300
+      ],
+      "size": [
+        152,
+        70
+      ],
+      "sources": [
+        {
+          "path": "catalog/patterns.json",
+          "line": 1,
+          "end_line": 7
+        }
+      ]
+    },
+    {
+      "id": "familias",
+      "type": "database",
+      "label": "Taxonomía",
+      "sublabel": "42 macrofamilias",
+      "pos": [
+        40,
+        130
+      ],
+      "size": [
+        152,
+        70
+      ],
+      "sources": [
+        {
+          "path": "catalog/taxonomy.json",
+          "line": 1,
+          "end_line": 11
+        }
+      ]
+    },
+    {
+      "id": "fichas",
+      "type": "database",
+      "label": "Fichas Markdown",
+      "sublabel": "Contenido canónico",
+      "pos": [
+        265,
+        130
+      ],
+      "size": [
+        155,
+        70
+      ],
+      "sources": [
+        {
+          "path": "content/patterns/001-pipeline.md",
+          "line": 1,
+          "end_line": 17
+        }
+      ]
+    },
+    {
+      "id": "astro",
+      "type": "backend",
+      "label": "Build Astro",
+      "sublabel": "Generación estática",
+      "pos": [
+        265,
+        300
+      ],
+      "size": [
+        155,
+        70
+      ],
+      "sources": [
+        {
+          "path": "web/src/pages/index.astro",
+          "line": 1,
+          "end_line": 12
+        }
+      ]
+    },
+    {
+      "id": "paginas",
+      "type": "frontend",
+      "label": "Fichas y catálogo",
+      "sublabel": "Rutas estáticas",
+      "pos": [
+        495,
+        300
+      ],
+      "size": [
+        160,
+        70
+      ],
+      "sources": [
+        {
+          "path": "web/src/pages/patterns/[slug].astro",
+          "line": 1,
+          "end_line": 23
+        }
+      ]
+    },
+    {
+      "id": "pages",
+      "type": "cloud",
+      "label": "GitHub Pages",
+      "sublabel": "Hosting estático",
+      "pos": [
+        730,
+        300
+      ],
+      "size": [
+        160,
+        70
+      ],
+      "sources": [
+        {
+          "path": ".github/workflows/deploy-web.yml",
+          "line": 1,
+          "end_line": 24
+        }
+      ]
+    },
+    {
+      "id": "lector",
+      "type": "external",
+      "label": "Navegador",
+      "sublabel": "Visita sin cuenta",
+      "pos": [
+        965,
+        300
+      ],
+      "size": [
+        162,
+        70
+      ],
+      "sources": [
+        {
+          "path": "web/src/layouts/BaseLayout.astro",
+          "line": 1,
+          "end_line": 27
+        }
+      ]
+    },
+    {
+      "id": "svg",
+      "type": "frontend",
+      "label": "Visor de relaciones",
+      "sublabel": "SVG + teclado",
+      "pos": [
+        965,
+        465
+      ],
+      "size": [
+        162,
+        72
+      ],
+      "sources": [
+        {
+          "path": "web/src/components/lab/PatternDiagram.astro",
+          "line": 1,
+          "end_line": 25
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "familias_astro",
+      "from": "familias",
+      "to": "astro",
+      "label": "clasificación"
+    },
+    {
+      "id": "fichas_astro",
+      "from": "fichas",
+      "to": "astro",
+      "label": "contenidos"
+    },
+    {
+      "id": "catalogo_astro",
+      "from": "catalogo",
+      "to": "astro"
+    },
+    {
+      "id": "astro_paginas",
+      "from": "astro",
+      "to": "paginas",
+      "label": "build"
+    },
+    {
+      "id": "paginas_pages",
+      "from": "paginas",
+      "to": "pages",
+      "label": "deploy"
+    },
+    {
+      "id": "pages_lector",
+      "from": "pages",
+      "to": "lector",
+      "label": "HTML"
+    },
+    {
+      "id": "lector_svg",
+      "from": "lector",
+      "to": "svg",
+      "label": "explorar"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Alcance comprobado",
+      "items": [
+        "Astro sirve páginas estáticas y fichas del catálogo",
+        "Los diagramas SVG actuales muestran relaciones declaradas",
+        "El contenido conserva sus fuentes de verdad"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Límites",
+      "items": [
+        "El editor local y la simulación pertenecen a fases posteriores",
+        "Un mapa de relaciones no demuestra flujos reales de ejecución"
+      ]
+    }
+  ]
+}

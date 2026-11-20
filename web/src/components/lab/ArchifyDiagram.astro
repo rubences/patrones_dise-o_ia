@@ -1,0 +1,23 @@
+---
+interface Props { filename: string; title: string; base: string }
+const {filename,title,base}=Astro.props;
+const safeFile=/^[a-z0-9-]+\.html$/.test(filename)?filename:undefined;
+if(!safeFile)throw new Error('Unsupported Archify diagram filename');
+const href=`${base}archify/${safeFile}`;
+---
+<section class="archify-diagram" aria-label={title}>
+  <div class="archify-header"><div><p class="eyebrow">Archify · Diagrama interactivo</p><h2>{title}</h2></div><a href={href} target="_blank" rel="noopener noreferrer">Abrir a pantalla completa ↗</a></div>
+  <p>Diagrama generado desde código del repositorio. Puedes explorar los componentes y abrir la vista completa. No ejecuta modelos ni herramientas.</p>
+  <iframe src={href} title={title} loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-downloads allow-popups"></iframe>
+  <p class="archify-fallback">Si el visor no se carga, <a href={href}>abre el HTML interactivo</a> o consulta el contenido y el código de esta ficha.</p>
+</section>
+<style>
+.archify-diagram{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:1.2rem;margin:1.5rem 0}
+.archify-header{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.archify-header h2{font-size:clamp(1.4rem,2.6vw,2.2rem);margin:0}
+.archify-header>a{color:var(--accent-2);font-weight:700}
+.archify-diagram>p{color:var(--muted)}
+.archify-diagram iframe{display:block;width:100%;height:min(76vh,760px);min-height:470px;border:1px solid var(--line);border-radius:12px;background:#101726}
+.archify-fallback{font-size:.9rem}
+@media(max-width:700px){.archify-diagram{padding:.7rem}.archify-diagram iframe{min-height:440px;height:72vh}}
+</style>

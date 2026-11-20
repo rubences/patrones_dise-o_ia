@@ -3,6 +3,8 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import taxonomy from '../../../../catalog/taxonomy.json';
 import PatternDiagram from '../../components/lab/PatternDiagram.astro';
+import ArchifyDiagram from '../../components/lab/ArchifyDiagram.astro';
+import {curatedDiagrams} from '../../data/archify-diagrams.mjs';
 import { buildPatternGraph } from '../../lib/lab/pattern-graph';
 
 export async function getStaticPaths() {
@@ -27,6 +29,7 @@ const graph = buildPatternGraph(
 );
 const toc = headings.filter((heading) => heading.depth === 2);
 const family = taxonomy.families.find((item)=>item.id===entry.data.family);
+const curated = curatedDiagrams.find((item)=>item.patternId===entry.data.patternId && item.slug===entry.data.slug);
 const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${entry.data.sourceFile}`;
 ---
 
@@ -52,7 +55,14 @@ const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${e
         </div>
       </header>
 
-      <PatternDiagram graph={graph} base={import.meta.env.BASE_URL} />
+      {curated ? (
+        <>
+          <ArchifyDiagram filename={curated.output} title={`Diagrama Archify · ${entry.data.title}`} base={import.meta.env.BASE_URL}/>
+          <details><summary>Consultar el mapa de relaciones del catálogo</summary><PatternDiagram graph={graph} base={import.meta.env.BASE_URL} /></details>
+        </>
+      ) : (
+        <PatternDiagram graph={graph} base={import.meta.env.BASE_URL} />
+      )}
 
       <div class="prose">
         <Content />
