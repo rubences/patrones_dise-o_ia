@@ -16,7 +16,7 @@ The defensible white space is the combination of:
 4. **distributed placement** across Edge–Mesh–Cloud, rather than cloud-only application construction;
 5. high-dependability application analysis including vehicular/C-V2X scenarios;
 6. a declared empirical programme with ablations, adversarial workloads and threats to validity;
-7. an open 102-pattern technical substrate and evidence registry, while keeping the research narrative independent.
+7. an open 122-pattern technical substrate and evidence registry, while keeping the research narrative independent.
 
 ## Comparator matrix
 
@@ -29,7 +29,7 @@ The defensible white space is the combination of:
 | *Agentic AI for Engineers: Architecting Goal-Driven Systems* | Apress, 2026 | Agentic architecture, design patterns, tools, safety/robustness, deployment | Accessible engineering path for hands-on professionals | Keep our target reader more advanced and research-oriented; expose formal design forces, protocol/authority separation and empirical validation instead of introductory build steps. |
 | *Architectures for Agentic AI: Integrating Multi-Agent Systems, Reinforcement Learning, and LLMs for Autonomous Decision-Making* | Springer, 2026 | Agentic architectures, multi-agent, autonomous decision making | Integrates LLMs, RL and multi-agent foundations | Our proposal should not imply it uniquely “unifies agent architecture”. The unique combination is pattern composition + dependability + tools/MCP + distributed Edge–Mesh–Cloud placement + evidence. |
 | *Building Distributed Systems in the Age of AI: Designing Intelligent, Resilient Architectures* — Max Hopei | Apress, Sep 2026 | Distributed systems, resilience, AI-era architecture, observability | Direct overlap with intelligent/resilient distributed architecture | Chapter 10 must remain a concrete AI placement/semantic-health contribution and Chapter 11 a high-dependability case, not a generic distributed-systems overview. |
-| *Analysis and Design of Next-Generation Software Architectures: Generative AI, Cybersecurity, and Cloud Computing* — Arthur M. Langer | Springer, 2025 | Software architecture, GenAI, cybersecurity, cloud/edge themes | Broad architecture/design framing and mature software-engineering context | Differentiate with a specialized AI pattern language, 102-pattern evidence substrate, agents/MCP, semantic failure and controlled pattern-composition experiments. |
+| *Analysis and Design of Next-Generation Software Architectures: Generative AI, Cybersecurity, and Cloud Computing* — Arthur M. Langer | Springer, 2025 | Software architecture, GenAI, cybersecurity, cloud/edge themes | Broad architecture/design framing and mature software-engineering context | Differentiate with a specialized AI pattern language, 122-pattern evidence substrate, agents/MCP, semantic failure and controlled pattern-composition experiments. |
 
 ## Primary public sources
 
