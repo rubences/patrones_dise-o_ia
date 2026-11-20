@@ -34,7 +34,8 @@ Exigir contratos verificables y registrar decisiones por dataset, versión, prop
 
 ## Implementación del repositorio
 
-`src/pattern_163_data_contamination_firewall.ts` es un contrato educativo de registros; no ejecuta detección estadística ni entrenamiento.
+Comprueba contaminación por coincidencia exacta de huellas SHA-256 aportadas; no detecta similitud semántica. Implementación TypeScript de referencia: `src/pattern_163_data_contamination_firewall.ts`. Pruebas positivas y negativas: `tests/p9_data_quality_patterns.test.ts`. Los límites metodológicos deben conservarse al evaluar casos reales.
+
 
 ## Producción
 
