@@ -34,7 +34,8 @@ Separar registro de decisiones, autorización, evidencia y revisión independien
 
 ## Implementación del repositorio
 
-`src/pattern_150_independent_safety_review.ts` es un contrato pedagógico de registros autorizados, no un sistema de cumplimiento regulatorio.
+Revisión de seguridad independiente con bloqueo ante hallazgos. Implementación TypeScript determinista en `src/pattern_150_independent_safety_review.ts`, con pruebas positivas y negativas en `tests/p9_governance_patterns.test.ts`. **No constituye certificación regulatoria ni validación jurídica.**
+
 
 ## Producción
 
