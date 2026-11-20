@@ -1,6 +1,6 @@
 # P12 — Plan de investigación para alcanzar 365 patrones
 
-Fecha: 2026-11-20. **Estado: cartera de investigación, no integración canónica**.
+Fecha: 2026-11-20. **Estado: 95 contratos experimentales implementados en investigación en `main`; integración canónica y CI pendientes.**
 
 ## Objetivo cuantificado
 
@@ -199,3 +199,7 @@ Catálogo actual: **270 patrones, 32 macrofamilias**. Objetivo: **365 patrones**
 - Gobernanza de alto impacto frente a `ai-governance-assurance`.
 
 **Decisión editorial:** los 95 IDs quedan reservados para investigación; si un candidato no supera la diferenciación, sustituirlo por otro justificado, sin inflar artificialmente el catálogo.
+
+## Hito de implementación (20-11-2026)
+
+Los diez grupos P12 (271–365) disponen de fuentes TypeScript, fichas de investigación, pruebas y proyectos de typecheck aislados. Los 95 candidatos permanecen fuera de `catalog/patterns.json`, `catalog/taxonomy.json`, `src/index.ts` y `content/patterns/`; el catálogo canónico continúa en 270. No se ha verificado CI verde. El siguiente hito consiste en auditoría de duplicidades, migración canónica, actualización de scripts y versión, validación editorial y comprobación de la web.
