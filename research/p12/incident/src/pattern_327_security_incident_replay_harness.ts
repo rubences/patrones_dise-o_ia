@@ -1,0 +1,3 @@
+/** P12 327: educational incident response reference; no forensic chain-of-custody certification. */
+export class Pattern327Contract{compare(expected:{id:string;blocked:boolean}[],replayed:{id:string;blocked:boolean}[]){if(!expected.length||new Set(expected.map(e=>e.id)).size!==expected.length||new Set(replayed.map(e=>e.id)).size!==replayed.length||[...expected,...replayed].some(e=>!e.id.trim()))throw Error("invalid replay");const actual=new Map(replayed.map(x=>[x.id,x.blocked]));const mismatches=expected.filter(x=>actual.get(x.id)!==x.blocked).map(x=>x.id);return {passed:mismatches.length===0,mismatches};}}
+export const PATTERN_327_META={id:327,family:"ai-incident-forensics",maturity:"experimental"} as const;
