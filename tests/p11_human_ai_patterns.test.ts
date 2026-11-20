@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern247Contract} from "../research/p11/human-ai/src/pattern_247_cognitive_load_aware_delegation.js";
+import {Pattern248Contract} from "../research/p11/human-ai/src/pattern_248_human_expertise_routing.js";
+import {Pattern249Contract} from "../research/p11/human-ai/src/pattern_249_explanation_depth_negotiation.js";
+import {Pattern250Contract} from "../research/p11/human-ai/src/pattern_250_human_disagreement_escalation.js";
+import {Pattern251Contract} from "../research/p11/human-ai/src/pattern_251_adaptive_autonomy_lease.js";
+import {Pattern252Contract} from "../research/p11/human-ai/src/pattern_252_operator_trust_calibration.js";
+import {Pattern253Contract} from "../research/p11/human-ai/src/pattern_253_collaborative_decision_provenance.js";
+import {Pattern254Contract} from "../research/p11/human-ai/src/pattern_254_human_feedback_bias_sentinel.js";
+test("247 delegates less autonomy above load threshold",()=>{const x=new Pattern247Contract();assert.equal(x.route(.9,.5),"reduce-autonomy");assert.throws(()=>x.route(2,.5));});
+test("248 routes to highest available expert",()=>{const x=new Pattern248Contract();assert.equal(x.choose([{id:"a",expertise:.9,available:false},{id:"b",expertise:.7,available:true}]),"b");assert.throws(()=>x.choose([{id:"a",expertise:.9,available:false}]));});
+test("249 explanation depth respects upper bound",()=>{const x=new Pattern249Contract();assert.equal(x.negotiate(5,2),2);assert.throws(()=>x.negotiate(-1,2));});
+test("250 high-impact disagreement requires review",()=>{const x=new Pattern250Contract();assert.equal(x.assess("stop","go",true).requiresReview,true);assert.equal(x.assess("stop","stop",true).requiresReview,false);});
+test("251 autonomy lease expires and can be revoked",()=>{const x=new Pattern251Contract();const lease={capability:"read",expiresAt:10,revoked:false};assert.equal(x.authorize(lease,"read",9),true);assert.throws(()=>x.authorize(lease,"read",10));assert.throws(()=>x.authorize({...lease,revoked:true},"read",9));});
+test("252 trust gap is bounded and flagged",()=>{const x=new Pattern252Contract();assert.equal(x.assess(.9,.4,.2).calibrated,false);assert.throws(()=>x.assess(2,.4,.2));});
+test("253 decision provenance requires reason",()=>{const x=new Pattern253Contract();assert.equal(x.record("human","approve","checked",1).actor,"human");assert.throws(()=>x.record("human","approve","",1));});
+test("254 feedback imbalance flags overrepresentation",()=>{const x=new Pattern254Contract();assert.equal(x.assess([{group:"a",count:10},{group:"b",count:1}],2).flagged,true);assert.throws(()=>x.assess([{group:"a",count:-1},{group:"b",count:1}],2));});
