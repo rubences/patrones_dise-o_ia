@@ -1,0 +1,3 @@
+/** P12 350: educational adversarial evaluation contract; no safety certification. */
+export class Pattern350Contract{assemble(claims:{id:string;evidenceIds:string[]}[],verifiedEvidence:ReadonlySet<string>){if(!claims.length||new Set(claims.map(x=>x.id)).size!==claims.length||claims.some(x=>!x.id.trim()||x.evidenceIds.some(y=>!y.trim())))throw Error("invalid safety case");const unsupported=claims.filter(c=>!c.evidenceIds.length||c.evidenceIds.some(e=>!verifiedEvidence.has(e))).map(c=>c.id);return {supported:unsupported.length===0,unsupported,limitation:"an evidence pack does not certify system safety" as const};}}
+export const PATTERN_350_META={id:350,family:"ai-agent-evaluation-redteam",maturity:"experimental"} as const;
