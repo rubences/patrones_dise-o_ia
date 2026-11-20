@@ -4,7 +4,7 @@ slug: semantic-memory-distillation
 title: "Semantic Memory Distillation"
 summary: "Contrato arquitectónico experimental para semantic memory distillation con trazabilidad, autorización y pruebas negativas."
 family: continual-learning-memory
-legacyGroup: 31
+legacyGroup: 29
 level: architecture
 difficulty: advanced
 maturity: experimental
