@@ -1,0 +1,3 @@
+/** P12 362: educational public-interest governance contract; not legal compliance certification. */
+export class Pattern362Contract{assess(notice:{decisionId:string;recipientId:string;channel:string;reasonProvided:boolean;appealRouteProvided:boolean;delivered:boolean}){if(!notice.decisionId.trim()||!notice.recipientId.trim()||!notice.channel.trim())throw Error("invalid notice");const missing=[...(!notice.reasonProvided?["reason"]:[]),...(!notice.appealRouteProvided?["appeal-route"]:[]),...(!notice.delivered?["delivery"]:[])];return {complete:missing.length===0,missing,limitation:"delivery flags must be verified by an external messaging system" as const};}}
+export const PATTERN_362_META={id:362,family:"ai-public-interest-governance",maturity:"experimental"} as const;
