@@ -1,0 +1,3 @@
+/** P12 286: educational identity-policy contract, not real credential issuance or cryptographic authentication. */
+export class Pattern286Contract{filter<T extends {tenant:string;owner:string;classification:"public"|"private"}>(records:T[],actor:{tenant:string;id:string}){if(!actor.tenant.trim()||!actor.id.trim()||records.some(r=>!r.tenant.trim()||!r.owner.trim()||!["public","private"].includes(r.classification)))throw Error("invalid memory access");return records.filter(r=>r.tenant===actor.tenant&&(r.classification==="public"||r.owner===actor.id));}}
+export const PATTERN_286_META={id:286,family:"agent-identity-trust",maturity:"experimental"} as const;
