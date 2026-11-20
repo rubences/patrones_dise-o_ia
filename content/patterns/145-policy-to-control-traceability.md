@@ -4,7 +4,7 @@ slug: policy-to-control-traceability
 title: "Policy-to-Control Traceability"
 summary: "Contrato experimental de gobierno de IA para policy-to-control traceability con revisión y evidencia de decisiones."
 family: ai-governance-assurance
-legacyGroup: 32
+legacyGroup: 30
 level: architecture
 difficulty: advanced
 maturity: experimental
