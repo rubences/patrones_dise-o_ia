@@ -7,6 +7,7 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'research/p10/privacy/**'
+      - 'research/p10/embodied/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -21,6 +22,7 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'research/p10/privacy/**'
+      - 'research/p10/embodied/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -72,6 +74,10 @@ jobs:
         run: npx --yes tsx@4.20.6 --test tests/p10_privacy_patterns.test.ts
       - name: Test P10 privacy integration workflow
         run: npx --yes tsx@4.20.6 --test tests/p10_privacy_integration.test.ts
+      - name: Typecheck P10 embodied simulation candidates
+        run: npx tsc --noEmit --project research/p10/embodied/tsconfig.json
+      - name: Test P10 embodied simulation contracts
+        run: npx --yes tsx@4.20.6 --test tests/p10_embodied_patterns.test.ts
       - name: Generate and validate quality report
         run: |
           node scripts/report-pattern-quality.mjs
