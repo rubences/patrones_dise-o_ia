@@ -4,7 +4,7 @@ slug: continual-learning-gate
 title: "Continual Learning Gate"
 summary: "Contrato arquitectónico experimental para continual learning gate con trazabilidad, autorización y pruebas negativas."
 family: continual-learning-memory
-legacyGroup: 31
+legacyGroup: 29
 level: architecture
 difficulty: advanced
 maturity: experimental
