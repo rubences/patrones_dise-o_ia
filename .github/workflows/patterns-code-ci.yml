@@ -9,6 +9,7 @@ on:
       - 'research/p10/privacy/**'
       - 'research/p10/embodied/**'
       - 'research/p10/science/**'
+      - 'research/p10/economics/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -25,6 +26,7 @@ on:
       - 'research/p10/privacy/**'
       - 'research/p10/embodied/**'
       - 'research/p10/science/**'
+      - 'research/p10/economics/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -84,6 +86,10 @@ jobs:
         run: npx tsc --noEmit --project research/p10/science/tsconfig.json
       - name: Test P10 scientific discovery contracts
         run: npx --yes tsx@4.20.6 --test tests/p10_science_patterns.test.ts
+      - name: Typecheck P10 economics candidates
+        run: npx tsc --noEmit --project research/p10/economics/tsconfig.json
+      - name: Test P10 economics contracts
+        run: npx --yes tsx@4.20.6 --test tests/p10_economics_patterns.test.ts
       - name: Generate and validate quality report
         run: |
           node scripts/report-pattern-quality.mjs
