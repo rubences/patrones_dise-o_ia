@@ -4,7 +4,7 @@ slug: offline-first-agent
 title: "Offline-First Agent"
 summary: "Contrato experimental para offline-first agent con decisiones explícitas de recursos y disponibilidad."
 family: edge-distributed-ai
-legacyGroup: 35
+legacyGroup: 33
 level: architecture
 difficulty: advanced
 maturity: experimental
