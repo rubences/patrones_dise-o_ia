@@ -28,7 +28,13 @@ test('authored diagrams cite sources and output portable HTML',()=>{
   assert.match(candidate.meta.repository.revision,/^[a-f0-9]{40}$/);
   for(const element of candidate.components??candidate.nodes??[]){
    assert.ok(element.sources?.length>0,`${item.id}:${element.id} lacks source`);
-   for(const source of element.sources)assert.ok(existsSync(join(root,source.path)),source.path);
+   for(const source of element.sources){
+    assert.ok(existsSync(join(root,source.path)),source.path);
+    const lineCount=readFileSync(join(root,source.path),'utf8').trimEnd().split(/\\r?\\n/).length;
+    assert.ok(Number.isInteger(source.line)&&source.line>=1,`Invalid source start: ${source.path}`);
+    assert.ok(Number.isInteger(source.end_line)&&source.end_line<=lineCount,
+      `Source range ${source.path} ends at ${source.end_line} but has ${lineCount} lines`);
+   }
   }
  }
 });
