@@ -1,0 +1,3 @@
+/** P10 215: educational economic mechanism; not strategyproofness, fairness or market compliance proof. */
+export class MultiAgentBudgetAllocation{allocate(requests:{agent:string;requested:number}[],budget:number){if(!Number.isFinite(budget)||budget<0||!requests.length||new Set(requests.map(r=>r.agent)).size!==requests.length||requests.some(r=>!r.agent.trim()||!Number.isFinite(r.requested)||r.requested<0))throw Error("invalid allocation");const total=requests.reduce((s,r)=>s+r.requested,0);if(!Number.isFinite(total))throw Error("overflow");const scale=total>budget?budget/total:1;return requests.map(r=>({agent:r.agent,allocated:r.requested*scale}));}}
+export const PATTERN_215_META={id:215,family:"ai-economics-mechanisms",maturity:"experimental"} as const;
