@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 300,
+  "catalogSize": 310,
   "patterns": [
     {
       "id": 1,
@@ -3500,6 +3500,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/300-context-sufficiency-stop-rule.md"
+    },
+    {
+      "id": 301,
+      "name": "Accessible Response Modality Router",
+      "slug": "accessible-response-modality-router",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_301_accessible_response_modality_router.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/301-accessible-response-modality-router.md"
+    },
+    {
+      "id": 302,
+      "name": "Plain Language Fidelity Gate",
+      "slug": "plain-language-fidelity-gate",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_302_plain_language_fidelity_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/302-plain-language-fidelity-gate.md"
+    },
+    {
+      "id": 303,
+      "name": "Multilingual Intent Preservation",
+      "slug": "multilingual-intent-preservation",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_303_multilingual_intent_preservation.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/303-multilingual-intent-preservation.md"
+    },
+    {
+      "id": 304,
+      "name": "Locale-Sensitive Tool Contract",
+      "slug": "locale-sensitive-tool-contract",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_304_locale_sensitive_tool_contract.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/304-locale-sensitive-tool-contract.md"
+    },
+    {
+      "id": 305,
+      "name": "Assistive Technology Compatibility Check",
+      "slug": "assistive-technology-compatibility-check",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_305_assistive_technology_compatibility_check.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/305-assistive-technology-compatibility-check.md"
+    },
+    {
+      "id": 306,
+      "name": "Cultural Context Assumption Audit",
+      "slug": "cultural-context-assumption-audit",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_306_cultural_context_assumption_audit.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/306-cultural-context-assumption-audit.md"
+    },
+    {
+      "id": 307,
+      "name": "Reading Complexity Adaptive Output",
+      "slug": "reading-complexity-adaptive-output",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_307_reading_complexity_adaptive_output.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/307-reading-complexity-adaptive-output.md"
+    },
+    {
+      "id": 308,
+      "name": "Low-Bandwidth Inclusive Experience",
+      "slug": "low-bandwidth-inclusive-experience",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_308_low_bandwidth_inclusive_experience.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/308-low-bandwidth-inclusive-experience.md"
+    },
+    {
+      "id": 309,
+      "name": "Language Equity Evaluation Harness",
+      "slug": "language-equity-evaluation-harness",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_309_language_equity_evaluation_harness.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/309-language-equity-evaluation-harness.md"
+    },
+    {
+      "id": 310,
+      "name": "Accessibility Regression Sentinel",
+      "slug": "accessibility-regression-sentinel",
+      "family": "ai-accessibility-inclusion",
+      "legacyGroup": 49,
+      "sourceFile": "src/pattern_310_accessibility_regression_sentinel.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/310-accessibility-regression-sentinel.md"
     }
   ]
 }
