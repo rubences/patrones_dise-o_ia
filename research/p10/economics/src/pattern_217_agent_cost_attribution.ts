@@ -1,0 +1,3 @@
+/** P10 217: educational economic mechanism; not strategyproofness, fairness or market compliance proof. */
+export class AgentCostAttribution{attribute(events:{agent:string;tokens:number;unitPrice:number}[]){const costs=new Map<string,number>();for(const e of events){if(!e.agent.trim()||![e.tokens,e.unitPrice].every(Number.isFinite)||e.tokens<0||e.unitPrice<0)throw Error("invalid cost");const value=(costs.get(e.agent)||0)+e.tokens*e.unitPrice;if(!Number.isFinite(value))throw Error("cost overflow");costs.set(e.agent,value);}return Object.fromEntries(costs);}}
+export const PATTERN_217_META={id:217,family:"ai-economics-mechanisms",maturity:"experimental"} as const;
