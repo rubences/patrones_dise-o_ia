@@ -4,7 +4,7 @@ slug: ci-failure-triage
 title: "CI Failure Triage"
 summary: "Patrón de referencia para ci failure triage con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agentic-software-engineering
-legacyGroup: 29
+legacyGroup: 31
 level: workflow
 difficulty: advanced
 maturity: emerging
