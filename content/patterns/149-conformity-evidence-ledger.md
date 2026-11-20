@@ -34,7 +34,8 @@ Separar registro de decisiones, autorización, evidencia y revisión independien
 
 ## Implementación del repositorio
 
-`src/pattern_149_conformity_evidence_ledger.ts` es un contrato pedagógico de registros autorizados, no un sistema de cumplimiento regulatorio.
+Libro de evidencias con huellas y referencias al registro anterior; no es un log inmutable ni una firma criptográfica. Implementación TypeScript determinista en `src/pattern_149_conformity_evidence_ledger.ts`, con pruebas positivas y negativas en `tests/p9_governance_patterns.test.ts`. **No constituye certificación regulatoria ni validación jurídica.**
+
 
 ## Producción
 
