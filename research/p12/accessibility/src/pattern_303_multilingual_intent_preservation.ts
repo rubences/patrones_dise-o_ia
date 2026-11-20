@@ -1,0 +1,3 @@
+/** P12 303: educational accessibility contract; not WCAG or equality certification. */
+export class Pattern303Contract{compare(source:{intent:string;entities:string[]},translated:{intent:string;entities:string[]}){if(!source.intent.trim()||!translated.intent.trim()||[...source.entities,...translated.entities].some(x=>!x.trim()))throw Error("invalid intent");const missing=source.entities.filter(x=>!translated.entities.includes(x));return {preserved:source.intent===translated.intent&&missing.length===0,missingEntities:missing,limitation:"intent labels must be independently validated" as const};}}
+export const PATTERN_303_META={id:303,family:"ai-accessibility-inclusion",maturity:"experimental"} as const;
