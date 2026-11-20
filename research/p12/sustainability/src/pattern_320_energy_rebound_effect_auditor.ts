@@ -1,0 +1,3 @@
+/** P12 320: educational sustainability control; energy and carbon values are externally supplied estimates. */
+export class Pattern320Contract{audit(before:{requests:number;joulesPerRequest:number},after:{requests:number;joulesPerRequest:number}){if([before.requests,after.requests].some(x=>!Number.isInteger(x)||x<0)||[before.joulesPerRequest,after.joulesPerRequest].some(x=>!Number.isFinite(x)||x<0))throw Error("invalid energy demand");const previous=before.requests*before.joulesPerRequest,current=after.requests*after.joulesPerRequest;return {previousJoules:previous,currentJoules:current,rebound:after.joulesPerRequest<before.joulesPerRequest&&current>previous};}}
+export const PATTERN_320_META={id:320,family:"ai-energy-sustainability",maturity:"experimental"} as const;
