@@ -1,0 +1,3 @@
+/** P12 337: educational semantic data contract; not production interoperability certification. */
+export class Pattern337Contract{detect(previous:{name:string;type:string;required:boolean}[],next:{name:string;type:string;required:boolean}[]){if([...previous,...next].some(x=>!x.name.trim()||!x.type.trim())||new Set(previous.map(x=>x.name)).size!==previous.length||new Set(next.map(x=>x.name)).size!==next.length)throw Error("invalid contract");const current=new Map(next.map(x=>[x.name,x]));const breaking=previous.filter(x=>!current.has(x.name)&&x.required||current.has(x.name)&&current.get(x.name)!.type!==x.type).map(x=>x.name);return {breaking};}}
+export const PATTERN_337_META={id:337,family:"ai-data-contracts",maturity:"experimental"} as const;
