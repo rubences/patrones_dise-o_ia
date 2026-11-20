@@ -141,6 +141,9 @@ jobs:
       - name: Test P9 differentiated governance patterns
         run: npx --yes tsx@4.20.6 --test tests/p9_governance_patterns.test.ts
 
+      - name: Test P9 differentiated data-quality patterns
+        run: npx --yes tsx@4.20.6 --test tests/p9_data_quality_patterns.test.ts
+
       - name: Install web dependencies
         working-directory: web
         run: npm install
