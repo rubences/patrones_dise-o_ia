@@ -2,12 +2,12 @@
 
 | Indicador | Estado |
 |---|---:|
-| Implementaciones TypeScript | **134/134** |
-| Registros del catálogo maestro | **134/134** |
-| Fichas editoriales canónicas | **134/134** |
-| Macrofamilias | **15** |
-| Grupos de trazabilidad | **28** |
-| Patrones con evidencia primaria/oficial | **54/134** |
+| Implementaciones TypeScript | **190/190** |
+| Registros del catálogo maestro | **190/190** |
+| Fichas editoriales canónicas | **190/190** |
+| Macrofamilias | **22** |
+| Grupos de trazabilidad | **35** |
+| Patrones con evidencia primaria/oficial | **54/190** |
 | Fuentes primarias/oficiales registradas | **51** |
 | Baseline de evidencia | **P7.0 · fail-closed** |
 | Publicaciones | **2 · editor-contact-ready** |
@@ -20,7 +20,7 @@ GDD permanece explícitamente **experimental** y no se contabiliza dentro del m�
 
 ## Próximos cierres
 
-1. Ampliar evidencia primaria más allá de 54/134 sin rebajar los scope notes.
+1. Ampliar evidencia primaria más allá de 54/190 sin rebajar los scope notes.
 2. Resolver blockers y derechos de figuras de las dos publicaciones antes de cualquier envío.
 3. Fijar `web/package-lock.json` para reproducibilidad transitiva.
 4. Activar branch protection/ruleset para exigir CI en `main`.
@@ -30,3 +30,7 @@ GDD permanece explícitamente **experimental** y no se contabiliza dentro del m�
 ## P8 — Protocolos de agentes
 
 12 patrones nuevos (123–134) con TypeScript y fichas canónicas. Estado de evidencia: `needs-review`; no incrementan el baseline P7.0 (54 patrones / 51 referencias). Pendiente de validación CI y conformidad interoperable.
+
+## P9 — Siete macrofamilias y 56 contratos experimentales
+
+Los IDs 135–190 cuentan con implementación de contrato TypeScript y ficha canónica, clasificados como **experimentales** y `needs-review`. No constituyen algoritmos completos de aprendizaje, gobierno certificado, DevOps autónomo, ingeniería de datos, inferencia edge ni razonamiento causal. La evidencia primaria validada permanece en 54 patrones / 51 fuentes (P7.0). Los benchmarks y las pruebas de integración deben completarse antes de alegar prestaciones o conformidad.
