@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 340,
+  "catalogSize": 350,
   "families": [
     {
       "id": "foundations",
@@ -236,6 +236,12 @@
       "name": "AI Data Contracts, Semantics & Interoperability",
       "nameEs": "Contratos de Datos, Semántica e Interoperabilidad de IA",
       "description": "Contratos semánticos, compatibilidad entrenamiento-inferencia, ontologías y linaje."
+    },
+    {
+      "id": "agentic-decision-control",
+      "name": "Agentic Decision Intelligence & Operational Control",
+      "nameEs": "Inteligencia de Decisión Agéntica y Control Operacional",
+      "description": "Procedencia, autorización, revisión, presupuestos y aseguramiento de decisiones operativas de agentes."
     }
   ],
   "levels": [
@@ -469,6 +475,10 @@
     {
       "id": 52,
       "name": "Contratos Semánticos e Interoperabilidad"
+    },
+    {
+      "id": 53,
+      "name": "Decisiones Agénticas y Control Operacional"
     }
   ]
 }
