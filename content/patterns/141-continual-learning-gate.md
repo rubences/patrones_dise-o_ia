@@ -34,7 +34,8 @@ Mantener operaciones explícitas y autorizadas, con estado y procedencia auditab
 
 ## Implementación del repositorio
 
-`src/pattern_141_continual_learning_gate.ts` contiene una abstracción mínima de almacenamiento por actor; no implementa un algoritmo de aprendizaje ni reproduce benchmarks.
+Gate de regresión basado en exactitud y métrica de olvido; requiere protocolo de evaluación externo. El código en `src/pattern_141_continual_learning_gate.ts` es una implementación de referencia determinista, sin llamadas a modelos externos. Pruebas: `tests/p9_memory_patterns.test.ts`.
+
 
 ## Producción
 
