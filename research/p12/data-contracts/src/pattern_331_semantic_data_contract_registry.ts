@@ -1,0 +1,3 @@
+/** P12 331: educational semantic data contract; not production interoperability certification. */
+export class Pattern331Contract{register(contracts:{id:string;version:string;concepts:string[]}[]){if(!contracts.length||contracts.some(c=>!c.id.trim()||!c.version.trim()||!c.concepts.length||c.concepts.some(x=>!x.trim()))||new Set(contracts.map(c=>c.id+"@"+c.version)).size!==contracts.length)throw Error("invalid contracts");return new Map(contracts.map(c=>[c.id+"@"+c.version,{...c,concepts:[...new Set(c.concepts)]}]));}}
+export const PATTERN_331_META={id:331,family:"ai-data-contracts",maturity:"experimental"} as const;
