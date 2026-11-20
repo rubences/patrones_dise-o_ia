@@ -2,12 +2,12 @@
 
 | Indicador | Estado |
 |---|---:|
-| Implementaciones TypeScript | **340/340** |
-| Registros del catálogo maestro | **340/340** |
-| Fichas editoriales canónicas | **340/340** |
-| Macrofamilias | **32** |
-| Grupos de trazabilidad | **45** |
-| Patrones con evidencia primaria/oficial | **54/340** |
+| Implementaciones TypeScript | **365/365** |
+| Registros del catálogo maestro | **365/365** |
+| Fichas editoriales canónicas | **365/365** |
+| Macrofamilias | **42** |
+| Grupos de trazabilidad | **55** |
+| Patrones con evidencia primaria/oficial | **54/365** |
 | Fuentes primarias/oficiales registradas | **51** |
 | Baseline de evidencia | **P7.0 · fail-closed** |
 | Publicaciones | **2 · editor-contact-ready** |
@@ -18,9 +18,17 @@ La segunda generación incorpora AI Factory, Cognitive Core, SDD/GDD, Open Data 
 
 GDD permanece explícitamente **experimental** y no se contabiliza dentro del mínimo de evidencia primaria P7.0.
 
+## Nuevos bloques 341–365
+
+- P13 (341–350): inteligencia de decisión y control operacional.
+- P14 (351–360): integridad de evaluación y aseguramiento de evidencias.
+- P15 (361–365): autonomía acotada y aseguramiento agéntico.
+
+Las nuevas implementaciones son contratos de referencia experimentales, pendientes de validación empírica y revisión de evidencia.
+
 ## Próximos cierres
 
-1. Ampliar evidencia primaria más allá de 54/340 sin rebajar los scope notes.
+1. Ampliar evidencia primaria más allá de 54/365 sin rebajar los scope notes.
 2. Resolver blockers y derechos de figuras de las dos publicaciones antes de cualquier envío.
 3. Fijar `web/package-lock.json` para reproducibilidad transitiva.
 4. Activar branch protection/ruleset para exigir CI en `main`.
