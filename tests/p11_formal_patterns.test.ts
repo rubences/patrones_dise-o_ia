@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern255Contract} from "../research/p11/formal/src/pattern_255_agent_transition_invariant_checker.js";
+import {Pattern256Contract} from "../research/p11/formal/src/pattern_256_temporal_policy_monitor.js";
+import {Pattern257Contract} from "../research/p11/formal/src/pattern_257_model_output_contract_proof_obligation.js";
+import {Pattern258Contract} from "../research/p11/formal/src/pattern_258_runtime_safety_shield.js";
+import {Pattern259Contract} from "../research/p11/formal/src/pattern_259_formal_tool_effect_specification.js";
+import {Pattern260Contract} from "../research/p11/formal/src/pattern_260_bounded_agent_state_explorer.js";
+import {Pattern261Contract} from "../research/p11/formal/src/pattern_261_policy_conflict_satisfiability_gate.js";
+import {Pattern262Contract} from "../research/p11/formal/src/pattern_262_proof_carrying_agent_action.js";
+test("255 invariant fails closed",()=>{const x=new Pattern255Contract();assert.equal(x.assert(true),true);assert.throws(()=>x.assert(false));});
+test("256 temporal policy rejects late events",()=>{const x=new Pattern256Contract();assert.equal(x.check([{time:1},{time:2}],2),true);assert.equal(x.check([{time:1},{time:5}],2),false);});
+test("257 output contract rejects invalid output",()=>{const x=new Pattern257Contract();assert.throws(()=>x.check(2,v=>v===3));assert.equal(x.check(3,v=>v===3),true);});
+test("258 runtime shield enforces bounds",()=>{const x=new Pattern258Contract();assert.equal(x.shield(2,0,3),2);assert.throws(()=>x.shield(4,0,3));});
+test("259 tool effects are allowlisted",()=>{const x=new Pattern259Contract();assert.throws(()=>x.check("delete",new Set(["read"])));});
+test("260 state exploration is bounded",()=>{const x=new Pattern260Contract();assert.deepEqual(x.explore(0,n=>n+1,2),[0,1,2]);assert.throws(()=>x.explore(0,n=>n,-1));});
+test("261 detects direct policy conflicts",()=>{const x=new Pattern261Contract();assert.deepEqual(x.conflicts(new Set(["read","write"]),new Set(["write"])),["write"]);});
+test("262 proof carrying action rejects untrusted proof",()=>{const x=new Pattern262Contract();assert.throws(()=>x.authorize("read",{action:"write",valid:true}));assert.equal(x.authorize("read",{action:"read",valid:true}),true);});
