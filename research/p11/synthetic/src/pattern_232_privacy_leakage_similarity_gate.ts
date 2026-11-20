@@ -1,0 +1,3 @@
+/** P11 232: educational synthetic-data contract; not privacy or fidelity certification. */
+export class Pattern232Contract{assess(samples:string[],training:string[],maxExactMatches:number){if(!Number.isInteger(maxExactMatches)||maxExactMatches<0||samples.some(s=>!s)||training.some(s=>!s))throw Error("invalid corpus");const known=new Set(training);const exactMatches=samples.filter(s=>known.has(s)).length;return {exactMatches,accepted:exactMatches<=maxExactMatches,limitation:"exact-match only; not a membership-inference test" as const};}}
+export const PATTERN_232_META={id:232,family:"trustworthy-synthetic-simulation",maturity:"experimental"} as const;
