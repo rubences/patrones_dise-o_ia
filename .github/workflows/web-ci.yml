@@ -135,7 +135,7 @@ jobs:
       - name: Install root dependencies
         run: npm ci
 
-      - name: Strict TypeScript typecheck for all 270 pattern modules
+      - name: Strict TypeScript typecheck for all 365 pattern modules
         run: npx tsc --noEmit --project tsconfig.json
 
       - name: Run hardening regression tests
@@ -167,6 +167,15 @@ jobs:
 
       - name: Test MCP policy and trusted registry hardening
         run: npx --yes tsx@4.20.6 --test tests/p9_mcp_policy_registry_hardening.test.ts
+
+      - name: Test P13 decision control contracts
+        run: npx --yes tsx@4.20.6 --test tests/p13_decision_control_patterns.test.ts
+
+      - name: Test P14 evaluation integrity contracts
+        run: npx --yes tsx@4.20.6 --test tests/p14_evaluation_integrity_patterns.test.ts
+
+      - name: Test P15 bounded autonomy contracts
+        run: npx --yes tsx@4.20.6 --test tests/p15_bounded_autonomy_patterns.test.ts
 
       - name: Install web dependencies
         working-directory: web
