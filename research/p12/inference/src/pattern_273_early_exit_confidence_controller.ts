@@ -1,0 +1,3 @@
+/** P12 273: educational inference-time control; not model-quality or sampling guarantee. */
+export class Pattern273Contract{decide(confidence:number,threshold:number,minimumSteps:number,completedSteps:number){if(![confidence,threshold].every(Number.isFinite)||confidence<0||confidence>1||threshold<0||threshold>1||![minimumSteps,completedSteps].every(Number.isInteger)||minimumSteps<0||completedSteps<0)throw Error("invalid early exit");return {exit:completedSteps>=minimumSteps&&confidence>=threshold};}}
+export const PATTERN_273_META={id:273,family:"inference-compute-optimization",maturity:"experimental"} as const;
