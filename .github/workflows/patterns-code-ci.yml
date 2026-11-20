@@ -12,6 +12,7 @@ on:
       - 'research/p10/economics/**'
       - 'research/p11/formal/**'
       - 'research/p11/supply-chain/**'
+      - 'research/p11/observability/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -31,6 +32,7 @@ on:
       - 'research/p10/economics/**'
       - 'research/p11/formal/**'
       - 'research/p11/supply-chain/**'
+      - 'research/p11/observability/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -102,6 +104,10 @@ jobs:
         run: npx tsc --noEmit --project research/p11/supply-chain/tsconfig.json
       - name: Test P11 supply-chain contracts
         run: npx --yes tsx@4.20.6 --test tests/p11_supply_chain_patterns.test.ts
+      - name: Typecheck P11 observability research
+        run: npx tsc --noEmit --project research/p11/observability/tsconfig.json
+      - name: Test P11 observability contracts
+        run: npx --yes tsx@4.20.6 --test tests/p11_observability_patterns.test.ts
       - name: Generate and validate quality report
         run: |
           node scripts/report-pattern-quality.mjs
