@@ -4,7 +4,7 @@ slug: human-accountability-gate
 title: "Human Accountability Gate"
 summary: "Contrato experimental de gobierno de IA para human accountability gate con revisión y evidencia de decisiones."
 family: ai-governance-assurance
-legacyGroup: 32
+legacyGroup: 30
 level: architecture
 difficulty: advanced
 maturity: experimental
