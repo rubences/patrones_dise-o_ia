@@ -10,7 +10,7 @@
  *  Importación por categoría:
  *  import { agenticos, seguridad, qa } from 'patrones-agentes-ia'
  *
- *  222 patrones exportados en 26 macrofamilias.
+ *  270 patrones exportados en 32 macrofamilias.
  */
 
 // ── Utilidades comunes ────────────────────────────────────────────
@@ -352,3 +352,52 @@ export * from "./pattern_219_fair_allocation_constraint.js";
 export * from "./pattern_220_market_manipulation_sentinel.js";
 export * from "./pattern_221_value_of_information_router.js";
 export * from "./pattern_222_economic_outcome_audit.js";
+
+export * from "./pattern_223_agent_behavior_trace_schema.js";
+export * from "./pattern_224_decision_attribution_probe.js";
+export * from "./pattern_225_tool_call_drift_detector.js";
+export * from "./pattern_226_semantic_latency_decomposer.js";
+export * from "./pattern_227_agent_failure_taxonomy_mapper.js";
+export * from "./pattern_228_behavioral_regression_sentinel.js";
+export * from "./pattern_229_multi_agent_causal_trace_joiner.js";
+export * from "./pattern_230_observability_coverage_gate.js";
+export * from "./pattern_231_synthetic_data_provenance_tag.js";
+export * from "./pattern_232_privacy_leakage_similarity_gate.js";
+export * from "./pattern_233_synthetic_to_real_distribution_audit.js";
+export * from "./pattern_234_scenario_coverage_generator.js";
+export * from "./pattern_235_counterfactual_scenario_sampler.js";
+export * from "./pattern_236_synthetic_label_quality_gate.js";
+export * from "./pattern_237_simulation_fidelity_contract.js";
+export * from "./pattern_238_synthetic_dataset_release_gate.js";
+export * from "./pattern_239_model_artifact_provenance_attestation.js";
+export * from "./pattern_240_dataset_lineage_signature_gate.js";
+export * from "./pattern_241_prompt_package_integrity_lock.js";
+export * from "./pattern_242_inference_dependency_sbom.js";
+export * from "./pattern_243_model_weight_tamper_sentinel.js";
+export * from "./pattern_244_third_party_model_license_gate.js";
+export * from "./pattern_245_secure_model_rollback.js";
+export * from "./pattern_246_training_pipeline_attestation.js";
+export * from "./pattern_247_cognitive_load_aware_delegation.js";
+export * from "./pattern_248_human_expertise_routing.js";
+export * from "./pattern_249_explanation_depth_negotiation.js";
+export * from "./pattern_250_human_disagreement_escalation.js";
+export * from "./pattern_251_adaptive_autonomy_lease.js";
+export * from "./pattern_252_operator_trust_calibration.js";
+export * from "./pattern_253_collaborative_decision_provenance.js";
+export * from "./pattern_254_human_feedback_bias_sentinel.js";
+export * from "./pattern_255_agent_transition_invariant_checker.js";
+export * from "./pattern_256_temporal_policy_monitor.js";
+export * from "./pattern_257_model_output_contract_proof_obligation.js";
+export * from "./pattern_258_runtime_safety_shield.js";
+export * from "./pattern_259_formal_tool_effect_specification.js";
+export * from "./pattern_260_bounded_agent_state_explorer.js";
+export * from "./pattern_261_policy_conflict_satisfiability_gate.js";
+export * from "./pattern_262_proof_carrying_agent_action.js";
+export * from "./pattern_263_ontology_change_proposal_agent.js";
+export * from "./pattern_264_entity_resolution_evidence_gate.js";
+export * from "./pattern_265_knowledge_graph_contradiction_resolver.js";
+export * from "./pattern_266_schema_evolution_compatibility_guard.js";
+export * from "./pattern_267_knowledge_freshness_decay_policy.js";
+export * from "./pattern_268_graph_provenance_reconciliation.js";
+export * from "./pattern_269_ontology_alignment_confidence_gate.js";
+export * from "./pattern_270_knowledge_repair_human_approval.js";
