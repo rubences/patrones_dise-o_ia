@@ -247,3 +247,17 @@ export { PiSSAConfig } from "./pattern_119_pissa.js";
 export { LoRAPlusConfig } from "./pattern_120_lora_plus.js";
 export { RankStabilizedLoRA } from "./pattern_121_rslora.js";
 export { LoftQConfig } from "./pattern_122_loftq.js";
+
+// P8: reference implementations (not yet promoted into the canonical 122-pattern catalog)
+export { MCPCapabilityAdapter } from "./pattern_123_mcp_capability_adapter.js";
+export { MCPPolicyGateway } from "./pattern_124_mcp_policy_gateway.js";
+export { TrustedToolRegistry } from "./pattern_125_trusted_tool_registry.js";
+export { ExplicitWorkflowHandle } from "./pattern_126_explicit_workflow_handle.js";
+export { MRTRHumanElicitation } from "./pattern_127_mrtr_human_elicitation.js";
+export { HostControlledSampling } from "./pattern_128_host_controlled_sampling.js";
+export { A2AAgentCardTrust } from "./pattern_129_a2a_agent_card_trust.js";
+export { A2ATaskLifecycle } from "./pattern_130_a2a_task_lifecycle.js";
+export { MCPA2ABridge } from "./pattern_131_mcp_a2a_bridge.js";
+export { ToolPoisoningDefense } from "./pattern_132_tool_poisoning_defense.js";
+export { ArgumentAwareLeastPrivilege } from "./pattern_133_argument_aware_least_privilege.js";
+export { CrossProtocolTraceContext } from "./pattern_134_cross_protocol_trace_context.js";
