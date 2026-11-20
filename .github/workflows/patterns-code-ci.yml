@@ -22,6 +22,7 @@ on:
       - 'research/p12/redteam/**'
       - 'research/p12/incident/**'
       - 'research/p12/data-contracts/**'
+      - 'research/p12/deployment/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -51,6 +52,7 @@ on:
       - 'research/p12/redteam/**'
       - 'research/p12/incident/**'
       - 'research/p12/data-contracts/**'
+      - 'research/p12/deployment/**'
       - 'catalog/**'
       - 'content/patterns/**'
       - 'scripts/validate-catalog-integrity.mjs'
@@ -162,6 +164,10 @@ jobs:
         run: npx tsc --noEmit --project research/p12/data-contracts/tsconfig.json
       - name: Test P12 semantic data contracts
         run: npx --yes tsx@4.20.6 --test tests/p12_data_contracts_patterns.test.ts
+      - name: Typecheck P12 deployment lifecycle research
+        run: npx tsc --noEmit --project research/p12/deployment/tsconfig.json
+      - name: Test P12 deployment lifecycle contracts
+        run: npx --yes tsx@4.20.6 --test tests/p12_deployment_patterns.test.ts
       - name: Generate and validate quality report
         run: |
           node scripts/report-pattern-quality.mjs
