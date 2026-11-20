@@ -4,8 +4,8 @@
 
 Patrones IA mantiene una única base técnica y editorial capaz de producir, de forma trazable:
 
-1. **190 implementaciones TypeScript**;
-2. **190 fichas canónicas**;
+1. **222 implementaciones TypeScript**;
+2. **222 fichas canónicas**;
 3. una **web navegable**;
 4. una **edición técnica reproducible** en Markdown/HTML/EPUB/PDF;
 5. dos **obras editoriales independientes**;
@@ -17,7 +17,7 @@ La prioridad es evitar duplicación manual: cuando cambia una ficha, el cambio d
 
 ```text
 catalog/taxonomy.json
-        └── 22 macrofamilias, vocabulario, niveles y madurez
+        └── 26 macrofamilias, vocabulario, niveles y madurez
 
 catalog/patterns.json
         └── inventario maestro 222/222
@@ -198,3 +198,12 @@ Patrones 123–134 incorporan contratos pedagógicos MCP/A2A. Nueva macrofamilia
 ## P9 — Siete macrofamilias y 56 contratos experimentales
 
 Los IDs 135–190 cuentan con implementación de contrato TypeScript y ficha canónica, clasificados como **experimentales** y `needs-review`. No constituyen algoritmos completos de aprendizaje, gobierno certificado, DevOps autónomo, ingeniería de datos, inferencia edge ni razonamiento causal. La evidencia primaria validada permanece en 54 patrones / 51 fuentes (P7.0). Los benchmarks y las pruebas de integración deben completarse antes de alegar prestaciones o conformidad.
+
+## Ampliación P10
+
+23. Privacy-Preserving & Confidential AI
+24. Multimodal & Embodied Agent Systems
+25. AI Experimentation & Scientific Discovery
+26. AI Economics, Markets & Mechanism Design
+
+Los patrones 191–222 están incorporados al catálogo principal con madurez `experimental` y evidencia `needs-review`. La integración en `main` no certifica seguridad ni equivale a una ejecución satisfactoria de CI.
