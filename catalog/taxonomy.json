@@ -273,31 +273,31 @@
       "name": "Protocolos e Interoperabilidad Agéntica"
     },
     {
-      "id": 31,
+      "id": 29,
       "name": "Learning, Memory & Continual Adaptation"
     },
     {
-      "id": 32,
+      "id": 30,
       "name": "AI Governance, Compliance & Assurance"
     },
     {
-      "id": 33,
+      "id": 31,
       "name": "Agentic Software Engineering & DevOps"
     },
     {
-      "id": 34,
+      "id": 32,
       "name": "Data-Centric AI & Data Quality Engineering"
     },
     {
-      "id": 35,
+      "id": 33,
       "name": "Edge, Distributed & Resource-Aware AI"
     },
     {
-      "id": 36,
+      "id": 34,
       "name": "Causal, Neuro-Symbolic & World-Model AI"
     },
     {
-      "id": 37,
+      "id": 35,
       "name": "Agent Runtime, Harness & Execution Control"
     }
   ]
