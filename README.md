@@ -1,4 +1,4 @@
-# Patrones IA — 330 patrones de diseño para sistemas inteligentes
+# Patrones IA — 340 patrones de diseño para sistemas inteligentes
 
 [![Editorial, Hardening, Publication and Web CI](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/web-ci.yml/badge.svg)](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/web-ci.yml)
 [![Deploy Patrones IA Web](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/deploy-web.yml/badge.svg)](https://github.com/rubences/patrones_dise-o_ia/actions/workflows/deploy-web.yml)
@@ -7,7 +7,7 @@
 
 **Web:** https://rubences.github.io/patrones_dise-o_ia/
 
-> **Estado actual — v21.6.0 / P7.0:** 330/330 implementaciones · 330/330 fichas canónicas · 38 macrofamilias · 51 grupos de trazabilidad · 54/330 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
+> **Estado actual — v21.7.0 / P7.0:** 340/340 implementaciones · 340/340 fichas canónicas · 39 macrofamilias · 52 grupos de trazabilidad · 54/340 patrones con evidencia primaria/oficial · 51 fuentes primarias/oficiales registradas.
 
 ## Qué mantiene el repositorio
 
@@ -15,7 +15,7 @@
 |---|---|---|
 | Código | `src/pattern_*.ts` | 190 implementaciones TypeScript de referencia |
 | Inventario | `catalog/patterns.json` | ID, slug, familia, grupo histórico y fichero fuente |
-| Taxonomía | `catalog/taxonomy.json` | 38 macrofamilias, niveles, madurez y vocabulario editorial |
+| Taxonomía | `catalog/taxonomy.json` | 39 macrofamilias, niveles, madurez y vocabulario editorial |
 | Fichas | `content/patterns/*.md` | contenido canónico para web y edición de referencia |
 | Evidencia | `catalog/references.json` + `catalog/pattern-evidence.json` | fuentes primarias/oficiales y límites de interpretación |
 | Web | `web/` | catálogo Astro, evidencia, libro y publicaciones |
@@ -25,7 +25,7 @@
 
 La regla editorial es **single source of truth**: código, catálogo, fichas, Evidence Pack, web y libro técnico deben poder reconstruirse sin mantener copias manuales divergentes.
 
-## 38 macrofamilias
+## 39 macrofamilias
 
 | # | Familia | Patrones | Alcance |
 |---:|---|---:|---|
@@ -160,7 +160,7 @@ Para estado operativo utiliza este README, `docs/EDITORIAL_ARCHITECTURE.md`, `ca
 
 ## Deuda técnica y próximos cierres
 
-- ampliar la evidencia primaria más allá de 54/330 sin rebajar el criterio de alcance;
+- ampliar la evidencia primaria más allá de 54/340 sin rebajar el criterio de alcance;
 - generar y versionar `web/package-lock.json`;
 - activar una ruleset/branch protection para que `main` exija CI desde GitHub, no solo por convención;
 - resolver blockers de submission y derechos de figuras antes de cualquier envío externo;
