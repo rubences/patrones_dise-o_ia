@@ -4,7 +4,7 @@ slug: trajectory-retention-policy
 title: "Trajectory Retention Policy"
 summary: "Patrón de referencia para trajectory retention policy con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agent-runtime-harness
-legacyGroup: 30
+legacyGroup: 35
 level: workflow
 difficulty: advanced
 maturity: emerging
