@@ -1,0 +1,3 @@
+/** P12 347: educational adversarial evaluation contract; no safety certification. */
+export class Pattern347Contract{check(requirements:string[],evidence:{requirement:string;verified:boolean}[]){if(!requirements.length||requirements.some(x=>!x.trim())||evidence.some(x=>!x.requirement.trim()))throw Error("invalid evidence");const verified=new Set(evidence.filter(x=>x.verified).map(x=>x.requirement));const missing=[...new Set(requirements)].filter(x=>!verified.has(x));return {complete:missing.length===0,missing,limitation:"verification flags require independent evidence validation" as const};}}
+export const PATTERN_347_META={id:347,family:"ai-agent-evaluation-redteam",maturity:"experimental"} as const;
