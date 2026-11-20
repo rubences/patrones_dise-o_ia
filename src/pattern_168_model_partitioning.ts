@@ -1,3 +1,3 @@
-/** P9 168 Model Partitioning: educational contract, not production infrastructure. */
-export class Pattern168Contract{private records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid");this.records.set(id,{actor,value});}get(id:string,actor:string){const v=this.records.get(id);if(!v||v.actor!==actor)throw Error("denied");return v.value;}}
+/** P9 168 Model Partitioning: deterministic scheduling/policy reference, not an edge runtime. */
+export type Layer={name:string;memoryMb:number;computeMs:number};export class Pattern168Contract{partition(layers:Layer[],edgeMemoryMb:number){if(!layers.length||edgeMemoryMb<0||layers.some(x=>!x.name||x.memoryMb<0||x.computeMs<0))throw Error("invalid layers");let used=0,cut=0;for(const l of layers){if(used+l.memoryMb>edgeMemoryMb)break;used+=l.memoryMb;cut++;}return {edgeLayers:layers.slice(0,cut).map(x=>x.name),cloudLayers:layers.slice(cut).map(x=>x.name),edgeMemoryMb:used};}}
 export const PATTERN_168_META={id:168,name:"Model Partitioning",family:"edge-distributed-ai",maturity:"experimental"} as const;
