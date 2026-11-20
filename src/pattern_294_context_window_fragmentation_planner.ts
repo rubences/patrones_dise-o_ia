@@ -1,0 +1,3 @@
+/** P12 294: deterministic educational context engineering reference, not LLM safety certification. */
+export class Pattern294Contract{plan(sizes:number[],capacity:number){if(!Number.isInteger(capacity)||capacity<=0||sizes.some(x=>!Number.isInteger(x)||x<=0||x>capacity))throw Error("invalid chunks");const batches:number[][]=[];let current:number[]=[];let used=0;for(const size of sizes){if(used+size>capacity){batches.push(current);current=[];used=0;}current.push(size);used+=size;}if(current.length)batches.push(current);return batches;}}
+export const PATTERN_294_META={id:294,family:"context-engineering",maturity:"experimental"} as const;
