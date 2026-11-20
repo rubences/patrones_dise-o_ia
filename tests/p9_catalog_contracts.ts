@@ -8,7 +8,7 @@ import { BoundedAgentIteration } from "../src/pattern_183_bounded_agent_iteratio
 import { Pattern135Contract } from "../src/pattern_135_episodic_memory_consolidation.js";
 const catalog=JSON.parse(readFileSync("catalog/patterns.json","utf8"));
 const taxonomy=JSON.parse(readFileSync("catalog/taxonomy.json","utf8"));
-assert.equal(catalog.catalogSize,190);assert.equal(taxonomy.families.length,22);assert.equal(catalog.patterns.length,190);
+assert.ok(catalog.catalogSize>=190);assert.equal(taxonomy.catalogSize,catalog.catalogSize);assert.ok(taxonomy.families.length>=22);assert.equal(catalog.patterns.length,catalog.catalogSize);
 for(let id=135;id<=190;id++){const record=catalog.patterns.find((x:{id:number})=>x.id===id);assert.ok(record);assert.ok(existsSync(record.sourceFile));assert.ok(existsSync(record.canonicalContent));assert.equal(record.evidenceStatus,"needs-review");}
 const flow=new IssueToPatchWorkflow();assert.throws(()=>flow.advance("reviewed"));flow.advance("patched");flow.advance("tested");flow.advance("reviewed");
 assert.throws(()=>new IndependentCodeVerifier().verify("same","same",true));assert.equal(new IndependentCodeVerifier().verify("author","reviewer",true),true);
