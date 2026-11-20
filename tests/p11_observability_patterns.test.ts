@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {Pattern223Contract} from "../research/p11/observability/src/pattern_223_agent_behavior_trace_schema.js";
+import {Pattern224Contract} from "../research/p11/observability/src/pattern_224_decision_attribution_probe.js";
+import {Pattern225Contract} from "../research/p11/observability/src/pattern_225_tool_call_drift_detector.js";
+import {Pattern226Contract} from "../research/p11/observability/src/pattern_226_semantic_latency_decomposer.js";
+import {Pattern227Contract} from "../research/p11/observability/src/pattern_227_agent_failure_taxonomy_mapper.js";
+import {Pattern228Contract} from "../research/p11/observability/src/pattern_228_behavioral_regression_sentinel.js";
+import {Pattern229Contract} from "../research/p11/observability/src/pattern_229_multi_agent_causal_trace_joiner.js";
+import {Pattern230Contract} from "../research/p11/observability/src/pattern_230_observability_coverage_gate.js";
+test("223 trace schema rejects missing span",()=>{const x=new Pattern223Contract();assert.throws(()=>x.validate({traceId:"t",spanId:"",timestamp:1,action:"read"}));assert.equal(x.validate({traceId:"t",spanId:"s",timestamp:1,action:"read"}).spanId,"s");});
+test("224 attribution weights normalize and reject zero total",()=>{const x=new Pattern224Contract();assert.deepEqual(x.attribute([{actor:"a",weight:1},{actor:"b",weight:1}]).map(v=>v.share),[.5,.5]);assert.throws(()=>x.attribute([{actor:"a",weight:0}]));});
+test("225 drift detects unknown tools without duplicates",()=>{assert.deepEqual(new Pattern225Contract().detect(["read"],["read","write","write"]),["write"]);});
+test("226 latency decomposition preserves total",()=>{const x=new Pattern226Contract();assert.equal(x.decompose([{name:"model",duration:2},{name:"tool",duration:3}]).total,5);assert.throws(()=>x.decompose([{name:"bad",duration:-1}]));});
+test("227 maps failures to bounded taxonomy",()=>{const x=new Pattern227Contract();assert.equal(x.classify("permission denied"),"authorization");assert.equal(x.classify("other"),"unclassified");});
+test("228 regression gate detects negative deltas only",()=>{const x=new Pattern228Contract();assert.equal(x.compare([1,1],[.7,1.3],.2)[0].regression,true);assert.equal(x.compare([1,1],[.7,1.3],.2)[1].regression,false);});
+test("229 rejects cross-trace parents and cycles",()=>{const x=new Pattern229Contract();assert.throws(()=>x.join([{id:"a",traceId:"t1",parentId:null},{id:"b",traceId:"t2",parentId:"a"}]));assert.throws(()=>x.join([{id:"a",traceId:"t",parentId:"b"},{id:"b",traceId:"t",parentId:"a"}]));});
+test("230 coverage reports missing required signals",()=>{const x=new Pattern230Contract();assert.deepEqual(x.assess(["trace"],["trace","decision"]).missing,["decision"]);});
