@@ -34,7 +34,8 @@ Mantener operaciones explícitas y autorizadas, con estado y procedencia auditab
 
 ## Implementación del repositorio
 
-`src/pattern_138_selective_forgetting.ts` contiene una abstracción mínima de almacenamiento por actor; no implementa un algoritmo de aprendizaje ni reproduce benchmarks.
+Expiración y eliminación selectiva por propietario; no garantiza borrado de copias externas. El código en `src/pattern_138_selective_forgetting.ts` es una implementación de referencia determinista, sin llamadas a modelos externos. Pruebas: `tests/p9_memory_patterns.test.ts`.
+
 
 ## Producción
 
