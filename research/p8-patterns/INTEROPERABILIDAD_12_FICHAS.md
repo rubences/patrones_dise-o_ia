@@ -1,6 +1,6 @@
 # P8 — Doce patrones candidatos de interoperabilidad agéntica
 
-> **Estado editorial:** fichas de diseño en investigación, todavía no catalogadas como implementaciones. No modificar el recuento 122 ni el baseline de evidencia hasta que existan TypeScript, tests y gates verdes. Fecha: 2026-11-20.
+> **Estado editorial actualizado (2026-11-20):** los patrones 123–134 ya tienen ficha canónica, código TypeScript y export en `main`, y el catálogo es 134/15. Los módulos son pedagógicos, no conformidad MCP/A2A. El baseline de evidencia permanece P7.0 (54 patrones / 51 fuentes); las nuevas fichas figuran como `needs-review`. La CI se ha configurado, pero sus resultados aún no están confirmados.
 
 ## Regla de clasificación
 
