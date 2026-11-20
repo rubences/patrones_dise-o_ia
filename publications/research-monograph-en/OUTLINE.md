@@ -1,6 +1,6 @@
 # Detailed Outline — Research Monograph (EN)
 
-The open catalogue contains 102 patterns. The monograph does **not** give all 102 equal chapter weight; it selects and composes them around research questions. Pattern IDs remain stable so readers can move from the book to the web and executable repository.
+The open catalogue contains 122 patterns. The monograph does **not** give all 122 equal chapter weight; it selects and composes them around research questions. Pattern IDs remain stable so readers can move from the book to the web and executable repository.
 
 ## Part I — Foundations and Agentic Architecture
 
@@ -68,7 +68,7 @@ Original material: semantic versus transport failure, retry safety, idempotency,
 
 Research question: which architectural controls reduce the authority of untrusted model output and external context?
 
-Core patterns: 53, 62, 69, 70, 71, 72, 74, 84, 89, 100, 101, 102.
+Core patterns: 53, 62, 69, 70, 71, 72, 74, 84, 89, 100, 101, 122.
 
 Original material: layered threat model, capability authorization, prompt/data boundaries, tool-output sanitization, adversarial evaluation and recovery loops.
 
@@ -102,7 +102,7 @@ Planned original case study: vehicular/C-V2X decision pipeline combining distrib
 
 Research question: how can the field test whether a pattern or composition actually improves a stated quality attribute?
 
-Core patterns: 42, 43, 73, 74, 75, 76, 77, 99, 102.
+Core patterns: 42, 43, 73, 74, 75, 76, 77, 99, 122.
 
 Original material: experiment templates, ablations, counterfactual baselines, adversarial scenarios, reproducibility checklist, threats to validity and a roadmap for an evidence-backed pattern language.
 
@@ -116,3 +116,15 @@ Original material: experiment templates, ablations, counterfactual baselines, ad
 - Mapping between pattern IDs and repository implementations.
 
 Appendices may move to the companion website if publisher page limits make a print version inefficient.
+
+## Next-generation extension — Patterns 103–122
+
+The research monograph now treats the new patterns as architectural layers rather than an appendix:
+
+- **AI Factory + Cognitive Core (103–104):** platform lifecycle and modular cognition.
+- **SDD/GDD (105–106):** governed specification and graph-based traceability.
+- **Open Data Lakehouse + Metadata Fabric + Typed Graph (107–109):** data/knowledge substrate.
+- **GraphRAG family (110–114):** local/global, adaptive, hierarchical, reflective and corrective retrieval.
+- **LoRA/PEFT family (115–122):** model adaptation as a cost/quality/deployment design space.
+
+GDD remains explicitly experimental terminology; Medium sources are treated as industry signals, not primary evidence.

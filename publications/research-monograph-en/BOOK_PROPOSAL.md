@@ -69,7 +69,7 @@ No benchmark result will be presented as a universal property of a pattern.
 
 Subject to the publishing contract, the companion project will provide:
 
-- the 102-pattern open reference website;
+- the 122-pattern open reference website;
 - TypeScript reference implementations;
 - machine-readable taxonomy and relationships;
 - evidence registry;
@@ -105,3 +105,7 @@ Initial routes to evaluate are Springer Nature's Computer Science book programme
 ## Related work disclosure
 
 A separate Spanish university manual is planned from the same open technical substrate. It has a different audience, chapter architecture, examples, code stack, exercises, figures and pedagogical purpose. Both proposals will disclose the related project when requested and will be checked against `../common/EDITORIAL_REUSE_AND_RIGHTS.md` before contract signature.
+
+## 2026 next-generation scope
+
+The companion corpus has expanded to 122 patterns and adds four research-relevant layers: AI Platforms & Factories, Development & Governance, Data & Graph Foundations, and Model Adaptation & PEFT. This strengthens the book's differentiation: it is not another catalogue of agent prompts, but a systems pattern language connecting AI Factory, cognitive cores, open lakehouse, typed graphs, GraphRAG, dependability, Edge–Mesh–Cloud execution and parameter-efficient adaptation.

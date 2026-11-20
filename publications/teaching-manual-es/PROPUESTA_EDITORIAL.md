@@ -22,7 +22,7 @@ El material se diseña para poder reutilizarse en asignaturas de grado y posgrad
 
 ## Diferenciación
 
-El manual se organiza por **experiencias de aprendizaje**, no por una enciclopedia de 102 capítulos. El catálogo completo permanece como referencia web; el libro selecciona composiciones de patrones para resolver problemas progresivos.
+El manual se organiza por **experiencias de aprendizaje**, no por una enciclopedia de 122 capítulos. El catálogo completo permanece como referencia web; el libro selecciona composiciones de patrones para resolver problemas progresivos.
 
 Cada módulo incluirá:
 
@@ -131,3 +131,7 @@ Rubén Juárez Cádiz desarrolla actividad docente y profesional en cibersegurid
 ## Derechos y relación con la obra inglesa
 
 Antes de firmar se aplicará `../common/EDITORIAL_REUSE_AND_RIGHTS.md`. El contrato debe preservar, en la medida negociada, la web complementaria, código, prácticas reutilizables en docencia, depósito permitido y capacidad de desarrollar la monografía EN como obra distinta.
+
+## Actualización curricular 2026 — segunda generación
+
+La propuesta incorpora cuatro bloques que diferencian el manual de un curso de uso de chatbots: (1) SDD/GDD para ingeniería asistida por IA, (2) Open Data Lakehouse y gobierno de metadatos, (3) grafos tipados y GraphRAG avanzado, y (4) LoRA/PEFT como laboratorio de adaptación y coste. La orientación sigue siendo docente: cada bloque se traduce en resultados de aprendizaje, práctica reproducible, tests y rúbrica.

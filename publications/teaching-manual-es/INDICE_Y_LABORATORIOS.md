@@ -100,3 +100,17 @@ La rúbrica se especializará por módulo y podrá adaptarse al peso y competenc
 ## Diseño de actualizaciones
 
 Las explicaciones estables permanecen en el libro. Versiones de SDK, endpoints, modelos, imágenes Docker, workflows n8n y soluciones se mantienen en el companion site con tags por edición. De este modo el libro conserva valor docente aunque cambie el ecosistema de herramientas.
+
+## Extensión de laboratorios 103–122
+
+### Práctica A — Spec to Graph
+Partir de una especificación SDD, convertir requisitos/decisiones/tests en un grafo tipado GDD y ejecutar validaciones de tipos y relaciones.
+
+### Práctica B — Open Data Lakehouse + GraphRAG
+Construir un dataset versionado con snapshots, registrar metadatos, extraer un grafo tipado y comparar retrieval vectorial, GraphRAG, RAPTOR, Self-RAG y CRAG con una misma batería de preguntas.
+
+### Práctica C — PEFT Decision Lab
+Comparar LoRA, QLoRA, AdaLoRA, DoRA, PiSSA, LoRA+, rsLoRA y LoftQ desde sus contratos: rank, bits, inicialización, learning rates, parámetros entrenables, memoria estimada y criterios de selección. El laboratorio no inventa resultados de entrenamiento: exige registrar hardware/modelo/dataset cuando se ejecuten experimentos reales.
+
+### Capstone ampliado
+La arquitectura final debe justificar si necesita AI Factory, Cognitive Core, Open Data Lakehouse y federación de metadatos, y demostrar qué gates impiden promocionar un artefacto sin evidencia.

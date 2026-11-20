@@ -15,27 +15,210 @@
       "samples/05-rag-extremo-a-extremo.md"
     ]
   },
-  "audience": ["estudiantes de grado TIC", "estudiantes de máster", "docentes de ingeniería", "profesionales en formación"],
+  "audience": [
+    "estudiantes de grado TIC",
+    "estudiantes de máster",
+    "docentes de ingeniería",
+    "profesionales en formación"
+  ],
   "derivativePolicy": "independent-editorial-work",
   "notATranslationOf": "research-monograph-en",
-  "sharedSubstrate": ["catalog", "source-code", "evidence-registry", "taxonomy"],
+  "sharedSubstrate": [
+    "catalog",
+    "source-code",
+    "evidence-registry",
+    "taxonomy"
+  ],
   "rightsReview": "contract-review-required",
-  "technicalStack": ["Python", "Docker", "n8n", "APIs LLM", "Git/GitHub"],
-  "publisherCandidates": ["RA-MA", "Paraninfo — encaje editorial por confirmar"],
-  "teachingContexts": ["Grados TIC", "Másteres en IA", "Ingeniería de Software", "Ciberseguridad", "Sistemas Distribuidos"],
-  "distinctiveContribution": "Manual universitario progresivo que transforma el catálogo de patrones en experiencias de aprendizaje reproducibles mediante laboratorios, ejercicios, rúbricas, evaluación formativa y un proyecto integrador.",
+  "technicalStack": [
+    "Python",
+    "Docker",
+    "n8n",
+    "APIs LLM",
+    "Git/GitHub",
+    "Apache Iceberg / open lakehouse",
+    "GraphRAG",
+    "LoRA / PEFT"
+  ],
+  "publisherCandidates": [
+    "RA-MA",
+    "Paraninfo — encaje editorial por confirmar"
+  ],
+  "teachingContexts": [
+    "Grados TIC",
+    "Másteres en IA",
+    "Ingeniería de Software",
+    "Ciberseguridad",
+    "Sistemas Distribuidos"
+  ],
+  "distinctiveContribution": "Manual universitario progresivo que transforma 122 patrones en experiencias reproducibles: agentes, SDD/GDD, Open Data Lakehouse, grafos tipados, GraphRAG, seguridad, resiliencia, observabilidad, PEFT, rúbricas y proyecto integrador.",
   "chapters": [
-    {"number": 1, "title": "Pensar la IA como un sistema de patrones", "patternIds": [1,2,9,10,13], "originalContribution": "Introduce resultados de aprendizaje, lectura de diagramas, selección de patrones y una práctica diagnóstica que diferencia modelo, aplicación y arquitectura."},
-    {"number": 2, "title": "APIs de LLM y salidas estructuradas", "patternIds": [28,59,67], "originalContribution": "Laboratorio guiado de APIs y contratos JSON con validación automática, pruebas de errores y rúbrica centrada en corrección de interfaces."},
-    {"number": 3, "title": "Pipeline y Router", "patternIds": [1,2], "originalContribution": "Práctica incremental para construir flujos deterministas y enrutamiento por intención, comparar alternativas y medir errores de clasificación y latencia."},
-    {"number": 4, "title": "Tool Use y Function Calling", "patternIds": [5,28,100,101], "originalContribution": "Laboratorio de herramientas con allowlist, validación de argumentos y saneamiento de resultados para enseñar autoridad mínima y uso seguro de APIs."},
-    {"number": 5, "title": "RAG de extremo a extremo", "patternIds": [25,41,52,66,98], "originalContribution": "Construye un RAG práctico con recuperación, ranking, contexto, grounding y atribución, incluyendo preguntas de evaluación y análisis de fallos de evidencia."},
-    {"number": 6, "title": "Razonamiento y bucles agénticos", "patternIds": [3,4,6,27,54], "originalContribution": "Compara planificación, reflexión, evaluación y ReAct mediante tareas controladas, límites de iteración y una rúbrica que separa calidad de complejidad."},
-    {"number": 7, "title": "Sistemas multiagente", "patternIds": [7,57,60,65], "originalContribution": "Práctica de delegación y orquestación donde el alumnado diseña contratos entre agentes, analiza conflictos y justifica cuándo no usar multiagente."},
-    {"number": 8, "title": "Memoria, caché y gestión del contexto", "patternIds": [44,48,51,86], "originalContribution": "Laboratorio de memoria y compactación que mide pérdida de información, reutilización, estado y coste, con ejercicios sobre privacidad y caducidad."},
-    {"number": 9, "title": "Seguridad y guardrails", "patternIds": [53,69,71,72,84,89,100,101], "originalContribution": "Cyberlab defensivo con prompt injection, secretos, PII, permisos y sandboxing en un entorno controlado, evaluado mediante casos adversariales reproducibles."},
-    {"number": 10, "title": "Fiabilidad y recuperación", "patternIds": [45,46,47,58,81,85,94], "originalContribution": "Práctica de fallos simulados para aplicar circuit breaker, bulkhead, backoff, fallback e idempotencia, con medición de disponibilidad y consistencia."},
-    {"number": 11, "title": "Evaluación, observabilidad y coste", "patternIds": [73,75,76,77,78,92], "originalContribution": "Laboratorio de trazas, regresión, experimentos A/B y presupuesto de tokens que obliga a defender decisiones mediante métricas y no solo demostraciones."},
-    {"number": 12, "title": "Proyecto integrador: servicio de IA en producción", "patternIds": [79,80,88,90,93,95,96], "originalContribution": "Capstone por equipos con despliegue, streaming, límites, canary, escalado humano y aclaración, acompañado de rúbrica técnica, defensa oral y retrospectiva."}
+    {
+      "number": 1,
+      "title": "Pensar la IA como un sistema de patrones",
+      "patternIds": [
+        1,
+        2,
+        9,
+        10,
+        13,
+        105,
+        106
+      ],
+      "originalContribution": "Introduce resultados de aprendizaje, lectura de diagramas, selección de patrones y una práctica diagnóstica que diferencia modelo, aplicación y arquitectura. Introduce SDD and the experimental GDD workflow to connect requirements, decisions, tests and evidence."
+    },
+    {
+      "number": 2,
+      "title": "APIs de LLM y salidas estructuradas",
+      "patternIds": [
+        28,
+        59,
+        67
+      ],
+      "originalContribution": "Laboratorio guiado de APIs y contratos JSON con validación automática, pruebas de errores y rúbrica centrada en corrección de interfaces."
+    },
+    {
+      "number": 3,
+      "title": "Pipeline y Router",
+      "patternIds": [
+        1,
+        2
+      ],
+      "originalContribution": "Práctica incremental para construir flujos deterministas y enrutamiento por intención, comparar alternativas y medir errores de clasificación y latencia."
+    },
+    {
+      "number": 4,
+      "title": "Tool Use y Function Calling",
+      "patternIds": [
+        5,
+        28,
+        100,
+        101
+      ],
+      "originalContribution": "Laboratorio de herramientas con allowlist, validación de argumentos y saneamiento de resultados para enseñar autoridad mínima y uso seguro de APIs."
+    },
+    {
+      "number": 5,
+      "title": "RAG, Open Lakehouse y grafos de extremo a extremo",
+      "patternIds": [
+        25,
+        41,
+        52,
+        66,
+        98,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114
+      ],
+      "originalContribution": "Construye un RAG práctico con recuperación, ranking, contexto, grounding y atribución, incluyendo preguntas de evaluación y análisis de fallos de evidencia. Extiende el laboratorio hacia datos abiertos/versionados, grafos tipados y comparación de RAG vectorial, GraphRAG, RAPTOR, Self-RAG y CRAG."
+    },
+    {
+      "number": 6,
+      "title": "Razonamiento y bucles agénticos",
+      "patternIds": [
+        3,
+        4,
+        6,
+        27,
+        54
+      ],
+      "originalContribution": "Compara planificación, reflexión, evaluación y ReAct mediante tareas controladas, límites de iteración y una rúbrica que separa calidad de complejidad."
+    },
+    {
+      "number": 7,
+      "title": "Sistemas multiagente",
+      "patternIds": [
+        7,
+        57,
+        60,
+        65
+      ],
+      "originalContribution": "Práctica de delegación y orquestación donde el alumnado diseña contratos entre agentes, analiza conflictos y justifica cuándo no usar multiagente."
+    },
+    {
+      "number": 8,
+      "title": "Memoria, caché y gestión del contexto",
+      "patternIds": [
+        44,
+        48,
+        51,
+        86
+      ],
+      "originalContribution": "Laboratorio de memoria y compactación que mide pérdida de información, reutilización, estado y coste, con ejercicios sobre privacidad y caducidad."
+    },
+    {
+      "number": 9,
+      "title": "Seguridad y guardrails",
+      "patternIds": [
+        53,
+        69,
+        71,
+        72,
+        84,
+        89,
+        100,
+        101
+      ],
+      "originalContribution": "Cyberlab defensivo con prompt injection, secretos, PII, permisos y sandboxing en un entorno controlado, evaluado mediante casos adversariales reproducibles."
+    },
+    {
+      "number": 10,
+      "title": "Fiabilidad y recuperación",
+      "patternIds": [
+        45,
+        46,
+        47,
+        58,
+        81,
+        85,
+        94
+      ],
+      "originalContribution": "Práctica de fallos simulados para aplicar circuit breaker, bulkhead, backoff, fallback e idempotencia, con medición de disponibilidad y consistencia."
+    },
+    {
+      "number": 11,
+      "title": "Evaluación, observabilidad, coste y adaptación de modelos",
+      "patternIds": [
+        73,
+        75,
+        76,
+        77,
+        78,
+        92,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122
+      ],
+      "originalContribution": "Laboratorio de trazas, regresión, experimentos A/B y presupuesto de tokens que obliga a defender decisiones mediante métricas y no solo demostraciones. Añade un laboratorio de selección PEFT que compara memoria, parámetros entrenables, inicialización, rank y cuantización sin confundir configuración con benchmark."
+    },
+    {
+      "number": 12,
+      "title": "Proyecto integrador: servicio de IA en producción",
+      "patternIds": [
+        79,
+        80,
+        88,
+        90,
+        93,
+        95,
+        96,
+        103,
+        104,
+        107,
+        108,
+        109
+      ],
+      "originalContribution": "Capstone por equipos con despliegue, streaming, límites, canary, escalado humano y aclaración, acompañado de rúbrica técnica, defensa oral y retrospectiva. El capstone integra AI Factory, Cognitive Core y Open Data Lakehouse como plataforma gobernada del servicio final."
+    }
   ]
 }
