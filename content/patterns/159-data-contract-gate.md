@@ -4,7 +4,7 @@ slug: data-contract-gate
 title: "Data Contract Gate"
 summary: "Contrato de referencia experimental para data contract gate con validación y procedencia explícitas."
 family: data-centric-ai
-legacyGroup: 34
+legacyGroup: 32
 level: architecture
 difficulty: advanced
 maturity: experimental
