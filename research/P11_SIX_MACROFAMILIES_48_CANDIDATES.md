@@ -1,8 +1,8 @@
 # P11 — Evaluación de seis macrofamilias y 48 patrones candidatos
 
-Fecha: 2026-11-20. **Estado: investigación, no integración en catálogo.**
+Fecha: 2026-11-20. **Estado: candidatos implementados e incorporados al catálogo principal en main; CI pendiente de confirmar.**
 
-El catálogo principal actual registra **222 patrones, 26 macrofamilias y 39 grupos**. Esta propuesta reserva los IDs **223–270** y estudia **6 familias** nuevas; el objetivo eventual sería **270 patrones, 32 macrofamilias**, sujeto a validación.
+El catálogo principal registra **270 patrones, 32 macrofamilias y 45 grupos**. Los IDs **223–270** están incorporados con madurez experimental y evidencia `needs-review`; la validación integral de CI sigue pendiente.
 
 ## Criterios de selección
 
