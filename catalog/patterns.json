@@ -1550,7 +1550,7 @@
       "name": "Selective Forgetting",
       "slug": "selective-forgetting",
       "family": "continual-learning-memory",
-      "legacyGroup": 29,
+      "legacyGroup": 31,
       "sourceFile": "src/pattern_138_selective_forgetting.ts",
       "implementationStatus": "implemented",
       "editorialStatus": "published",
