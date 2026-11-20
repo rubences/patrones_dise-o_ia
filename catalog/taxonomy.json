@@ -1,7 +1,7 @@
 {
   "$schema": "./taxonomy.schema.json",
   "version": "2.0.0",
-  "catalogSize": 310,
+  "catalogSize": 320,
   "families": [
     {
       "id": "foundations",
@@ -218,6 +218,12 @@
       "name": "Accessible, Inclusive & Multilingual AI",
       "nameEs": "IA Accesible, Inclusiva y Multilingüe",
       "description": "Accesibilidad, adaptación lingüística, formatos regionales, equidad y tecnologías de asistencia."
+    },
+    {
+      "id": "ai-energy-sustainability",
+      "name": "Sustainable & Carbon-Aware AI Operations",
+      "nameEs": "Operación Sostenible de IA y Consciente del Carbono",
+      "description": "Planificación de inferencia, consumo energético, intensidad de carbono y efecto rebote."
     }
   ],
   "levels": [
@@ -439,6 +445,10 @@
     {
       "id": 49,
       "name": "Accesibilidad e Inclusión Multilingüe"
+    },
+    {
+      "id": 50,
+      "name": "Sostenibilidad y Eficiencia Energética"
     }
   ]
 }
