@@ -34,7 +34,8 @@ Separar supuestos, datos, modelo, decisión y evidencia con trazabilidad.
 
 ## Implementación del repositorio
 
-`src/pattern_181_causal_confounder_check.ts` es un contrato educativo, no estima modelos causales ni ejecuta simulación del mundo.
+Señala padres comunes potencialmente confusores; heurística insuficiente para identificación causal. Referencia determinista: `src/pattern_181_causal_confounder_check.ts`. Pruebas positivas y negativas: `tests/p9_causal_patterns.test.ts`. **No se afirma identificación causal, corrección formal ni rendimiento en benchmarks.**
+
 
 ## Producción
 
