@@ -186,6 +186,9 @@ jobs:
       - name: Validate macrofamily navigation
         run: node --test tests/macrofamilies-navigation.test.mjs
 
+      - name: Test Interactive Lab architecture schema
+        run: npx --yes tsx@4.20.6 --test tests/interactive-lab-architecture-schema.test.ts
+
       - name: Install web dependencies
         working-directory: web
         run: npm install
