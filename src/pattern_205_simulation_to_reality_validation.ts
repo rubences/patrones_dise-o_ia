@@ -1,0 +1,3 @@
+/** P10 205: deterministic simulation-only reference; no physical safety certification. */
+export class SimulationToRealityValidation{assess(simulated:number[],observed:number[],maxMeanError:number){if(!simulated.length||simulated.length!==observed.length||![...simulated,...observed,maxMeanError].every(Number.isFinite)||maxMeanError<0)throw Error("invalid validation");const mae=simulated.reduce((s,v,i)=>s+Math.abs(v-observed[i]),0)/simulated.length;return {mae,accepted:mae<=maxMeanError};}}
+export const PATTERN_205_META={id:205,family:"multimodal-embodied-ai",maturity:"experimental"} as const;
