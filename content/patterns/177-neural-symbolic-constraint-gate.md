@@ -34,7 +34,8 @@ Separar supuestos, datos, modelo, decisión y evidencia con trazabilidad.
 
 ## Implementación del repositorio
 
-`src/pattern_177_neural_symbolic_constraint_gate.ts` es un contrato educativo, no estima modelos causales ni ejecuta simulación del mundo.
+Verifica restricciones numéricas sobre resultados; no integra un motor de inferencia simbólica completo. Referencia determinista: `src/pattern_177_neural_symbolic_constraint_gate.ts`. Pruebas positivas y negativas: `tests/p9_causal_patterns.test.ts`. **No se afirma identificación causal, corrección formal ni rendimiento en benchmarks.**
+
 
 ## Producción
 
