@@ -383,8 +383,8 @@
       "authors": "Apache Gravitino Project",
       "year": 2026,
       "venue": "Apache Gravitino",
-      "url": "https://gravitino.apache.org/docs/next/catalogs-and-schemas/",
-      "identifier": "Apache-Gravitino:Catalogs-Schemas",
+      "url": "https://gravitino.apache.org/docs/1.3.1/catalogs-and-schemas/",
+      "identifier": "Apache-Gravitino:1.3.1:Catalogs-Schemas",
       "primary": true
     },
     {
