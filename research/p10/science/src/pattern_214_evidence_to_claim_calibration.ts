@@ -1,0 +1,3 @@
+/** P10 214: educational deterministic research contract, not scientific validation. */
+export class EvidenceToClaimCalibration{assess(claim:{id:string;strength:"exploratory"|"correlational"|"causal"},evidence:{replications:number;randomized:boolean;identified:boolean}){if(!claim.id.trim()||!Number.isInteger(evidence.replications)||evidence.replications<0)throw Error("invalid evidence");const supported=claim.strength==="exploratory"||claim.strength==="correlational"&&evidence.replications>=1||claim.strength==="causal"&&evidence.randomized&&evidence.identified&&evidence.replications>=1;return {supported,requiresIndependentReview:true as const};}}
+export const PATTERN_214_META={id:214,family:"ai-scientific-discovery",maturity:"experimental"} as const;
