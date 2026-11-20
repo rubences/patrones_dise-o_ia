@@ -34,7 +34,8 @@ Explicitar precondiciones, propietario y estado; medir degradación y capacidad 
 
 ## Implementación del repositorio
 
-`src/pattern_174_edge_to_cloud_failover.ts` es un contrato educativo, no ejecuta inferencia edge ni protocolos distribuidos.
+Selecciona edge o cloud según disponibilidad y latencia máxima; no ejecuta migración real. Contrato TypeScript determinista: `src/pattern_174_edge_to_cloud_failover.ts`; pruebas de regresión: `tests/p9_edge_patterns.test.ts`. No se ha medido rendimiento real en hardware edge ni se implementan servicios distribuidos completos.
+
 
 ## Producción
 
