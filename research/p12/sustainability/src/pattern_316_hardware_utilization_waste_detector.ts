@@ -1,0 +1,3 @@
+/** P12 316: educational sustainability control; energy and carbon values are externally supplied estimates. */
+export class Pattern316Contract{assess(samples:{id:string;utilization:number;watts:number}[],maxIdleWatts:number){if(!Number.isFinite(maxIdleWatts)||maxIdleWatts<0||samples.some(x=>!x.id.trim()||![x.utilization,x.watts].every(Number.isFinite)||x.utilization<0||x.utilization>1||x.watts<0))throw Error("invalid utilization");return samples.filter(x=>x.utilization<.1&&x.watts>maxIdleWatts).map(x=>x.id);}}
+export const PATTERN_316_META={id:316,family:"ai-energy-sustainability",maturity:"experimental"} as const;
