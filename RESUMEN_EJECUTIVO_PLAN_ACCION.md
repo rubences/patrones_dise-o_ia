@@ -2,12 +2,12 @@
 
 | Indicador | Estado |
 |---|---:|
-| Implementaciones TypeScript | **290/290** |
-| Registros del catálogo maestro | **290/290** |
-| Fichas editoriales canónicas | **290/290** |
+| Implementaciones TypeScript | **300/300** |
+| Registros del catálogo maestro | **300/300** |
+| Fichas editoriales canónicas | **300/300** |
 | Macrofamilias | **32** |
 | Grupos de trazabilidad | **45** |
-| Patrones con evidencia primaria/oficial | **54/290** |
+| Patrones con evidencia primaria/oficial | **54/300** |
 | Fuentes primarias/oficiales registradas | **51** |
 | Baseline de evidencia | **P7.0 · fail-closed** |
 | Publicaciones | **2 · editor-contact-ready** |
@@ -20,7 +20,7 @@ GDD permanece explícitamente **experimental** y no se contabiliza dentro del m�
 
 ## Próximos cierres
 
-1. Ampliar evidencia primaria más allá de 54/290 sin rebajar los scope notes.
+1. Ampliar evidencia primaria más allá de 54/300 sin rebajar los scope notes.
 2. Resolver blockers y derechos de figuras de las dos publicaciones antes de cualquier envío.
 3. Fijar `web/package-lock.json` para reproducibilidad transitiva.
 4. Activar branch protection/ruleset para exigir CI en `main`.
