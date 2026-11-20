@@ -34,7 +34,8 @@ Explicitar precondiciones, propietario y estado; medir degradación y capacidad 
 
 ## Implementación del repositorio
 
-`src/pattern_168_model_partitioning.ts` es un contrato educativo, no ejecuta inferencia edge ni protocolos distribuidos.
+Particiona una secuencia de capas según memoria edge; no optimiza transferencia ni grafos de ejecución. Contrato TypeScript determinista: `src/pattern_168_model_partitioning.ts`; pruebas de regresión: `tests/p9_edge_patterns.test.ts`. No se ha medido rendimiento real en hardware edge ni se implementan servicios distribuidos completos.
+
 
 ## Producción
 
