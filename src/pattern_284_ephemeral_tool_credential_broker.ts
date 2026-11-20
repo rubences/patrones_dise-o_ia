@@ -1,0 +1,3 @@
+/** P12 284: educational identity-policy contract, not real credential issuance or cryptographic authentication. */
+export class Pattern284Contract{authorize(lease:{tool:string;tenant:string;expiresAt:number;revoked:boolean},request:{tool:string;tenant:string;now:number}){if(!request.tool.trim()||!request.tenant.trim()||![lease.expiresAt,request.now].every(Number.isFinite)||lease.revoked||lease.tool!==request.tool||lease.tenant!==request.tenant||request.now>=lease.expiresAt)throw Error("credential lease denied");return true;}}
+export const PATTERN_284_META={id:284,family:"agent-identity-trust",maturity:"experimental"} as const;
