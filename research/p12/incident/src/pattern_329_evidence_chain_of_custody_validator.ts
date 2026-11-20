@@ -1,0 +1,3 @@
+/** P12 329: educational incident response reference; no forensic chain-of-custody certification. */
+export class Pattern329Contract{validate(events:{actor:string;timestamp:number;previousDigest:string|null;digest:string}[]){if(!events.length||events.some(e=>!e.actor.trim()||!Number.isFinite(e.timestamp)||!/^[a-f0-9]{64}$/i.test(e.digest)||e.previousDigest!==null&&!/^[a-f0-9]{64}$/i.test(e.previousDigest)))throw Error("invalid custody");for(let i=0;i<events.length;i++){if(i===0&&events[i].previousDigest!==null||i>0&&(events[i].previousDigest!==events[i-1].digest||events[i].timestamp<events[i-1].timestamp))return false;}return true;}}
+export const PATTERN_329_META={id:329,family:"ai-incident-forensics",maturity:"experimental"} as const;
