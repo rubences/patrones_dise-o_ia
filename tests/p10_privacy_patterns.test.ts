@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {DifferentialPrivacyBudgetGate} from "../src/pattern_191_differential_privacy_budget_gate.js";
+import {ConfidentialInferenceBoundary} from "../src/pattern_192_confidential_inference_boundary.js";
+import {PrivateRetrievalPolicy} from "../src/pattern_193_private_retrieval_policy.js";
+import {SecureAggregationCoordinator} from "../src/pattern_194_secure_aggregation_coordinator.js";
+import {PIIMinimizationPipeline} from "../src/pattern_195_pii_minimization_pipeline.js";
+import {PrivacyPreservingTelemetry} from "../src/pattern_196_privacy_preserving_telemetry.js";
+import {ConsentAwareDataProcessing} from "../src/pattern_197_consent_aware_data_processing.js";
+import {PrivacyAttackEvaluation} from "../src/pattern_198_privacy_attack_evaluation.js";
+test("191 composition budget is enforced, not differential privacy mechanism",()=>{const x=new DifferentialPrivacyBudgetGate({epsilon:1,delta:1e-5});x.reserve("a",.4,0);assert.throws(()=>x.reserve("a",.7,0));assert.equal(x.usage("a").epsilon,.4);});
+test("192 attestation boundary rejects missing evidence",()=>{const x=new ConfidentialInferenceBoundary();const m=new Set(["trusted"]);assert.throws(()=>x.authorize({attested:false,measurement:"trusted",approvedMeasurements:m,encryptedInput:true,debugEnabled:false}));assert.equal(x.authorize({attested:true,measurement:"trusted",approvedMeasurements:m,encryptedInput:true,debugEnabled:false}).allowed,true);});
+test("193 tenant and clearance filtering",()=>{const x=new PrivateRetrievalPolicy();const docs=[{tenant:"a",classification:"internal" as const},{tenant:"b",classification:"public" as const},{tenant:"a",classification:"restricted" as const}];assert.equal(x.filter(docs,{tenant:"a",clearance:"internal"}).length,1);});
+test("194 quorum gate is not secure aggregation",()=>{const x=new SecureAggregationCoordinator();assert.throws(()=>x.authorize(["a"],2));assert.equal(x.authorize(["a","b"],2).requiresCryptographicAggregation,true);});
+test("195 allowlist rejects forbidden PII fields",()=>{const x=new PIIMinimizationPipeline();assert.deepEqual(x.project({name:"secret",count:3},new Set(["count"]),new Set(["name"])),{count:3});assert.throws(()=>x.project({name:"secret"},new Set(["name"]),new Set(["name"])));});
+test("196 telemetry suppresses low-count groups",()=>{const x=new PrivacyPreservingTelemetry();const rows=[{tenant:"a",metric:"m",value:1},{tenant:"a",metric:"m",value:3},{tenant:"b",metric:"m",value:2}];assert.equal(x.aggregate(rows,2).length,1);});
+test("197 consent revocation blocks processing",()=>{const x=new ConsentAwareDataProcessing();x.grant("s","research");assert.equal(x.authorize("s","research"),true);x.revoke("s","research");assert.throws(()=>x.authorize("s","research"));});
+test("198 attack evaluation is descriptive only",()=>{const x=new PrivacyAttackEvaluation();const r=x.evaluate([true,false],[true,false]);assert.equal(r.accuracy,1);assert.match(r.limitation,/not a privacy guarantee/);});
