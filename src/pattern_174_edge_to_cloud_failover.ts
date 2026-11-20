@@ -1,3 +1,3 @@
-/** P9 174 Edge-to-Cloud Failover: educational contract, not production infrastructure. */
-export class Pattern174Contract{private records=new Map<string,{actor:string;value:string}>();put(id:string,actor:string,value:string){if(!id||!actor||!value)throw Error("invalid");this.records.set(id,{actor,value});}get(id:string,actor:string){const v=this.records.get(id);if(!v||v.actor!==actor)throw Error("denied");return v.value;}}
+/** P9 174 Edge-to-Cloud Failover: deterministic scheduling/policy reference, not an edge runtime. */
+export class Pattern174Contract{choose(edge:{healthy:boolean;latencyMs:number},cloud:{healthy:boolean;latencyMs:number},maxLatencyMs:number){if(maxLatencyMs<0)throw Error("invalid latency");if(edge.healthy&&edge.latencyMs>=0&&edge.latencyMs<=maxLatencyMs)return "edge" as const;if(cloud.healthy&&cloud.latencyMs>=0&&cloud.latencyMs<=maxLatencyMs)return "cloud" as const;throw Error("no healthy execution target");}}
 export const PATTERN_174_META={id:174,name:"Edge-to-Cloud Failover",family:"edge-distributed-ai",maturity:"experimental"} as const;
