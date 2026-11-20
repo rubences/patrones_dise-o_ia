@@ -147,6 +147,9 @@ jobs:
       - name: Test P9 edge and resource-aware patterns
         run: npx --yes tsx@4.20.6 --test tests/p9_edge_patterns.test.ts
 
+      - name: Test P9 causal and neuro-symbolic contracts
+        run: npx --yes tsx@4.20.6 --test tests/p9_causal_patterns.test.ts
+
       - name: Install web dependencies
         working-directory: web
         run: npm install
