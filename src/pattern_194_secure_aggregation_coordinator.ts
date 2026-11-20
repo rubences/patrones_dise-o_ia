@@ -1,0 +1,3 @@
+/** P10 privacy pattern 194: deterministic educational policy/metric, not a privacy certification. */
+export class SecureAggregationCoordinator{authorize(participants:string[],minimum:number){if(!Number.isInteger(minimum)||minimum<2||new Set(participants).size!==participants.length||participants.some(x=>!x)||participants.length<minimum)throw Error("aggregation quorum denied");return {quorumMet:true as const,participants:participants.length,requiresCryptographicAggregation:true as const};}}
+export const PATTERN_194_META={id:194,family:"privacy-confidential-ai",maturity:"experimental"} as const;
