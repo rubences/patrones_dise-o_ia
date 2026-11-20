@@ -1,10 +1,10 @@
 # P9 — Ampliación integral de la biblioteca de patrones IA
 
-**Fecha:** 2026-11-20. **Estado:** cartera de investigación y diseño aprobada; NO equivale a 56 patrones implementados ni a nueva versión de producción.
+**Fecha:** 2026-11-20. **Estado actualizado (20-11-2026):** los 56 IDs 135–190 disponen de fichas canónicas y contratos TypeScript educativos, incorporados al catálogo v19.0.0 de 190 patrones / 22 familias. **No** equivalen a 56 algoritmos o integraciones de producción; CI y builds no verificados todavía.
 
 ## Objetivo
 
-Incorporar siete macrofamilias adicionales y 56 candidatos con IDs reservados 135–190. Catálogo de producción actual: 134 patrones y 15 familias. Objetivo futuro: 190 patrones y 22 familias **solo después de implementación y gates completos**. Mantener inmutables los IDs 1–134.
+Incorporar siete macrofamilias adicionales y 56 candidatos con IDs reservados 135–190. Catálogo editorial actual: 190 patrones y 22 familias; baseline de evidencia primaria P7.0 sin cambios (54 patrones / 51 fuentes). La validación de CI y la profundización de implementaciones siguen pendientes. Mantener inmutables los IDs 1–134.
 
 ## Cartera de patrones
 
