@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "catalogSize": 270,
+  "catalogSize": 280,
   "patterns": [
     {
       "id": 1,
@@ -3140,6 +3140,126 @@
       "editorialStatus": "published",
       "evidenceStatus": "needs-review",
       "canonicalContent": "content/patterns/270-knowledge-repair-human-approval.md"
+    },
+    {
+      "id": 271,
+      "name": "Reasoning Effort Budget Scheduler",
+      "slug": "reasoning-effort-budget-scheduler",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_271_reasoning_effort_budget_scheduler.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/271-reasoning-effort-budget-scheduler.md"
+    },
+    {
+      "id": 272,
+      "name": "Adaptive Test-Time Compute Gate",
+      "slug": "adaptive-test-time-compute-gate",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_272_adaptive_test_time_compute_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/272-adaptive-test-time-compute-gate.md"
+    },
+    {
+      "id": 273,
+      "name": "Early Exit Confidence Controller",
+      "slug": "early-exit-confidence-controller",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_273_early_exit_confidence_controller.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/273-early-exit-confidence-controller.md"
+    },
+    {
+      "id": 274,
+      "name": "Speculative Decoding Acceptance Gate",
+      "slug": "speculative-decoding-acceptance-gate",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_274_speculative_decoding_acceptance_gate.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/274-speculative-decoding-acceptance-gate.md"
+    },
+    {
+      "id": 275,
+      "name": "Reasoning Trace Compression Contract",
+      "slug": "reasoning-trace-compression-contract",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_275_reasoning_trace_compression_contract.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/275-reasoning-trace-compression-contract.md"
+    },
+    {
+      "id": 276,
+      "name": "Inference Cascade Escalation Policy",
+      "slug": "inference-cascade-escalation-policy",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_276_inference_cascade_escalation_policy.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/276-inference-cascade-escalation-policy.md"
+    },
+    {
+      "id": 277,
+      "name": "Uncertainty-Triggered Deliberation",
+      "slug": "uncertainty-triggered-deliberation",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_277_uncertainty_triggered_deliberation.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/277-uncertainty-triggered-deliberation.md"
+    },
+    {
+      "id": 278,
+      "name": "Parallel Candidate Consensus Budget",
+      "slug": "parallel-candidate-consensus-budget",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_278_parallel_candidate_consensus_budget.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/278-parallel-candidate-consensus-budget.md"
+    },
+    {
+      "id": 279,
+      "name": "Inference Cache Correctness Guard",
+      "slug": "inference-cache-correctness-guard",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_279_inference_cache_correctness_guard.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/279-inference-cache-correctness-guard.md"
+    },
+    {
+      "id": 280,
+      "name": "Verifier-Guided Search Controller",
+      "slug": "verifier-guided-search-controller",
+      "family": "inference-compute-optimization",
+      "legacyGroup": 46,
+      "sourceFile": "src/pattern_280_verifier_guided_search_controller.ts",
+      "implementationStatus": "implemented",
+      "editorialStatus": "published",
+      "evidenceStatus": "needs-review",
+      "canonicalContent": "content/patterns/280-verifier-guided-search-controller.md"
     }
   ]
 }
