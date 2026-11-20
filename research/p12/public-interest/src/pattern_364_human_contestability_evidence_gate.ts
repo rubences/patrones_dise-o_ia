@@ -1,0 +1,3 @@
+/** P12 364: educational public-interest governance contract; not legal compliance certification. */
+export class Pattern364Contract{assess(caseFile:{decisionId:string;explanationAvailable:boolean;supportingEvidenceAvailable:boolean;humanReviewAvailable:boolean;correctionChannelAvailable:boolean}){if(!caseFile.decisionId.trim())throw Error("invalid case");const missing=(["explanationAvailable","supportingEvidenceAvailable","humanReviewAvailable","correctionChannelAvailable"] as const).filter(k=>caseFile[k]!==true);return {contestable:missing.length===0,missing};}}
+export const PATTERN_364_META={id:364,family:"ai-public-interest-governance",maturity:"experimental"} as const;
