@@ -67,6 +67,9 @@ jobs:
       - name: Validate repository consistency
         run: node scripts/validate-repository-consistency.mjs
 
+      - name: Validate web and 365-pattern publication coverage
+        run: node scripts/validate-web-publication-coverage.mjs
+
       - name: Validate dual publication architecture
         run: node scripts/validate-publications.mjs
 
