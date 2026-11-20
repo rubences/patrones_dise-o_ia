@@ -1,0 +1,3 @@
+/** P12 352: educational AI deployment contract; not a production release controller. */
+export class Pattern352Contract{decide(canary:{requests:number;failures:number},baseline:{requests:number;failures:number},maxRegression:number){if(!Number.isFinite(maxRegression)||maxRegression<0||maxRegression>1||[canary.requests,canary.failures,baseline.requests,baseline.failures].some(x=>!Number.isInteger(x)||x<0)||!canary.requests||!baseline.requests||canary.failures>canary.requests||baseline.failures>baseline.requests)throw Error("invalid rollout");const delta=canary.failures/canary.requests-baseline.failures/baseline.requests;return {promote:delta<=maxRegression,delta};}}
+export const PATTERN_352_META={id:352,family:"ai-deployment-lifecycle",maturity:"experimental"} as const;
