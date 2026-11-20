@@ -4,7 +4,7 @@ slug: structural-causal-model-adapter
 title: "Structural Causal Model Adapter"
 summary: "Contrato experimental para structural causal model adapter con restricciones explícitas y evaluación reproducible."
 family: causal-neurosymbolic-ai
-legacyGroup: 36
+legacyGroup: 34
 level: architecture
 difficulty: advanced
 maturity: experimental
