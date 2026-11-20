@@ -1,0 +1,3 @@
+/** P12 344: educational adversarial evaluation contract; no safety certification. */
+import {createHash} from "node:crypto";export class Pattern344Contract{detect(evaluation:string[],training:string[]){if([...evaluation,...training].some(x=>!x.trim()))throw Error("invalid corpus");const digest=(s:string)=>createHash("sha256").update(s.trim()).digest("hex");const known=new Set(training.map(digest));const matches=evaluation.filter(x=>known.has(digest(x)));return {exactMatches:matches.length,flagged:matches.length>0,limitation:"exact normalized matches do not detect paraphrased contamination" as const};}}
+export const PATTERN_344_META={id:344,family:"ai-agent-evaluation-redteam",maturity:"experimental"} as const;
