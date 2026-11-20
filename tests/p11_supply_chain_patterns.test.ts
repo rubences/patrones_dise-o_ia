@@ -1,0 +1,18 @@
+import test from "node:test";import assert from "node:assert/strict";import {createHash,generateKeyPairSync,sign} from "node:crypto";
+import {Pattern239Contract} from "../research/p11/supply-chain/src/pattern_239_model_artifact_provenance_attestation.js";
+import {Pattern240Contract} from "../research/p11/supply-chain/src/pattern_240_dataset_lineage_signature_gate.js";
+import {Pattern241Contract} from "../research/p11/supply-chain/src/pattern_241_prompt_package_integrity_lock.js";
+import {Pattern242Contract} from "../research/p11/supply-chain/src/pattern_242_inference_dependency_sbom.js";
+import {Pattern243Contract} from "../research/p11/supply-chain/src/pattern_243_model_weight_tamper_sentinel.js";
+import {Pattern244Contract} from "../research/p11/supply-chain/src/pattern_244_third_party_model_license_gate.js";
+import {Pattern245Contract} from "../research/p11/supply-chain/src/pattern_245_secure_model_rollback.js";
+import {Pattern246Contract} from "../research/p11/supply-chain/src/pattern_246_training_pipeline_attestation.js";
+const digest=(value:string)=>createHash("sha256").update(value).digest("hex");
+test("239 verifies bytes against expected SHA-256",()=>{const x=new Pattern239Contract();assert.equal(x.verify(Buffer.from("model"),digest("model")),true);assert.equal(x.verify(Buffer.from("other"),digest("model")),false);});
+test("240 verifies genuine signature and rejects tampering",()=>{const keys=generateKeyPairSync("rsa",{modulusLength:2048});const message=Buffer.from("dataset");const signature=sign("sha256",message,keys.privateKey);const publicKey=keys.publicKey.export({format:"pem",type:"spki"}).toString();const x=new Pattern240Contract();assert.equal(x.verify(message,signature,publicKey),true);assert.equal(x.verify(Buffer.from("tampered"),signature,publicKey),false);});
+test("241 canonical prompt package detects content modification",()=>{const x=new Pattern241Contract();const parts=[{path:"system.txt",content:"safe"}];const hash=x.digest(parts);assert.equal(x.verify(parts,hash),true);assert.equal(x.verify([{path:"system.txt",content:"changed"}],hash),false);});
+test("242 detects undeclared version drift",()=>{const x=new Pattern242Contract();assert.deepEqual(x.diff([{name:"lib",version:"1"}],[{name:"lib",version:"2"}]),[{name:"lib",version:"2"}]);});
+test("243 detects weight tampering",()=>{const x=new Pattern243Contract();assert.equal(x.verify(Buffer.from("weights"),digest("weights")),true);assert.equal(x.verify(Buffer.from("bad"),digest("weights")),false);});
+test("244 blocks unapproved license",()=>{const x=new Pattern244Contract();assert.throws(()=>x.authorize({id:"m",license:"unknown"},new Set(["approved"])));assert.equal(x.authorize({id:"m",license:"approved"},new Set(["approved"])).approved,true);});
+test("245 selects last healthy approved version",()=>{const x=new Pattern245Contract();assert.equal(x.select([{id:"v1",digest:"a".repeat(64),healthy:true,approved:true},{id:"v2",digest:"b".repeat(64),healthy:false,approved:true}]).id,"v1");});
+test("246 rejects unverified training step",()=>{const x=new Pattern246Contract();assert.equal(x.assess([{id:"train",digest:"a".repeat(64),verified:false}]).accepted,false);});
