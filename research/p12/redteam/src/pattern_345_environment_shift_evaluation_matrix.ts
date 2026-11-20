@@ -1,0 +1,3 @@
+/** P12 345: educational adversarial evaluation contract; no safety certification. */
+export class Pattern345Contract{compare(results:{environment:string;successes:number;total:number}[],maxGap:number){if(results.length<2||!Number.isFinite(maxGap)||maxGap<0||maxGap>1||results.some(x=>!x.environment.trim()||!Number.isInteger(x.total)||x.total<=0||!Number.isInteger(x.successes)||x.successes<0||x.successes>x.total))throw Error("invalid evaluation");const rates=results.map(x=>({environment:x.environment,rate:x.successes/x.total}));const gap=Math.max(...rates.map(x=>x.rate))-Math.min(...rates.map(x=>x.rate));return {rates,gap,flagged:gap>maxGap};}}
+export const PATTERN_345_META={id:345,family:"ai-agent-evaluation-redteam",maturity:"experimental"} as const;
