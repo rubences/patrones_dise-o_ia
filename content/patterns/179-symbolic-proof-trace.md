@@ -34,7 +34,8 @@ Separar supuestos, datos, modelo, decisión y evidencia con trazabilidad.
 
 ## Implementación del repositorio
 
-`src/pattern_179_symbolic_proof_trace.ts` es un contrato educativo, no estima modelos causales ni ejecuta simulación del mundo.
+Comprueba dependencias declaradas entre pasos de una derivación; no verifica validez de reglas lógicas. Referencia determinista: `src/pattern_179_symbolic_proof_trace.ts`. Pruebas positivas y negativas: `tests/p9_causal_patterns.test.ts`. **No se afirma identificación causal, corrección formal ni rendimiento en benchmarks.**
+
 
 ## Producción
 
