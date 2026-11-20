@@ -1,0 +1,17 @@
+import test from "node:test";import assert from "node:assert/strict";
+import {SensorFusionConfidenceGate} from "../research/p10/embodied/src/pattern_199_sensor_fusion_confidence_gate.js";
+import {PerceptionToActionContract} from "../research/p10/embodied/src/pattern_200_perception_to_action_contract.js";
+import {EmbodiedSafetyEnvelope} from "../research/p10/embodied/src/pattern_201_embodied_safety_envelope.js";
+import {TemporalMultimodalAlignment} from "../research/p10/embodied/src/pattern_202_temporal_multimodal_alignment.js";
+import {RobotSkillInvocation} from "../research/p10/embodied/src/pattern_203_robot_skill_invocation.js";
+import {PhysicalWorldStateEstimator} from "../research/p10/embodied/src/pattern_204_physical_world_state_estimator.js";
+import {SimulationToRealityValidation} from "../research/p10/embodied/src/pattern_205_simulation_to_reality_validation.js";
+import {HumanOverrideForEmbodiedAgents} from "../research/p10/embodied/src/pattern_206_human_override_for_embodied_agents.js";
+test("199 weighted fusion rejects low confidence",()=>{const x=new SensorFusionConfidenceGate();assert.equal(x.fuse([{source:"a",value:4,confidence:1},{source:"b",value:8,confidence:1}],.5).value,6);assert.throws(()=>x.fuse([{source:"a",value:4,confidence:.1}],.5));});
+test("200 stale perception cannot authorize action",()=>{const x=new PerceptionToActionContract();assert.throws(()=>x.authorize({timestamp:1,confidence:1},{kind:"move"},10,2,.8));assert.equal(x.authorize({timestamp:9,confidence:1},{kind:"move"},10,2,.8).authorized,true);});
+test("201 rejects unsafe velocity and force",()=>{const x=new EmbodiedSafetyEnvelope();assert.throws(()=>x.enforce({velocity:3,force:1},{maxVelocity:2,maxForce:2}));assert.equal(x.enforce({velocity:1,force:1},{maxVelocity:2,maxForce:2}).velocity,1);});
+test("202 modality timestamps must align",()=>{const x=new TemporalMultimodalAlignment();assert.throws(()=>x.align({timestamp:1},{timestamp:10},2));assert.equal(x.align({timestamp:1},{timestamp:2},2).aligned,true);});
+test("203 skill requires registry and human approval",()=>{const x=new RobotSkillInvocation();x.register("move");assert.throws(()=>x.invoke("move",false));assert.equal(x.invoke("move",true).execution,"simulation-only");});
+test("204 state estimation validates measurement confidence",()=>{const x=new PhysicalWorldStateEstimator();assert.equal(x.update({position:0,velocity:2},{position:4,confidence:.5},1).position,3);assert.throws(()=>x.update({position:0,velocity:1},{position:1,confidence:2},1));});
+test("205 simulated versus observed MAE threshold",()=>{const x=new SimulationToRealityValidation();assert.equal(x.assess([1,2],[1,4],.5).accepted,false);assert.equal(x.assess([1,2],[1,2],0).accepted,true);});
+test("206 human stop remains active until authorized reset",()=>{const x=new HumanOverrideForEmbodiedAgents();x.stop();assert.throws(()=>x.authorize());assert.throws(()=>x.reset(false));x.reset(true);assert.equal(x.authorize(),true);});
