@@ -4,7 +4,7 @@ slug: controlled-write-barrier
 title: "Controlled Write Barrier"
 summary: "Patrón de referencia para controlled write barrier con contratos explícitos, comprobaciones negativas y límites de ejecución."
 family: agent-runtime-harness
-legacyGroup: 30
+legacyGroup: 35
 level: workflow
 difficulty: advanced
 maturity: emerging
