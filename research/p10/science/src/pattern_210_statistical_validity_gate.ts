@@ -1,0 +1,3 @@
+/** P10 210: educational deterministic research contract, not scientific validation. */
+export class StatisticalValidityGate{assess(pValues:number[],alpha:number){if(!pValues.length||!Number.isFinite(alpha)||alpha<=0||alpha>=1||pValues.some(p=>!Number.isFinite(p)||p<0||p>1))throw Error("invalid statistics");const sorted=pValues.map((p,index)=>({p,index})).sort((a,b)=>a.p-b.p);const rejected=new Array<boolean>(pValues.length).fill(false);for(let i=0;i<sorted.length;i++){if(sorted[i].p>alpha/(sorted.length-i))break;rejected[sorted[i].index]=true;}return {rejected,method:"Holm-Bonferroni" as const};}}
+export const PATTERN_210_META={id:210,family:"ai-scientific-discovery",maturity:"experimental"} as const;
