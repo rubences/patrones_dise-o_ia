@@ -4,7 +4,7 @@ slug: cross-trajectory-abstraction
 title: "Cross-Trajectory Abstraction"
 summary: "Contrato arquitectónico experimental para cross-trajectory abstraction con trazabilidad, autorización y pruebas negativas."
 family: continual-learning-memory
-legacyGroup: 31
+legacyGroup: 29
 level: architecture
 difficulty: advanced
 maturity: experimental
