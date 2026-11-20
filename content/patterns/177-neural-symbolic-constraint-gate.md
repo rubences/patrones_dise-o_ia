@@ -4,7 +4,7 @@ slug: neural-symbolic-constraint-gate
 title: "Neural-Symbolic Constraint Gate"
 summary: "Contrato experimental para neural-symbolic constraint gate con restricciones explícitas y evaluación reproducible."
 family: causal-neurosymbolic-ai
-legacyGroup: 36
+legacyGroup: 34
 level: architecture
 difficulty: advanced
 maturity: experimental
