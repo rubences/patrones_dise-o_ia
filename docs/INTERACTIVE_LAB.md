@@ -19,3 +19,9 @@ La nueva capa Archify convive con el SVG de relaciones de la fase 1. Se generan 
 El visor Astro utiliza un `iframe` aislado con enlace de apertura independiente, y conserva el contenido textual de la ficha. Primeros diagramas: arquitectura del Interactive Lab y workflow del patrón 001. No se atribuye a los 365 patrones un flujo de ejecución inferido automáticamente.
 
 Los datos de los usuarios siguen siendo locales, sin cuentas; la generación Archify ocurre en GitHub Actions, **no en el navegador del usuario**. La licencia Apache-2.0 y las atribuciones del proyecto se conservan en `web/public/archify/`. 
+
+## Fase 2 — almacenamiento local (en desarrollo)
+
+El contrato `ArchitectureDiagram` v1 dispone de serialización JSON, importación con validación de esquema y límite de 1 MB, y adaptadores de almacenamiento en memoria y IndexedDB. El almacenamiento es exclusivamente local, sin cuentas ni backend. La importación rechaza proyectos con versiones desconocidas, patrones inexistentes, conexiones inválidas y etiquetas potencialmente peligrosas. El almacenamiento del navegador puede eliminarse por políticas del usuario, cuotas o limpieza: la exportación manual será indispensable.
+
+Los adaptadores se están verificando en CI antes de conectarlos al futuro editor visual. Todavía no hay un botón de guardado ni un lienzo de edición en la web pública.
