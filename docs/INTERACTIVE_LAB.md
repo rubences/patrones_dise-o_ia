@@ -69,3 +69,7 @@ Tras simular, el editor permite elegir una oleada mediante selector o controles 
 ## Estadísticas y exportación de informe
 
 El editor presenta recuentos estructurales de nodos, aristas, tamaño de oleadas y conexiones por tipo. «Exportar informe» genera JSON autocontenido con estadísticas, traza, diagnóstico y aviso metodológico. El informe es local y reproducible, sin latencias, costes, rendimiento ni ejecución de LLM/herramientas. Tras cualquier modificación se invalida el informe anterior.
+
+## Filtros visuales por tipo de conexión
+
+El editor filtra visualmente las aristas por `data`, `control`, `tool-call`, `delegation` y `evidence`. «Todos los tipos» restaura el conjunto completo. El filtro no elimina conexiones, no cambia el JSON almacenado y no afecta a la simulación o estadísticas.
