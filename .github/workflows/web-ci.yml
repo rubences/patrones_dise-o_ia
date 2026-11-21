@@ -199,6 +199,7 @@ jobs:
         run: |
           npx --yes tsx@4.20.6 --test tests/interactive-lab-editor-operations.test.ts
           node --test tests/interactive-lab-editor-smoke.test.mjs
+          npx --yes tsx@4.20.6 --test tests/interactive-lab-editor-history.test.ts
 
       - name: Install web dependencies
         working-directory: web

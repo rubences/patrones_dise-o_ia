@@ -33,3 +33,7 @@ Se añaden diagramas de flujo revisados para los patrones 025 (RAG), 053 (Guardr
 ## Editor visual local — entrega MVP
 
 La ruta `/lab/editor/` permite seleccionar patrones de las 42 macrofamilias, añadir nodos, arrastrarlos, conectarlos con relaciones tipadas, eliminar nodos con teclado, guardar y abrir proyectos en IndexedDB, e importar/exportar JSON validado. El lienzo SVG utiliza texto seguro y no ejecuta modelos, herramientas ni código del proyecto importado. El editor es un primer MVP sin XYFlow; el refinamiento de experiencia, undo/redo, pruebas E2E de navegador y simulación reproducible continúan pendientes. El navegador puede eliminar los proyectos: exporta JSON regularmente.
+
+## Historial de edición
+
+El editor ofrece controles Deshacer/Rehacer para operaciones sobre nodos y conexiones. El historial es local y acotado a 50 versiones; se reinicia al abrir, importar o crear un proyecto. No constituye auditoría ni sustituye la exportación JSON. El guardado en IndexedDB persiste el proyecto, no su historial.
