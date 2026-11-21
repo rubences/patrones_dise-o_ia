@@ -41,3 +41,7 @@ El editor ofrece controles Deshacer/Rehacer para operaciones sobre nodos y conex
 ## Edición de conexiones
 
 La interfaz permite seleccionar una conexión existente por sus nodos y tipo, y eliminarla sin borrar los patrones asociados. La operación se incluye en el historial local de Deshacer/Rehacer y conserva la validación del grafo.
+
+## Pruebas de navegador del editor
+
+La suite `tests/interactive-lab-browser-e2e.test.mjs` se ejecuta contra el build Astro real servido por `astro preview`, en Chromium con Playwright. Verifica creación y conexión de patrones, borrado de aristas, deshacer/rehacer, guardado en IndexedDB tras recargar la página, exportación JSON, rechazo de etiquetas HTML importadas y movimiento mediante teclado y puntero. Se ejecuta en `.github/workflows/editor-e2e.yml` y no requiere credenciales ni un servidor de datos. La suite valida un navegador concreto; no sustituye pruebas de accesibilidad completas ni compatibilidad multiplataforma.
