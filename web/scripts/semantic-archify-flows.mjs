@@ -48,6 +48,26 @@ export const semanticFlows={
   links:[['question','decision','pregunta'],['decision','gate','texto del modelo'],['gate','stub','sí'],['gate','output','no'],['stub','synthesis','resultado simulado'],['synthesis','output','respuesta integrada']],
   evidence:['No se declaran tools a la API: se inspecciona output_text buscando la palabra «buscar»','invocarHerramienta devuelve respuestas simuladas, no hace llamadas HTTP ni SQL','Solo se simula buscar_web; las otras herramientas figuran en HERRAMIENTAS pero no se despachan']
  }
+ ,6:{
+  steps:[['goal','Objetivo','entrada','external'],['plan','Generar plan','generarPlanInicial','backend'],['assess','Evaluar viabilidad','evaluarPlan','backend'],['refine','Refinar plan','refinarPlan','backend'],['result','Resultado','ResultadoPlanificacion','frontend']],
+  links:[['goal','plan','objetivo'],['plan','assess','plan inicial'],['assess','refine','evaluación'],['refine','result','plan refinado']],
+  evidence:['Las cuatro subtareas iniciales están codificadas como valores fijos','La viabilidad se infiere buscando «viable» en el texto, sin validación estructurada','El tiempo total suma las duraciones del plan inicial mediante parseInt, no calcula ruta crítica']
+ },
+ 7:{
+  steps:[['task','Tarea','entrada','external'],['roles','Roles especializados','ROLES_AGENTES','backend'],['parallel','Ejecución paralela','Promise.all · procesarConAgente','backend'],['synthesis','Síntesis orquestadora','sintetizarContribuciones','backend'],['consensus','Consenso aproximado','promedio de confianza','backend'],['result','Resultado multiagente','ResultadoMultiAgent','frontend']],
+  links:[['task','roles','tarea'],['roles','parallel','4 roles'],['parallel','synthesis','contribuciones'],['synthesis','consensus','síntesis'],['consensus','result','resultado']],
+  evidence:['Los cuatro roles se lanzan con Promise.all','La confianza de cada agente se genera con Math.random, no procede del modelo','El consenso se calcula con el promedio de confianzas aleatorias, no con comparación semántica']
+ },
+ 8:{
+  steps:[['task','Tarea','entrada','external'],['proposal','Propuesta de IA','generarProposal','backend'],['risk','Clasificar riesgo','búsqueda de palabras','backend'],['gate','¿Requiere aprobación?','requiereAprobacionHumana','backend'],['human','Decisión humana simulada','obtenerAprobacionHumana','backend'],['refine','Refinar propuesta','refinarProposal','backend'],['result','Resultado','ProcesoHITL','frontend']],
+  links:[['task','proposal','tarea'],['proposal','risk','propuesta'],['risk','gate','riesgo'],['gate','human','medio/alto/crítico'],['gate','result','bajo'],['human','result','aprobado o rechazado'],['human','refine','solicita cambios'],['refine','result','propuesta refinada']],
+  evidence:['La revisión humana está simulada mediante Math.random; no hay interacción humana real','La clasificación de riesgo utiliza coincidencias de texto','La aprobación y la ejecución se representan mediante cadenas de resultado, no acciones externas']
+ },
+ 9:{
+  steps:[['client','Cliente','ConfigAgente','external'],['factory','FabricaAgentes','crearAgente','backend'],['gate','Seleccionar tipo','switch(config.tipo)','backend'],['expert','Agente Experto','requiere especialización','backend'],['other','Otros agentes','generalista/supervisor/auditor','backend'],['result','Agente creado','interfaz Agente','frontend']],
+  links:[['client','factory','configuración'],['factory','gate','tipo'],['gate','expert','experto'],['gate','other','otros tipos'],['expert','result','instancia'],['other','result','instancia']],
+  evidence:['La fábrica selecciona una clase según config.tipo','El experto requiere especialización y lanza error si falta','Cada agente implementa procesarTarea; crearAgente no ejecuta el modelo']
+ }
 };
 export function sourceSemanticDiagram(p,revision){
  const flow=semanticFlows[p.id];
