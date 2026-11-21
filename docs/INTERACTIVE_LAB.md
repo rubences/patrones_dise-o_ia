@@ -77,3 +77,7 @@ El editor filtra visualmente las aristas por `data`, `control`, `tool-call`, `de
 ## Informe HTML para docencia y análisis técnico
 
 «Informe HTML imprimible» exporta un documento autónomo, sin JavaScript ni recursos externos, con resumen, recuentos, oleadas, diagnóstico y traza. Permite imprimir o guardar como PDF desde el navegador. Escapa todo contenido procedente de etiquetas y títulos del proyecto. No afirma ejecución real ni métricas empíricas.
+
+## Cobertura Archify de los 365 patrones
+
+Cada ficha dispone de un HTML Archify propio generado a partir del catálogo canónico y del archivo de implementación correspondiente. Los cinco patrones 001, 025, 053, 060 y 082 conservan diagramas de flujo revisados manualmente. Para los otros 360, el diagrama inicial es un **mapa esquemático de fuentes y revisión**, no una reconstrucción auditada de su lógica interna: indica catálogo, código, contrato, verificación y documentación, con referencias al archivo fuente. Esta distinción se señala en cada ficha y en el propio HTML. La mejora editorial posterior consiste en reemplazar progresivamente estos mapas por diagramas semánticos específicos y contrastados con cada implementación. Ninguno ejecuta herramientas ni modelos.

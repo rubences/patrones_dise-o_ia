@@ -1,8 +1,12 @@
-import {execFileSync} from 'node:child_process';
+import {execFileSync,execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+const execAsync=promisify(execFile);
 import {copyFileSync,existsSync,mkdirSync,mkdtempSync,readFileSync,rmSync,statSync,writeFileSync} from 'node:fs';
 import {join,resolve,dirname} from 'node:path';
 import {tmpdir} from 'node:os';
 import {ARCHIFY_RELEASE_SHA,curatedDiagrams} from '../web/src/data/archify-diagrams.mjs';
+import {patternDiagramRegistry,patternSourceOverview} from '../web/scripts/pattern-archify-registry.mjs';
+import catalog from '../catalog/patterns.json' with {type:'json'};
 
 const root=resolve(import.meta.dirname,'..');
 const archifyDir=join(root,'.tooling','archify');
@@ -40,6 +44,30 @@ try{
   copyFileSync(output,published);
   console.log('Published:',published);
  }
+ const curatedIds=new Set(curatedDiagrams.filter(d=>d.patternId).map(d=>d.patternId));
+ const generated=patternDiagramRegistry().filter(d=>!curatedIds.has(d.patternId));
+ const patterns=new Map(catalog.patterns.map(p=>[p.id,p]));
+ const workerCount=Number(process.env.ARCHIFY_WORKERS??'1');
+ if(!Number.isInteger(workerCount)||workerCount<1||workerCount>6)throw Error('Invalid ARCHIFY_WORKERS');
+ const workers=Array.from({length:Math.min(workerCount,generated.length)},async(_,worker)=>{
+  for(let i=worker;i<generated.length;i+=workerCount){
+   const entry=generated[i],pattern=patterns.get(entry.patternId);
+   if(!pattern||!existsSync(join(root,pattern.sourceFile)))throw Error('Missing pattern source '+entry.patternId);
+   const input=patternSourceOverview(pattern,revision);
+   const candidate=join(temp,`generated-${entry.patternId}.json`);
+   writeFileSync(candidate,JSON.stringify(input,null,2)+'\n');
+   const output=join(root,input.meta.output);
+   mkdirSync(dirname(output),{recursive:true});
+   try{
+    await execAsync(process.execPath,[cli,'finalize','workflow',candidate,input.meta.output,
+     '--repo-root',root,'--quality','showcase','--json'],{cwd:root,maxBuffer:2*1024*1024});
+   }catch(error){throw Error('Archify pattern '+entry.patternId+': '+JSON.stringify({code:error.code,stdout:String(error.stdout??'').slice(-3000),stderr:String(error.stderr??'').slice(-3000),message:error.message}).slice(-6500))}
+   if(!existsSync(output)||statSync(output).size<1000)throw Error('Missing generated Archify '+entry.id);
+   copyFileSync(output,join(siteOutput,entry.output));
+   console.log('Generated pattern Archify',entry.patternId,'/',catalog.patterns.length);
+  }
+ });
+ await Promise.all(workers);
 }finally{
  rmSync(temp,{recursive:true,force:true});
 }
