@@ -49,3 +49,7 @@ La suite `tests/interactive-lab-browser-e2e.test.mjs` se ejecuta contra el build
 ## Accesibilidad del editor — selección de nodos
 
 El editor incorpora un selector de nodos y un botón explícito para eliminar el nodo elegido, además de movimiento con las teclas de dirección y borrado con Suprimir. El foco del teclado se indica visualmente y se ofrece ayuda contextual. Una prueba de Chromium comprueba que la eliminación mediante controles accesibles conserva el historial Deshacer. Esta mejora no constituye una auditoría WCAG completa.
+
+## Gestión local de proyectos
+
+El editor permite duplicar un proyecto con identificador nuevo, renombrarlo sin modificar los nodos, y muestra el estado de cambios sin guardar. Antes de crear otro proyecto, cargar uno existente o importar JSON se pide confirmación si se perderían cambios; también se avisa al abandonar la página. Los proyectos originales permanecen independientes de sus copias. Los datos se guardan solo en IndexedDB; exporta JSON como copia de seguridad.
