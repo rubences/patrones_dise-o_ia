@@ -68,7 +68,7 @@ if(root){
  const uid=()=> 'project_'+crypto.randomUUID().replaceAll('-','').slice(0,20);
  let project:ArchitectureDiagram=newArchitecture(uid(),'Mi arquitectura IA');
  let history=createHistory(project);
- let savedSnapshot:ArchitectureDiagram|null=null;
+ let savedSnapshot:ArchitectureDiagram|null=structuredClone(project);
  const dirtyLabel=el<HTMLElement>('editor-dirty');
  const current=()=>({...project,title:title.value.trim()});
  const updateDirty=()=>{dirtyLabel.textContent=projectIsDirty(savedSnapshot,current())?'Cambios sin guardar':'Todos los cambios guardados'};
@@ -119,7 +119,7 @@ if(root){
  el<HTMLButtonElement>('editor-remove-node').addEventListener('click',()=>{if(!selectedNode.value){notice('No hay un nodo seleccionado');return}commit(removePatternNode(project,selectedNode.value));render();notice('Nodo eliminado')});
  selectedNode.addEventListener('change',()=>{const id=selectedNode.value;const all=[...nodes.querySelectorAll('g')];const index=project.nodes.findIndex(n=>n.id===id);if(index>=0)(all[index] as SVGGElement)?.focus()});
  el<HTMLButtonElement>('editor-remove-edge').addEventListener('click',()=>{if(!edgeSelect.value){notice('No hay una conexión seleccionada');return}commit(removePatternEdge(project,edgeSelect.value));render();notice('Conexión eliminada')});
- el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{if(!mayDiscard())return;savedSnapshot=null;reset(newArchitecture(uid(),'Mi arquitectura IA'));render();notice('Proyecto nuevo sin guardar')});
+ el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{if(!mayDiscard())return;const fresh=newArchitecture(uid(),'Mi arquitectura IA');savedSnapshot=structuredClone(fresh);reset(fresh);render();notice('Proyecto nuevo sin guardar')});
  el<HTMLButtonElement>('editor-duplicate').addEventListener('click',()=>{try{const next=duplicateProject(current(),uid(),title.value.trim()+' (copia)');savedSnapshot=null;reset(next);render();notice('Copia creada. Guarda para conservarla.')}catch(e){notice(e instanceof Error?e.message:String(e))}});
  el<HTMLButtonElement>('editor-rename').addEventListener('click',()=>{try{commit(renameProject(project,title.value));render();notice('Nombre actualizado. Guarda para conservarlo.')}catch(e){notice(e instanceof Error?e.message:String(e))}});
  el<HTMLButtonElement>('editor-save').addEventListener('click',()=>safely(async()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok)throw Error(v.errors.join('; '));await storage.put(v.diagram);project=v.diagram;savedSnapshot=structuredClone(v.diagram);await refreshSaved();updateDirty();notice('Guardado en este navegador')}));
