@@ -192,6 +192,9 @@ jobs:
       - name: Validate Archify diagram sources and integration
         run: node --test tests/archify-diagrams.test.mjs
 
+      - name: Test local Interactive Lab project storage
+        run: npx --yes tsx@4.20.6 --test tests/interactive-lab-local-projects.test.ts
+
       - name: Install web dependencies
         working-directory: web
         run: npm install

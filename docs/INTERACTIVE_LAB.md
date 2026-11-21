@@ -25,3 +25,7 @@ Los datos de los usuarios siguen siendo locales, sin cuentas; la generación Arc
 Se añaden diagramas de flujo revisados para los patrones 025 (RAG), 053 (Guardrails), 060 (Orchestrator–Workers) y 082 (MCP Server), además del Pipeline 001 y la arquitectura web. Los seis artefactos se generan con Archify 3.2.0 fijado, pasan por `finalize` y se sirven como HTML autónomo. La ficha de cada patrón conserva el visor SVG genérico como mapa alternativo de relaciones.
 
 **Límites documentados:** P025 usa recuperación léxica sobre datos simulados; P053 tiene políticas pedagógicas, no autorización de acciones sensibles; P060 valida dependencias y despacha olas paralelas; P082 usa un transporte MCP en memoria. No se deben atribuir propiedades que las implementaciones no demuestran.
+
+## Fase 2 — persistencia local (contratos)
+
+`ArchitectureDiagram` v1 dispone de importación JSON con validación de esquema y límite de 1 MB, y adaptadores en memoria e IndexedDB. El almacenamiento es local, sin cuentas ni backend. La persistencia en el navegador puede ser eliminada por el usuario o por cuotas: la futura interfaz incluirá exportación manual. Los adaptadores todavía no están conectados a un editor visual público.
