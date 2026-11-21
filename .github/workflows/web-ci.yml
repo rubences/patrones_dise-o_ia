@@ -226,6 +226,9 @@ jobs:
           path: .tooling/archify
           persist-credentials: false
 
+      - name: Verify all 365 Archify registry entries
+        run: node --test tests/archify-all-patterns.test.mjs
+
       - name: Generate and browser-validate Archify diagrams
         run: node scripts/build-archify-diagrams.mjs
 
