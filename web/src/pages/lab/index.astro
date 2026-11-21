@@ -4,6 +4,7 @@ import ArchifyDiagram from '../../components/lab/ArchifyDiagram.astro';
 import {curatedDiagrams} from '../../data/archify-diagrams.mjs';
 const base=import.meta.env.BASE_URL;
 const diagram=curatedDiagrams.find(d=>d.id==='interactive-lab');
+const featured=curatedDiagrams.filter(d=>d.patternId).sort((a,b)=>a.patternId-b.patternId);
 if(!diagram)throw new Error('Archify overview diagram missing');
 ---
 <BaseLayout title="Interactive Lab — Patrones IA" description="Visita los diagramas interactivos generados con Archify y explora arquitecturas de inteligencia artificial.">
@@ -16,5 +17,11 @@ if(!diagram)throw new Error('Archify overview diagram missing');
  <section class="section" style="padding-top:0">
   <ArchifyDiagram filename={diagram.output} title="Arquitectura actual del catálogo y laboratorio" base={base}/>
   <p>La representación describe el sistema web existente. No equivale a certificación, benchmark ni ejecución de los patrones.</p>
+ </section>
+ <section class="section" aria-labelledby="curated-heading">
+  <div class="section-heading"><div><p class="eyebrow">Explorar implementaciones</p><h2 id="curated-heading">Diagramas por patrón</h2></div><p>Diagramas de código revisado, agrupados por su función. Cada ficha conserva el código y el mapa de relaciones del catálogo.</p></div>
+  <div class="card-grid">
+   {featured.map(d=><a class="pattern-card" href={`${base}patterns/${d.slug}/`}><span class="pattern-number">PATTERN {String(d.patternId).padStart(3,"0")}</span><h3>{({1:"Pipeline",25:"RAG",53:"Guardrails",60:"Orchestrator–Workers",82:"MCP Server"})[d.patternId]??d.slug}</h3><p>Ver el diagrama Archify, sus fuentes y la implementación de referencia.</p></a>)}
+  </div>
  </section>
 </BaseLayout>
