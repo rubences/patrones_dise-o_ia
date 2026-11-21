@@ -45,3 +45,7 @@ La interfaz permite seleccionar una conexión existente por sus nodos y tipo, y 
 ## Pruebas de navegador del editor
 
 La suite `tests/interactive-lab-browser-e2e.test.mjs` se ejecuta contra el build Astro real servido por `astro preview`, en Chromium con Playwright. Verifica creación y conexión de patrones, borrado de aristas, deshacer/rehacer, guardado en IndexedDB tras recargar la página, exportación JSON, rechazo de etiquetas HTML importadas y movimiento mediante teclado y puntero. Se ejecuta en `.github/workflows/editor-e2e.yml` y no requiere credenciales ni un servidor de datos. La suite valida un navegador concreto; no sustituye pruebas de accesibilidad completas ni compatibilidad multiplataforma.
+
+## Accesibilidad del editor — selección de nodos
+
+El editor incorpora un selector de nodos y un botón explícito para eliminar el nodo elegido, además de movimiento con las teclas de dirección y borrado con Suprimir. El foco del teclado se indica visualmente y se ofrece ayuda contextual. Una prueba de Chromium comprueba que la eliminación mediante controles accesibles conserva el historial Deshacer. Esta mejora no constituye una auditoría WCAG completa.

@@ -75,3 +75,19 @@ test('browser: keyboard and pointer move pattern nodes',async()=>{
  assert.notEqual(moved,keyboard);
  await context.close();
 });
+
+test('browser: accessible node selector deletes a selected node',async()=>{
+ const context=await browser.newContext();
+ const page=await context.newPage();await page.goto(base);
+ await page.locator('#editor-pattern').selectOption('1');
+ await page.locator('#editor-add').click();
+ await page.locator('#editor-pattern').selectOption('25');
+ await page.locator('#editor-add').click();
+ const id=await page.locator('#editor-selected-node option').first().getAttribute('value');
+ await page.locator('#editor-selected-node').selectOption(id);
+ await page.locator('#editor-remove-node').click();
+ assert.equal(await page.locator('#editor-nodes > g').count(),1);
+ await page.locator('#editor-undo').click();
+ assert.equal(await page.locator('#editor-nodes > g').count(),2);
+ await context.close();
+});
