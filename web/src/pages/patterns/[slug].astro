@@ -61,7 +61,7 @@ const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${e
       {archify ? (
         <>
           <ArchifyDiagram filename={archify.output} title={`Diagrama Archify · ${entry.data.title}`} base={import.meta.env.BASE_URL}/>
-          {archify.generated && <p class="archify-note">Mapa de fuentes generado automáticamente. No es un diagrama de flujo de ejecución revisado; los diagramas curados incluyen mayor detalle de implementación.</p>}
+          {archify.generated && <p class="archify-note">{archify.reviewed ? 'Flujo esquemático contrastado con el archivo fuente. No representa una ejecución real.' : 'Mapa de fuentes generado automáticamente. No es un diagrama de flujo de ejecución revisado; los diagramas curados incluyen mayor detalle de implementación.'}</p>}
           <details><summary>Consultar el mapa de relaciones del catálogo</summary><PatternDiagram graph={graph} base={import.meta.env.BASE_URL} /></details>
         </>
       ) : (

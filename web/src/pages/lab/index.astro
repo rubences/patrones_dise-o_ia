@@ -2,9 +2,14 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArchifyDiagram from '../../components/lab/ArchifyDiagram.astro';
 import {curatedDiagrams} from '../../data/archify-diagrams.mjs';
+import {patternDiagramRegistry} from '../../../scripts/pattern-archify-registry.mjs';
+import catalog from '../../../../catalog/patterns.json';
 const base=import.meta.env.BASE_URL;
 const diagram=curatedDiagrams.find(d=>d.id==='interactive-lab');
-const featured=curatedDiagrams.filter(d=>d.patternId).sort((a,b)=>a.patternId-b.patternId);
+const registry=patternDiagramRegistry();
+const featured=registry.filter(d=>!d.generated).sort((a,b)=>a.patternId-b.patternId);
+const sourceReviewed=registry.filter(d=>d.reviewed).sort((a,b)=>a.patternId-b.patternId);
+const patterns=new Map(catalog.patterns.map(p=>[p.id,p]));
 if(!diagram)throw new Error('Archify overview diagram missing');
 ---
 <BaseLayout title="Interactive Lab — Patrones IA" description="Visita los diagramas interactivos generados con Archify y explora arquitecturas de inteligencia artificial.">
@@ -19,9 +24,14 @@ if(!diagram)throw new Error('Archify overview diagram missing');
   <p>La representación describe el sistema web existente. No equivale a certificación, benchmark ni ejecución de los patrones.</p>
  </section>
  <section class="section" aria-labelledby="curated-heading">
-  <div class="section-heading"><div><p class="eyebrow">Explorar implementaciones</p><h2 id="curated-heading">Diagramas por patrón</h2></div><p>Cinco diagramas de implementación revisados manualmente. El catálogo completo ofrece 365 vistas Archify: 360 mapas esquemáticos de fuentes pendientes de revisión individual.</p></div>
+  <div class="section-heading"><div><p class="eyebrow">Explorar implementaciones</p><h2 id="curated-heading">Diagramas por patrón</h2></div><p>Cinco diagramas de implementación revisados manualmente. El catálogo completo ofrece 365 vistas Archify: {sourceReviewed.length} flujos contrastados con código y {registry.length-featured.length-sourceReviewed.length} mapas esquemáticos de fuentes pendientes de revisión individual.</p></div>
   <div class="card-grid">
    {featured.map(d=><a class="pattern-card" href={`${base}patterns/${d.slug}/`}><span class="pattern-number">PATTERN {String(d.patternId).padStart(3,"0")}</span><h3>{({1:"Pipeline",25:"RAG",53:"Guardrails",60:"Orchestrator–Workers",82:"MCP Server"})[d.patternId]??d.slug}</h3><p>Ver el diagrama Archify, sus fuentes y la implementación de referencia.</p></a>)}
+  </div>
+  <h3>Flujos específicos contrastados con el código ({sourceReviewed.length})</h3>
+  <p>Estos diagramas describen decisiones y componentes de la implementación; no ejecutan modelos ni herramientas.</p>
+  <div class="card-grid">
+   {sourceReviewed.map(d=><a class="pattern-card" href={`${base}patterns/${d.slug}/`}><span class="pattern-number">PATTERN {String(d.patternId).padStart(3,'0')}</span><h3>{patterns.get(d.patternId)?.name??d.slug}</h3><p>Explorar flujo, decisiones y limitaciones contrastadas con el archivo fuente.</p></a>)}
   </div>
  </section>
 </BaseLayout>
