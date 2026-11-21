@@ -1,0 +1,171 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "RAG · recuperación y generación",
+    "locale": "es",
+    "quality_profile": "showcase",
+    "output": "dist/archify-build/pattern-025-rag.html",
+    "repository": {
+      "url": "https://github.com/rubences/patrones_dise-o_ia",
+      "provider": "github",
+      "revision": "a2c744a8ce3c2a85ca7c59056c93c3831bff77a5"
+    }
+  },
+  "lanes": [
+    {
+      "id": "usuario",
+      "label": "Solicitud"
+    },
+    {
+      "id": "datos",
+      "label": "Recuperación"
+    },
+    {
+      "id": "modelo",
+      "label": "Generación"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "pregunta",
+      "lane": "usuario",
+      "col": 0,
+      "type": "external",
+      "label": "Pregunta",
+      "sublabel": "Consulta del usuario",
+      "sources": [
+        {
+          "path": "src/pattern_25_rag.ts",
+          "line": 95,
+          "end_line": 110
+        }
+      ]
+    },
+    {
+      "id": "indice",
+      "lane": "datos",
+      "col": 1,
+      "type": "database",
+      "label": "Documentos",
+      "sublabel": "Repositorio simulado",
+      "sources": [
+        {
+          "path": "src/pattern_25_rag.ts",
+          "line": 51,
+          "end_line": 90
+        }
+      ]
+    },
+    {
+      "id": "recuperar",
+      "lane": "datos",
+      "col": 2,
+      "type": "backend",
+      "label": "Recuperar top-K",
+      "sublabel": "Coincidencia de términos",
+      "sources": [
+        {
+          "path": "src/pattern_25_rag.ts",
+          "line": 74,
+          "end_line": 93
+        }
+      ]
+    },
+    {
+      "id": "contexto",
+      "lane": "modelo",
+      "col": 3,
+      "type": "backend",
+      "label": "Construir contexto",
+      "sublabel": "Documentos + pregunta",
+      "sources": [
+        {
+          "path": "src/pattern_25_rag.ts",
+          "line": 111,
+          "end_line": 138
+        }
+      ]
+    },
+    {
+      "id": "llm",
+      "lane": "modelo",
+      "col": 4,
+      "type": "backend",
+      "label": "Generar respuesta",
+      "sublabel": "LLM con contexto",
+      "sources": [
+        {
+          "path": "src/pattern_25_rag.ts",
+          "line": 139,
+          "end_line": 164
+        }
+      ]
+    },
+    {
+      "id": "salida",
+      "lane": "usuario",
+      "col": 5,
+      "type": "frontend",
+      "label": "Respuesta y fuentes",
+      "sublabel": "Texto + documentos usados",
+      "sources": [
+        {
+          "path": "src/pattern_25_rag.ts",
+          "line": 165,
+          "end_line": 172
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_1",
+      "from": "pregunta",
+      "to": "recuperar",
+      "label": "consulta"
+    },
+    {
+      "id": "edge_2",
+      "from": "indice",
+      "to": "recuperar",
+      "label": "documentos"
+    },
+    {
+      "id": "edge_3",
+      "from": "recuperar",
+      "to": "contexto",
+      "label": "relevantes"
+    },
+    {
+      "id": "edge_4",
+      "from": "contexto",
+      "to": "llm",
+      "label": "prompt"
+    },
+    {
+      "id": "edge_5",
+      "from": "llm",
+      "to": "salida",
+      "label": "resultado"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Implementación de referencia",
+      "items": [
+        "Basado en src/pattern_25_rag.ts",
+        "El diagrama documenta código, no ejecuta servicios"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Límites y condiciones",
+      "items": [
+        "La búsqueda es léxica sobre documentos de ejemplo, no un índice vectorial.",
+        "Si no se recuperan documentos, el método devuelve una respuesta sin llamar al modelo."
+      ]
+    }
+  ]
+}
