@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {newArchitecture,addPatternNode,connectPatternNodes,movePatternNode,removePatternNode} from '../web/src/lib/lab/editor-operations.ts';
+import {validateArchitecture} from '../web/src/lib/lab/architecture-validation.ts';
+const ids=new Set([1,25,53]);
+test('new architecture is valid and empty',()=>{const a=newArchitecture('demo','Ejemplo');assert.equal(validateArchitecture(a,ids).ok,true)});
+test('adding nodes derives sorted patternIds',()=>{let a=newArchitecture('demo','Ejemplo');a=addPatternNode(a,25,'RAG');a=addPatternNode(a,1,'Pipeline');assert.deepEqual(a.patternIds,[1,25]);assert.equal(validateArchitecture(a,ids).ok,true)});
+test('connecting nodes creates valid typed edge',()=>{let a=addPatternNode(newArchitecture('demo','Ejemplo'),1,'Pipeline');a=addPatternNode(a,25,'RAG');a=connectPatternNodes(a,a.nodes[0].id,a.nodes[1].id,'data');assert.equal(a.edges.length,1);assert.equal(validateArchitecture(a,ids).ok,true)});
+test('self connection and missing nodes fail',()=>{const a=addPatternNode(newArchitecture('demo','Ejemplo'),1,'Pipeline');assert.throws(()=>connectPatternNodes(a,a.nodes[0].id,a.nodes[0].id,'data'));assert.throws(()=>connectPatternNodes(a,'missing',a.nodes[0].id,'data'))});
+test('move and delete keep graph valid',()=>{let a=addPatternNode(newArchitecture('demo','Ejemplo'),1,'Pipeline');a=addPatternNode(a,25,'RAG');a=connectPatternNodes(a,a.nodes[0].id,a.nodes[1].id,'data');a=movePatternNode(a,a.nodes[0].id,125,80);assert.equal(a.nodes[0].position.x,125);a=removePatternNode(a,a.nodes[1].id);assert.equal(a.edges.length,0);assert.deepEqual(a.patternIds,[1]);assert.equal(validateArchitecture(a,ids).ok,true)});
