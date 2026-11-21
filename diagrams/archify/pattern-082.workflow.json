@@ -1,0 +1,177 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "MCP Server · descubrimiento e invocación",
+    "locale": "es",
+    "quality_profile": "showcase",
+    "output": "dist/archify-build/pattern-082-mcp-server.html",
+    "repository": {
+      "url": "https://github.com/rubences/patrones_dise-o_ia",
+      "provider": "github",
+      "revision": "a2c744a8ce3c2a85ca7c59056c93c3831bff77a5"
+    }
+  },
+  "lanes": [
+    {
+      "id": "cliente",
+      "label": "Cliente MCP"
+    },
+    {
+      "id": "protocolo",
+      "label": "Transporte"
+    },
+    {
+      "id": "servidor",
+      "label": "Servidor y herramientas"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "cliente_mcp",
+      "lane": "cliente",
+      "col": 0,
+      "type": "external",
+      "label": "Cliente MCP",
+      "sublabel": "SDK cliente",
+      "sources": [
+        {
+          "path": "src/pattern_82_mcp_server.ts",
+          "line": 96,
+          "end_line": 105
+        }
+      ]
+    },
+    {
+      "id": "transporte",
+      "lane": "protocolo",
+      "col": 1,
+      "type": "messagebus",
+      "label": "Transporte",
+      "sublabel": "Par en memoria",
+      "sources": [
+        {
+          "path": "src/pattern_82_mcp_server.ts",
+          "line": 102,
+          "end_line": 110
+        }
+      ]
+    },
+    {
+      "id": "servidor",
+      "lane": "servidor",
+      "col": 2,
+      "type": "backend",
+      "label": "Servidor MCP",
+      "sublabel": "McpServer",
+      "sources": [
+        {
+          "path": "src/pattern_82_mcp_server.ts",
+          "line": 61,
+          "end_line": 66
+        }
+      ]
+    },
+    {
+      "id": "buscar",
+      "lane": "servidor",
+      "col": 3,
+      "type": "backend",
+      "label": "buscar_patron",
+      "sublabel": "Tool con schema Zod",
+      "sources": [
+        {
+          "path": "src/pattern_82_mcp_server.ts",
+          "line": 65,
+          "end_line": 80
+        }
+      ]
+    },
+    {
+      "id": "listar",
+      "lane": "servidor",
+      "col": 4,
+      "type": "backend",
+      "label": "listar_categorias",
+      "sublabel": "Tool sin argumentos",
+      "sources": [
+        {
+          "path": "src/pattern_82_mcp_server.ts",
+          "line": 81,
+          "end_line": 92
+        }
+      ]
+    },
+    {
+      "id": "resultado",
+      "lane": "cliente",
+      "col": 5,
+      "type": "frontend",
+      "label": "Respuesta MCP",
+      "sublabel": "Contenido estructurado",
+      "sources": [
+        {
+          "path": "src/pattern_82_mcp_server.ts",
+          "line": 107,
+          "end_line": 123
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_1",
+      "from": "cliente_mcp",
+      "to": "transporte",
+      "label": "connect"
+    },
+    {
+      "id": "edge_2",
+      "from": "transporte",
+      "to": "servidor",
+      "label": "MCP"
+    },
+    {
+      "id": "edge_3",
+      "from": "servidor",
+      "to": "buscar",
+      "label": "tools/call"
+    },
+    {
+      "id": "edge_4",
+      "from": "servidor",
+      "to": "listar",
+      "label": "tools/list"
+    },
+    {
+      "id": "edge_5",
+      "from": "buscar",
+      "to": "resultado",
+      "label": "resultado"
+    },
+    {
+      "id": "edge_6",
+      "from": "listar",
+      "to": "resultado",
+      "label": "categorías"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Implementación de referencia",
+      "items": [
+        "Basado en src/pattern_82_mcp_server.ts",
+        "El diagrama documenta código, no ejecuta servicios"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Límites y condiciones",
+      "items": [
+        "La demostración utiliza InMemoryTransport, no HTTP ni stdio.",
+        "Las herramientas consultan un catálogo de ejemplo y validan los argumentos declarados."
+      ]
+    }
+  ]
+}

@@ -216,3 +216,7 @@ La navegación del catálogo conserva sus **365 patrones y 42 macrofamilias**. L
 - Generación: `node scripts/build-archify-diagrams.mjs` tras tener el checkout de Archify fijado bajo `.tooling/archify` y el build Astro en `web/dist`.
 
 Los HTML generados se cargan localmente desde GitHub Pages, no dependen de servicios externos durante la visualización y no ejecutan modelos ni herramientas. Los diagramas no son por sí mismos evidencias empíricas. El editor visual de arquitecturas y la persistencia local continúan como parte de la fase 2 del plan Superpowers.
+
+### Ampliación Archify: patrones representativos
+
+Además del diagrama general y el Pipeline 001, el laboratorio incluye flujos interactivos para RAG 025, Guardrails 053, Orchestrator–Workers 060 y MCP Server 082. Todos proceden de código revisado y conservan referencias de origen; los demás patrones mantienen el mapa de relaciones hasta que sus diagramas específicos se revisen.
