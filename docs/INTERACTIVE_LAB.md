@@ -29,3 +29,7 @@ Se añaden diagramas de flujo revisados para los patrones 025 (RAG), 053 (Guardr
 ## Fase 2 — persistencia local (contratos)
 
 `ArchitectureDiagram` v1 dispone de importación JSON con validación de esquema y límite de 1 MB, y adaptadores en memoria e IndexedDB. El almacenamiento es local, sin cuentas ni backend. La persistencia en el navegador puede ser eliminada por el usuario o por cuotas: la futura interfaz incluirá exportación manual. Los adaptadores todavía no están conectados a un editor visual público.
+
+## Editor visual local — entrega MVP
+
+La ruta `/lab/editor/` permite seleccionar patrones de las 42 macrofamilias, añadir nodos, arrastrarlos, conectarlos con relaciones tipadas, eliminar nodos con teclado, guardar y abrir proyectos en IndexedDB, e importar/exportar JSON validado. El lienzo SVG utiliza texto seguro y no ejecuta modelos, herramientas ni código del proyecto importado. El editor es un primer MVP sin XYFlow; el refinamiento de experiencia, undo/redo, pruebas E2E de navegador y simulación reproducible continúan pendientes. El navegador puede eliminar los proyectos: exporta JSON regularmente.
