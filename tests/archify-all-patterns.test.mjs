@@ -57,3 +57,10 @@ test('four source-reviewed flows reflect distinct code paths and limitations',()
  const tools=patternSourceOverview(catalog.patterns.find(p=>p.id===5),'a'.repeat(40));
  assert.ok(tools.cards.some(c=>c.items.some(t=>t.includes('simuladas'))));
 });
+
+test('reviewed diagrams are counted separately from generic source maps',()=>{
+ const entries=patternDiagramRegistry();
+ assert.equal(entries.filter(e=>!e.generated).length,5);
+ assert.equal(entries.filter(e=>e.reviewed).length,13);
+ assert.equal(entries.filter(e=>e.generated&&!e.reviewed).length,347);
+});
