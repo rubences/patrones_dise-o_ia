@@ -5,6 +5,7 @@ import taxonomy from '../../../../catalog/taxonomy.json';
 import PatternDiagram from '../../components/lab/PatternDiagram.astro';
 import ArchifyDiagram from '../../components/lab/ArchifyDiagram.astro';
 import {curatedDiagrams} from '../../data/archify-diagrams.mjs';
+import {patternDiagramRegistry} from '../../../scripts/pattern-archify-registry.mjs';
 import { buildPatternGraph } from '../../lib/lab/pattern-graph';
 
 export async function getStaticPaths() {
@@ -30,6 +31,8 @@ const graph = buildPatternGraph(
 const toc = headings.filter((heading) => heading.depth === 2);
 const family = taxonomy.families.find((item)=>item.id===entry.data.family);
 const curated = curatedDiagrams.find((item)=>item.patternId===entry.data.patternId && item.slug===entry.data.slug);
+const generated = patternDiagramRegistry().find((item)=>item.patternId===entry.data.patternId && item.slug===entry.data.slug);
+const archify = curated??generated;
 const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${entry.data.sourceFile}`;
 ---
 
@@ -55,9 +58,10 @@ const sourceHref = `https://github.com/rubences/patrones_dise-o_ia/blob/main/${e
         </div>
       </header>
 
-      {curated ? (
+      {archify ? (
         <>
-          <ArchifyDiagram filename={curated.output} title={`Diagrama Archify · ${entry.data.title}`} base={import.meta.env.BASE_URL}/>
+          <ArchifyDiagram filename={archify.output} title={`Diagrama Archify · ${entry.data.title}`} base={import.meta.env.BASE_URL}/>
+          {archify.generated && <p class="archify-note">Mapa de fuentes generado automáticamente. No es un diagrama de flujo de ejecución revisado; los diagramas curados incluyen mayor detalle de implementación.</p>}
           <details><summary>Consultar el mapa de relaciones del catálogo</summary><PatternDiagram graph={graph} base={import.meta.env.BASE_URL} /></details>
         </>
       ) : (
