@@ -47,8 +47,10 @@ try{
  const curatedIds=new Set(curatedDiagrams.filter(d=>d.patternId).map(d=>d.patternId));
  const generated=patternDiagramRegistry().filter(d=>!curatedIds.has(d.patternId));
  const patterns=new Map(catalog.patterns.map(p=>[p.id,p]));
- const workers=Array.from({length:Math.min(6,generated.length)},async(_,worker)=>{
-  for(let i=worker;i<generated.length;i+=6){
+ const workerCount=Number(process.env.ARCHIFY_WORKERS??'1');
+ if(!Number.isInteger(workerCount)||workerCount<1||workerCount>6)throw Error('Invalid ARCHIFY_WORKERS');
+ const workers=Array.from({length:Math.min(workerCount,generated.length)},async(_,worker)=>{
+  for(let i=worker;i<generated.length;i+=workerCount){
    const entry=generated[i],pattern=patterns.get(entry.patternId);
    if(!pattern||!existsSync(join(root,pattern.sourceFile)))throw Error('Missing pattern source '+entry.patternId);
    const input=patternSourceOverview(pattern,revision);
@@ -59,7 +61,7 @@ try{
    try{
     await execAsync(process.execPath,[cli,'finalize','workflow',candidate,input.meta.output,
      '--repo-root',root,'--quality','showcase','--json'],{cwd:root,maxBuffer:2*1024*1024});
-   }catch(error){throw Error('Archify pattern '+entry.patternId+': '+String(error.stderr??error.message).slice(-2500))}
+   }catch(error){throw Error('Archify pattern '+entry.patternId+': '+JSON.stringify({code:error.code,stdout:String(error.stdout??'').slice(-3000),stderr:String(error.stderr??'').slice(-3000),message:error.message}).slice(-6500))}
    if(!existsSync(output)||statSync(output).size<1000)throw Error('Missing generated Archify '+entry.id);
    copyFileSync(output,join(siteOutput,entry.output));
    console.log('Generated pattern Archify',entry.patternId,'/',catalog.patterns.length);
