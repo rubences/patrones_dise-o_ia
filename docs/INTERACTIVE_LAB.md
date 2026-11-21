@@ -65,3 +65,7 @@ El motor calcula profundidad máxima como **número de nodos** de la cadena de d
 ## Inspección visual por oleadas
 
 Tras simular, el editor permite elegir una oleada mediante selector o controles Anterior/Siguiente. El lienzo SVG destaca los nodos activos en amarillo, la ruta estructural más larga en azul, los nodos cíclicos en rosa y los bloqueos derivados en violeta. La selección visual es efímera: al modificar el grafo se invalida la traza y se restauran los estilos originales. Los colores se acompañan de texto de estado y atributos accesibles; no implican ejecución real ni métricas temporales.
+
+## Estadísticas y exportación de informe
+
+El editor presenta recuentos estructurales de nodos, aristas, tamaño de oleadas y conexiones por tipo. «Exportar informe» genera JSON autocontenido con estadísticas, traza, diagnóstico y aviso metodológico. El informe es local y reproducible, sin latencias, costes, rendimiento ni ejecución de LLM/herramientas. Tras cualquier modificación se invalida el informe anterior.
