@@ -29,6 +29,8 @@ const base=import.meta.env.BASE_URL;
   </div>
   <div class="editor-toolbar">
    <button id="editor-new" type="button">Nuevo</button>
+   <button id="editor-duplicate" type="button">Duplicar proyecto</button>
+   <button id="editor-rename" type="button">Renombrar</button>
    <button id="editor-undo" type="button" disabled>Deshacer</button>
    <button id="editor-redo" type="button" disabled>Rehacer</button>
    <button id="editor-save" type="button">Guardar local</button>
@@ -40,7 +42,7 @@ const base=import.meta.env.BASE_URL;
   </div>
   <p class="editor-help" id="editor-help">Arrastra los nodos con el ratón. Con teclado, selecciona un nodo y utiliza las Flechas para moverlo o Suprimir para eliminarlo. También puedes usar el selector y el botón «Eliminar nodo».</p>
   <div class="editor-canvas"><svg id="editor-svg" viewBox="0 0 1100 600" role="img" aria-label="Lienzo de arquitectura: arrastra nodos para reorganizarlos"><defs><marker id="editor-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6 Z" fill="#5eead4"/></marker></defs><g id="editor-edges"></g><g id="editor-nodes"></g></svg></div>
-  <div class="editor-footer"><p id="editor-status" role="status" aria-live="polite">Añade un patrón para comenzar.</p><p>Los proyectos se guardan exclusivamente en IndexedDB. Exporta una copia JSON: el navegador puede borrar los datos locales. El lienzo representa una composición conceptual, no ejecuta los patrones.</p></div>
+  <div class="editor-footer"><p id="editor-dirty" role="status" aria-live="polite">Proyecto sin guardar</p><p id="editor-status" role="status" aria-live="polite">Añade un patrón para comenzar.</p><p>Los proyectos se guardan exclusivamente en IndexedDB. Exporta una copia JSON: el navegador puede borrar los datos locales. El lienzo representa una composición conceptual, no ejecuta los patrones.</p></div>
  </div>
 </section>
 </BaseLayout>
@@ -50,6 +52,7 @@ import {createHistory,commitHistory,undoHistory,redoHistory} from '../../../lib/
 import {validateArchitecture} from '../../../lib/lab/architecture-validation';
 import {createIndexedDbProjectStorage} from '../../../lib/lab/project-storage';
 import {parseProjectJson,serializeProject} from '../../../lib/lab/project-transfer';
+import {duplicateProject,renameProject,projectIsDirty} from '../../../lib/lab/project-management';
 import type {ArchitectureDiagram,EdgeKind} from '../../../lib/lab/architecture-schema';
 const root=document.getElementById('architecture-editor');
 if(root){
@@ -65,9 +68,14 @@ if(root){
  const uid=()=> 'project_'+crypto.randomUUID().replaceAll('-','').slice(0,20);
  let project:ArchitectureDiagram=newArchitecture(uid(),'Mi arquitectura IA');
  let history=createHistory(project);
+ let savedSnapshot:ArchitectureDiagram|null=structuredClone(project);
+ const dirtyLabel=el<HTMLElement>('editor-dirty');
+ const current=()=>({...project,title:title.value.trim()});
+ const updateDirty=()=>{dirtyLabel.textContent=projectIsDirty(savedSnapshot,current())?'Cambios sin guardar':'Todos los cambios guardados'};
+ const mayDiscard=()=>!projectIsDirty(savedSnapshot,current())||confirm('Hay cambios sin guardar. ¿Continuar sin guardarlos?');
  const syncHistory=()=>{el<HTMLButtonElement>('editor-undo').disabled=!history.past.length;el<HTMLButtonElement>('editor-redo').disabled=!history.future.length};
- const commit=(next:ArchitectureDiagram)=>{history=commitHistory(history,next);project=history.present;syncHistory()};
- const reset=(next:ArchitectureDiagram)=>{history=createHistory(next);project=history.present;syncHistory()};
+ const commit=(next:ArchitectureDiagram)=>{history=commitHistory(history,next);project=history.present;syncHistory();updateDirty()};
+ const reset=(next:ArchitectureDiagram)=>{history=createHistory(next);project=history.present;syncHistory();updateDirty()};
  const notice=(msg:string)=>{status.textContent=msg};
  const make=(tag:string,attrs:Record<string,string>={})=>{const x=document.createElementNS(ns,tag) as SVGElement;for(const [k,v] of Object.entries(attrs))x.setAttribute(k,v);return x};
  const options=(select:HTMLSelectElement,values:{value:string;label:string}[])=>{const prev=select.value;select.replaceChildren(...values.map(v=>{const o=document.createElement('option');o.value=v.value;o.textContent=v.label;return o}));if(values.some(v=>v.value===prev))select.value=prev};
@@ -78,7 +86,7 @@ if(root){
   options(target,project.nodes.map(n=>({value:n.id,label:n.label})));
   options(selectedNode,project.nodes.map(n=>({value:n.id,label:`#${n.patternId} · ${n.label}`})));
   options(edgeSelect,project.edges.map(e=>({value:e.id,label:`${project.nodes.find(n=>n.id===e.source)?.label??e.source} → ${project.nodes.find(n=>n.id===e.target)?.label??e.target} (${e.kind})`})));
-  nodes.replaceChildren();edges.replaceChildren();
+  nodes.replaceChildren();edges.replaceChildren();updateDirty();
   for(const e of project.edges){const a=project.nodes.find(n=>n.id===e.source),b=project.nodes.find(n=>n.id===e.target);if(!a||!b)continue;
    const line=make('line',{x1:String(a.position.x+90),y1:String(a.position.y+30),x2:String(b.position.x+90),y2:String(b.position.y+30),stroke:'#5eead4','stroke-width':'2','marker-end':'url(#editor-arrow)'});
    edges.append(line);
@@ -95,7 +103,7 @@ if(root){
    g.addEventListener('pointerdown',ev=>{if(ev.button!==0)return;const bounds=svg.getBoundingClientRect();const sx=1100/bounds.width,sy=600/bounds.height;const initialX=n.position.x,initialY=n.position.y,startX=ev.clientX,startY=ev.clientY;
     const move=(event:PointerEvent)=>{project=movePatternNode(project,n.id,Math.max(0,Math.min(920,initialX+(event.clientX-startX)*sx)),Math.max(0,Math.min(540,initialY+(event.clientY-startY)*sy)));const moved=project.nodes.find(v=>v.id===n.id)!;g.setAttribute('transform',`translate(${moved.position.x} ${moved.position.y})`);
      project.edges.forEach((e,i)=>{const a=project.nodes.find(v=>v.id===e.source),b=project.nodes.find(v=>v.id===e.target);const line=edges.children[i];if(a&&b&&line){line.setAttribute('x1',String(a.position.x+90));line.setAttribute('y1',String(a.position.y+30));line.setAttribute('x2',String(b.position.x+90));line.setAttribute('y2',String(b.position.y+30));}})};
-    const stop=()=>{history=commitHistory(history,project);syncHistory();window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',stop);window.removeEventListener('pointercancel',stop);notice('Posición actualizada. Guarda para conservar los cambios.')};
+    const stop=()=>{history=commitHistory(history,project);syncHistory();window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',stop);window.removeEventListener('pointercancel',stop);updateDirty();notice('Posición actualizada. Guarda para conservar los cambios.')};
     window.addEventListener('pointermove',move);window.addEventListener('pointerup',stop);window.addEventListener('pointercancel',stop);
    });
    g.addEventListener('keydown',ev=>{if(ev.key==='Delete'||ev.key==='Backspace'){commit(removePatternNode(project,n.id));render();notice('Nodo eliminado')}else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key)){ev.preventDefault();commit(movePatternNode(project,n.id,n.position.x+(ev.key==='ArrowLeft'?-15:ev.key==='ArrowRight'?15:0),n.position.y+(ev.key==='ArrowUp'?-15:ev.key==='ArrowDown'?15:0)));render()}});
@@ -104,20 +112,24 @@ if(root){
  const refreshSaved=async()=>{const projects=await storage.list();options(saved,[{value:'',label:'Seleccionar…'},...projects.map(p=>({value:p.id,label:p.title}))])};
  const safely=async(task:()=>Promise<void>)=>{try{await task()}catch(e){notice('Error: '+(e instanceof Error?e.message:String(e)))}};
  family.addEventListener('change',refreshPalette);
+ title.addEventListener('input',updateDirty);
+ window.addEventListener('beforeunload',event=>{if(projectIsDirty(savedSnapshot,current())){event.preventDefault();event.returnValue=''}});
  el<HTMLButtonElement>('editor-add').addEventListener('click',()=>{const p=palette.find(p=>p.id===Number(pattern.value));if(!p)return;commit(addPatternNode(project,p.id,p.title));render();notice('Nodo añadido. Guarda para conservarlo.')});
  el<HTMLButtonElement>('editor-connect').addEventListener('click',()=>{try{commit(connectPatternNodes(project,source.value,target.value,kind.value as EdgeKind));render();notice('Conexión añadida')}catch(e){notice(e instanceof Error?e.message:String(e))}});
  el<HTMLButtonElement>('editor-remove-node').addEventListener('click',()=>{if(!selectedNode.value){notice('No hay un nodo seleccionado');return}commit(removePatternNode(project,selectedNode.value));render();notice('Nodo eliminado')});
  selectedNode.addEventListener('change',()=>{const id=selectedNode.value;const all=[...nodes.querySelectorAll('g')];const index=project.nodes.findIndex(n=>n.id===id);if(index>=0)(all[index] as SVGGElement)?.focus()});
  el<HTMLButtonElement>('editor-remove-edge').addEventListener('click',()=>{if(!edgeSelect.value){notice('No hay una conexión seleccionada');return}commit(removePatternEdge(project,edgeSelect.value));render();notice('Conexión eliminada')});
- el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{reset(newArchitecture(uid(),'Mi arquitectura IA'));render();notice('Proyecto nuevo sin guardar')});
- el<HTMLButtonElement>('editor-save').addEventListener('click',()=>safely(async()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok)throw Error(v.errors.join('; '));await storage.put(v.diagram);await refreshSaved();notice('Guardado en este navegador')}));
- el<HTMLButtonElement>('editor-load').addEventListener('click',()=>safely(async()=>{const p=await storage.get(saved.value);if(!p)throw Error('Selecciona un proyecto guardado');reset(p);render();notice('Proyecto cargado')}));
- el<HTMLButtonElement>('editor-delete').addEventListener('click',()=>safely(async()=>{if(!saved.value)throw Error('Selecciona un proyecto');if(!confirm('¿Eliminar este proyecto del navegador?'))return;await storage.remove(saved.value);await refreshSaved();notice('Proyecto eliminado')}));
+ el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{if(!mayDiscard())return;const fresh=newArchitecture(uid(),'Mi arquitectura IA');savedSnapshot=structuredClone(fresh);reset(fresh);render();notice('Proyecto nuevo sin guardar')});
+ el<HTMLButtonElement>('editor-duplicate').addEventListener('click',()=>{try{const next=duplicateProject(current(),uid(),title.value.trim()+' (copia)');savedSnapshot=null;reset(next);render();notice('Copia creada. Guarda para conservarla.')}catch(e){notice(e instanceof Error?e.message:String(e))}});
+ el<HTMLButtonElement>('editor-rename').addEventListener('click',()=>{try{commit(renameProject(project,title.value));render();notice('Nombre actualizado. Guarda para conservarlo.')}catch(e){notice(e instanceof Error?e.message:String(e))}});
+ el<HTMLButtonElement>('editor-save').addEventListener('click',()=>safely(async()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok)throw Error(v.errors.join('; '));await storage.put(v.diagram);project=v.diagram;savedSnapshot=structuredClone(v.diagram);await refreshSaved();updateDirty();notice('Guardado en este navegador')}));
+ el<HTMLButtonElement>('editor-load').addEventListener('click',()=>safely(async()=>{const p=await storage.get(saved.value);if(!p)throw Error('Selecciona un proyecto guardado');if(!mayDiscard())return;savedSnapshot=structuredClone(p);reset(p);render();notice('Proyecto cargado')}));
+ el<HTMLButtonElement>('editor-delete').addEventListener('click',()=>safely(async()=>{if(!saved.value)throw Error('Selecciona un proyecto');if(!confirm('¿Eliminar este proyecto del navegador?'))return;const deletedId=saved.value;await storage.remove(deletedId);if(project.id===deletedId){savedSnapshot=null;updateDirty()}await refreshSaved();notice('Proyecto eliminado')}));
  el<HTMLButtonElement>('editor-export').addEventListener('click',()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok){notice(v.errors.join('; '));return}const url=URL.createObjectURL(new Blob([serializeProject(v.diagram)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`${project.id}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('Archivo JSON exportado')});
- el<HTMLInputElement>('editor-import').addEventListener('change',event=>safely(async()=>{const file=(event.currentTarget as HTMLInputElement).files?.[0];if(!file)return;if(file.size>1_000_000)throw Error('El archivo supera 1 MB');const parsed=parseProjectJson(await file.text(),known);if(!parsed.ok)throw Error(parsed.errors.join('; '));reset(parsed.diagram);render();notice('Proyecto importado. Guarda para conservarlo.')}));
+ el<HTMLInputElement>('editor-import').addEventListener('change',event=>safely(async()=>{const file=(event.currentTarget as HTMLInputElement).files?.[0];if(!file)return;if(file.size>1_000_000)throw Error('El archivo supera 1 MB');const parsed=parseProjectJson(await file.text(),known);if(!parsed.ok)throw Error(parsed.errors.join('; '));if(!mayDiscard())return;savedSnapshot=null;reset(parsed.diagram);render();notice('Proyecto importado. Guarda para conservarlo.')}));
  el<HTMLButtonElement>('editor-undo').addEventListener('click',()=>{history=undoHistory(history);project=history.present;syncHistory();render();notice('Cambio deshecho')});
  el<HTMLButtonElement>('editor-redo').addEventListener('click',()=>{history=redoHistory(history);project=history.present;syncHistory();render();notice('Cambio rehecho')});
- refreshPalette();render();syncHistory();void safely(refreshSaved);
+ refreshPalette();render();syncHistory();updateDirty();void safely(refreshSaved);
 }
 </script>
 <style>

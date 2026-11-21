@@ -202,6 +202,7 @@ jobs:
           npx --yes tsx@4.20.6 --test tests/interactive-lab-editor-history.test.ts
           npx --yes tsx@4.20.6 --test tests/interactive-lab-edge-editing.test.ts
           node --test tests/interactive-lab-accessibility.test.mjs
+          npx --yes tsx@4.20.6 --test tests/interactive-lab-project-management.test.ts
 
       - name: Install web dependencies
         working-directory: web
