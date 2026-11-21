@@ -24,6 +24,8 @@ const base=import.meta.env.BASE_URL;
    <button id="editor-connect" type="button">Conectar</button>
    <label>Conexión existente <select id="editor-edge" aria-label="Conexión para eliminar"></select></label>
    <button id="editor-remove-edge" type="button">Eliminar conexión</button>
+   <label>Nodo seleccionado <select id="editor-selected-node" aria-label="Nodo para seleccionar"></select></label>
+   <button id="editor-remove-node" type="button">Eliminar nodo</button>
   </div>
   <div class="editor-toolbar">
    <button id="editor-new" type="button">Nuevo</button>
@@ -36,6 +38,7 @@ const base=import.meta.env.BASE_URL;
    <button id="editor-export" type="button">Exportar JSON</button>
    <label class="file-control">Importar JSON <input id="editor-import" type="file" accept=".json,application/json"/></label>
   </div>
+  <p class="editor-help" id="editor-help">Arrastra los nodos con el ratón. Con teclado, selecciona un nodo y utiliza las Flechas para moverlo o Suprimir para eliminarlo. También puedes usar el selector y el botón «Eliminar nodo».</p>
   <div class="editor-canvas"><svg id="editor-svg" viewBox="0 0 1100 600" role="img" aria-label="Lienzo de arquitectura: arrastra nodos para reorganizarlos"><defs><marker id="editor-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6 Z" fill="#5eead4"/></marker></defs><g id="editor-edges"></g><g id="editor-nodes"></g></svg></div>
   <div class="editor-footer"><p id="editor-status" role="status" aria-live="polite">Añade un patrón para comenzar.</p><p>Los proyectos se guardan exclusivamente en IndexedDB. Exporta una copia JSON: el navegador puede borrar los datos locales. El lienzo representa una composición conceptual, no ejecuta los patrones.</p></div>
  </div>
@@ -56,7 +59,7 @@ if(root){
  const storage=createIndexedDbProjectStorage(known);
  const el=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
  const title=el<HTMLInputElement>('project-title'),family=el<HTMLSelectElement>('editor-family'),pattern=el<HTMLSelectElement>('editor-pattern');
- const source=el<HTMLSelectElement>('editor-source'),target=el<HTMLSelectElement>('editor-target'),kind=el<HTMLSelectElement>('editor-kind'),edgeSelect=el<HTMLSelectElement>('editor-edge'),saved=el<HTMLSelectElement>('editor-saved');
+ const source=el<HTMLSelectElement>('editor-source'),target=el<HTMLSelectElement>('editor-target'),kind=el<HTMLSelectElement>('editor-kind'),edgeSelect=el<HTMLSelectElement>('editor-edge'),selectedNode=el<HTMLSelectElement>('editor-selected-node'),saved=el<HTMLSelectElement>('editor-saved');
  const status=el<HTMLElement>('editor-status'),nodes=el<SVGGElement>('editor-nodes'),edges=el<SVGGElement>('editor-edges'),svg=el<SVGSVGElement>('editor-svg');
  const ns='http://www.w3.org/2000/svg';
  const uid=()=> 'project_'+crypto.randomUUID().replaceAll('-','').slice(0,20);
@@ -73,6 +76,7 @@ if(root){
   title.value=project.title;
   options(source,project.nodes.map(n=>({value:n.id,label:n.label})));
   options(target,project.nodes.map(n=>({value:n.id,label:n.label})));
+  options(selectedNode,project.nodes.map(n=>({value:n.id,label:`#${n.patternId} · ${n.label}`})));
   options(edgeSelect,project.edges.map(e=>({value:e.id,label:`${project.nodes.find(n=>n.id===e.source)?.label??e.source} → ${project.nodes.find(n=>n.id===e.target)?.label??e.target} (${e.kind})`})));
   nodes.replaceChildren();edges.replaceChildren();
   for(const e of project.edges){const a=project.nodes.find(n=>n.id===e.source),b=project.nodes.find(n=>n.id===e.target);if(!a||!b)continue;
@@ -82,6 +86,7 @@ if(root){
   for(const n of project.nodes){
    const g=make('g',{transform:`translate(${n.position.x} ${n.position.y})`,tabindex:'0',role:'group','aria-label':`${n.label}, patrón ${n.patternId}`});
    g.style.cursor='grab';
+   g.addEventListener('focus',()=>{selectedNode.value=n.id});
    const rect=make('rect',{width:'180',height:'60',rx:'12',fill:'#17263c',stroke:'#5eead4','stroke-width':'2'});
    const text=make('text',{x:'90',y:'24','text-anchor':'middle',fill:'#fff','font-size':'12'});
    text.textContent=n.label.length>24?n.label.slice(0,22)+'…':n.label;
@@ -101,6 +106,8 @@ if(root){
  family.addEventListener('change',refreshPalette);
  el<HTMLButtonElement>('editor-add').addEventListener('click',()=>{const p=palette.find(p=>p.id===Number(pattern.value));if(!p)return;commit(addPatternNode(project,p.id,p.title));render();notice('Nodo añadido. Guarda para conservarlo.')});
  el<HTMLButtonElement>('editor-connect').addEventListener('click',()=>{try{commit(connectPatternNodes(project,source.value,target.value,kind.value as EdgeKind));render();notice('Conexión añadida')}catch(e){notice(e instanceof Error?e.message:String(e))}});
+ el<HTMLButtonElement>('editor-remove-node').addEventListener('click',()=>{if(!selectedNode.value){notice('No hay un nodo seleccionado');return}commit(removePatternNode(project,selectedNode.value));render();notice('Nodo eliminado')});
+ selectedNode.addEventListener('change',()=>{const id=selectedNode.value;const all=[...nodes.querySelectorAll('g')];const index=project.nodes.findIndex(n=>n.id===id);if(index>=0)(all[index] as SVGGElement)?.focus()});
  el<HTMLButtonElement>('editor-remove-edge').addEventListener('click',()=>{if(!edgeSelect.value){notice('No hay una conexión seleccionada');return}commit(removePatternEdge(project,edgeSelect.value));render();notice('Conexión eliminada')});
  el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{reset(newArchitecture(uid(),'Mi arquitectura IA'));render();notice('Proyecto nuevo sin guardar')});
  el<HTMLButtonElement>('editor-save').addEventListener('click',()=>safely(async()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok)throw Error(v.errors.join('; '));await storage.put(v.diagram);await refreshSaved();notice('Guardado en este navegador')}));
@@ -123,5 +130,7 @@ if(root){
 .editor-canvas{overflow:auto;border:1px solid var(--line);border-radius:14px;background:radial-gradient(circle at center,#1b3448,#101725)}
 .editor-canvas svg{display:block;width:100%;min-width:680px;height:auto;touch-action:none}
 .editor-footer{color:var(--muted);font-size:.88rem}
+.editor-help{font-size:.9rem;color:var(--muted);margin:.4rem 0 1rem}
+#editor-nodes g:focus rect{stroke:#fff;stroke-width:4}
 #editor-status{color:#5eead4;font-weight:600}
 </style>
