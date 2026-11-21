@@ -205,3 +205,13 @@ test('browser: edge-type filter changes only SVG visibility',async()=>{
  assert.equal(await page.locator('#editor-edges > line').evaluateAll(lines=>lines.filter(line=>line.style.display!=='none').length),2);
  await context.close();
 });
+
+test('browser: export printable HTML simulation report without scripts',async()=>{
+ const context=await browser.newContext({acceptDownloads:true});const page=await context.newPage();await page.goto(base);
+ await page.locator('#editor-pattern').selectOption('1');await page.locator('#editor-add').click();await page.locator('#editor-simulate').click();
+ const pending=page.waitForEvent('download');await page.locator('#editor-export-html').click();const file=await pending;
+ const html=await (await import('node:fs/promises')).readFile(await file.path(),'utf8');
+ assert.match(html,/<!doctype html>/i);assert.match(html,/No se han ejecutado modelos/);assert.doesNotMatch(html,/<script/i);
+ await page.locator('#editor-add').click();assert.equal(await page.locator('#editor-export-html').isDisabled(),true);
+ await context.close();
+});
