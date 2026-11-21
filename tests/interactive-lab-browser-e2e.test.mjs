@@ -187,3 +187,21 @@ test('browser: simulation statistics and standalone report export',async()=>{
  await page.locator('#editor-add').click();assert.equal(await page.locator('#editor-export-report').isDisabled(),true);
  await context.close();
 });
+
+test('browser: edge-type filter changes only SVG visibility',async()=>{
+ const context=await browser.newContext();const page=await context.newPage();await page.goto(base);
+ await page.locator('#editor-pattern').selectOption('1');await page.locator('#editor-add').click();
+ await page.locator('#editor-pattern').selectOption('25');await page.locator('#editor-add').click();
+ const ids=await page.locator('#editor-source option').evaluateAll(os=>os.map(o=>o.value));
+ await page.locator('#editor-source').selectOption(ids[0]);await page.locator('#editor-target').selectOption(ids[1]);
+ await page.locator('#editor-kind').selectOption('data');await page.locator('#editor-connect').click();
+ await page.locator('#editor-kind').selectOption('control');await page.locator('#editor-connect').click();
+ assert.equal(await page.locator('#editor-edges > line:visible').count(),2);
+ await page.locator('#editor-edge-filter').selectOption('data');
+ assert.equal(await page.locator('#editor-edges > line:visible').count(),1);
+ await page.locator('#editor-simulate').click();
+ assert.match(await page.locator('#simulation-statistics').textContent(),/Conexiones: 2/);
+ await page.locator('#editor-edge-filter').selectOption('all');
+ assert.equal(await page.locator('#editor-edges > line:visible').count(),2);
+ await context.close();
+});
