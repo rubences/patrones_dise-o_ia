@@ -69,3 +69,7 @@ Tras simular, el editor permite elegir una oleada mediante selector o controles 
 ## Estadísticas y exportación de informe
 
 El editor presenta recuentos estructurales de nodos, aristas, tamaño de oleadas y conexiones por tipo. «Exportar informe» genera JSON autocontenido con estadísticas, traza, diagnóstico y aviso metodológico. El informe es local y reproducible, sin latencias, costes, rendimiento ni ejecución de LLM/herramientas. Tras cualquier modificación se invalida el informe anterior.
+
+## Informe HTML para docencia y análisis técnico
+
+«Informe HTML imprimible» exporta un documento autónomo, sin JavaScript ni recursos externos, con resumen, recuentos, oleadas, diagnóstico y traza. Permite imprimir o guardar como PDF desde el navegador. Escapa todo contenido procedente de etiquetas y títulos del proyecto. No afirma ejecución real ni métricas empíricas.
