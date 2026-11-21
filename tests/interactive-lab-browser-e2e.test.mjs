@@ -28,9 +28,9 @@ test('browser: create, connect, undo/redo, save, reload and open',async()=>{
  assert.equal(await page.locator('#editor-edges > line').count(),0);
  await page.locator('#project-title').fill('Arquitectura persistida');
  await page.locator('#editor-save').click();
- await page.getByRole('status').getByText('Guardado en este navegador').waitFor();
+ await page.waitForFunction(() => document.querySelector('#editor-status')?.textContent?.includes('Guardado en este navegador'));
  await page.reload();
- await page.locator('#editor-saved option').filter({hasText:'Arquitectura persistida'}).waitFor();
+ await page.locator('#editor-saved option').filter({hasText:'Arquitectura persistida'}).waitFor({state:'attached'});
  const savedId=await page.locator('#editor-saved option').filter({hasText:'Arquitectura persistida'}).getAttribute('value');
  await page.locator('#editor-saved').selectOption(savedId);
  await page.locator('#editor-load').click();
@@ -51,7 +51,7 @@ test('browser: imported invalid HTML-like labels cannot render or replace projec
  await page.goto(base);
  const payload={schemaVersion:1,id:'evil',title:'Prueba',patternIds:[1],nodes:[{id:'a',patternId:1,label:'<img src=x onerror=alert(1)>',position:{x:0,y:0},ports:[]}],edges:[]};
  await page.locator('#editor-import').setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(payload))});
- await page.getByRole('status').getByText(/Error:/).waitFor();
+ await page.waitForFunction(() => document.querySelector('#editor-status')?.textContent?.startsWith('Error:'));
  assert.equal(await page.locator('#editor-nodes > g').count(),0);
  await context.close();
 });
