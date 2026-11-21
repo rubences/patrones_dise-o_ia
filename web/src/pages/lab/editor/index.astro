@@ -43,6 +43,7 @@ const base=import.meta.env.BASE_URL;
    <button id="editor-export-report" type="button" disabled>Exportar informe</button>
    <label class="file-control">Importar JSON <input id="editor-import" type="file" accept=".json,application/json"/></label>
   </div>
+  <div class="editor-toolbar"><label>Mostrar conexiones <select id="editor-edge-filter" aria-label="Filtrar conexiones por tipo"><option value="all">Todos los tipos</option><option value="data">Datos</option><option value="control">Control</option><option value="tool-call">Herramientas</option><option value="delegation">Delegación</option><option value="evidence">Evidencia</option></select></label><p>El filtro solo modifica la vista, no el proyecto ni la simulación.</p></div>
   <p class="editor-help" id="editor-help">Arrastra los nodos con el ratón. Con teclado, selecciona un nodo y utiliza las Flechas para moverlo o Suprimir para eliminarlo. También puedes usar el selector y el botón «Eliminar nodo».</p>
   <div class="editor-canvas"><svg id="editor-svg" viewBox="0 0 1100 600" role="img" aria-label="Lienzo de arquitectura: arrastra nodos para reorganizarlos"><defs><marker id="editor-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6 Z" fill="#5eead4"/></marker></defs><g id="editor-edges"></g><g id="editor-nodes"></g></svg></div>
   <section class="simulation-report" aria-labelledby="simulation-heading"><h2 id="simulation-heading">Simulación determinista</h2><p>La simulación analiza dependencias y ciclos. No ejecuta modelos ni herramientas.</p><div id="simulation-result" role="status" aria-live="polite">Pulsa «Simular arquitectura» para generar una traza.</div><div id="simulation-structure" aria-label="Análisis estructural"></div><div id="simulation-statistics" aria-label="Estadísticas por oleada"></div><div class="editor-toolbar"><label>Oleada a inspeccionar <select id="simulation-wave" aria-label="Oleada de simulación"><option value="0">Vista general</option></select></label><button id="simulation-prev" type="button">Anterior</button><button id="simulation-next" type="button">Siguiente</button></div><p id="simulation-focus" role="status" aria-live="polite">Sin oleada seleccionada.</p><ol id="simulation-steps" aria-label="Pasos de simulación"></ol></section>
@@ -61,6 +62,7 @@ import {simulateArchitecture,type SimulationReport} from '../../../lib/lab/simul
 import {analyzeArchitecture,type StructuralAnalysis} from '../../../lib/lab/structural-analysis';
 import {simulationNodeStates} from '../../../lib/lab/simulation-visual-state';
 import {buildSimulationStatistics,type SimulationStatistics} from '../../../lib/lab/simulation-statistics';
+import {filterArchitectureEdges} from '../../../lib/lab/edge-filter';
 import type {ArchitectureDiagram,EdgeKind} from '../../../lib/lab/architecture-schema';
 const root=document.getElementById('architecture-editor');
 if(root){
@@ -71,6 +73,7 @@ if(root){
  const el=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
  const title=el<HTMLInputElement>('project-title'),family=el<HTMLSelectElement>('editor-family'),pattern=el<HTMLSelectElement>('editor-pattern');
  const source=el<HTMLSelectElement>('editor-source'),target=el<HTMLSelectElement>('editor-target'),kind=el<HTMLSelectElement>('editor-kind'),edgeSelect=el<HTMLSelectElement>('editor-edge'),selectedNode=el<HTMLSelectElement>('editor-selected-node'),saved=el<HTMLSelectElement>('editor-saved');
+ const edgeFilter=el<HTMLSelectElement>('editor-edge-filter');
  const status=el<HTMLElement>('editor-status'),nodes=el<SVGGElement>('editor-nodes'),edges=el<SVGGElement>('editor-edges'),svg=el<SVGSVGElement>('editor-svg');
  const ns='http://www.w3.org/2000/svg';
  const uid=()=> 'project_'+crypto.randomUUID().replaceAll('-','').slice(0,20);
@@ -95,6 +98,7 @@ if(root){
  const make=(tag:string,attrs:Record<string,string>={})=>{const x=document.createElementNS(ns,tag) as SVGElement;for(const [k,v] of Object.entries(attrs))x.setAttribute(k,v);return x};
  const options=(select:HTMLSelectElement,values:{value:string;label:string}[])=>{const prev=select.value;select.replaceChildren(...values.map(v=>{const o=document.createElement('option');o.value=v.value;o.textContent=v.label;return o}));if(values.some(v=>v.value===prev))select.value=prev};
  const refreshPalette=()=>{const filtered=palette.filter(p=>!family.value||p.family===family.value);options(pattern,filtered.map(p=>({value:String(p.id),label:`#${p.id} · ${p.title}`})) )};
+ const applyEdgeFilter=()=>{const visible=new Set(filterArchitectureEdges(project,edgeFilter.value==='all'?null:edgeFilter.value as EdgeKind).map(e=>e.id));project.edges.forEach((e,i)=>{const line=edges.children[i] as SVGElement|undefined;if(line)line.style.display=visible.has(e.id)?'':'none'})};
  const render=()=>{
   title.value=project.title;
   options(source,project.nodes.map(n=>({value:n.id,label:n.label})));
@@ -104,7 +108,7 @@ if(root){
   nodes.replaceChildren();edges.replaceChildren();updateDirty();
   for(const e of project.edges){const a=project.nodes.find(n=>n.id===e.source),b=project.nodes.find(n=>n.id===e.target);if(!a||!b)continue;
    const line=make('line',{x1:String(a.position.x+90),y1:String(a.position.y+30),x2:String(b.position.x+90),y2:String(b.position.y+30),stroke:'#5eead4','stroke-width':'2','marker-end':'url(#editor-arrow)'});
-   edges.append(line);
+   line.setAttribute('data-edge-kind',e.kind);edges.append(line);
   }
   for(const n of project.nodes){
    const g=make('g',{transform:`translate(${n.position.x} ${n.position.y})`,tabindex:'0',role:'group','aria-label':`${n.label}, patrón ${n.patternId}`});
@@ -123,11 +127,12 @@ if(root){
    });
    g.addEventListener('keydown',ev=>{if(ev.key==='Delete'||ev.key==='Backspace'){commit(removePatternNode(project,n.id));render();notice('Nodo eliminado')}else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key)){ev.preventDefault();commit(movePatternNode(project,n.id,n.position.x+(ev.key==='ArrowLeft'?-15:ev.key==='ArrowRight'?15:0),n.position.y+(ev.key==='ArrowUp'?-15:ev.key==='ArrowDown'?15:0)));render()}});
   }
-  if(lastSimulation&&lastStructure)showWave();
+  applyEdgeFilter();if(lastSimulation&&lastStructure)showWave();
  };
  const refreshSaved=async()=>{const projects=await storage.list();options(saved,[{value:'',label:'Seleccionar…'},...projects.map(p=>({value:p.id,label:p.title}))])};
  const safely=async(task:()=>Promise<void>)=>{try{await task()}catch(e){notice('Error: '+(e instanceof Error?e.message:String(e)))}};
  family.addEventListener('change',refreshPalette);
+ edgeFilter.addEventListener('change',applyEdgeFilter);
  title.addEventListener('input',()=>{updateDirty();invalidateSimulation()});
  window.addEventListener('beforeunload',event=>{if(projectIsDirty(savedSnapshot,current())){event.preventDefault();event.returnValue=''}});
  el<HTMLButtonElement>('editor-add').addEventListener('click',()=>{const p=palette.find(p=>p.id===Number(pattern.value));if(!p)return;commit(addPatternNode(project,p.id,p.title));render();notice('Nodo añadido. Guarda para conservarlo.')});
