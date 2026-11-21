@@ -37,3 +37,7 @@ La ruta `/lab/editor/` permite seleccionar patrones de las 42 macrofamilias, añ
 ## Historial de edición
 
 El editor ofrece controles Deshacer/Rehacer para operaciones sobre nodos y conexiones. El historial es local y acotado a 50 versiones; se reinicia al abrir, importar o crear un proyecto. No constituye auditoría ni sustituye la exportación JSON. El guardado en IndexedDB persiste el proyecto, no su historial.
+
+## Edición de conexiones
+
+La interfaz permite seleccionar una conexión existente por sus nodos y tipo, y eliminarla sin borrar los patrones asociados. La operación se incluye en el historial local de Deshacer/Rehacer y conserva la validación del grafo.
