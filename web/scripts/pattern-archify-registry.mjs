@@ -1,11 +1,13 @@
 import catalog from '../../catalog/patterns.json' with {type:'json'};
 import {curatedDiagrams} from '../src/data/archify-diagrams.mjs';
+import {semanticFlows,sourceSemanticDiagram} from './semantic-archify-flows.mjs';
 export const patternDiagramOutput=(p)=>`pattern-${String(p.id).padStart(3,'0')}-${p.slug}.html`;
 export function patternDiagramRegistry(){
  const curated=new Map(curatedDiagrams.filter(x=>x.patternId).map(x=>[x.patternId,x]));
- return catalog.patterns.map(p=>curated.get(p.id)??{id:`pattern-${String(p.id).padStart(3,'0')}`,type:'workflow',patternId:p.id,slug:p.slug,output:patternDiagramOutput(p),generated:true});
+ return catalog.patterns.map(p=>curated.get(p.id)??{id:`pattern-${String(p.id).padStart(3,'0')}`,type:'workflow',patternId:p.id,slug:p.slug,output:patternDiagramOutput(p),generated:true,reviewed:!!semanticFlows[p.id]});
 }
 export function patternSourceOverview(p,revision){
+ if(semanticFlows[p.id])return sourceSemanticDiagram(p,revision);
  const output=patternDiagramOutput(p);
  const source={path:p.sourceFile,line:1,end_line:1};
  const names=[
