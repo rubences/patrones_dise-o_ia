@@ -57,3 +57,7 @@ El editor permite duplicar un proyecto con identificador nuevo, renombrarlo sin 
 ## Fase 3 — simulación determinista (primera entrega)
 
 La ruta `/lab/editor/` incluye «Simular arquitectura» y «Exportar traza». El motor puro valida el grafo y calcula oleadas topológicas estables, ordenando los nodos listos por identificador. Detecta ciclos y dependencias bloqueadas, y genera un informe JSON reproducible con `schemaVersion:1`, estado, oleadas, pasos, nodos bloqueados e incidencias. Las conexiones de cualquier tipo se interpretan como dependencias de precedencia para esta primera versión, **no como ejecución real de herramientas, modelos ni agentes**. Las trazas marcan `executedModels:false` y `executedTools:false`. Al editar la arquitectura se invalida la traza anterior. No se estiman tiempos, costes ni métricas empíricas.
+
+## Fase 3 — diagnóstico estructural
+
+El motor calcula profundidad máxima como **número de nodos** de la cadena de dependencias más larga en un DAG, con desempate determinista por identificadores. Muestra el tamaño de cada oleada y, ante bloqueos, distingue los nodos que pertenecen a ciclos (componentes fuertemente conexas) de los nodos bloqueados aguas abajo. Los resultados se incorporan a la exportación JSON como `structuralAnalysis`. Esta es una medida estructural, no una ruta crítica temporal: no se asignan duraciones, latencias ni costes a los nodos.

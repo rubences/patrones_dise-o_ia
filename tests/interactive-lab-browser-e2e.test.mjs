@@ -145,8 +145,11 @@ test('browser: deterministic simulation produces trace and blocks cycles',async(
  const download=await downloadPromise;
  const trace=JSON.parse(await (await import('node:fs/promises')).readFile(await download.path(),'utf8'));
  assert.equal(trace.executedModels,false);assert.equal(trace.executedTools,false);
+ assert.equal(trace.structuralAnalysis.longestPathLength,2);
+ assert.deepEqual(trace.structuralAnalysis.waveSizes,[1,1]);
  await page.locator('#editor-source').selectOption(ids[1]);await page.locator('#editor-target').selectOption(ids[0]);
  await page.locator('#editor-connect').click();await page.locator('#editor-simulate').click();
  assert.match(await page.locator('#simulation-result').textContent(),/Simulación bloqueada/);
+ assert.match(await page.locator('#simulation-structure').textContent(),/Nodos en ciclos: 2/);
  await context.close();
 });
