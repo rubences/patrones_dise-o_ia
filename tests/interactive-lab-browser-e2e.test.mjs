@@ -198,10 +198,10 @@ test('browser: edge-type filter changes only SVG visibility',async()=>{
  await page.locator('#editor-kind').selectOption('control');await page.locator('#editor-connect').click();
  assert.equal(await page.locator('#editor-edges > line').evaluateAll(lines=>lines.filter(line=>line.style.display!=='none').length),2);
  await page.locator('#editor-edge-filter').selectOption('data');
- assert.equal(await page.locator('#editor-edges > line:visible').count(),1);
+ assert.equal(await page.locator('#editor-edges > line').evaluateAll(lines=>lines.filter(line=>line.style.display!=='none').length),1);
  await page.locator('#editor-simulate').click();
  assert.match(await page.locator('#simulation-statistics').textContent(),/Conexiones: 2/);
  await page.locator('#editor-edge-filter').selectOption('all');
- assert.equal(await page.locator('#editor-edges > line:visible').count(),2);
+ assert.equal(await page.locator('#editor-edges > line').evaluateAll(lines=>lines.filter(line=>line.style.display!=='none').length),2);
  await context.close();
 });
