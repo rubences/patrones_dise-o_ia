@@ -207,6 +207,7 @@ jobs:
           npx --yes tsx@4.20.6 --test tests/interactive-lab-structural-analysis.test.ts
           npx --yes tsx@4.20.6 --test tests/interactive-lab-simulation-visual-state.test.ts
           npx --yes tsx@4.20.6 --test tests/interactive-lab-simulation-statistics.test.ts
+          npx --yes tsx@4.20.6 --test tests/interactive-lab-simulation-report-html.test.ts
 
       - name: Install web dependencies
         working-directory: web
