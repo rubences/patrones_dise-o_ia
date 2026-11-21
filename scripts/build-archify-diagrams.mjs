@@ -53,7 +53,7 @@ try{
    if(!pattern||!existsSync(join(root,pattern.sourceFile)))throw Error('Missing pattern source '+entry.patternId);
    const input=patternSourceOverview(pattern,revision);
    const candidate=join(temp,`generated-${entry.patternId}.json`);
-   writeFileSync(candidate,JSON.stringify(input,null,2)+'\\n');
+   writeFileSync(candidate,JSON.stringify(input,null,2)+'\n');
    const output=join(root,input.meta.output);
    mkdirSync(dirname(output),{recursive:true});
    try{
