@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {filterArchitectureEdges} from '../web/src/lib/lab/edge-filter.ts';
+import {newArchitecture,addPatternNode,connectPatternNodes} from '../web/src/lib/lab/editor-operations.ts';
+let graph=newArchitecture('demo','Filtro');graph=addPatternNode(graph,1,'A');graph=addPatternNode(graph,25,'B');
+graph=connectPatternNodes(graph,graph.nodes[0].id,graph.nodes[1].id,'data');
+graph=connectPatternNodes(graph,graph.nodes[0].id,graph.nodes[1].id,'control');
+test('all edge kinds remain visible when filter is unset',()=>assert.equal(filterArchitectureEdges(graph,null).length,2));
+test('data filter preserves only data edges without changing graph',()=>{assert.equal(filterArchitectureEdges(graph,'data').length,1);assert.equal(graph.edges.length,2)});
+test('control filter preserves only control edges',()=>assert.equal(filterArchitectureEdges(graph,'control')[0].kind,'control'));
