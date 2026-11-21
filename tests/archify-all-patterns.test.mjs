@@ -12,7 +12,7 @@ test('one uniquely named Archify HTML per canonical pattern',()=>{
 });
 test('generated schematic explicitly discloses non-vetted scope and sources',()=>{
  const curated=new Set(patternDiagramRegistry().filter(x=>!x.generated).map(x=>x.patternId));
- for(const p of catalog.patterns.filter(p=>!curated.has(p.id)&&![2,3,4,5].includes(p.id))){
+ for(const p of catalog.patterns.filter(p=>!curated.has(p.id)&&![2,3,4,5,6,7,8,9].includes(p.id))){
   const d=patternSourceOverview(p,'a'.repeat(40));
   assert.equal(d.diagram_type,'workflow');
   assert.equal(d.nodes.length,5);
@@ -23,7 +23,7 @@ test('generated schematic explicitly discloses non-vetted scope and sources',()=
 });
 
 test('four source-reviewed flows reflect distinct code paths and limitations',()=>{
- for(const id of [2,3,4,5]){
+ for(const id of [2,3,4,5,6,7,8,9]){
   const p=catalog.patterns.find(p=>p.id===id),d=patternSourceOverview(p,'a'.repeat(40));
   assert.ok(d.nodes.length>=5);
   assert.ok(d.edges.length>=4);
@@ -36,6 +36,14 @@ test('four source-reviewed flows reflect distinct code paths and limitations',()
  assert.ok(reflection.cards.some(c=>c.items.some(t=>t.includes('fijadas'))));
  const evaluator=patternSourceOverview(catalog.patterns.find(p=>p.id===4),'a'.repeat(40));
  assert.ok(evaluator.edges.some(e=>e.from==='limit'&&e.to==='critic'));
+ const planning=patternSourceOverview(catalog.patterns.find(p=>p.id===6),'a'.repeat(40));
+ assert.ok(planning.cards.some(c=>c.items.some(t=>t.includes('parseInt'))));
+ const multi=patternSourceOverview(catalog.patterns.find(p=>p.id===7),'a'.repeat(40));
+ assert.ok(multi.cards.some(c=>c.items.some(t=>t.includes('Math.random'))));
+ const hitl=patternSourceOverview(catalog.patterns.find(p=>p.id===8),'a'.repeat(40));
+ assert.ok(hitl.cards.some(c=>c.items.some(t=>t.includes('simulada'))));
+ const factory=patternSourceOverview(catalog.patterns.find(p=>p.id===9),'a'.repeat(40));
+ assert.ok(factory.edges.some(e=>e.to==='expert'));
  const tools=patternSourceOverview(catalog.patterns.find(p=>p.id===5),'a'.repeat(40));
  assert.ok(tools.cards.some(c=>c.items.some(t=>t.includes('simuladas'))));
 });
