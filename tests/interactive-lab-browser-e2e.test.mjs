@@ -34,6 +34,7 @@ test('browser: create, connect, undo/redo, save, reload and open',async()=>{
  const savedId=await page.locator('#editor-saved option').filter({hasText:'Arquitectura persistida'}).getAttribute('value');
  await page.locator('#editor-saved').selectOption(savedId);
  await page.locator('#editor-load').click();
+ await page.waitForFunction(() => document.querySelector('#editor-status')?.textContent?.includes('Proyecto cargado'));
  assert.equal(await page.locator('#editor-nodes > g').count(),2);
  assert.equal(await page.locator('#project-title').inputValue(),'Arquitectura persistida');
  const downloadPromise=page.waitForEvent('download');
