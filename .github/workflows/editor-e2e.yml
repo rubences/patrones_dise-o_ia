@@ -1,0 +1,66 @@
+name: Interactive Lab Browser E2E
+
+on:
+  pull_request:
+    paths:
+      - 'web/**'
+      - 'tests/interactive-lab-browser-e2e.test.mjs'
+      - '.github/workflows/editor-e2e.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - 'tests/interactive-lab-browser-e2e.test.mjs'
+      - '.github/workflows/editor-e2e.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Install Astro dependencies
+        working-directory: web
+        run: npm install
+
+      - name: Install pinned Playwright test runtime
+        working-directory: web
+        run: |
+          npm install --no-save --package-lock=false playwright@1.58.2
+
+      - name: Setup Chrome for Testing
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+
+      - name: Build static website
+        working-directory: web
+        run: npm run build
+
+      - name: Start Astro preview
+        working-directory: web
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/lab-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4321/patrones_dise-o_ia/lab/editor/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/lab-preview.log
+          exit 1
+
+      - name: Run Chromium browser tests
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        run: node --test tests/interactive-lab-browser-e2e.test.mjs
