@@ -68,6 +68,31 @@ export const semanticFlows={
   links:[['client','factory','configuración'],['factory','gate','tipo'],['gate','expert','experto'],['gate','other','otros tipos'],['expert','result','instancia'],['other','result','instancia']],
   evidence:['La fábrica selecciona una clase según config.tipo','El experto requiere especialización y lanza error si falta','Cada agente implementa procesarTarea; crearAgente no ejecuta el modelo']
  }
+ ,10:{
+  steps:[['client','Configuración de prompt','rol, contexto y tarea','external'],['builder','ConstructorPrompt','métodos fluidos','backend'],['parts','Añadir componentes','restricciones, ejemplos, formato','backend'],['construct','Construir texto','construir()','backend'],['model','Usar prompt','responses.create en demostración','backend'],['output','Respuesta','output_text','frontend']],
+  links:[['client','builder','crear'],['builder','parts','componer'],['parts','construct','construir'],['construct','model','instrucciones'],['model','output','respuesta']],
+  evidence:['ConstructorPrompt ensambla cadenas; no valida semánticamente las restricciones','reset() limpia el estado para reutilizar la instancia','Las llamadas al modelo aparecen en demostrarBuilder, no dentro de construir()']
+ },
+ 11:{
+  steps:[['model','Respuesta LLM','RespuestaLLM','external'],['registry','GestorAdaptadores','registrarAdaptador','backend'],['choose','Elegir formato','adaptar(respuesta, formato)','backend'],['json','Adaptador JSON','parseo o fallback','backend'],['other','Otros adaptadores','CSV, XML, Markdown, HTML','backend'],['output','RespuestaFormato','contenido adaptado','frontend']],
+  links:[['model','registry','texto'],['registry','choose','formatos'],['choose','json','json'],['choose','other','otros'],['json','output','resultado'],['other','output','resultado']],
+  evidence:['El JSON usa una expresión regular codiciosa y JSON.parse con fallback','El CSV transforma cada línea en una única celda entre comillas, no infiere columnas','Los adaptadores no garantizan que el contenido sea válido para todos los consumidores']
+ },
+ 12:{
+  steps:[['input','Entrada','solicitud','external'],['stack','Componer decoradores','wrappers encadenados','backend'],['validation','Validación','DecoradorValidacion','backend'],['cache','Caché','DecoradorCache','backend'],['retry','Reintentos','DecoradorRetry','backend'],['agent','Agente base','AgenteSimple','backend'],['output','Respuesta','procesar()','frontend']],
+  links:[['input','stack','entrada'],['stack','validation','envolver'],['validation','cache','siguiente'],['cache','retry','miss'],['retry','agent','invocar'],['agent','output','respuesta'],['cache','output','hit']],
+  evidence:['Los decoradores se componen mediante envolturas y pueden cambiar de orden','Retry usa espera lineal delayMs × intento, no backoff exponencial','La demostración utiliza varias composiciones, no una única cadena obligatoria']
+ },
+ 13:{
+  steps:[['question','Pregunta','entrada','external'],['context','GeneradorConEstrategia','estrategia activa','backend'],['select','Cambiar estrategia','cambiarEstrategia','backend'],['prompt','Construir prompt','generarPrompt','backend'],['model','Invocar LLM','configuracionLLM','backend'],['result','Resultado','respuesta y duración','frontend']],
+  links:[['question','context','pregunta'],['context','select','estrategia'],['select','prompt','directa/reflexiva/creativa/etc.'],['prompt','model','instrucciones'],['model','result','respuesta']],
+  evidence:['La estrategia modifica el prompt y la configuración de reasoning','La duración se mide durante la llamada y no es una predicción','La demostración compara como más rápida solo Directa frente a Reflexiva, aunque ejecuta otras estrategias']
+ },
+ 14:{
+  steps:[['request','Solicitud','prioridad y campo','external'],['first','Soporte nivel 1','puedoManejar','backend'],['technical','Soporte técnico','puedoManejar','backend'],['billing','Facturación','puedoManejar','backend'],['legal','Legal','puedoManejar','backend'],['supervisor','Supervisor','último manejador','backend'],['result','Respuesta o escalado','Respuesta','frontend']],
+  links:[['request','first','iniciar'],['first','result','maneja'],['first','technical','no maneja'],['technical','result','maneja'],['technical','billing','no maneja'],['billing','result','maneja'],['billing','legal','no maneja'],['legal','result','maneja'],['legal','supervisor','no maneja'],['supervisor','result','resuelve o escala']],
+  evidence:['Cada manejador decide con puedoManejar; si no puede, delega al siguiente','La cadena estándar ordena nivel 1, técnico, facturación, legal y supervisor','Si no existe un siguiente manejador se devuelve escalada:true y procesada:false']
+ }
 };
 export function sourceSemanticDiagram(p,revision){
  const flow=semanticFlows[p.id];
