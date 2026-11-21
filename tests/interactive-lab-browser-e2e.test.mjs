@@ -91,3 +91,39 @@ test('browser: accessible node selector deletes a selected node',async()=>{
  assert.equal(await page.locator('#editor-nodes > g').count(),2);
  await context.close();
 });
+
+test('browser: duplicate and rename projects without modifying original',async()=>{
+ const context=await browser.newContext();
+ const page=await context.newPage();await page.goto(base);
+ await page.locator('#editor-pattern').selectOption('1');
+ await page.locator('#editor-add').click();
+ await page.locator('#project-title').fill('Original');
+ await page.locator('#editor-save').click();
+ await page.waitForFunction(()=>document.querySelector('#editor-status')?.textContent?.includes('Guardado en este navegador'));
+ await page.locator('#editor-duplicate').click();
+ assert.equal(await page.locator('#project-title').inputValue(),'Original (copia)');
+ assert.equal(await page.locator('#editor-nodes > g').count(),1);
+ await page.locator('#project-title').fill('Copia renombrada');
+ await page.locator('#editor-rename').click();
+ assert.equal(await page.locator('#project-title').inputValue(),'Copia renombrada');
+ assert.match(await page.locator('#editor-dirty').textContent(),/Cambios sin guardar/);
+ await page.locator('#editor-save').click();
+ await page.waitForFunction(()=>document.querySelector('#editor-status')?.textContent?.includes('Guardado en este navegador'));
+ const labels=await page.locator('#editor-saved option').allTextContents();
+ assert.ok(labels.includes('Original'));
+ assert.ok(labels.includes('Copia renombrada'));
+ await context.close();
+});
+test('browser: warns before discarding unsaved changes',async()=>{
+ const context=await browser.newContext();
+ const page=await context.newPage();await page.goto(base);
+ await page.locator('#editor-pattern').selectOption('1');
+ await page.locator('#editor-add').click();
+ page.once('dialog',dialog=>dialog.dismiss());
+ await page.locator('#editor-new').click();
+ assert.equal(await page.locator('#editor-nodes > g').count(),1);
+ page.once('dialog',dialog=>dialog.accept());
+ await page.locator('#editor-new').click();
+ assert.equal(await page.locator('#editor-nodes > g').count(),0);
+ await context.close();
+});
