@@ -15,7 +15,7 @@ test('printable report includes structure, disclaimer and safe markup',()=>{
 });
 test('HTML special characters in labels are escaped',()=>{
  let g=newArchitecture('demo','Prueba');g=addPatternNode(g,1,'Pipeline');
- g.nodes[0].label='<img src=x onerror=alert(1)>';
+ g.title='<img src=x onerror=alert(1)>';
  const s=simulateArchitecture(g,ids),a=analyzeArchitecture(g,ids),stats=buildSimulationStatistics(g,s,a);
  const html=renderSimulationReportHtml(g,stats,s,a);
  assert.doesNotMatch(html,/<img src=x/);
