@@ -1,0 +1,171 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Orchestrator–Workers · DAG de subtareas",
+    "locale": "es",
+    "quality_profile": "showcase",
+    "output": "dist/archify-build/pattern-060-orchestrator-workers.html",
+    "repository": {
+      "url": "https://github.com/rubences/patrones_dise-o_ia",
+      "provider": "github",
+      "revision": "a2c744a8ce3c2a85ca7c59056c93c3831bff77a5"
+    }
+  },
+  "lanes": [
+    {
+      "id": "control",
+      "label": "Orquestador"
+    },
+    {
+      "id": "workers",
+      "label": "Workers especializados"
+    },
+    {
+      "id": "salida",
+      "label": "Resultado"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "objetivo",
+      "lane": "control",
+      "col": 0,
+      "type": "external",
+      "label": "Objetivo",
+      "sublabel": "Solicitud inicial",
+      "sources": [
+        {
+          "path": "src/pattern_60_orchestrator_workers.ts",
+          "line": 120,
+          "end_line": 131
+        }
+      ]
+    },
+    {
+      "id": "plan",
+      "lane": "control",
+      "col": 1,
+      "type": "backend",
+      "label": "Planificar DAG",
+      "sublabel": "Tareas y dependencias",
+      "sources": [
+        {
+          "path": "src/pattern_60_orchestrator_workers.ts",
+          "line": 130,
+          "end_line": 154
+        }
+      ]
+    },
+    {
+      "id": "validar",
+      "lane": "control",
+      "col": 2,
+      "type": "security",
+      "label": "Validar dependencias",
+      "sublabel": "Referencias conocidas",
+      "sources": [
+        {
+          "path": "src/pattern_60_orchestrator_workers.ts",
+          "line": 77,
+          "end_line": 86
+        }
+      ]
+    },
+    {
+      "id": "listas",
+      "lane": "control",
+      "col": 3,
+      "type": "backend",
+      "label": "Tareas listas",
+      "sublabel": "Solo deps completadas",
+      "sources": [
+        {
+          "path": "src/pattern_60_orchestrator_workers.ts",
+          "line": 70,
+          "end_line": 76
+        }
+      ]
+    },
+    {
+      "id": "workers",
+      "lane": "workers",
+      "col": 4,
+      "type": "backend",
+      "label": "Ejecutar ola",
+      "sublabel": "Workers en paralelo",
+      "sources": [
+        {
+          "path": "src/pattern_60_orchestrator_workers.ts",
+          "line": 158,
+          "end_line": 197
+        }
+      ]
+    },
+    {
+      "id": "resumen",
+      "lane": "salida",
+      "col": 5,
+      "type": "frontend",
+      "label": "Síntesis",
+      "sublabel": "Resultados agregados",
+      "sources": [
+        {
+          "path": "src/pattern_60_orchestrator_workers.ts",
+          "line": 202,
+          "end_line": 219
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_1",
+      "from": "objetivo",
+      "to": "plan",
+      "label": "planificar"
+    },
+    {
+      "id": "edge_2",
+      "from": "plan",
+      "to": "validar",
+      "label": "DAG"
+    },
+    {
+      "id": "edge_3",
+      "from": "validar",
+      "to": "listas",
+      "label": "válido"
+    },
+    {
+      "id": "edge_4",
+      "from": "listas",
+      "to": "workers",
+      "label": "despachar"
+    },
+    {
+      "id": "edge_5",
+      "from": "workers",
+      "to": "resumen",
+      "label": "resultados"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Implementación de referencia",
+      "items": [
+        "Basado en src/pattern_60_orchestrator_workers.ts",
+        "El diagrama documenta código, no ejecuta servicios"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Límites y condiciones",
+      "items": [
+        "El plan falla ante dependencias desconocidas y ciclos bloqueantes.",
+        "Las tareas listas de una misma ola se ejecutan en paralelo."
+      ]
+    }
+  ]
+}
