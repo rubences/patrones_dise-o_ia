@@ -25,6 +25,8 @@ const base=import.meta.env.BASE_URL;
   </div>
   <div class="editor-toolbar">
    <button id="editor-new" type="button">Nuevo</button>
+   <button id="editor-undo" type="button" disabled>Deshacer</button>
+   <button id="editor-redo" type="button" disabled>Rehacer</button>
    <button id="editor-save" type="button">Guardar local</button>
    <label>Proyectos guardados <select id="editor-saved"><option value="">Seleccionar…</option></select></label>
    <button id="editor-load" type="button">Abrir</button>
@@ -39,6 +41,7 @@ const base=import.meta.env.BASE_URL;
 </BaseLayout>
 <script>
 import {newArchitecture,addPatternNode,connectPatternNodes,movePatternNode,removePatternNode} from '../../../lib/lab/editor-operations';
+import {createHistory,commitHistory,undoHistory,redoHistory} from '../../../lib/lab/editor-history';
 import {validateArchitecture} from '../../../lib/lab/architecture-validation';
 import {createIndexedDbProjectStorage} from '../../../lib/lab/project-storage';
 import {parseProjectJson,serializeProject} from '../../../lib/lab/project-transfer';
@@ -56,6 +59,10 @@ if(root){
  const ns='http://www.w3.org/2000/svg';
  const uid=()=> 'project_'+crypto.randomUUID().replaceAll('-','').slice(0,20);
  let project:ArchitectureDiagram=newArchitecture(uid(),'Mi arquitectura IA');
+ let history=createHistory(project);
+ const syncHistory=()=>{el<HTMLButtonElement>('editor-undo').disabled=!history.past.length;el<HTMLButtonElement>('editor-redo').disabled=!history.future.length};
+ const commit=(next:ArchitectureDiagram)=>{history=commitHistory(history,next);project=history.present;syncHistory()};
+ const reset=(next:ArchitectureDiagram)=>{history=createHistory(next);project=history.present;syncHistory()};
  const notice=(msg:string)=>{status.textContent=msg};
  const make=(tag:string,attrs:Record<string,string>={})=>{const x=document.createElementNS(ns,tag) as SVGElement;for(const [k,v] of Object.entries(attrs))x.setAttribute(k,v);return x};
  const options=(select:HTMLSelectElement,values:{value:string;label:string}[])=>{const prev=select.value;select.replaceChildren(...values.map(v=>{const o=document.createElement('option');o.value=v.value;o.textContent=v.label;return o}));if(values.some(v=>v.value===prev))select.value=prev};
@@ -81,24 +88,26 @@ if(root){
     g.setPointerCapture(ev.pointerId);
     const move=(event:PointerEvent)=>{project=movePatternNode(project,n.id,Math.max(0,Math.min(920,initialX+(event.clientX-startX)*sx)),Math.max(0,Math.min(540,initialY+(event.clientY-startY)*sy)));const moved=project.nodes.find(v=>v.id===n.id)!;g.setAttribute('transform',`translate(${moved.position.x} ${moved.position.y})`);
      project.edges.forEach((e,i)=>{const a=project.nodes.find(v=>v.id===e.source),b=project.nodes.find(v=>v.id===e.target);const line=edges.children[i];if(a&&b&&line){line.setAttribute('x1',String(a.position.x+90));line.setAttribute('y1',String(a.position.y+30));line.setAttribute('x2',String(b.position.x+90));line.setAttribute('y2',String(b.position.y+30));}})};
-    const stop=()=>{g.removeEventListener('pointermove',move);g.removeEventListener('pointerup',stop);g.removeEventListener('pointercancel',stop);notice('Posición actualizada. Guarda para conservar los cambios.')};
+    const stop=()=>{history=commitHistory(history,project);syncHistory();g.removeEventListener('pointermove',move);g.removeEventListener('pointerup',stop);g.removeEventListener('pointercancel',stop);notice('Posición actualizada. Guarda para conservar los cambios.')};
     g.addEventListener('pointermove',move);g.addEventListener('pointerup',stop);g.addEventListener('pointercancel',stop);
    });
-   g.addEventListener('keydown',ev=>{if(ev.key==='Delete'||ev.key==='Backspace'){project=removePatternNode(project,n.id);render();notice('Nodo eliminado')}else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key)){ev.preventDefault();project=movePatternNode(project,n.id,n.position.x+(ev.key==='ArrowLeft'?-15:ev.key==='ArrowRight'?15:0),n.position.y+(ev.key==='ArrowUp'?-15:ev.key==='ArrowDown'?15:0));render()}});
+   g.addEventListener('keydown',ev=>{if(ev.key==='Delete'||ev.key==='Backspace'){commit(removePatternNode(project,n.id));render();notice('Nodo eliminado')}else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key)){ev.preventDefault();commit(movePatternNode(project,n.id,n.position.x+(ev.key==='ArrowLeft'?-15:ev.key==='ArrowRight'?15:0),n.position.y+(ev.key==='ArrowUp'?-15:ev.key==='ArrowDown'?15:0));render()}});
   }
  };
  const refreshSaved=async()=>{const projects=await storage.list();options(saved,[{value:'',label:'Seleccionar…'},...projects.map(p=>({value:p.id,label:p.title}))])};
  const safely=async(task:()=>Promise<void>)=>{try{await task()}catch(e){notice('Error: '+(e instanceof Error?e.message:String(e)))}};
  family.addEventListener('change',refreshPalette);
- el<HTMLButtonElement>('editor-add').addEventListener('click',()=>{const p=palette.find(p=>p.id===Number(pattern.value));if(!p)return;project=addPatternNode(project,p.id,p.title);render();notice('Nodo añadido. Guarda para conservarlo.')});
- el<HTMLButtonElement>('editor-connect').addEventListener('click',()=>{try{project=connectPatternNodes(project,source.value,target.value,kind.value as EdgeKind);render();notice('Conexión añadida')}catch(e){notice(e instanceof Error?e.message:String(e))}});
- el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{project=newArchitecture(uid(),'Mi arquitectura IA');render();notice('Proyecto nuevo sin guardar')});
+ el<HTMLButtonElement>('editor-add').addEventListener('click',()=>{const p=palette.find(p=>p.id===Number(pattern.value));if(!p)return;commit(addPatternNode(project,p.id,p.title));render();notice('Nodo añadido. Guarda para conservarlo.')});
+ el<HTMLButtonElement>('editor-connect').addEventListener('click',()=>{try{commit(connectPatternNodes(project,source.value,target.value,kind.value as EdgeKind));render();notice('Conexión añadida')}catch(e){notice(e instanceof Error?e.message:String(e))}});
+ el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{reset(newArchitecture(uid(),'Mi arquitectura IA'));render();notice('Proyecto nuevo sin guardar')});
  el<HTMLButtonElement>('editor-save').addEventListener('click',()=>safely(async()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok)throw Error(v.errors.join('; '));await storage.put(v.diagram);await refreshSaved();notice('Guardado en este navegador')}));
- el<HTMLButtonElement>('editor-load').addEventListener('click',()=>safely(async()=>{const p=await storage.get(saved.value);if(!p)throw Error('Selecciona un proyecto guardado');project=p;render();notice('Proyecto cargado')}));
+ el<HTMLButtonElement>('editor-load').addEventListener('click',()=>safely(async()=>{const p=await storage.get(saved.value);if(!p)throw Error('Selecciona un proyecto guardado');reset(p);render();notice('Proyecto cargado')}));
  el<HTMLButtonElement>('editor-delete').addEventListener('click',()=>safely(async()=>{if(!saved.value)throw Error('Selecciona un proyecto');if(!confirm('¿Eliminar este proyecto del navegador?'))return;await storage.remove(saved.value);await refreshSaved();notice('Proyecto eliminado')}));
  el<HTMLButtonElement>('editor-export').addEventListener('click',()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok){notice(v.errors.join('; '));return}const url=URL.createObjectURL(new Blob([serializeProject(v.diagram)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`${project.id}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('Archivo JSON exportado')});
- el<HTMLInputElement>('editor-import').addEventListener('change',event=>safely(async()=>{const file=(event.currentTarget as HTMLInputElement).files?.[0];if(!file)return;if(file.size>1_000_000)throw Error('El archivo supera 1 MB');const parsed=parseProjectJson(await file.text(),known);if(!parsed.ok)throw Error(parsed.errors.join('; '));project=parsed.diagram;render();notice('Proyecto importado. Guarda para conservarlo.')}));
- refreshPalette();render();void safely(refreshSaved);
+ el<HTMLInputElement>('editor-import').addEventListener('change',event=>safely(async()=>{const file=(event.currentTarget as HTMLInputElement).files?.[0];if(!file)return;if(file.size>1_000_000)throw Error('El archivo supera 1 MB');const parsed=parseProjectJson(await file.text(),known);if(!parsed.ok)throw Error(parsed.errors.join('; '));reset(parsed.diagram);render();notice('Proyecto importado. Guarda para conservarlo.')}));
+ el<HTMLButtonElement>('editor-undo').addEventListener('click',()=>{history=undoHistory(history);project=history.present;syncHistory();render();notice('Cambio deshecho')});
+ el<HTMLButtonElement>('editor-redo').addEventListener('click',()=>{history=redoHistory(history);project=history.present;syncHistory();render();notice('Cambio rehecho')});
+ refreshPalette();render();syncHistory();void safely(refreshSaved);
 }
 </script>
 <style>
