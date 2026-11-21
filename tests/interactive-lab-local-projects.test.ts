@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {parseProjectJson,serializeProject} from '../web/src/lib/lab/project-transfer.ts';
+import {createMemoryProjectStorage} from '../web/src/lib/lab/project-storage.ts';
+const known=new Set([1,25]);
+const valid=()=>({schemaVersion:1,id:'demo',title:'Proyecto demo',patternIds:[1,25],nodes:[{id:'a',patternId:1,label:'Fuente',position:{x:0,y:0},ports:[{id:'out',direction:'output',kind:'data'}]},{id:'b',patternId:25,label:'Destino',position:{x:200,y:0},ports:[{id:'in',direction:'input',kind:'data'}]}],edges:[{id:'e',source:'a',sourcePort:'out',target:'b',targetPort:'in',kind:'data'}]});
+test('roundtrip keeps validated graph',()=>{const p=valid();const r=parseProjectJson(serializeProject(p),known);assert.equal(r.ok,true);if(r.ok)assert.deepEqual(r.diagram,p)});
+test('malformed JSON is rejected without throwing',()=>assert.equal(parseProjectJson('{broken',known).ok,false));
+test('future versions and unknown patterns are rejected',()=>{const p=valid();p.schemaVersion=2;assert.equal(parseProjectJson(JSON.stringify(p),known).ok,false);p.schemaVersion=1;p.nodes[1].patternId=999;assert.equal(parseProjectJson(JSON.stringify(p),known).ok,false)});
+test('oversized imports fail closed',()=>assert.equal(parseProjectJson('x'.repeat(1_000_001),known).ok,false));
+test('memory storage persists snapshots and removes projects',async()=>{const store=createMemoryProjectStorage(known);const p=valid();await store.put(p);p.title='Changed after save';assert.equal((await store.get('demo'))?.title,'Proyecto demo');assert.equal((await store.list()).length,1);await store.remove('demo');assert.equal(await store.get('demo'),null)});
+test('storage rejects malformed projects',async()=>{const store=createMemoryProjectStorage(known);const p=valid();p.nodes[0].label='<script>';await assert.rejects(()=>store.put(p))});
