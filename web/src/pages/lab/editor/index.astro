@@ -22,6 +22,8 @@ const base=import.meta.env.BASE_URL;
    <label>Destino <select id="editor-target" aria-label="Nodo destino"></select></label>
    <label>Conexión <select id="editor-kind"><option value="data">Datos</option><option value="control">Control</option><option value="tool-call">Herramienta</option><option value="delegation">Delegación</option><option value="evidence">Evidencia</option></select></label>
    <button id="editor-connect" type="button">Conectar</button>
+   <label>Conexión existente <select id="editor-edge" aria-label="Conexión para eliminar"></select></label>
+   <button id="editor-remove-edge" type="button">Eliminar conexión</button>
   </div>
   <div class="editor-toolbar">
    <button id="editor-new" type="button">Nuevo</button>
@@ -40,7 +42,7 @@ const base=import.meta.env.BASE_URL;
 </section>
 </BaseLayout>
 <script>
-import {newArchitecture,addPatternNode,connectPatternNodes,movePatternNode,removePatternNode} from '../../../lib/lab/editor-operations';
+import {newArchitecture,addPatternNode,connectPatternNodes,movePatternNode,removePatternNode,removePatternEdge} from '../../../lib/lab/editor-operations';
 import {createHistory,commitHistory,undoHistory,redoHistory} from '../../../lib/lab/editor-history';
 import {validateArchitecture} from '../../../lib/lab/architecture-validation';
 import {createIndexedDbProjectStorage} from '../../../lib/lab/project-storage';
@@ -54,7 +56,7 @@ if(root){
  const storage=createIndexedDbProjectStorage(known);
  const el=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
  const title=el<HTMLInputElement>('project-title'),family=el<HTMLSelectElement>('editor-family'),pattern=el<HTMLSelectElement>('editor-pattern');
- const source=el<HTMLSelectElement>('editor-source'),target=el<HTMLSelectElement>('editor-target'),kind=el<HTMLSelectElement>('editor-kind'),saved=el<HTMLSelectElement>('editor-saved');
+ const source=el<HTMLSelectElement>('editor-source'),target=el<HTMLSelectElement>('editor-target'),kind=el<HTMLSelectElement>('editor-kind'),edgeSelect=el<HTMLSelectElement>('editor-edge'),saved=el<HTMLSelectElement>('editor-saved');
  const status=el<HTMLElement>('editor-status'),nodes=el<SVGGElement>('editor-nodes'),edges=el<SVGGElement>('editor-edges'),svg=el<SVGSVGElement>('editor-svg');
  const ns='http://www.w3.org/2000/svg';
  const uid=()=> 'project_'+crypto.randomUUID().replaceAll('-','').slice(0,20);
@@ -71,6 +73,7 @@ if(root){
   title.value=project.title;
   options(source,project.nodes.map(n=>({value:n.id,label:n.label})));
   options(target,project.nodes.map(n=>({value:n.id,label:n.label})));
+  options(edgeSelect,project.edges.map(e=>({value:e.id,label:`${project.nodes.find(n=>n.id===e.source)?.label??e.source} → ${project.nodes.find(n=>n.id===e.target)?.label??e.target} (${e.kind})`})));
   nodes.replaceChildren();edges.replaceChildren();
   for(const e of project.edges){const a=project.nodes.find(n=>n.id===e.source),b=project.nodes.find(n=>n.id===e.target);if(!a||!b)continue;
    const line=make('line',{x1:String(a.position.x+90),y1:String(a.position.y+30),x2:String(b.position.x+90),y2:String(b.position.y+30),stroke:'#5eead4','stroke-width':'2','marker-end':'url(#editor-arrow)'});
@@ -99,6 +102,7 @@ if(root){
  family.addEventListener('change',refreshPalette);
  el<HTMLButtonElement>('editor-add').addEventListener('click',()=>{const p=palette.find(p=>p.id===Number(pattern.value));if(!p)return;commit(addPatternNode(project,p.id,p.title));render();notice('Nodo añadido. Guarda para conservarlo.')});
  el<HTMLButtonElement>('editor-connect').addEventListener('click',()=>{try{commit(connectPatternNodes(project,source.value,target.value,kind.value as EdgeKind));render();notice('Conexión añadida')}catch(e){notice(e instanceof Error?e.message:String(e))}});
+ el<HTMLButtonElement>('editor-remove-edge').addEventListener('click',()=>{if(!edgeSelect.value){notice('No hay una conexión seleccionada');return}commit(removePatternEdge(project,edgeSelect.value));render();notice('Conexión eliminada')});
  el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{reset(newArchitecture(uid(),'Mi arquitectura IA'));render();notice('Proyecto nuevo sin guardar')});
  el<HTMLButtonElement>('editor-save').addEventListener('click',()=>safely(async()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok)throw Error(v.errors.join('; '));await storage.put(v.diagram);await refreshSaved();notice('Guardado en este navegador')}));
  el<HTMLButtonElement>('editor-load').addEventListener('click',()=>safely(async()=>{const p=await storage.get(saved.value);if(!p)throw Error('Selecciona un proyecto guardado');reset(p);render();notice('Proyecto cargado')}));
