@@ -19,3 +19,9 @@ La nueva capa Archify convive con el SVG de relaciones de la fase 1. Se generan 
 El visor Astro utiliza un `iframe` aislado con enlace de apertura independiente, y conserva el contenido textual de la ficha. Primeros diagramas: arquitectura del Interactive Lab y workflow del patrón 001. No se atribuye a los 365 patrones un flujo de ejecución inferido automáticamente.
 
 Los datos de los usuarios siguen siendo locales, sin cuentas; la generación Archify ocurre en GitHub Actions, **no en el navegador del usuario**. La licencia Apache-2.0 y las atribuciones del proyecto se conservan en `web/public/archify/`. 
+
+## Diagramas Archify por macrofamilia — segunda entrega
+
+Se añaden diagramas de flujo revisados para los patrones 025 (RAG), 053 (Guardrails), 060 (Orchestrator–Workers) y 082 (MCP Server), además del Pipeline 001 y la arquitectura web. Los seis artefactos se generan con Archify 3.2.0 fijado, pasan por `finalize` y se sirven como HTML autónomo. La ficha de cada patrón conserva el visor SVG genérico como mapa alternativo de relaciones.
+
+**Límites documentados:** P025 usa recuperación léxica sobre datos simulados; P053 tiene políticas pedagógicas, no autorización de acciones sensibles; P060 valida dependencias y despacha olas paralelas; P082 usa un transporte MCP en memoria. No se deben atribuir propiedades que las implementaciones no demuestran.
