@@ -61,3 +61,7 @@ La ruta `/lab/editor/` incluye «Simular arquitectura» y «Exportar traza». El
 ## Fase 3 — diagnóstico estructural
 
 El motor calcula profundidad máxima como **número de nodos** de la cadena de dependencias más larga en un DAG, con desempate determinista por identificadores. Muestra el tamaño de cada oleada y, ante bloqueos, distingue los nodos que pertenecen a ciclos (componentes fuertemente conexas) de los nodos bloqueados aguas abajo. Los resultados se incorporan a la exportación JSON como `structuralAnalysis`. Esta es una medida estructural, no una ruta crítica temporal: no se asignan duraciones, latencias ni costes a los nodos.
+
+## Inspección visual por oleadas
+
+Tras simular, el editor permite elegir una oleada mediante selector o controles Anterior/Siguiente. El lienzo SVG destaca los nodos activos en amarillo, la ruta estructural más larga en azul, los nodos cíclicos en rosa y los bloqueos derivados en violeta. La selección visual es efímera: al modificar el grafo se invalida la traza y se restauran los estilos originales. Los colores se acompañan de texto de estado y atributos accesibles; no implican ejecución real ni métricas temporales.

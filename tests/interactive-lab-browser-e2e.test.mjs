@@ -153,3 +153,23 @@ test('browser: deterministic simulation produces trace and blocks cycles',async(
  assert.match(await page.locator('#simulation-structure').textContent(),/Nodos en ciclos: 2/);
  await context.close();
 });
+
+test('browser: inspect waves and highlight structural path and cyclic nodes',async()=>{
+ const context=await browser.newContext();const page=await context.newPage();await page.goto(base);
+ await page.locator('#editor-pattern').selectOption('1');await page.locator('#editor-add').click();
+ await page.locator('#editor-pattern').selectOption('25');await page.locator('#editor-add').click();
+ const ids=await page.locator('#editor-source option').evaluateAll(os=>os.map(o=>o.value));
+ await page.locator('#editor-source').selectOption(ids[0]);await page.locator('#editor-target').selectOption(ids[1]);await page.locator('#editor-connect').click();
+ await page.locator('#editor-simulate').click();
+ assert.equal(await page.locator('#simulation-wave option').count(),3);
+ assert.equal(await page.locator('#editor-nodes > g[data-simulation-state="path"]').count(),2);
+ await page.locator('#simulation-next').click();
+ assert.equal(await page.locator('#editor-nodes > g[data-simulation-state="active"]').count(),1);
+ await page.locator('#simulation-next').click();
+ assert.equal(await page.locator('#editor-nodes > g[data-simulation-state="active"]').count(),1);
+ await page.locator('#editor-source').selectOption(ids[1]);await page.locator('#editor-target').selectOption(ids[0]);await page.locator('#editor-connect').click();
+ assert.equal(await page.locator('#editor-nodes > g[data-simulation-state]').count(),0);
+ await page.locator('#editor-simulate').click();
+ assert.equal(await page.locator('#editor-nodes > g[data-simulation-state="cyclic"]').count(),2);
+ await context.close();
+});
