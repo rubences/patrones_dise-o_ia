@@ -69,3 +69,7 @@ Tras simular, el editor permite elegir una oleada mediante selector o controles 
 ## Estadísticas y exportación de informe
 
 El editor presenta recuentos estructurales de nodos, aristas, tamaño de oleadas y conexiones por tipo. «Exportar informe» genera JSON autocontenido con estadísticas, traza, diagnóstico y aviso metodológico. El informe es local y reproducible, sin latencias, costes, rendimiento ni ejecución de LLM/herramientas. Tras cualquier modificación se invalida el informe anterior.
+
+## Cobertura Archify de los 365 patrones
+
+Cada ficha dispone de un HTML Archify propio generado a partir del catálogo canónico y del archivo de implementación correspondiente. Los cinco patrones 001, 025, 053, 060 y 082 conservan diagramas de flujo revisados manualmente. Para los otros 360, el diagrama inicial es un **mapa esquemático de fuentes y revisión**, no una reconstrucción auditada de su lógica interna: indica catálogo, código, contrato, verificación y documentación, con referencias al archivo fuente. Esta distinción se señala en cada ficha y en el propio HTML. La mejora editorial posterior consiste en reemplazar progresivamente estos mapas por diagramas semánticos específicos y contrastados con cada implementación. Ninguno ejecuta herramientas ni modelos.
