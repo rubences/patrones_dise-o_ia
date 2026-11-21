@@ -66,13 +66,12 @@ test('browser: keyboard and pointer move pattern nodes',async()=>{
  await node.focus();await page.keyboard.press('ArrowRight');
  const keyboard=await page.locator('#editor-nodes > g').first().getAttribute('transform');
  assert.notEqual(keyboard,before);
+ await page.locator('#editor-nodes > g > rect').first().scrollIntoViewIfNeeded();
  const rect=await page.locator('#editor-nodes > g > rect').first().boundingBox();
  assert.ok(rect);
- await page.evaluate(() => {window.__dragDebug={down:0,move:0,up:0};const node=document.querySelector('#editor-nodes > g');node.addEventListener('pointerdown',()=>window.__dragDebug.down++);window.addEventListener('pointermove',()=>window.__dragDebug.move++);window.addEventListener('pointerup',()=>window.__dragDebug.up++)});
- const hit=await page.evaluate(({x,y})=>({tag:document.elementFromPoint(x,y)?.tagName,html:document.elementFromPoint(x,y)?.outerHTML?.slice(0,180)}),{x:rect.x+50,y:rect.y+20});
  await page.mouse.move(rect.x+50,rect.y+20);
  await page.mouse.down();await page.mouse.move(rect.x+90,rect.y+55,{steps:4});await page.mouse.up();
  const moved=await page.locator('#editor-nodes > g').first().getAttribute('transform');
- assert.notEqual(moved,keyboard,JSON.stringify({events:await page.evaluate(() => window.__dragDebug),hit,rect}));
+ assert.notEqual(moved,keyboard);
  await context.close();
 });
