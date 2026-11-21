@@ -57,7 +57,7 @@ if(root){
  const uid=()=> 'project_'+crypto.randomUUID().replaceAll('-','').slice(0,20);
  let project:ArchitectureDiagram=newArchitecture(uid(),'Mi arquitectura IA');
  const notice=(msg:string)=>{status.textContent=msg};
- const make=(tag:string,attrs:Record<string,string>={})=>{const x=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))x.setAttribute(k,v);return x};
+ const make=(tag:string,attrs:Record<string,string>={})=>{const x=document.createElementNS(ns,tag) as SVGElement;for(const [k,v] of Object.entries(attrs))x.setAttribute(k,v);return x};
  const options=(select:HTMLSelectElement,values:{value:string;label:string}[])=>{const prev=select.value;select.replaceChildren(...values.map(v=>{const o=document.createElement('option');o.value=v.value;o.textContent=v.label;return o}));if(values.some(v=>v.value===prev))select.value=prev};
  const refreshPalette=()=>{const filtered=palette.filter(p=>!family.value||p.family===family.value);options(pattern,filtered.map(p=>({value:String(p.id),label:`#${p.id} · ${p.title}`})) )};
  const render=()=>{
