@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import catalog from '../../../../../catalog/patterns.json';
+import taxonomy from '../../../../../catalog/taxonomy.json';
+const palette=catalog.patterns.map(p=>({id:p.id,title:p.name,family:p.family})).sort((a,b)=>a.id-b.id);
+const base=import.meta.env.BASE_URL;
+---
+<BaseLayout title="Editor de arquitecturas · Interactive Lab" description="Construye y guarda arquitecturas de IA en tu navegador sin cuentas ni backend.">
+<section class="section">
+ <p class="eyebrow">Interactive Lab · Fase 2</p>
+ <h1>Editor de arquitecturas</h1>
+ <p class="lead">Combina patrones de las {taxonomy.families.length} macrofamilias, conecta nodos y guarda el proyecto en este navegador. Los diagramas Archify de referencia siguen disponibles en <a href={`${base}lab/`}>el laboratorio</a>.</p>
+ <div class="editor-panel" id="architecture-editor" data-palette={JSON.stringify(palette)}>
+  <div class="editor-toolbar">
+   <label>Nombre del proyecto <input id="project-title" value="Mi arquitectura IA" maxlength="120"/></label>
+   <label>Macrofamilia <select id="editor-family"><option value="">Todas</option>{taxonomy.families.map(f=><option value={f.id}>{f.nameEs}</option>)}</select></label>
+   <label>Patrón <select id="editor-pattern" aria-label="Patrón para añadir"></select></label>
+   <button id="editor-add" type="button">Añadir nodo</button>
+  </div>
+  <div class="editor-toolbar">
+   <label>Origen <select id="editor-source" aria-label="Nodo origen"></select></label>
+   <label>Destino <select id="editor-target" aria-label="Nodo destino"></select></label>
+   <label>Conexión <select id="editor-kind"><option value="data">Datos</option><option value="control">Control</option><option value="tool-call">Herramienta</option><option value="delegation">Delegación</option><option value="evidence">Evidencia</option></select></label>
+   <button id="editor-connect" type="button">Conectar</button>
+  </div>
+  <div class="editor-toolbar">
+   <button id="editor-new" type="button">Nuevo</button>
+   <button id="editor-save" type="button">Guardar local</button>
+   <label>Proyectos guardados <select id="editor-saved"><option value="">Seleccionar…</option></select></label>
+   <button id="editor-load" type="button">Abrir</button>
+   <button id="editor-delete" type="button">Eliminar guardado</button>
+   <button id="editor-export" type="button">Exportar JSON</button>
+   <label class="file-control">Importar JSON <input id="editor-import" type="file" accept=".json,application/json"/></label>
+  </div>
+  <div class="editor-canvas"><svg id="editor-svg" viewBox="0 0 1100 600" role="img" aria-label="Lienzo de arquitectura: arrastra nodos para reorganizarlos"><defs><marker id="editor-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6 Z" fill="#5eead4"/></marker></defs><g id="editor-edges"></g><g id="editor-nodes"></g></svg></div>
+  <div class="editor-footer"><p id="editor-status" role="status" aria-live="polite">Añade un patrón para comenzar.</p><p>Los proyectos se guardan exclusivamente en IndexedDB. Exporta una copia JSON: el navegador puede borrar los datos locales. El lienzo representa una composición conceptual, no ejecuta los patrones.</p></div>
+ </div>
+</section>
+</BaseLayout>
+<script>
+import {newArchitecture,addPatternNode,connectPatternNodes,movePatternNode,removePatternNode} from '../../../lib/lab/editor-operations';
+import {validateArchitecture} from '../../../lib/lab/architecture-validation';
+import {createIndexedDbProjectStorage} from '../../../lib/lab/project-storage';
+import {parseProjectJson,serializeProject} from '../../../lib/lab/project-transfer';
+import type {ArchitectureDiagram,EdgeKind} from '../../../lib/lab/architecture-schema';
+const root=document.getElementById('architecture-editor');
+if(root){
+ type Entry={id:number;title:string;family:string};
+ const palette:Entry[]=JSON.parse(root.dataset.palette||'[]');
+ const known=new Set(palette.map(p=>p.id));
+ const storage=createIndexedDbProjectStorage(known);
+ const el=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
+ const title=el<HTMLInputElement>('project-title'),family=el<HTMLSelectElement>('editor-family'),pattern=el<HTMLSelectElement>('editor-pattern');
+ const source=el<HTMLSelectElement>('editor-source'),target=el<HTMLSelectElement>('editor-target'),kind=el<HTMLSelectElement>('editor-kind'),saved=el<HTMLSelectElement>('editor-saved');
+ const status=el<HTMLElement>('editor-status'),nodes=el<SVGGElement>('editor-nodes'),edges=el<SVGGElement>('editor-edges'),svg=el<SVGSVGElement>('editor-svg');
+ const ns='http://www.w3.org/2000/svg';
+ const uid=()=> 'project_'+crypto.randomUUID().replaceAll('-','').slice(0,20);
+ let project:ArchitectureDiagram=newArchitecture(uid(),'Mi arquitectura IA');
+ const notice=(msg:string)=>{status.textContent=msg};
+ const make=(tag:string,attrs:Record<string,string>={})=>{const x=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))x.setAttribute(k,v);return x};
+ const options=(select:HTMLSelectElement,values:{value:string;label:string}[])=>{const prev=select.value;select.replaceChildren(...values.map(v=>{const o=document.createElement('option');o.value=v.value;o.textContent=v.label;return o}));if(values.some(v=>v.value===prev))select.value=prev};
+ const refreshPalette=()=>{const filtered=palette.filter(p=>!family.value||p.family===family.value);options(pattern,filtered.map(p=>({value:String(p.id),label:`#${p.id} · ${p.title}`})) )};
+ const render=()=>{
+  title.value=project.title;
+  options(source,project.nodes.map(n=>({value:n.id,label:n.label})));
+  options(target,project.nodes.map(n=>({value:n.id,label:n.label})));
+  nodes.replaceChildren();edges.replaceChildren();
+  for(const e of project.edges){const a=project.nodes.find(n=>n.id===e.source),b=project.nodes.find(n=>n.id===e.target);if(!a||!b)continue;
+   const line=make('line',{x1:String(a.position.x+90),y1:String(a.position.y+30),x2:String(b.position.x+90),y2:String(b.position.y+30),stroke:'#5eead4','stroke-width':'2','marker-end':'url(#editor-arrow)'});
+   edges.append(line);
+  }
+  for(const n of project.nodes){
+   const g=make('g',{transform:`translate(${n.position.x} ${n.position.y})`,tabindex:'0',role:'group','aria-label':`${n.label}, patrón ${n.patternId}`});
+   g.style.cursor='grab';
+   const rect=make('rect',{width:'180',height:'60',rx:'12',fill:'#17263c',stroke:'#5eead4','stroke-width':'2'});
+   const text=make('text',{x:'90',y:'24','text-anchor':'middle',fill:'#fff','font-size':'12'});
+   text.textContent=n.label.length>24?n.label.slice(0,22)+'…':n.label;
+   const sub=make('text',{x:'90',y:'43','text-anchor':'middle',fill:'#5eead4','font-size':'11'});sub.textContent='#'+n.patternId;
+   g.append(rect,text,sub);nodes.append(g);
+   g.addEventListener('pointerdown',ev=>{if(ev.button!==0)return;const bounds=svg.getBoundingClientRect();const sx=1100/bounds.width,sy=600/bounds.height;const initialX=n.position.x,initialY=n.position.y,startX=ev.clientX,startY=ev.clientY;
+    g.setPointerCapture(ev.pointerId);
+    const move=(event:PointerEvent)=>{project=movePatternNode(project,n.id,Math.max(0,Math.min(920,initialX+(event.clientX-startX)*sx)),Math.max(0,Math.min(540,initialY+(event.clientY-startY)*sy)));const moved=project.nodes.find(v=>v.id===n.id)!;g.setAttribute('transform',`translate(${moved.position.x} ${moved.position.y})`);
+     project.edges.forEach((e,i)=>{const a=project.nodes.find(v=>v.id===e.source),b=project.nodes.find(v=>v.id===e.target);const line=edges.children[i];if(a&&b&&line){line.setAttribute('x1',String(a.position.x+90));line.setAttribute('y1',String(a.position.y+30));line.setAttribute('x2',String(b.position.x+90));line.setAttribute('y2',String(b.position.y+30));}})};
+    const stop=()=>{g.removeEventListener('pointermove',move);g.removeEventListener('pointerup',stop);g.removeEventListener('pointercancel',stop);notice('Posición actualizada. Guarda para conservar los cambios.')};
+    g.addEventListener('pointermove',move);g.addEventListener('pointerup',stop);g.addEventListener('pointercancel',stop);
+   });
+   g.addEventListener('keydown',ev=>{if(ev.key==='Delete'||ev.key==='Backspace'){project=removePatternNode(project,n.id);render();notice('Nodo eliminado')}else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(ev.key)){ev.preventDefault();project=movePatternNode(project,n.id,n.position.x+(ev.key==='ArrowLeft'?-15:ev.key==='ArrowRight'?15:0),n.position.y+(ev.key==='ArrowUp'?-15:ev.key==='ArrowDown'?15:0));render()}});
+  }
+ };
+ const refreshSaved=async()=>{const projects=await storage.list();options(saved,[{value:'',label:'Seleccionar…'},...projects.map(p=>({value:p.id,label:p.title}))])};
+ const safely=async(task:()=>Promise<void>)=>{try{await task()}catch(e){notice('Error: '+(e instanceof Error?e.message:String(e)))}};
+ family.addEventListener('change',refreshPalette);
+ el<HTMLButtonElement>('editor-add').addEventListener('click',()=>{const p=palette.find(p=>p.id===Number(pattern.value));if(!p)return;project=addPatternNode(project,p.id,p.title);render();notice('Nodo añadido. Guarda para conservarlo.')});
+ el<HTMLButtonElement>('editor-connect').addEventListener('click',()=>{try{project=connectPatternNodes(project,source.value,target.value,kind.value as EdgeKind);render();notice('Conexión añadida')}catch(e){notice(e instanceof Error?e.message:String(e))}});
+ el<HTMLButtonElement>('editor-new').addEventListener('click',()=>{project=newArchitecture(uid(),'Mi arquitectura IA');render();notice('Proyecto nuevo sin guardar')});
+ el<HTMLButtonElement>('editor-save').addEventListener('click',()=>safely(async()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok)throw Error(v.errors.join('; '));await storage.put(v.diagram);await refreshSaved();notice('Guardado en este navegador')}));
+ el<HTMLButtonElement>('editor-load').addEventListener('click',()=>safely(async()=>{const p=await storage.get(saved.value);if(!p)throw Error('Selecciona un proyecto guardado');project=p;render();notice('Proyecto cargado')}));
+ el<HTMLButtonElement>('editor-delete').addEventListener('click',()=>safely(async()=>{if(!saved.value)throw Error('Selecciona un proyecto');if(!confirm('¿Eliminar este proyecto del navegador?'))return;await storage.remove(saved.value);await refreshSaved();notice('Proyecto eliminado')}));
+ el<HTMLButtonElement>('editor-export').addEventListener('click',()=>{project={...project,title:title.value.trim()};const v=validateArchitecture(project,known);if(!v.ok){notice(v.errors.join('; '));return}const url=URL.createObjectURL(new Blob([serializeProject(v.diagram)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`${project.id}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('Archivo JSON exportado')});
+ el<HTMLInputElement>('editor-import').addEventListener('change',event=>safely(async()=>{const file=(event.currentTarget as HTMLInputElement).files?.[0];if(!file)return;if(file.size>1_000_000)throw Error('El archivo supera 1 MB');const parsed=parseProjectJson(await file.text(),known);if(!parsed.ok)throw Error(parsed.errors.join('; '));project=parsed.diagram;render();notice('Proyecto importado. Guarda para conservarlo.')}));
+ refreshPalette();render();void safely(refreshSaved);
+}
+</script>
+<style>
+.editor-panel{border:1px solid var(--line);border-radius:18px;padding:1rem;background:var(--panel)}
+.editor-toolbar{display:flex;flex-wrap:wrap;align-items:end;gap:.8rem;margin-bottom:1rem}
+.editor-toolbar label{display:grid;gap:.3rem;font-size:.83rem;flex:1 1 150px}
+.editor-toolbar input,.editor-toolbar select{min-height:40px;max-width:100%;padding:.45rem;border:1px solid var(--line);border-radius:8px;background:#15233a;color:#fff}
+.editor-toolbar button,.file-control{min-height:40px;padding:.55rem .85rem;border:1px solid #4d8991;border-radius:8px;background:#123d46;color:#e6fffb;cursor:pointer}
+.file-control input{max-width:180px;font-size:.7rem}
+.editor-canvas{overflow:auto;border:1px solid var(--line);border-radius:14px;background:radial-gradient(circle at center,#1b3448,#101725)}
+.editor-canvas svg{display:block;width:100%;min-width:680px;height:auto;touch-action:none}
+.editor-footer{color:var(--muted);font-size:.88rem}
+#editor-status{color:#5eead4;font-weight:600}
+</style>
