@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {chromium} from '../web/node_modules/playwright/index.mjs';
 
 const base=process.env.LAB_TEST_URL??'http://127.0.0.1:4321/patrones_dise-o_ia/lab/editor/';
-const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH||'/usr/bin/google-chrome',args:['--no-sandbox']});
 test.after(async()=>{await browser.close()});
 test('browser: create, connect, undo/redo, save, reload and open',async()=>{
  const context=await browser.newContext({acceptDownloads:true});
