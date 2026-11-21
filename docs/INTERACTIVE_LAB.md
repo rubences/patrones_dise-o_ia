@@ -53,3 +53,7 @@ El editor incorpora un selector de nodos y un botón explícito para eliminar el
 ## Gestión local de proyectos
 
 El editor permite duplicar un proyecto con identificador nuevo, renombrarlo sin modificar los nodos, y muestra el estado de cambios sin guardar. Antes de crear otro proyecto, cargar uno existente o importar JSON se pide confirmación si se perderían cambios; también se avisa al abandonar la página. Los proyectos originales permanecen independientes de sus copias. Los datos se guardan solo en IndexedDB; exporta JSON como copia de seguridad.
+
+## Fase 3 — simulación determinista (primera entrega)
+
+La ruta `/lab/editor/` incluye «Simular arquitectura» y «Exportar traza». El motor puro valida el grafo y calcula oleadas topológicas estables, ordenando los nodos listos por identificador. Detecta ciclos y dependencias bloqueadas, y genera un informe JSON reproducible con `schemaVersion:1`, estado, oleadas, pasos, nodos bloqueados e incidencias. Las conexiones de cualquier tipo se interpretan como dependencias de precedencia para esta primera versión, **no como ejecución real de herramientas, modelos ni agentes**. Las trazas marcan `executedModels:false` y `executedTools:false`. Al editar la arquitectura se invalida la traza anterior. No se estiman tiempos, costes ni métricas empíricas.

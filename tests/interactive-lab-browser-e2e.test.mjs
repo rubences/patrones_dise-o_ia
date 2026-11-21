@@ -127,3 +127,26 @@ test('browser: warns before discarding unsaved changes',async()=>{
  assert.equal(await page.locator('#editor-nodes > g').count(),0);
  await context.close();
 });
+
+test('browser: deterministic simulation produces trace and blocks cycles',async()=>{
+ const context=await browser.newContext({acceptDownloads:true});
+ const page=await context.newPage();await page.goto(base);
+ await page.locator('#editor-pattern').selectOption('1');await page.locator('#editor-add').click();
+ await page.locator('#editor-pattern').selectOption('25');await page.locator('#editor-add').click();
+ const ids=await page.locator('#editor-source option').evaluateAll(os=>os.map(o=>o.value));
+ await page.locator('#editor-source').selectOption(ids[0]);
+ await page.locator('#editor-target').selectOption(ids[1]);
+ await page.locator('#editor-connect').click();
+ await page.locator('#editor-simulate').click();
+ assert.match(await page.locator('#simulation-result').textContent(),/Simulación completada: 2 oleadas/);
+ assert.equal(await page.locator('#simulation-steps li').count(),2);
+ const downloadPromise=page.waitForEvent('download');
+ await page.locator('#editor-export-trace').click();
+ const download=await downloadPromise;
+ const trace=JSON.parse(await (await import('node:fs/promises')).readFile(await download.path(),'utf8'));
+ assert.equal(trace.executedModels,false);assert.equal(trace.executedTools,false);
+ await page.locator('#editor-source').selectOption(ids[1]);await page.locator('#editor-target').selectOption(ids[0]);
+ await page.locator('#editor-connect').click();await page.locator('#editor-simulate').click();
+ assert.match(await page.locator('#simulation-result').textContent(),/Simulación bloqueada/);
+ await context.close();
+});
