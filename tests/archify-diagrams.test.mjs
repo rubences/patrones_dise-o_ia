@@ -12,7 +12,7 @@ test('pins Archify 3.2.0 to a full commit SHA',()=>{
 test('curated diagrams are unique and safely named',()=>{
  assert.equal(entries.length,6);
  assert.deepEqual(entries.filter(x=>x.patternId).map(x=>x.patternId).sort((a,b)=>a-b),[1,25,53,60,82]);
- assert.equal(new Set(entries.map(x=>x.id)).size,2);
+ assert.equal(new Set(entries.map(x=>x.id)).size,entries.length);
  for(const item of entries){
   assert.match(item.output,/^[a-z0-9-]+\.html$/);
   assert.match(item.candidate,/^diagrams\/archify\/[a-z0-9.-]+\.json$/);
