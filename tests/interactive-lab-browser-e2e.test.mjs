@@ -173,3 +173,17 @@ test('browser: inspect waves and highlight structural path and cyclic nodes',asy
  assert.equal(await page.locator('#editor-nodes > g[data-simulation-state="cyclic"]').count(),2);
  await context.close();
 });
+
+test('browser: simulation statistics and standalone report export',async()=>{
+ const context=await browser.newContext({acceptDownloads:true});const page=await context.newPage();await page.goto(base);
+ await page.locator('#editor-pattern').selectOption('1');await page.locator('#editor-add').click();
+ await page.locator('#editor-pattern').selectOption('25');await page.locator('#editor-add').click();
+ await page.locator('#editor-simulate').click();
+ assert.match(await page.locator('#simulation-statistics').textContent(),/Nodos: 2/);
+ const pending=page.waitForEvent('download');await page.locator('#editor-export-report').click();const download=await pending;
+ const data=JSON.parse(await (await import('node:fs/promises')).readFile(await download.path(),'utf8'));
+ assert.equal(data.reportVersion,1);assert.equal(data.statistics.nodeCount,2);
+ assert.equal(data.statistics.executedModels,false);
+ await page.locator('#editor-add').click();assert.equal(await page.locator('#editor-export-report').isDisabled(),true);
+ await context.close();
+});
