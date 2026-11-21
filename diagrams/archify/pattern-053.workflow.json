@@ -1,0 +1,150 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Guardrails · controles antes y después del LLM",
+    "locale": "es",
+    "quality_profile": "showcase",
+    "output": "dist/archify-build/pattern-053-guardrails.html",
+    "repository": {
+      "url": "https://github.com/rubences/patrones_dise-o_ia",
+      "provider": "github",
+      "revision": "a2c744a8ce3c2a85ca7c59056c93c3831bff77a5"
+    }
+  },
+  "lanes": [
+    {
+      "id": "entrada",
+      "label": "Entrada"
+    },
+    {
+      "id": "seguridad",
+      "label": "Controles"
+    },
+    {
+      "id": "modelo",
+      "label": "Generación"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "usuario",
+      "lane": "entrada",
+      "col": 0,
+      "type": "external",
+      "label": "Solicitud",
+      "sublabel": "Entrada de texto",
+      "sources": [
+        {
+          "path": "src/pattern_53_guardrails.ts",
+          "line": 139,
+          "end_line": 148
+        }
+      ]
+    },
+    {
+      "id": "input",
+      "lane": "seguridad",
+      "col": 1,
+      "type": "security",
+      "label": "Guardrail entrada",
+      "sublabel": "PII y temas",
+      "sources": [
+        {
+          "path": "src/pattern_53_guardrails.ts",
+          "line": 45,
+          "end_line": 83
+        }
+      ]
+    },
+    {
+      "id": "llm",
+      "lane": "modelo",
+      "col": 2,
+      "type": "backend",
+      "label": "LLM",
+      "sublabel": "Respuesta candidata",
+      "sources": [
+        {
+          "path": "src/pattern_53_guardrails.ts",
+          "line": 150,
+          "end_line": 167
+        }
+      ]
+    },
+    {
+      "id": "output",
+      "lane": "seguridad",
+      "col": 3,
+      "type": "security",
+      "label": "Guardrail salida",
+      "sublabel": "Datos sensibles + veredicto",
+      "sources": [
+        {
+          "path": "src/pattern_53_guardrails.ts",
+          "line": 86,
+          "end_line": 135
+        }
+      ]
+    },
+    {
+      "id": "respuesta",
+      "lane": "entrada",
+      "col": 4,
+      "type": "frontend",
+      "label": "Respuesta",
+      "sublabel": "Aprobada o bloqueada",
+      "sources": [
+        {
+          "path": "src/pattern_53_guardrails.ts",
+          "line": 168,
+          "end_line": 178
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_1",
+      "from": "usuario",
+      "to": "input",
+      "label": "revisar"
+    },
+    {
+      "id": "edge_2",
+      "from": "input",
+      "to": "llm",
+      "label": "permitir / sanear"
+    },
+    {
+      "id": "edge_3",
+      "from": "llm",
+      "to": "output",
+      "label": "evaluar"
+    },
+    {
+      "id": "edge_4",
+      "from": "output",
+      "to": "respuesta",
+      "label": "permitir / bloquear"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Implementación de referencia",
+      "items": [
+        "Basado en src/pattern_53_guardrails.ts",
+        "El diagrama documenta código, no ejecuta servicios"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Límites y condiciones",
+      "items": [
+        "La entrada puede ser saneada o bloqueada; no siempre se rechaza.",
+        "El veredicto inesperado del clasificador bloquea la respuesta; no es un control de autorización para acciones sensibles."
+      ]
+    }
+  ]
+}
