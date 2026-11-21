@@ -73,3 +73,7 @@ El editor presenta recuentos estructurales de nodos, aristas, tamaño de oleadas
 ## Filtros visuales por tipo de conexión
 
 El editor filtra visualmente las aristas por `data`, `control`, `tool-call`, `delegation` y `evidence`. «Todos los tipos» restaura el conjunto completo. El filtro no elimina conexiones, no cambia el JSON almacenado y no afecta a la simulación o estadísticas.
+
+## Informe HTML para docencia y análisis técnico
+
+«Informe HTML imprimible» exporta un documento autónomo, sin JavaScript ni recursos externos, con resumen, recuentos, oleadas, diagnóstico y traza. Permite imprimir o guardar como PDF desde el navegador. Escapa todo contenido procedente de etiquetas y títulos del proyecto. No afirma ejecución real ni métricas empíricas.
