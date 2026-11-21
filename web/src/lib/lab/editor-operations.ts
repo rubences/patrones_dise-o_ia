@@ -20,3 +20,7 @@ export function movePatternNode(a:ArchitectureDiagram,nodeId:string,x:number,y:n
 export function removePatternNode(a:ArchitectureDiagram,nodeId:string):ArchitectureDiagram {
  return derived({...a,nodes:a.nodes.filter(n=>n.id!==nodeId),edges:a.edges.filter(e=>e.source!==nodeId&&e.target!==nodeId)});
 }
+
+export function removePatternEdge(a:ArchitectureDiagram,edgeId:string):ArchitectureDiagram {
+ return {...a,edges:a.edges.filter(e=>e.id!==edgeId)};
+}
